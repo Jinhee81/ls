@@ -1,12 +1,12 @@
 <!--임대물건의 그룹에 대한 추가 모달 시작-->
-<script type="text/javascript">
+<!-- <script type="text/javascript">
 window.onload = function() {
     if (!window.location.hash) {
         window.location = window.location + '#loaded';
         self.window.location.reload();
     }
 }
-</script>
+</script> -->
 <div class="modal fade bd-example-modal-lg" id="modal_group_add<?=$escaped['id']?>" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-lg">
     <div class="modal-content">
@@ -35,16 +35,17 @@ window.onload = function() {
         </thead>
         <tbody>
            <tr>
-            <!-- <form class="" action="" method="post"> -->
+            <form action="p_room_make.php" method="post">
+              <input type="hidden" name="id" value="<?=$escaped['id']?>">
               <td scope="col"><input class="form-control text-center" type="text" name="building_name" value="<?=$escaped['name']?>" disabled></td><!--명칭-->
 
-              <td scope="col"><input class="form-control text-center" type="text" name="name"></td><!--그룹명-->
+              <td scope="col"><input class="form-control text-center" type="text" name="name" required=""></td><!--그룹명-->
 
-              <td scope="col"><input name="room_count" class="form-control text-center" type="number" min="1" max="100" onmouseout="button_value_count(this.value);"required=""></td><!--방/좌석수-->
+              <td scope="col"><input name="count" class="form-control text-center" type="number" min="1" max="100" onmouseout="button_value_count(this.value);"required=""></td><!--방/좌석수-->
 
               <td scope="col"><input class="form-control text-center" type="number" name="room_start_number" onmouseout="button_value_startNumber(this.value);"></td><!--방/좌석시작번호-->
 
-              <td scope="col"><button class="btn btn-outline-success" type="submit" id="button_room_make" onclick="button_room_make();">생성</button></td><!--생성버튼-->
+              <td scope="col"><button class="btn btn-outline-success" type="button" onclick="button_room_make();">생성</button></td><!--생성버튼-->
             <!-- </form> -->
           </tr>
         </tbody>
@@ -53,18 +54,9 @@ window.onload = function() {
           <i class="fas fa-exclamation"></i>&nbsp;방/좌석수는 1~100사이 숫자만 입력 가능합니다.<br>
           <i class="fas fa-exclamation"></i>&nbsp;꽃잎반, 열매반 등 한글이름인 경우 방/좌석시작번호 값을 비운채로 생성하기 버튼을 누릅니다.<br>
         </small>
+        <div class="container" id="below_rooms">
+        </div><!--생성하기버튼 누르면 여기에 방번호가 쫙 나온다-->
     </div> <!--modal body close div-->
-    <div class="container" id="below_rooms">
-      <!-- <div class="row">
-
-        <div class="col col-sm-12">
-          <table class="table table-sm table-bordered text-center" id="table_rooms">
-
-          </table>
-        </div>
-
-      </div> -->
-    </div>
 
     <div class="modal-footer">
       <button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="closePopup();">취소</button>
@@ -115,13 +107,13 @@ function button_room_make(){ //방들을 만드는 함수, 생성하기버튼 �
   var closeTrArray= [6,13,20,27,34,41,48];
   for(var i=0; i<rooms.length; i++) {
    if(trArray.includes(i)){
-     table = table + "<tr><td>"+ "<input type='text' class='form-control text-center' value ='" + rooms[i] + "'></td>";
+     table = table + "<tr><td>"+ "<input type='text' class='form-control text-center' name = 'rName["+ i +"] value ='" + rooms[i] + "'></td>";
 
    } else if (closeTrArray.includes(i)){
-     table = table + "<td>"+ "<input type='text' class='form-control text-center' value ='" + rooms[i] + "'></td></tr>";
+     table = table + "<td>"+ "<input type='text' class='form-control text-center' name = 'rName["+ i +"] value ='" + rooms[i] + "'></td></tr>";
 
    } else {
-     table = table + "<td>"+ "<input type='text' class='form-control text-center' value ='" + rooms[i] + "'></td>";
+     table = table + "<td>"+ "<input type='text' class='form-control text-center' name = 'rName["+ i +"] value ='" + rooms[i] + "'></td>";
 
    }
   }
@@ -129,7 +121,7 @@ function button_room_make(){ //방들을 만드는 함수, 생성하기버튼 �
   $tweet.append(table);
 
   $('#below_rooms').html($tweet);
-  // $('#comment').html("");
+  $('#comment').empty();
 }
 function closePopup(){
   // window.opener.location.reload();

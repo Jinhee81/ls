@@ -70,10 +70,24 @@
     jbBtn.appendChild(jbBtnText);
     document.body.appendChild(jbBtn);
 
-    
+
     document.write('hi jinhee');
     var a = "<h1>hi solmi</h1>"+"<h2>hi siwon</h2>";
     $('#heyjinhee').html(a);
 
+
+
   </script>
 </html>
+
+$row = mysqli_fetch_array($result);
+while($row){
+  ?><a href='#' class='badge badge-info'><?=$row['name']?></a>
+<?php}?>
+
+<?php
+include $_SERVER['DOCUMENT_ROOT']."/view/conn.php";
+$sql2 = "select name from group_in_building where building_id={$escaped['id']}";
+$result2 = mysqli_query($conn, $sql2);
+echo $result2;
+?>

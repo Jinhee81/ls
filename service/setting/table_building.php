@@ -35,7 +35,13 @@ include $_SERVER['DOCUMENT_ROOT']."/view/conn.php"; ?>
       $escaped['lease_type'] = htmlspecialchars($row['lease_type']);
       $escaped['name'] = htmlspecialchars($row['name']);
       $escaped['pay'] = htmlspecialchars($row['pay']);
+      mysqli_close();
+
+      $sql2 =
+        "select name from group_in_building where building_id={$escaped['id']}";
+      $result2 = mysqli_query($conn, $sql2);
       ?>
+
     <tr>
       <td><?=$escaped['num']?></td>
       <td><?=$escaped['id']?></td>
@@ -46,10 +52,15 @@ include $_SERVER['DOCUMENT_ROOT']."/view/conn.php"; ?>
         <?php
 include $_SERVER['DOCUMENT_ROOT']."/service/setting/modal_building_edit.php";
          ?>
-      </td><!--임대물건수정 모달 호출 버튼-->
+      </td><!--명칭수정 모달 호출 버튼-->
       <td><?=$escaped['pay']?></td>
-      <td><a href="#" class="badge badge-info">그룹명
-      </a>
+      <td>
+        <?php
+        // echo $sql2;
+        // print_r($result2);
+        while($row2=mysqli_fetch_array($result2)){?>
+          <a href='#' class='badge badge-info'><?=$row2['name']?></a>
+        <?php } ?>
         <button class="btn btn-outline-warning btn-sm" data-toggle="modal" data-target="#modal_group_add<?=$escaped['id']?>">추가하기</button>
       <?php
 include $_SERVER['DOCUMENT_ROOT']."/service/setting/modal_b_group_add.php";
@@ -71,3 +82,8 @@ include $_SERVER['DOCUMENT_ROOT']."/service/setting/modal_b_group_add.php";
 <small class="form-text text-muted">
   . 그룹이란? 관리해야할 방 개수가 여러개일때, 편리하게 관리하도록 그룹으로 설정합니다. 예) 1층그룹 101호~120호, 2층그룹 201호~220호
 </small> <!--건물리스트 출력 테이블 끝-->
+<script>
+  function group_add(){
+    window.open(modal_b_group_add.php);
+  }
+</script>

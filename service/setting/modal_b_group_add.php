@@ -39,7 +39,7 @@ window.onload = function() {
               <input type="hidden" name="id" value="<?=$escaped['id']?>">
               <td scope="col"><input class="form-control text-center" type="text" name="building_name" value="<?=$escaped['name']?>" disabled></td><!--명칭-->
 
-              <td scope="col"><input class="form-control text-center" type="text" name="name" required=""></td><!--그룹명-->
+              <td scope="col"><input class="form-control text-center" type="text" name="gName" required=""></td><!--그룹명-->
 
               <td scope="col"><input name="count" class="form-control text-center" type="number" min="1" max="100" onmouseout="button_value_count(this.value);"required=""></td><!--방/좌석수-->
 
@@ -101,19 +101,19 @@ function button_room_make(){ //방들을 만드는 함수, 생성하기버튼 �
 
   var $tweet = $('<div></div>');
   $tweet.append("<h5>관리번호 목록</h5>");
-  // $tweet.appendTo($('#table_rooms'));
+  $tweet.appendTo($('#table_rooms'));
   var table = "<table class='table table-bordered table-sm text-center'>";
   var trArray=[0,7,14,21,28,35,42,49];
   var closeTrArray= [6,13,20,27,34,41,48];
   for(var i=0; i<rooms.length; i++) {
    if(trArray.includes(i)){
-     table = table + "<tr><td>"+ "<input type='text' class='form-control text-center' name = 'rName["+ i +"] value ='" + rooms[i] + "'></td>";
+     table = table + "<tr><td>"+ "<input type='text' name='rName"+i+"' class='form-control text-center' value ='" + i + ':'+rooms[i] + "'></td>";
 
    } else if (closeTrArray.includes(i)){
-     table = table + "<td>"+ "<input type='text' class='form-control text-center' name = 'rName["+ i +"] value ='" + rooms[i] + "'></td></tr>";
+     table = table + "<td>"+ "<input type='text' name='rName"+i+"' class='form-control text-center' value ='" + i + ':' + rooms[i] + "'></td></tr>";
 
    } else {
-     table = table + "<td>"+ "<input type='text' class='form-control text-center' name = 'rName["+ i +"] value ='" + rooms[i] + "'></td>";
+     table = table + "<td>"+ "<input type='text' name='rName"+i+"' class='form-control text-center' value ='" + i + ':' + rooms[i] + "'></td>";
 
    }
   }

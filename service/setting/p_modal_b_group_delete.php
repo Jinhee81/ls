@@ -8,19 +8,15 @@ $filtered = array(
 
 $sql  = "
     DELETE
-      FROM building
+      FROM group_in_building
       WHERE
         id = {$filtered['id']}
     ";
-
+echo $sql;
 $result = mysqli_query($conn, $sql);
 
 if($result === false){
-  echo "<script>
-  alert('삭제할 수 없습니다. 건물안 그룹이 존재합니다.');
-  location.href='building.php';
-  </script>";
-  // echo mysqli_error($conn);
+  echo mysqli_error($conn);
 } else {
   echo "<script>alert('삭제하였습니다.');
   location.href='building.php';

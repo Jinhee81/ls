@@ -38,3 +38,14 @@ a .bin{
   text-align: center;
   height: 10px;;
 }
+span#clear.fa.fa-times-circle {
+  cursor: pointer;
+  margin: auto -23px;
+  color: red;
+}
+button#rDelete.btn.btn-default{
+  padding-left: 0px;
+  padding-top: 0px;
+  border-top-width: 0px;
+  border-left-width: 0px;
+}

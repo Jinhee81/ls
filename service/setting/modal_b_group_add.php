@@ -10,6 +10,7 @@ window.onload = function() {
 <div class="modal fade bd-example-modal-lg" id="modal_group_add<?=$escaped['id']?>" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-lg">
     <div class="modal-content">
+      <form action="p_room_make.php" method="post">
       <div class="modal-header">
         <h5 class="modal-title">그룹 및 관리번호 생성</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -34,19 +35,17 @@ window.onload = function() {
           </tr>
         </thead>
         <tbody>
-           <tr>
-            <form action="p_room_make.php" method="post">
-              <input type="hidden" name="id" value="<?=$escaped['id']?>">
-              <td scope="col"><input class="form-control text-center" type="text" name="building_name" value="<?=$escaped['name']?>" disabled></td><!--명칭-->
+         <tr>
+            <input type="hidden" name="id" value="<?=$escaped['id']?>">
+            <td scope="col"><input class="form-control text-center" type="text" name="building_name" value="<?=$escaped['name']?>" disabled></td><!--명칭-->
 
-              <td scope="col"><input class="form-control text-center" type="text" name="gName" required=""></td><!--그룹명-->
+            <td scope="col"><input class="form-control text-center" type="text" name="gName" required=""></td><!--그룹명-->
 
-              <td scope="col"><input name="count" class="form-control text-center" type="number" min="1" max="100" onmouseout="button_value_count(this.value);"required=""></td><!--방/좌석수-->
+            <td scope="col"><input class="form-control text-center" type="number" min="1" max="100" name="count"  onmouseout="button_value_count(this.value);" required=""></td><!--방/좌석수-->
 
-              <td scope="col"><input class="form-control text-center" type="number" name="room_start_number" onmouseout="button_value_startNumber(this.value);"></td><!--방/좌석시작번호-->
+            <td scope="col"><input class="form-control text-center" type="number" name="room_start_number" onmouseout="button_value_startNumber(this.value);"></td><!--방/좌석시작번호-->
 
-              <td scope="col"><button class="btn btn-outline-success" type="button" onclick="button_room_make();">생성</button></td><!--생성버튼-->
-            <!-- </form> -->
+            <td scope="col"><button class="btn btn-outline-success" type="button" onclick="button_room_make();">생성</button></td><!--생성버튼-->
           </tr>
         </tbody>
         </table>
@@ -62,6 +61,7 @@ window.onload = function() {
       <button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="closePopup();">취소</button>
       <button type="submit" class="btn btn-primary">저장</button>
     </div>
+  </form>
   </div> <!--modal content close div-->
 </div> <!--modal-dialog modal-lg close div-->
 </div> <!--그룹추가 모달 끝-->
@@ -103,18 +103,18 @@ function button_room_make(){ //방들을 만드는 함수, 생성하기버튼 �
   $tweet.append("<h5>관리번호 목록</h5>");
   $tweet.appendTo($('#table_rooms'));
   var table = "<table class='table table-bordered table-sm text-center'>";
-  var trArray=[0,7,14,21,28,35,42,49];
-  var closeTrArray= [6,13,20,27,34,41,48];
+  var trArray=[0,7,14,21,28,35,42,49,56,63,70,77,84,91,98];
+  var closeTrArray= [6,13,20,27,34,41,48,55,62,69,76,83,90,97];
   for(var i=0; i<rooms.length; i++) {
+   var stringI = i.toString();
    if(trArray.includes(i)){
-     table = table + "<tr><td>"+ "<input type='text' name='rName"+i+"' class='form-control text-center' value ='" + i + ':'+rooms[i] + "'></td>";
+     table = table + "<tr><td>"+ "<input type='text' name='rName" + i + "' class='form-control text-center' value ='"+ rooms[i] +"'></td>";
 
    } else if (closeTrArray.includes(i)){
-     table = table + "<td>"+ "<input type='text' name='rName"+i+"' class='form-control text-center' value ='" + i + ':' + rooms[i] + "'></td></tr>";
+     table = table + "<td>"+ "<input type='text' name='rName" + i + "' class='form-control text-center' value ='" + rooms[i] + "'></td></tr>";
 
    } else {
-     table = table + "<td>"+ "<input type='text' name='rName"+i+"' class='form-control text-center' value ='" + i + ':' + rooms[i] + "'></td>";
-
+     table = table + "<td>"+ "<input type='text' name='rName" + i + "' class='form-control text-center' value ='" + rooms[i] + "'></td>";
    }
   }
   table = table + "</table>";

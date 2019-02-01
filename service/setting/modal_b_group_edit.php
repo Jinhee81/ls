@@ -43,25 +43,29 @@
         </table>
         <!-- 아래는 그룹내방번호보여주는테이블시작 -->
         <?php
-        $editRooms = [];
-        $editDelete = "";
         $sql7 = "select * from r_g_in_building where group_in_building_id = {$row3['id']}";
+        $editRooms[$row3['id']] = [];
         $result7 = mysqli_query($conn, $sql7);
         while($row7 = mysqli_fetch_array($result7)){
-          array_push($editRooms, $row7['rName']);
+          array_push($editRooms[$row3['id']], $row7['rName']);
         }
+        ?>
+        <div id="solmi88">
+          <?php $aa = json_encode($editRooms[$row3['id']]); ?>
+        </div>
+        <?php
         $table2 = "<table class='table table-borderless table-sm text-center'";
         $trArray=[0,5,10,15,20,25,30,35,40,45,50,55,60,65,70,75,80,85,90,95];
         $closeTrArray= [4,9,14,19,24,29,34,39,44,49,54,59,64,69,74,79,84,89,94,99];
 
-        for ($i=0; $i < sizeof($editRooms); $i++) {
+        for ($i=0; $i < sizeof($editRooms[$row3['id']]); $i++) {
           if(in_array($i, $trArray)){
             $table2 = $table2 . "<tr>
-              <td style='padding-right:0px;'><input class='form-control text-center' type='text' name='rName" . $i . "' value='" . $editRooms[$i] . "'></td>
+              <td style='padding-right:0px;'><input class='form-control text-center' type='text' name='rName" . $i . "' value='" . $editRooms[$row3['id']][$i] . "'></td>
               <td style='padding-left:0px;'>
               <form action='p_room_delete.php' method='post'>
               <input type='hidden' name='group' value='".$row3['id']."'>
-              <input type='hidden' name='rNumber' value='".$editRooms[$i]."'>
+              <input type='hidden' name='rNumber' value='".$editRooms[$row3['id']][$i]."'>
               <button type='submit' class='btn btn-default' id='rDelete'
                style='padding-left: 0px;
                padding-top: 0px;
@@ -72,11 +76,11 @@
               </td>";
           } else if(in_array($i, $closeTrArray)){
             $table2 = $table2 . "
-            <td style='padding-right:0px;'><input class='form-control text-center' type='text' name='rName" . $i . "' value='" . $editRooms[$i] . "'></td>
+            <td style='padding-right:0px;'><input class='form-control text-center' type='text' name='rName" . $i . "' value='" . $editRooms[$row3['id']][$i] . "'></td>
             <td style='padding-left:0px;'>
             <form action='p_room_delete.php' method='post'>
             <input type='hidden' name='group' value='".$row3['id']."'>
-            <input type='hidden' name='rNumber' value='".$editRooms[$i]."'>
+            <input type='hidden' name='rNumber' value='".$editRooms[$row3['id']][$i]."'>
             <button type='submit' class='btn btn-default' id='rDelete'
              style='padding-left: 0px;
              padding-top: 0px;
@@ -87,11 +91,11 @@
             </td></tr>";
           } else {
             $table2 = $table2 . "
-            <td style='padding-right:0px;'><input class='form-control text-center' type='text' name='rName" . $i . "' value='" . $editRooms[$i] . "'></td>
+            <td style='padding-right:0px;'><input class='form-control text-center' type='text' name='rName" . $i . "' value='" . $editRooms[$row3['id']][$i] . "'></td>
             <td style='padding-left:0px;'>
             <form action='p_room_delete.php' method='post'>
             <input type='hidden' name='group' value='".$row3['id']."'>
-            <input type='hidden' name='rNumber' value='".$editRooms[$i]."'>
+            <input type='hidden' name='rNumber' value='".$editRooms[$row3['id']][$i]."'>
             <button type='submit' class='btn btn-default' id='rDelete'
              style='padding-left: 0px;
              padding-top: 0px;
@@ -102,7 +106,11 @@
             </td>";
           }
         }
-        $table2 = $table2."<td><button class='btn btn-outline-warning btn-sm'>관리번호 추가</button><td>";
+        $table2 = $table2."<td>
+        <form method='post' action='p_room_add.php'>
+        <input type='hidden' name='id' value='".$row3['id']."'>
+        <input type='hidden' name='room_add' value=''>
+        <button type='submit' class='btn btn-outline-warning btn-sm'>관리번호 추가</button></form><td>";
         $table2 = $table2."</table>";
         ?>
         <div>
@@ -122,9 +130,3 @@
   </div> <!--modal content close div-->
 </div> <!--modal-dialog modal-lg close div-->
 </div> <!--그룹수정 모달 끝-->
-<script>
-$("#clear").click(function(){
-    $(".resultingarticles").empty();
-    $("#searchbox").val("");
-  });
-</script>

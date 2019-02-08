@@ -29,7 +29,7 @@ include $_SERVER['DOCUMENT_ROOT']."/view/conn.php";
     if($b_count < 1) {
       echo "";
     } else {
-      include $_SERVER['DOCUMENT_ROOT']."/service/setting/table_building.php";
+      include $_SERVER['DOCUMENT_ROOT']."/service/setting/building_table.php";
     }?>
 
   </div>

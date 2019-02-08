@@ -5,11 +5,12 @@
       <?php
       $sql3 = "select * from group_in_building
          where id = {$row2['id']}";
-         // echo $sql;
+         // echo $sql; 건물아이디로 건물내의 그룹정보 질의
       $result3 = mysqli_query($conn, $sql3);
       while($row3 = mysqli_fetch_array($result3)){
         // var_dump($row);
        ?>
+      <form action="p_room_edit.php" method="POST"> <!--그룹및관리번호수정 시작폼-->
       <div class="modal-header">
         <h5 class="modal-title">그룹 및 관리번호 수정</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -17,12 +18,6 @@
         </button>
       </div>
       <div class="modal-body">
-        <div class="">
-          <h6>location</h6>
-          <script>
-            document.write(location.href);
-          </script>
-        </div>
         <table class="table table-bordered text-center">
         <thead>
           <tr>
@@ -33,11 +28,12 @@
         </thead>
         <tbody>
           <tr>
+            <input type="hidden" name="building_id" value="<?=$escaped['id']?>">
             <td><input class="form-control text-center" type="text" name="building_name" value="<?=$escaped['name']?>" disabled></td><!--물건명, 예)비즈피스 구로-->
 
             <td><input class="form-control text-center" type="text" name="name" required="" value="<?=$row3['gName']?>"></td><!--그룹명, 예)상주, 비상주-->
 
-            <td><input name="count" class="form-control text-center" value="<?=$row3['count']?>" disabled=""></td><!--방/좌석수-->
+            <td><input name="count" class="form-control text-center" value="<?=$row_count[0]?>" disabled></td><!--방/좌석수-->
           </tr>
         </tbody>
         </table>
@@ -49,11 +45,6 @@
         while($row7 = mysqli_fetch_array($result7)){
           array_push($editRooms[$row3['id']], $row7['rName']);
         }
-        ?>
-        <div id="solmi88">
-          <?php $aa = json_encode($editRooms[$row3['id']]); ?>
-        </div>
-        <?php
         $table2 = "<table class='table table-borderless table-sm text-center'";
         $trArray=[0,5,10,15,20,25,30,35,40,45,50,55,60,65,70,75,80,85,90,95];
         $closeTrArray= [4,9,14,19,24,29,34,39,44,49,54,59,64,69,74,79,84,89,94,99];
@@ -61,7 +52,7 @@
         for ($i=0; $i < sizeof($editRooms[$row3['id']]); $i++) {
           if(in_array($i, $trArray)){
             $table2 = $table2 . "<tr>
-              <td style='padding-right:0px;'><input class='form-control text-center' type='text' name='rName" . $i . "' value='" . $editRooms[$row3['id']][$i] . "'></td>
+              <td style='padding-right:0px;'><input class='form-control text-center' required='' type='text' name='rName" . $i . "' value='" . $editRooms[$row3['id']][$i] . "'></td>
               <td style='padding-left:0px;'>
               <form action='p_room_delete.php' method='post'>
               <input type='hidden' name='group' value='".$row3['id']."'>
@@ -76,7 +67,7 @@
               </td>";
           } else if(in_array($i, $closeTrArray)){
             $table2 = $table2 . "
-            <td style='padding-right:0px;'><input class='form-control text-center' type='text' name='rName" . $i . "' value='" . $editRooms[$row3['id']][$i] . "'></td>
+            <td style='padding-right:0px;'><input class='form-control text-center' required='' type='text' name='rName" . $i . "' value='" . $editRooms[$row3['id']][$i] . "'></td>
             <td style='padding-left:0px;'>
             <form action='p_room_delete.php' method='post'>
             <input type='hidden' name='group' value='".$row3['id']."'>
@@ -91,7 +82,7 @@
             </td></tr>";
           } else {
             $table2 = $table2 . "
-            <td style='padding-right:0px;'><input class='form-control text-center' type='text' name='rName" . $i . "' value='" . $editRooms[$row3['id']][$i] . "'></td>
+            <td style='padding-right:0px;'><input class='form-control text-center' required='' type='text' name='rName" . $i . "' value='" . $editRooms[$row3['id']][$i] . "'></td>
             <td style='padding-left:0px;'>
             <form action='p_room_delete.php' method='post'>
             <input type='hidden' name='group' value='".$row3['id']."'>
@@ -110,13 +101,13 @@
         <form method='post' action='p_room_add.php'>
         <input type='hidden' name='id' value='".$row3['id']."'>
         <input type='hidden' name='room_add' value=''>
-        <button type='submit' class='btn btn-outline-warning btn-sm'>관리번호 추가</button></form><td>";
+        <button type='text' class='btn btn-outline-warning btn-sm'>관리번호 추가</button></form><td>";
         $table2 = $table2."</table>";
         ?>
         <div>
           <?php echo $table2; ?>
         </div>
-    </div> <!--modal body close div-->
+      </div> <!--modal body close div-->
 
     <div class="modal-footer">
       <button type="button" class="btn btn-secondary" data-dismiss="modal">닫기</button>
@@ -126,6 +117,7 @@
       </form>
       <button type="submit" class="btn btn-primary">수정</button>
     </div>
+  </form> <!--수정버튼닫는폼-->
     <?php } ?>
   </div> <!--modal content close div-->
 </div> <!--modal-dialog modal-lg close div-->

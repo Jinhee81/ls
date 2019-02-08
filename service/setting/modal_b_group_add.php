@@ -108,13 +108,13 @@ function button_room_make(){ //방들을 만드는 함수, 생성하기버튼 �
   for(var i=0; i<rooms.length; i++) {
    var stringI = i.toString();
    if(trArray.includes(i)){
-     table = table + "<tr><td>"+ "<input type='text' name='rName" + i + "' class='form-control text-center' value ='"+ rooms[i] +"'></td>";
+     table = table + "<tr><td>"+ "<input type='text' name='rName" + i + "' class='form-control text-center' value ='"+ rooms[i] +"' required></td>";
 
    } else if (closeTrArray.includes(i)){
-     table = table + "<td>"+ "<input type='text' name='rName" + i + "' class='form-control text-center' value ='" + rooms[i] + "'></td></tr>";
+     table = table + "<td>"+ "<input type='text' name='rName" + i + "' class='form-control text-center' value ='" + rooms[i] + "' required></td></tr>";
 
    } else {
-     table = table + "<td>"+ "<input type='text' name='rName" + i + "' class='form-control text-center' value ='" + rooms[i] + "'></td>";
+     table = table + "<td>"+ "<input type='text' name='rName" + i + "' class='form-control text-center' value ='" + rooms[i] + "' required></td>";
    }
   }
   table = table + "</table>";

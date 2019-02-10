@@ -22,7 +22,13 @@
 
   }
 
+
+
   // array.forEach(function(item){
   //   document.write(item\n);
   // })
 </script>
+
+<!-- <input type="hidden" name="building_id" value="<?=$escaped['id']?>">
+<input type="hidden" name="id" value="<?=$row['id']?>">
+<input type="hidden" name="good" value="<?=$row['name']?>"> -->

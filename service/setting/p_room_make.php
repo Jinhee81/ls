@@ -12,7 +12,7 @@ for ($i=0; $i < (int)$filtered['count']; $i++) {
 }
 
 $sql5 =
-  "select count(*) from group_in_building where gName='{$filtered['gName']}'";
+  "select count(*) from group_in_building where gName='{$filtered['gName']}' and building_id={$filtered['id']}";
 $result5 = mysqli_query($conn, $sql5);
 $row5 = mysqli_fetch_array($result5);
 

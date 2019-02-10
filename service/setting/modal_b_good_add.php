@@ -7,13 +7,13 @@
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
-      <div class="mt-5">
+      <div class="mt-3">
         <p>임대계약 외에 일회성으로 발생하는 기타매출 상품명을 적으세요.</p>
       </div>
       <form class="container" action="p_good_add.php" method="post">
         <div class="form-row">
           <div class="container">
-            <input type="hidden" name="buidling_id" value="<?=$escaped['id']?>">
+            <input type="hidden" name="building_id" value="<?=$escaped['id']?>">
             <input name="good" type="text" class="form-control" placeholder="예)회의실, 노트북 등" required="">
           </div>
         </div>

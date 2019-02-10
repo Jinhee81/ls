@@ -74,6 +74,16 @@ include $_SERVER['DOCUMENT_ROOT']."/service/setting/modal_b_group_add.php";
        ?>
      </td><!--상주/비상주추가 모달 호출 버튼-->
      <td>
+       <?php $sql = "select * from good_in_building where building_id = {$escaped['id']}";
+        // echo $sql;
+        $result = mysqli_query($conn, $sql);
+        while($row = mysqli_fetch_array($result)){?>
+          <button data-toggle="modal" data-target="#modal_good_edit<?=$row['id']?>"
+            class='badge badge-info'>
+            <?=$row['name']?>
+          </button><?php
+include $_SERVER['DOCUMENT_ROOT']."/service/setting/modal_b_good_edit.php";
+        }?>
        <button class="btn btn-outline-warning btn-sm" data-toggle="modal" data-target="#modal_good_add<?=$escaped['id']?>">추가하기</button>
      <?php
 include $_SERVER['DOCUMENT_ROOT']."/service/setting/modal_b_good_add.php";

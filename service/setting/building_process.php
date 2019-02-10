@@ -1,4 +1,4 @@
-<?php
+<?php //빌딩만드는 파일
 session_start();
 include $_SERVER['DOCUMENT_ROOT']."/view/conn.php";
 

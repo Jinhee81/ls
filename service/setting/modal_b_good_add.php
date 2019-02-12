@@ -1,4 +1,4 @@
-<div class="modal" tabindex="-1" role="dialog" id="modal_good_add<?=$escaped['id']?>">
+<div class="modal" tabindex="-1" role="dialog" id="modal_good_add<?=$escaped1['id']?>">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
@@ -13,7 +13,7 @@
       <form class="container" action="p_good_add.php" method="post">
         <div class="form-row">
           <div class="container">
-            <input type="hidden" name="building_id" value="<?=$escaped['id']?>">
+            <input type="hidden" name="building_id" value="<?=$escaped1['id']?>">
             <input name="good" type="text" class="form-control" placeholder="예)회의실, 노트북 등" required="">
           </div>
         </div>

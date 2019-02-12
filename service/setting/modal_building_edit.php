@@ -1,5 +1,5 @@
 <!--임대물건 수정 모달 -->
-<div class="modal fade" id="edit<?=$escaped['id']?>" tabindex="-1" role="dialog">
+<div class="modal fade" id="edit<?=$escaped1['id']?>" tabindex="-1" role="dialog">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
@@ -28,7 +28,7 @@
           <div class="form-group row">
             <label class="col-sm-3 col-form-label">명칭</label>
             <div class="col-sm-9">
-              <input type="text" class="form-control" name="name" value="<?=$escaped['name']?>" required="">
+              <input type="text" class="form-control" name="name" value="<?=$escaped1['name']?>" required="">
             </div>
           </div>
           <div class="form-group row">

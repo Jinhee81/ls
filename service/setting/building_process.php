@@ -20,11 +20,13 @@ if ($r_count === 0) {
       INSERT INTO building (
           name,
           pay,
-          user_id
+          user_id,
+          created
       ) VALUES (
           '{$filtered['name']}',
           '{$_POST['pay']}',
-          {$_SESSION['id']}
+          {$_SESSION['id']},
+          now()
       )";
 } else {
   echo "<script>alert('같은 명칭이 이미 존재합니다.');

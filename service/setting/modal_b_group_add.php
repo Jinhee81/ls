@@ -7,7 +7,7 @@ window.onload = function() {
     }
 }
 </script> -->
-<div class="modal fade bd-example-modal-lg" id="modal_group_add<?=$escaped['id']?>" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+<div class="modal fade bd-example-modal-lg" id="modal_group_add<?=$escaped1['id']?>" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-lg">
     <div class="modal-content">
       <form action="p_room_make.php" method="post">
@@ -18,12 +18,12 @@ window.onload = function() {
         </button>
       </div>
       <div class="modal-body">
-        <div class="">
+        <!-- <div class="">
           <h6>location</h6>
           <script>
             document.write(location.href);
           </script>
-        </div>
+        </div> -->
         <table class="table table-bordered text-center">
         <thead>
           <tr>
@@ -36,8 +36,8 @@ window.onload = function() {
         </thead>
         <tbody>
          <tr>
-            <input type="hidden" name="id" value="<?=$escaped['id']?>">
-            <td scope="col"><input class="form-control text-center" type="text" name="building_name" value="<?=$escaped['name']?>" disabled></td><!--명칭-->
+            <input type="hidden" name="id" value="<?=$escaped1['id']?>">
+            <td scope="col"><input class="form-control text-center" type="text" name="building_name" value="<?=$escaped1['name']?>" disabled></td><!--명칭-->
 
             <td scope="col"><input class="form-control text-center" type="text" name="gName" required=""></td><!--그룹명-->
 
@@ -84,7 +84,6 @@ function button_value_startNumber(s){ //방시작번호 가져오는 함수
 }
 
 function button_room_make(){ //방들을 만드는 함수, 생성하기버튼 누르면 실행되는거
-
   var iCount = Number(count);
   if(!startNumber){
     for (var i=0; i < iCount; i++){
@@ -101,7 +100,7 @@ function button_room_make(){ //방들을 만드는 함수, 생성하기버튼 �
 
   var $tweet = $('<div></div>');
   $tweet.append("<h5>관리번호 목록</h5>");
-  $tweet.appendTo($('#table_rooms'));
+  // $tweet.appendTo($('#table_rooms'));
   var table = "<table class='table table-bordered table-sm text-center'>";
   var trArray=[0,7,14,21,28,35,42,49,56,63,70,77,84,91,98];
   var closeTrArray= [6,13,20,27,34,41,48,55,62,69,76,83,90,97];
@@ -120,9 +119,10 @@ function button_room_make(){ //방들을 만드는 함수, 생성하기버튼 �
   table = table + "</table>";
   $tweet.append(table);
 
-  $('#below_rooms').html($tweet);
+  $('#below_rooms').text('solmi');
   $('#comment').empty();
 }
+
 function closePopup(){
   // window.opener.location.reload();
   // window.close();

@@ -38,11 +38,11 @@ if($row[0]>=1){
   $result = mysqli_query($conn, $sql);
   //
   if($result){
-  echo "<script>alert('저장되었습니다.');
+  echo "<script>alert('수정하였습니다.');
     location.href = 'building.php';
     </script>";
   } else {
-  echo "<script>alert('저장에 문제가 생겼습니다. 관리자에게 문의해주세요.');
+  echo "<script>alert('수정에 문제가 생겼습니다. 관리자에게 문의해주세요.');
     location.href='building.php';
     </script>";
   error_log(mysqli_error($conn));

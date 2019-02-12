@@ -25,11 +25,14 @@
 
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav mr-auto">
-          <li class="nav-item active">
-            <a class="nav-link" href="#">리스맨관리자 <span class="sr-only">(current)</span></a>
+          <li class="nav-item">
+            <a class="nav-link" href="#">리스맨관리자</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="/admin/user_list.php">회원리스트</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/admin/building_list.php">관리물건리스트</a>
           </li>
         </ul>
 

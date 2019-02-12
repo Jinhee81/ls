@@ -11,7 +11,7 @@
       <div class="modal-body">
         <div class="form-row">
           <div class="container">
-            <input type="hidden" name="building_id" value="<?=$escaped['id']?>">
+            <input type="hidden" name="building_id" value="<?=$escaped1['id']?>">
             <input type="hidden" name="id" value="<?=$row['id']?>">
             <input name="good" type="text" class="form-control" value="<?=$row['name']?>">
           </div>
@@ -19,7 +19,7 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">닫기</button>
-        <button type="submit" class="btn btn-secondary" value="delete" onclick="javascript: form.action='p_good_delete.php';">삭제</button>
+        <button type="submit" class="btn btn-secondary" onclick="javascript: form.action='p_good_delete.php';">삭제</button>
         <button type="submit" class="btn btn-primary">수정하기</button>
       </div>
       </form>

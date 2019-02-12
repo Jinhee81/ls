@@ -17,7 +17,7 @@ $row = mysqli_fetch_array($result_count);
 // echo $row[0];
 
 if($row[0]>=1){
-  echo "<script>alert('동일한 그룹명은 사용 불가합니다.');
+  echo "<script>alert('동일한 상품명은 사용 불가합니다.');
      location.href='building.php';
      </script>";
 } else {

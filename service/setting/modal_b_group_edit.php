@@ -28,8 +28,8 @@
         </thead>
         <tbody>
           <tr>
-            <input type="hidden" name="building_id" value="<?=$escaped['id']?>">
-            <td><input class="form-control text-center" type="text" name="building_name" value="<?=$escaped['name']?>" disabled></td><!--물건명, 예)비즈피스 구로-->
+            <input type="hidden" name="building_id" value="<?=$escaped1['id']?>">
+            <td><input class="form-control text-center" type="text" name="building_name" value="<?=$escaped1['name']?>" disabled></td><!--물건명, 예)비즈피스 구로-->
 
             <td><input class="form-control text-center" type="text" name="name" required="" value="<?=$row3['gName']?>"></td><!--그룹명, 예)상주, 비상주-->
 
@@ -54,46 +54,34 @@
             $table2 = $table2 . "<tr>
               <td style='padding-right:0px;'><input class='form-control text-center' required='' type='text' name='rName" . $i . "' value='" . $editRooms[$row3['id']][$i] . "'></td>
               <td style='padding-left:0px;'>
-              <form action='p_room_delete.php' method='post'>
-              <input type='hidden' name='group' value='".$row3['id']."'>
-              <input type='hidden' name='rNumber' value='".$editRooms[$row3['id']][$i]."'>
-              <button type='submit' class='btn btn-default' id='rDelete'
+              <button type='submit' class='btn btn-default'
                style='padding-left: 0px;
                padding-top: 0px;
                border-top-width: 0px;
-               border-left-width: 0px;'>
+               border-left-width: 0px;' formaction='p_room_delete.php';'>
               <i class='fa fa-times-circle' style='color:#FE9A2E;'></i></button>
-              </form>
               </td>";
           } else if(in_array($i, $closeTrArray)){
             $table2 = $table2 . "
             <td style='padding-right:0px;'><input class='form-control text-center' required='' type='text' name='rName" . $i . "' value='" . $editRooms[$row3['id']][$i] . "'></td>
             <td style='padding-left:0px;'>
-            <form action='p_room_delete.php' method='post'>
-            <input type='hidden' name='group' value='".$row3['id']."'>
-            <input type='hidden' name='rNumber' value='".$editRooms[$row3['id']][$i]."'>
             <button type='submit' class='btn btn-default' id='rDelete'
              style='padding-left: 0px;
              padding-top: 0px;
              border-top-width: 0px;
-             border-left-width: 0px;'>
+             border-left-width: 0px;' formaction='p_room_delete.php';'>
             <i class='fa fa-times-circle' style='color:#FE9A2E;'></i></button>
-            </form>
             </td></tr>";
           } else {
             $table2 = $table2 . "
             <td style='padding-right:0px;'><input class='form-control text-center' required='' type='text' name='rName" . $i . "' value='" . $editRooms[$row3['id']][$i] . "'></td>
             <td style='padding-left:0px;'>
-            <form action='p_room_delete.php' method='post'>
-            <input type='hidden' name='group' value='".$row3['id']."'>
-            <input type='hidden' name='rNumber' value='".$editRooms[$row3['id']][$i]."'>
             <button type='submit' class='btn btn-default' id='rDelete'
              style='padding-left: 0px;
              padding-top: 0px;
              border-top-width: 0px;
-             border-left-width: 0px;'>
+             border-left-width: 0px;' formaction='p_room_delete.php';'>
             <i class='fa fa-times-circle' style='color:#FE9A2E;'></i></button>
-            </form>
             </td>";
           }
         }

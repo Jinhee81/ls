@@ -119,7 +119,7 @@ function button_room_make(){ //방들을 만드는 함수, 생성하기버튼 �
   table = table + "</table>";
   $tweet.append(table);
 
-  $('#below_rooms').text('solmi');
+  $('#below_rooms').html($tweet);
   $('#comment').empty();
 }
 

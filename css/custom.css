@@ -49,3 +49,7 @@ button#rDelete.btn.btn-default{
   border-top-width: 0px;
   border-left-width: 0px;
 }
+
+#popup{
+  background-color: grey;
+}

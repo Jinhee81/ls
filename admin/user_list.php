@@ -15,7 +15,6 @@
           <th>유형</th>
           <th>가입경로</th>
           <th>가입일시</th>
-          <th>수정일시</th>
           <th>건물수</th>
         </tr>
         <?php
@@ -28,8 +27,8 @@
           cellphone,
           lease_type,
           regist_channel,
-          created,
-          updated,
+          user.created,
+          user.updated,
           (select count(*) from building where user.id = building.user_id) as building_count
          from
           (select @num :=0)a,
@@ -50,7 +49,7 @@
           'created'=>htmlspecialchars($row['created']),
           'updated'=>htmlspecialchars($row['updated']),
           'building_count'=>htmlspecialchars($row['building_count'])
-        )
+        );
           ?>
         <tr>
           <td><?=$row['num']?></td>
@@ -62,7 +61,6 @@
           <td><?=$filtered['lease_type']?></td>
           <td><?=$filtered['regist_channel']?></td>
           <td><?=$filtered['created']?></td>
-          <td><?=$filtered['updated']?></td>
           <td><?=$filtered['building_count']?></td>
         </tr>
       <?php

@@ -10,7 +10,7 @@
       </div>
       <div class="modal-body">
         <form action="building_process_edit.php" method="post">
-          <input type="hidden" name="id" value="<?=$escaped['id']?>">
+          <input type="hidden" name="id" value="<?=$escaped1['id']?>">
           <div class="form-group row">
             <label for="staticEmail" class="col-sm-3 col-form-label">형태</label>
             <div class="col-sm-9">
@@ -35,8 +35,8 @@
             <label class="col-sm-3 col-form-label">수금방법</label>
             <div class="col-sm-9">
               <select name="pay" class="form-control">
-                <option value="선불" <?php if($escaped['pay']=="선불"){echo "selected";}?>>선불</option>
-                <option value="후불" <?php if($escaped['pay']=="후불"){echo "selected";}?>>후불</option>
+                <option value="선불" <?php if($escaped1['pay']=="선불"){echo "selected";}?>>선불</option>
+                <option value="후불" <?php if($escaped1['pay']=="후불"){echo "selected";}?>>후불</option>
               </select>
               <small class="form-text text-muted">
                 임대료를 선불로 수납할 경우 선불 선택, 후불로 수납할경우 후불을 선택하세요.

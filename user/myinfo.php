@@ -10,7 +10,7 @@ include $_SERVER['DOCUMENT_ROOT']."/view/conn.php";
    <hr class="my-4">
    <!-- <p>It uses utility classes for typography and spacing to space content out within the larger container.</p> -->
    <a class="btn btn-primary btn-sm" href="#" role="button">사용량조회</a>
-   <a class="btn btn-primary btn-sm" href="#" role="button">결제정보조</a>
+   <a class="btn btn-primary btn-sm" href="#" role="button">결제정보조회</a>
    <a class="btn btn-primary btn-sm" href="#" role="button">비밀번호변경</a>
 </div>
 
@@ -85,5 +85,5 @@ include $_SERVER['DOCUMENT_ROOT']."/view/conn.php";
 
 </div>
 <?php
-include $_SERVER['DOCUMENT_ROOT']."/view/footer.php";
+include $_SERVER['DOCUMENT_ROOT']."/view/service_footer.php";
 ?>

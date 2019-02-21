@@ -32,3 +32,5 @@
 <!-- <input type="hidden" name="building_id" value="<?=$escaped['id']?>">
 <input type="hidden" name="id" value="<?=$row['id']?>">
 <input type="hidden" name="good" value="<?=$row['name']?>"> -->
+
+<div class='form-group col-md-3'><span><img src='/img/calendar.svg' id='date1'></span></div> 달력아이콘

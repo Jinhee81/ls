@@ -3,72 +3,75 @@ session_start();
 include $_SERVER['DOCUMENT_ROOT']."/view/conn.php";
 
 $filtered = array(
-  'building_id' => mysqli_real_escape_string($conn, $_POST['building_id']), //건물아이디
-  'name' => mysqli_real_escape_string($conn, $_POST['name']), //그룹명
-  'group' => mysqli_real_escape_string($conn, $_POST['group']), //그룹아이디
+  'id' => mysqli_real_escape_string($conn, $_POST['id']), //그룹아이디
+  'gName' => mysqli_real_escape_string($conn, $_POST['gName']) //그룹명
 );
+settype($filtered['id'],'integer');
 
-// print_r($_POST)."<br>";
-// print_r($filtered)."<br>";
+print_r($_POST);
 
-$sql_edit_r_count = "select count(*) from r_g_in_building
-       where group_in_building_id={$filtered['group']}";
-$result_edit_r_count = mysqli_query($conn, $sql_edit_r_count);
-$row_edit_r_count = mysqli_fetch_array($result_edit_r_count);
-
-for ($i=0; $i < (int)$row_edit_r_count[0]; $i++) {
+$roomArray = [];
+for ($i=0; $i < (int)$_POST['count']; $i++) {
   $roomed['rName'.$i] = mysqli_real_escape_string($conn, $_POST['rName'.$i]);
 }
+// print_r($roomArray);
 
-$sql6 = "
-  UPDATE group_in_building
-  SET
-    gName = '{$filtered['name']}',
-    updated = NOW()
-  WHERE
-    id = {$filtered['group']}
-  ";
-$result6 = mysqli_query($conn, $sql6); //그룹명수정 질의
-// echo $sql6."<br>";
-$r_order = 1;
-foreach($roomed as $key => $value){
-  $sql = "
-    UPDATE r_g_in_building
-    SET
-      rName = '{$value}'
-    WHERE
-      ordered = {$r_order} and
-      group_in_building_id = {$filtered['group']}
-  ";
-  // echo $sql."<br>";
-  $r_order += 1;
-  $result = mysqli_query($conn, $sql);
-} //건물안 그룹명 내에 방번호 수정(update로하면 안되고, insert로 해야한다)
-
-foreach($roomed as $key => $value){
-  $sql_overlap_check =
-    "select count(*) from r_g_in_building
-    where group_in_building_id={$filtered['group']}
-    and rName = {$value}
-    ";
-  $result_overlap_check = mysqli_query($conn, $sql_overlap_check);
-  $row_overlap_check = mysqli_fetch_array($result_overlap_check);
-
-  if($row_overlap_check[0] >= 2 ){
-    echo "<script>
-    alert('동일한 관리번호는 사용 불가합니다.');</script>";
-    goto end;
-  }
+echo 'siwon'; print_r($roomed['rName1']); echo 'misun';
+for ($i=0; $i < (int)$_POST['count']; $i++) {
+  echo $roomed[$i];
 }
+echo 'solme';
 
-echo
-"<script>
-alert('수정하였습니다.');
-location.href='building.php';
-</script>";
-
-end :
-echo "<script>
-  location.href='building.php';</script>";
+// $sql1 = "
+//   UPDATE group_in_building
+//   SET
+//     gName = '{$filtered['gName']}',
+//     updated = NOW()
+//   WHERE
+//     id = {$filtered['id']}
+//   ";
+// $result1 = mysqli_query($conn, $sql1); //그룹명수정
+//
+// $r_order = 1;
+//
+// foreach($roomed as $key => $value){
+//   $sql = "
+//     UPDATE r_g_in_building
+//     SET
+//       rName = '{$value}'
+//     WHERE
+//       ordered = {$r_order} and
+//       group_in_building_id = {$filtered['id']}
+//   ";
+//
+//   $r_order += 1;
+//   $result = mysqli_query($conn, $sql);
+//
+//   $sql_overlap_check =
+//     "select count(*) from r_g_in_building
+//     where group_in_building_id={$filtered['id']}
+//     and rName = '{$value}'
+//     ";
+//   $result_overlap_check = mysqli_query($conn, $sql_overlap_check);
+//   $row_overlap_check = mysqli_fetch_array($result_overlap_check);
+//   // echo $sql_overlap_check;
+//   // print_r($row_overlap_check[0]);
+//
+//   if((int)$row_overlap_check[0] >= 2 ){
+//     echo "<script>
+//     alert('동일한 관리번호는 사용 불가합니다.');</script>";
+//     goto end;
+//   } //동일한관리번호 불가 처리 9999
+// }
+//
+// echo
+// "<script>
+// alert('수정하였습니다.');
+// location.href='modal_b_group_edit2.php?id=".$filtered['id']."';
+// </script>";
+//
+// end :
+// echo "<script>
+//   location.href='modal_b_group_edit2.php?id=".$filtered['id']."';</script>";
 
 ?>

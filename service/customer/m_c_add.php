@@ -8,23 +8,7 @@ include $_SERVER['DOCUMENT_ROOT']."/view/service_header2.php";
 include $_SERVER['DOCUMENT_ROOT']."/view/conn.php";
 ?>
 
-<script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
-<script src="/js/daumAddressAPI.js"></script>
 <script src="m_c_add_element.js"></script>
-<script>
-$(function(){
-  $("#date1").datepicker({
-    changeMonth : true,
-    changeYear : true,
-    yearRange: 'c-100:c',
-    showButtonPannel: true,
-    currentText: '오늘',
-    closeText: '닫기',
-    nextText: '다음달',
-    prevText: '이전달'
-  });
-});
-</script>
 <section class="container">
   <div class="jumbotron">
     <h1 class="display-4">고객등록 화면입니다!</h1>

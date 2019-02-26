@@ -336,6 +336,18 @@ $(document).ready(function () {
           <input type="text" name="c_etc" class="form-control">
         </div>
       </div>
+
+      <div class='form-row'>
+        <div class='form-group col-md-6'>
+          <label>등록일</label>
+          <input type='text' name='created' class='form-control' value='<?=$row['created']?>'>
+        </div>
+        <div class='form-group col-md-6'>
+          <label>마지막 수정일</label>
+          <input type='text' name='created' class='form-control' value='<?=$row['updated']?>'>
+        </div>
+      </div>
+
       <button type="submit" class="btn btn-primary">저장</button>
     </div>
   </form>

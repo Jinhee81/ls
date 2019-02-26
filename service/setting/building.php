@@ -13,10 +13,8 @@ include $_SERVER['DOCUMENT_ROOT']."/view/conn.php";
   <p class="lead">예) '도레미고시원' 또는 '두드림센터' 등 평상시 관리하는 명칭을 적어주세요.</p>
   <hr class="my-4">
   <p></p>
-  <button class="btn btn-primary btn-lg" data-toggle="modal" data-target="#modal">관리물건 등록</button>
+  <a class="btn btn-primary btn-lg" href="modal_building_add.php" role="button">관리물건 등록</a>
 </div>
-
-<?php include $_SERVER['DOCUMENT_ROOT']."/service/setting/modal_building_add.php";?> <!--관리물건등록 모달-->
 
 <section>
   <div class="container">

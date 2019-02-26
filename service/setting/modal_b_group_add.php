@@ -1,90 +1,87 @@
-<!--임대물건의 그룹에 대한 추가 모달 시작-->
-<!-- <script type="text/javascript">
-window.onload = function() {
-    if (!window.location.hash) {
-        window.location = window.location + '#loaded';
-        self.window.location.reload();
-    }
+<?php
+session_start();
+if(!isset($_SESSION['is_login'])){
+  header('Location: /user/login.php');
 }
-</script> -->
-<div class="modal fade bd-example-modal-lg" id="modal_group_add<?=$escaped1['id']?>" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-lg">
-    <div class="modal-content">
-      <form action="p_room_make.php" method="post">
-      <div class="modal-header">
-        <h5 class="modal-title">그룹 및 관리번호 생성</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        <!-- <div class="">
-          <h6>location</h6>
-          <script>
-            document.write(location.href);
-          </script>
-        </div> -->
-        <table class="table table-bordered text-center">
-        <thead>
-          <tr>
-            <td scope="col">물건명</td>
-            <td scope="col">그룹명</td>
-            <td scope="col">관리개수<br>(숫자)</td>
-            <td scope="col">시작번호<br>(숫자)</td>
-            <td scope="col"></td>
-          </tr>
-        </thead>
-        <tbody>
-         <tr>
-            <input type="hidden" name="id" value="<?=$escaped1['id']?>">
-            <td scope="col"><input class="form-control text-center" type="text" name="building_name" value="<?=$escaped1['name']?>" disabled></td><!--명칭-->
+include $_SERVER['DOCUMENT_ROOT']."/view/service_header1_meta.php";
+include $_SERVER['DOCUMENT_ROOT']."/view/service_header2.php";
+include $_SERVER['DOCUMENT_ROOT']."/view/conn.php";
 
-            <td scope="col"><input class="form-control text-center" type="text" name="gName" required=""></td><!--그룹명-->
+$filtered_id = mysqli_real_escape_string($conn, $_GET['id']);
+settype($filtered_id, 'integer');
+$sql = "select * from building where id={$filtered_id}";
+$result = mysqli_query($conn, $sql);
+$row = mysqli_fetch_array($result);
+// print_r($row);
+?>
 
-            <td scope="col"><input class="form-control text-center" type="number" min="1" max="100" name="count"  onmouseout="button_value_count(this.value);" required=""></td><!--방/좌석수-->
+<section class="container">
+  <div class="jumbotron">
+    <h1 class="display-4"> >> 그룹 및 관리번호 생성 화면입니다!</h1>
+    <hr class="my-4">
+    <p class="lead">(1) 그룹명에는 '1층', '2층' 등의 명칭을 적어주세요. 만약 그룹명이 생각나지 않으면 '기본'이라고 적어주세요. 추후 언제든 수정가능합니다.<br>
+    (2) 관리개수에는 1~100사이 숫자를 입력해주세요.<br>
+    (3) 관리번호가 만약 꽃잎반, 열매반 등 한글 이름인 경우(숫자 호수가 아닌경우) 시작번호 값을 비운채 생성하기 버튼을 눌러주세요.</p>
+    <!-- <hr class="my-4">
+    <small>(1) '명칭'은 평상시 부르는 이름으로 적어주세요. 예)도레미고시원, 성공빌딩 (2) '수금방법'은 임대료를 선불로 수납할 경우 선불 선택, 후불로 수납할경우 후불을 선택하세요.</small> -->
+  </div>
+</section>
+<section class="container" style="max-width:600px;">
+  <form action="p_room_make.php" method="post">
+    <input type="hidden" name="id" value="<?=$row['id']?>">
+    <table class="table table-bordered text-center">
+      <tr>
+        <td scope="col col-md-4">물건명</td>
+        <td scope="col col-md-8"><input class="form-control text-center" type="text" name="building_name" value="<?=$row['name']?>" disabled></td>
+      </tr>
+      <tr>
+        <td scope="col col-md-4">그룹명</td>
+        <td scope="col col-md-8"><input class="form-control text-center" type="text" name="gName" required=""></td>
+      </tr>
+      <tr>
+        <td scope="col col-md-4">관리개수(숫자)</td>
+        <td scope="col col-md-8"><input class="form-control text-center" type="number" min="1" max="100" name="count"  onmouseout="button_value_count(this.value);" required=""></td>
+      </tr>
+      <tr>
+        <td scope="col col-md-4">시작번호(숫자)</td>
+        <td scope="col col-md-8">
+          <div class="form-row">
+            <div class="form-group col-md-8">
+              <input class="form-control text-center" type="number" name="room_start_number" onmouseout="button_value_startNumber(this.value);">
+            </div>
+            <div class="form-group col-md-4">
+              <button class="btn btn-outline-success btn-block" type="button" onclick="button_room_make();">생성</button>
+            </div>
+          </div>
+          </td>
+      </tr>
+    </table>
+    <div class="container" id="below_rooms">
+    </div><!--생성하기버튼 누르면 여기에 방번호가 쫙 나온다-->
 
-            <td scope="col"><input class="form-control text-center" type="number" name="room_start_number" onmouseout="button_value_startNumber(this.value);"></td><!--방/좌석시작번호-->
-
-            <td scope="col"><button class="btn btn-outline-success" type="button" onclick="button_room_make();">생성</button></td><!--생성버튼-->
-          </tr>
-        </tbody>
-        </table>
-        <small id="comment">
-          <i class="fas fa-exclamation"></i>&nbsp;방/좌석수는 1~100사이 숫자만 입력 가능합니다.<br>
-          <i class="fas fa-exclamation"></i>&nbsp;꽃잎반, 열매반 등 한글이름인 경우 방/좌석시작번호 값을 비운채로 생성하기 버튼을 누릅니다.<br>
-        </small>
-        <div class="container" id="below_rooms">
-        </div><!--생성하기버튼 누르면 여기에 방번호가 쫙 나온다-->
-    </div> <!--modal body close div-->
-
-    <div class="modal-footer">
-      <button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="closePopup();">취소</button>
-      <button type="submit" class="btn btn-primary">저장</button>
-    </div>
   </form>
-  </div> <!--modal content close div-->
-</div> <!--modal-dialog modal-lg close div-->
-</div> <!--그룹추가 모달 끝-->
+</section>
 
 <script>
-
 var count;
 var startNumber;
 var rooms = [];
 function button_value_count(c){ //방갯수 가져오는 함수
-  // count = document.getElementsByName('room_count')[0].value;
   count = c;
-  // alert(count);
   return count;
 }
 function button_value_startNumber(s){ //방시작번호 가져오는 함수
-  // startNumber = document.getElementsByName('room_start_number')[0].value;
   startNumber = s;
   return startNumber;
 }
 
 function button_room_make(){ //방들을 만드는 함수, 생성하기버튼 누르면 실행되는거
   var iCount = Number(count);
+  console.log(iCount, typeof(iCount));
+  if((iCount === 0) || (iCount > 100)){
+    alert('관리개수 항목에 1~100 사이 숫자를 입력해야 합니다!')
+    return false;
+  }
   if(!startNumber){
     for (var i=0; i < iCount; i++){
       rooms.push("");
@@ -99,11 +96,11 @@ function button_room_make(){ //방들을 만드는 함수, 생성하기버튼 �
   alert(rooms);
 
   var $tweet = $('<div></div>');
-  $tweet.append("<h5>관리번호 목록</h5>");
+  $tweet.append("<h5 class='text-center'>관리번호 목록</h5>");
   // $tweet.appendTo($('#table_rooms'));
   var table = "<table class='table table-bordered table-sm text-center'>";
-  var trArray=[0,7,14,21,28,35,42,49,56,63,70,77,84,91,98];
-  var closeTrArray= [6,13,20,27,34,41,48,55,62,69,76,83,90,97];
+  var trArray=[0,3,6,9,12,15,18,21,24,27,30,33,36,39,42,45,48, 51,54,57,60,63,66,69,72,75,78,81,84,87,90,93,96,99];
+  var closeTrArray= [2,5,8,11,14,17,20,23,26,29,32,35,38,41,44,47,50, 53,56,59,62,65,68,71,74,77,80,83,86,89,92,95,98];
   for(var i=0; i<rooms.length; i++) {
    var stringI = i.toString();
    if(trArray.includes(i)){
@@ -116,11 +113,11 @@ function button_room_make(){ //방들을 만드는 함수, 생성하기버튼 �
      table = table + "<td>"+ "<input type='text' name='rName" + i + "' class='form-control text-center' value ='" + rooms[i] + "' required></td>";
    }
   }
-  table = table + "</table>";
+  table = table + "</table><div class='mt-7'><a class='btn btn-secondary' href='building.php' role='button'>취소/돌아가기</a><button type='submit' class='btn btn-primary ml-1'>저장</button></div>";
+
   $tweet.append(table);
 
   $('#below_rooms').html($tweet);
-  $('#comment').empty();
 }
 
 function closePopup(){
@@ -132,3 +129,5 @@ function closePopup(){
  }
 
 </script>
+
+<?php include $_SERVER['DOCUMENT_ROOT']."/view/service_footer.php";?>

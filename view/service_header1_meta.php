@@ -21,20 +21,20 @@
     <!-- <link rel="stylesheet" href="/css/font-awesome.min.css"> -->
     <link href="https://fonts.googleapis.com/css?family=Gothic+A1:700|Nanum+Gothic" rel="stylesheet">
     <link rel="stylesheet" href="/css/jquery-ui.min.css">
-    <script src="/js/jquery-3.2.1.min.js"></script>
     <script src="/js/popper.min.js"></script>
     <script src="/js/bootstrap.min.js"></script>
     <!-- <script src="/js/mdb.min.js"></script> 이걸왜했지? 머티리얼디자인부트스트랩 js파일임-->
+    <script src="/js/jquery-3.2.1.min.js"></script>
     <script src="/js/jquery-ui.min.js"></script>
     <script src="/js/datepicker-ko.js"></script>
-    <!-- <script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
-    <script src="/js/daumAddressAPI.js"></script> -->
+    <script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
+    <script src="/js/daumAddressAPI.js"></script>
     <script>
-    $( function() {
+    $(document).ready($( function() {
       $( "#datepicker" ).datepicker({
         changeMonth: true,
         changeYear: true
       });
-    } );
+    } ));
     </script>
   </head>

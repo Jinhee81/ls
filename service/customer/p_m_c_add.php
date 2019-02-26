@@ -14,8 +14,8 @@ $fil = array(
   'companyname' => mysqli_real_escape_string($conn, $_POST['companyname'])
 );
 
-$fil['contact'] = $_POST['contact1'].$_POST['contact2']. $_POST['contact3'];
-$fil['companynumber'] = $_POST['companynumber1'].$_POST['companynumber2']. $_POST['companynumber3'];
+$fil['contact'] = $_POST['contact1'].'-'.$_POST['contact2']. '-'.$_POST['contact3'];
+$fil['companynumber'] = $_POST['companynumber1'].'-'.$_POST['companynumber2']. '-'.$_POST['companynumber3'];
 
 $sql = "
   INSERT INTO customer (

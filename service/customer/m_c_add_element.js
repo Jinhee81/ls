@@ -14,7 +14,7 @@ var gubun2 = "<div class='form-row' id='idDiv2Large'><div class='form-group col-
 
 var quest_story = "<label>문의내용</label><input type='text' name='qStory' class='form-control' maxlength='14'>";
 
-var quest_date = "<label>문의일자</label><input type='date' name='qDate' class='form-control' id='date1'>";
+var quest_date = "<label>문의일자</label><input type='text' name='qDate' class='form-control' id='datepicker'>";
 
 var contact ="<label>"+ starEx +"연락처</label><div class='form-row'><div class='form group col-md-4'><input type='number' name='contact1' id='contact1' class='form-control' maxlength='3' required oninput='maxlengthCheck(this);'></div><div class='form group col-md-4'><input type='number' name='contact2' id='contact2' class='form-control' maxlength='4' required oninput='maxlengthCheck(this);'></div><div class='form group col-md-4'><input type='number' name='contact3' id='contact3' class='form-control' maxlength='4' required oninput='maxlengthCheck(this);'></div></div>";
 

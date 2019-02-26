@@ -1,4 +1,5 @@
-<!--그룹수정모달(예, 상주/비상주) 시작-->
+<!-- 그룹수정모달(예, 상주/비상주) 시작-->
+
 <div class="modal fade bd-example-modal-lg" id="modal_group_edit<?=$row2['id']?>" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-lg">
     <div class="modal-content">
@@ -107,6 +108,8 @@
     </div>
   </form> <!--수정버튼닫는폼-->
     <?php } ?>
+
+
   </div> <!--modal content close div-->
 </div> <!--modal-dialog modal-lg close div-->
-</div> <!--그룹수정 모달 끝-->
+</div> <!--그룹수정 모달 끝 -->

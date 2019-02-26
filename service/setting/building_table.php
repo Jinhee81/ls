@@ -44,11 +44,8 @@ include $_SERVER['DOCUMENT_ROOT']."/view/conn.php"; ?>
       <!-- <td><?=$escaped1['id']?></td> 건물아이디 일부러 숨김처리-->
       <td><?=$escaped1['lease_type']?></td>
       <td>
-        <a href="#edit<?=$escaped1['id']?>" data-toggle="modal"><?=$escaped1['name']?></a>
-        <?php
-include $_SERVER['DOCUMENT_ROOT']."/service/setting/modal_building_edit.php";
-         ?>
-      </td><!--비즈피스구로,장암명칭 수정모달 호출 버튼-->
+        <a href="modal_building_edit.php?id=<?=$escaped1['id']?>"><?=$escaped1['name']?></a>
+      </td>
       <td><?=$escaped1['pay']?></td>
       <td>
         <?php
@@ -58,22 +55,17 @@ include $_SERVER['DOCUMENT_ROOT']."/service/setting/modal_building_edit.php";
         // echo $sql2;
         // print_r($result2);
         while($row2 = mysqli_fetch_array($result2)){?>
-          <?php $sql_count="select count(*) from r_g_in_building where group_in_building_id={$row2['id']}";
+          <?php $sql_count="select count(*) from r_g_in_building where group_in_building_id={$row2['id']}";//--row2['id']는 그룹아이디로 그룹정보 호출-->
           $result_count=mysqli_query($conn, $sql_count);
           $row_count=mysqli_fetch_array($result_count);
           ?>
-          <button data-toggle="modal" data-target="#modal_group_edit<?=$row2['id']?>"
-            class='badge badge-info'><!--row2['id']는 그룹아이디-->
-            <?=$row2['id'],$row2['gName'],"(",$row_count[0],")"?>
-          </button><!--건물내그룹뱃지-->
-        <?php
-        include $_SERVER['DOCUMENT_ROOT']."/service/setting/modal_b_group_edit.php";
-      } ?><!--상주/비상주수정 모달 호출 버튼-->
-        <button class="btn btn-outline-warning btn-sm" data-toggle="modal" data-target="#modal_group_add<?=$escaped1['id']?>">추가하기</button>
-      <?php
-include $_SERVER['DOCUMENT_ROOT']."/service/setting/modal_b_group_add.php";
-       ?>
-     </td><!--상주/비상주추가 모달 호출 버튼-->
+          <a href="modal_b_group_edit2.php?id=<?=$row2['id']?>"
+            class='badge badge-info'>
+            <?=$row2['gName'],"(",$row_count[0],")"?>
+          </a><!--건물내그룹뱃지-->
+      <?php } ?><!--상주/비상주수정 모달 호출 버튼-->
+        <a class="btn btn-outline-warning btn-sm" href="modal_b_group_add.php?id=<?=$escaped1['id']?>">추가하기</button>
+     </td><!--상주/비상주 그룹추가 호출 버튼, 건물아이디에 추가해야한다-->
      <td>
        <?php $sql = "select * from good_in_building where building_id = {$escaped1['id']}";
         // echo $sql;

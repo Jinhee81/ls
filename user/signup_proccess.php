@@ -33,10 +33,13 @@ $sql  = "
         '{$_POST['regist_channel']}',
         NOW()
     )";
+// echo $sql;
 $result = mysqli_query($conn, $sql);
-// echo $result;
 if($result === false){
-    echo mysqli_error($conn);
+  echo "<script>alert('저장과정에 문제가 생겼습니다. 관리자에게 문의하세요.');
+  location.href = 'signup.php';
+  </script>";
+  error_log(mysqli_error($conn));
 } else {
   echo "저장되었습니다.<a href='/admin/user_list.php'>돌아가기</a>";
 }

@@ -8,24 +8,25 @@ include $_SERVER['DOCUMENT_ROOT']."/view/service_header2.php";
 include $_SERVER['DOCUMENT_ROOT']."/view/conn.php";
 ?>
 
-<script src="m_c_add_element.js"></script>
+<script src="cadd.js"></script>
 <section class="container">
   <div class="jumbotron">
     <h1 class="display-4">고객등록 화면입니다!</h1>
     <p class="lead">고객이란 입주한 세입자 및 문의하는 문의고객, 거래처 등을 포함합니다. 고객등록이 되어야 임대계약 등록이 가능합니다!</p>
+    <small>(1) * 표시는 필수입력값입니다. (2) 구분(대)의 값이 '고객'이어야 임대계약 등록이 가능합니다. (3) '고객'이란 단어는 세입자 또는 입주자를 의미합니다. (4)'일괄등록'은 데스크탑화면에서 가능합니다 (모바일화면 사용불가)</small>
     <hr class="my-4">
-    <small>(1) * 표시는 필수입력값입니다. (2) 구분(대)의 값이 '고객'이어야 임대계약 등록이 가능합니다. (3) '고객'이란 단어는 세입자 또는 입주자를 의미합니다.</small>
+    <a class="btn btn-primary btn-sm" href="m_c_adds.php" role="button">일괄등록</a>
   </div>
 </section>
 <section class="container" style="max-width:700px;">
-  <form method="post" action ="p_m_c_add.php"> <!--문의고객 입력-->
+  <form method="post" action ="p_m_c_add.php">
     <div class="form-row">
       <div class="form-group col-md-4">
         <label>구분(대)</label>
       </div>
       <div class="form-group col-md-8">
         <select id="customer_div1" name="div1" class="form-control" onchange="div1Get();">
-          <option value="문의고객">문의고객</option>
+          <option value="문의">문의</option>
           <option value="진행고객" selected>고객</option>
           <option value="거래처">거래처</option>
         </select>
@@ -49,7 +50,7 @@ include $_SERVER['DOCUMENT_ROOT']."/view/conn.php";
     </div>
     <div class="">
       <button type='submit' class='btn btn-primary'>저장</button>
-      <a href='customer.php'><button type='button' class='btn btn-secondary'>취소/돌아가기</button></a>
+      <a href='customer.php'><button type='button' class='btn btn-secondary'>고객리스트화면으로</button></a>
     </div>
   </form>
 </section>

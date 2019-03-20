@@ -53,3 +53,11 @@ button#rDelete.btn.btn-default{
 #popup{
   background-color: grey;
 }
+
+/* #checkboxTestTbl tr.selected{background-color: #A9D0F5;}
+select .selectCall{background-color: #A9D0F5;}
+
+@media (max-width: 990px) {
+.mobile {
+  display: none;
+} */

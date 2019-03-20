@@ -2,26 +2,70 @@
 session_start();
 include $_SERVER['DOCUMENT_ROOT']."/view/conn.php";
 
-print_r($_POST);
-print_r($_SESSION);
+// print_r($_POST);
+// print_r($_SESSION);
 
 $fil = array(
-  'qStory' => mysqli_real_escape_string($conn, $_POST['qStory']),
   'qDate' => mysqli_real_escape_string($conn, $_POST['qDate']),
   'name' => mysqli_real_escape_string($conn, $_POST['name']),
   'email' => mysqli_real_escape_string($conn, $_POST['email']),
   'etc' => mysqli_real_escape_string($conn, $_POST['etc']),
-  'companyname' => mysqli_real_escape_string($conn, $_POST['companyname'])
+  'companyname' => mysqli_real_escape_string($conn, $_POST['companyname']),
+  'contact1' => mysqli_real_escape_string($conn, $_POST['contact1']),
+  'contact2' => mysqli_real_escape_string($conn, $_POST['contact2']),
+  'contact3' => mysqli_real_escape_string($conn, $_POST['contact3']),
+  'cNumber1' => mysqli_real_escape_string($conn, $_POST['cNumber1']),
+  'cNumber2' => mysqli_real_escape_string($conn, $_POST['cNumber2']),
+  'cNumber3' => mysqli_real_escape_string($conn, $_POST['cNumber3']),
+  'add1' => mysqli_real_escape_string($conn, $_POST['add1']),
+  'add2' => mysqli_real_escape_string($conn, $_POST['add2']),
+  'add3' => mysqli_real_escape_string($conn, $_POST['add3'])
 );
 
-$fil['contact'] = $_POST['contact1'].'-'.$_POST['contact2']. '-'.$_POST['contact3'];
-$fil['companynumber'] = $_POST['companynumber1'].'-'.$_POST['companynumber2']. '-'.$_POST['companynumber3'];
+// print_r($fil);
+if ($_POST['div1'] != '문의'){
+  $addCheck1 = "
+    select count(*) from customer
+    where
+      user_id={$_SESSION['id']} and name = '{$fil['name']}'
+      ";
+  // echo $addCheck1;
+  $result_addCheck1 = mysqli_query($conn, $addCheck1);
+  $row_addCheck1 = mysqli_fetch_array($result_addCheck1);
+
+  if((int)$row_addCheck1[0]>0){
+    echo "<script>alert('중복된 이름이 존재합니다. 중복된 이름은 저장이 안돼요.');
+          location.href = 'm_c_add.php';</script>";
+    exit();
+  }
+}
+
+
+$addCheck2 = "
+  select count(*) from customer
+  where
+    user_id={$_SESSION['id']} and
+    contact1 = '{$fil['contact1']}' and
+    contact2 = '{$fil['contact2']}' and
+    contact3 = '{$fil['contact3']}'
+    ";
+// echo $addCheck2;
+$result_addCheck2 = mysqli_query($conn, $addCheck2);
+$row_addCheck2 = mysqli_fetch_array($result_addCheck2);
+
+if((int)$row_addCheck2[0]>0){
+  echo "<script>alert('중복된 연락처가 존재합니다. 중복된 연락처는 저장이 안돼요.');
+        location.href = 'm_c_add.php';</script>";
+  exit();
+}
 
 $sql = "
   INSERT INTO customer (
-    div1, qStory, qDate, div2, name, contact, gender, email, div3, div4, div5, etc, companyname, companynumber, created, user_id
+    div1, qDate, div2, name, contact1, contact2, contact3,
+    gender, email, div3, div4, div5, companyname, cNumber1, cNumber2, cNumber3, zipcode, add1, add2, add3, etc, created, user_id
     ) VALUES (
-    '{$_POST['div1']}', '{$fil['qStory']}', '{$fil['qDate']}', '{$_POST['div2']}', '{$fil['name']}', '{$fil['contact']}', '{$_POST['gender']}', '{$fil['email']}', '{$_POST['div3']}', '{$_POST['div4']}', '{$_POST['div5']}', '{$fil['etc']}', '{$fil['companyname']}', '{$fil['companynumber']}', now(), {$_SESSION['id']}
+    '{$_POST['div1']}', '{$fil['qDate']}', '{$_POST['div2']}', '{$fil['name']}', '{$fil['contact1']}', '{$fil['contact2']}', '{$fil['contact3']}', '{$_POST['gender']}', '{$fil['email']}', '{$_POST['div3']}', '{$_POST['div4']}', '{$_POST['div5']}', '{$fil['companyname']}',
+    '{$fil['cNumber1']}', '{$fil['cNumber2']}','{$fil['cNumber3']}', '{$_POST['zipcode']}', '{$fil['add1']}','{$fil['add2']}', '{$fil['add3']}', '{$fil['etc']}', now(), {$_SESSION['id']}
     )
 ";
 
@@ -37,49 +81,4 @@ if($result){
   </script>";
   error_log(mysqli_error($conn));
 }
-
-
-
-// $query = "
-//   select count(*) from building
-//   where
-//     user_id={$_SESSION['id']} and name = '{$filtered['name']}'
-//     ;";
-//
-// $result = mysqli_query($conn, $query);
-// $row = mysqli_fetch_array($result);
-// $r_count = (int)$row['count(*)'];
-
-
-// if ($r_count === 0) {
-//   $sql  = "
-//       INSERT INTO building (
-//           name,
-//           pay,
-//           user_id,
-//           created
-//       ) VALUES (
-//           '{$filtered['name']}',
-//           '{$_POST['pay']}',
-//           {$_SESSION['id']},
-//           now()
-//       )";
-// } else {
-//   echo "<script>alert('같은 명칭이 이미 존재합니다.');
-//   location.href='building.php';
-//   </script>";
-// }
-//
-// $result = mysqli_query($conn, $sql);
-// // echo $result;
-// if($result === false){
-//     echo mysqli_error($conn);
-// } else {
-//   echo
-//   "<script>
-//   alert('저장되었습니다.');
-//   window.location.href='building.php';
-//   </script>";
-// }
-
 ?>

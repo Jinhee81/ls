@@ -5,18 +5,28 @@
     <title></title>
   </head>
   <body>
-    <h1>check box</h1>
     <table>
       <tr>
-        <th><input type="checkbox" checked='checked'></th>
-        <th>Title</th>
-        <th>Description</th>
-      </tr>
-      <tr>
-        <td><input type="checkbox" checked='checked'></td>
-        <td>jinhee</td>
-        <td>mysql is ...</td>
+        <td><input id="solmi" type="text" name="rName17" value="217호">
+        <button type="button" onclick="solmi();">누르기</button></td>
       </tr>
     </table>
+    <script src="/js/jquery-3.2.1.min.js"></script>
+    <script>
+      var a = $(this).prev();
+      var b = $(a).prop('tagName');
+      var c = $(b).children();
+      var d = $(c).attr('value');
+      function solmi(){
+        // console.log(a,b,c);
+        // console.log(a);
+        // console.log(b);
+        // console.log(c);
+        // console.log(d);
+        var a = $(this).prev();
+        console.log($(a).prop('tagName'))
+      }
+      // console.log($('#solmi').attr('value'));
+    </script>
   </body>
 </html>

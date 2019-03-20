@@ -5,7 +5,7 @@ include $_SERVER['DOCUMENT_ROOT']."/view/conn.php";
 print_r($_POST)."<br>";
 
 $filtered = array(
-  'building_id' => mysqli_real_escape_string($conn, $_POST['building_id']), //건물아이디
+  'id' => mysqli_real_escape_string($conn, $_POST['id']), //건물아이디
   'good' => mysqli_real_escape_string($conn, $_POST['good']) //상품명
 );
 settype($filtered['building_id'], 'integer');
@@ -24,7 +24,7 @@ if($row[0]>=1){
   $sql = "INSERT INTO good_in_building (name, created, building_id) VALUES
     ('{$filtered['good']}',
       now(),
-      {$filtered['building_id']}
+      {$filtered['id']}
     )";
   echo $sql;
   $result = mysqli_query($conn, $sql);

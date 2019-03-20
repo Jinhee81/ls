@@ -14,7 +14,7 @@
         <a class="nav-link" href="/service/customer/customer.php">고객</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="#">임대계약</a>
+        <a class="nav-link" href="/service/contract/contract.php">임대계약</a>
       </li>
       <li class="nav-item">
         <a class="nav-link" href="#">기타계약</a>

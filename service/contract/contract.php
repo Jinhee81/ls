@@ -19,7 +19,7 @@ include $_SERVER['DOCUMENT_ROOT']."/view/conn.php";
 </style>
 <section class="container">
   <div class="jumbotron">
-    <h1 class="display-4">고객리스트 화면입니다!</h1>
+    <h1 class="display-4">임대계약리스트 화면입니다!</h1>
     <p class="lead">고객이란 입주한 세입자 및 문의하는 예비고객, 거래처 등을 포함합니다. 고객등록이 되어야 임대계약 등록이 가능합니다!</p>
   </div>
 
@@ -84,7 +84,7 @@ include $_SERVER['DOCUMENT_ROOT']."/view/conn.php";
     <div class="d-flex flex-row-reverse">
       <div class="float-right">
         <button type="submit" class="btn btn-secondary" name="submit" onsubmit="if(!confirm('정말 삭제하겠습니까?')){return false;}">삭제</button>
-        <a href="m_c_add.php"><button type="button" class="btn btn-primary" name="button">등록</button></a>
+        <a href="contract_add1.php"><button type="button" class="btn btn-primary" name="button">등록</button></a>
       </div>
     </div>
     <div class="mt-3">

@@ -1,27 +1,50 @@
-<div class="modal" tabindex="-1" role="dialog" id="modal_good_add<?=$escaped1['id']?>">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title">기타상품</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="mt-3">
-        <p>임대계약 외에 일회성으로 발생하는 기타매출 상품명을 적으세요.</p>
-      </div>
-      <form class="container" action="p_good_add.php" method="post">
-        <div class="form-row">
-          <div class="container">
-            <input type="hidden" name="building_id" value="<?=$escaped1['id']?>">
-            <input name="good" type="text" class="form-control" placeholder="예)회의실, 노트북 등" required="">
-          </div>
-        </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">닫기</button>
-        <button type="submit" class="btn btn-primary">추가하기</button>
-      </div>
-    </form>
-    </div>
+<?php
+session_start();
+if(!isset($_SESSION['is_login'])){
+  header('Location: /user/login.php');
+}
+include $_SERVER['DOCUMENT_ROOT']."/view/service_header1_meta.php";
+include $_SERVER['DOCUMENT_ROOT']."/view/service_header2.php";
+include $_SERVER['DOCUMENT_ROOT']."/view/conn.php";
+
+print_r($_GET);
+$filtered_id = mysqli_real_escape_string($conn, $_GET['id']);
+settype($filtered_id, 'integer');
+$sql = "select * from building where id={$filtered_id}";
+echo $sql;
+$result = mysqli_query($conn, $sql);
+$row = mysqli_fetch_array($result);
+print_r($row);
+?>
+
+<section class="container">
+  <div class="jumbotron">
+    <h1 class="display-4"> >> 기타상품 생성 화면입니다!</h1>
+    <hr class="my-4">
+    <p class="lead">임대계약 외에 일회성으로 발생하는 기타매출 상품명을 적으세요. 예)회의실,노트북 등</p>
+    <!-- <hr class="my-4">
+    <small>(1) '명칭'은 평상시 부르는 이름으로 적어주세요. 예)도레미고시원, 성공빌딩 (2) '수금방법'은 임대료를 선불로 수납할 경우 선불 선택, 후불로 수납할경우 후불을 선택하세요.</small> -->
   </div>
-</div>
+</section>
+
+<section class="container" style="max-width:600px;">
+  <form class="container" action="p_good_add.php" method="post">
+    <input type="hidden" name="id" value="<?=$filtered_id?>">
+    <table class="table table-bordered text-center">
+      <tr>
+        <td scope="col col-md-4">물건명</td>
+        <td scope="col col-md-8"><input class="form-control text-center" type="text" name="building_name" value="<?=$row['name']?>" disabled></td>
+      </tr>
+      <tr>
+        <td scope="col col-md-4">기타상품</td>
+        <td scope="col col-md-8"><input class="form-control text-center" type="text" name="good" required="" placeholder="예)회의실, 노트북 등" ></td>
+      </tr>
+    </table>
+    <div class='mt-7'>
+      <a class='btn btn-secondary' href='building.php' role='button'>취소/돌아가기</a>
+      <button type='submit' class='btn btn-primary ml-1'>저장</button>
+    </div>
+  </form>
+</section>
+
+<?php include $_SERVER['DOCUMENT_ROOT']."/view/service_footer.php";?>

@@ -11,7 +11,7 @@ include $_SERVER['DOCUMENT_ROOT']."/view/conn.php";
    <!-- <p>It uses utility classes for typography and spacing to space content out within the larger container.</p> -->
    <a class="btn btn-primary btn-sm" href="#" role="button">사용량조회</a>
    <a class="btn btn-primary btn-sm" href="#" role="button">결제정보조회</a>
-   <a class="btn btn-primary btn-sm" href="#" role="button">비밀번호변경</a>
+   <!-- <a class="btn btn-primary btn-sm" href="#" role="button">비밀번호변경</a> -->
 </div>
 
 <div class="container" style="max-width:500px;">

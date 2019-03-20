@@ -10,7 +10,7 @@ include $_SERVER['DOCUMENT_ROOT']."/view/conn.php"; ?>
       <th>수납방법</th>
       <th>그룹/관리번호</th>
       <th>기타상품</th>
-      <th></th>
+      <th class="mobile"></th>
     </tr>
     <?php
     $sql1 = "SELECT
@@ -64,25 +64,21 @@ include $_SERVER['DOCUMENT_ROOT']."/view/conn.php"; ?>
             <?=$row2['gName'],"(",$row_count[0],")"?>
           </a><!--건물내그룹뱃지-->
       <?php } ?><!--상주/비상주수정 모달 호출 버튼-->
-        <a class="btn btn-outline-warning btn-sm" href="modal_b_group_add.php?id=<?=$escaped1['id']?>">추가하기</button>
+        <a class="btn btn-outline-warning btn-sm" href="modal_b_group_add.php?id=<?=$escaped1['id']?>">추가하기</a>
      </td><!--상주/비상주 그룹추가 호출 버튼, 건물아이디에 추가해야한다-->
      <td>
        <?php $sql = "select * from good_in_building where building_id = {$escaped1['id']}";
         // echo $sql;
         $result = mysqli_query($conn, $sql);
         while($row = mysqli_fetch_array($result)){?>
-          <button data-toggle="modal" data-target="#modal_good_edit<?=$row['id']?>"
+          <a href="modal_b_good_edit.php?id=<?=$row['id']?>"
             class='badge badge-info'>
             <?=$row['name']?>
-          </button><?php
-include $_SERVER['DOCUMENT_ROOT']."/service/setting/modal_b_good_edit.php";
-        }?>
-       <button class="btn btn-outline-warning btn-sm" data-toggle="modal" data-target="#modal_good_add<?=$escaped1['id']?>">추가하기</button>
-     <?php
-include $_SERVER['DOCUMENT_ROOT']."/service/setting/modal_b_good_add.php";
-      ?>
+          </a>
+    <?php }?>
+       <a class="btn btn-outline-warning btn-sm" href="modal_b_good_add.php?id=<?=$escaped1['id']?>">추가하기</a>
      </td><!--기타계약상품추가 모달 호출버튼 -->
-      <td>
+      <td class="mobile">
         <form class="" action="building_process_delete.php" method="post" onsubmit="if(!confirm('정말 삭제하겠습니까?')){return false;}">
           <input type="hidden" name="id" value="<?=$escaped1['id']?>">
           <button type="submit" class="btn btn-default">

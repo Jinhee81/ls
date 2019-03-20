@@ -46,11 +46,14 @@ $row = mysqli_fetch_array($result);
         <td scope="col col-md-4">시작번호(숫자)</td>
         <td scope="col col-md-8">
           <div class="form-row">
-            <div class="form-group col-md-8">
+            <div class="form-group col-md-6">
               <input class="form-control text-center" type="number" name="room_start_number" onmouseout="button_value_startNumber(this.value);">
             </div>
-            <div class="form-group col-md-4">
+            <div class="form-group col-md-3">
               <button class="btn btn-outline-success btn-block" type="button" onclick="button_room_make();">생성</button>
+            </div>
+            <div class="form-group col-md-3">
+              <button class="btn btn-outline-success btn-block" type="button" onclick="button_room_cansel();">취소</button>
             </div>
           </div>
           </td>
@@ -118,6 +121,11 @@ function button_room_make(){ //방들을 만드는 함수, 생성하기버튼 �
   $tweet.append(table);
 
   $('#below_rooms').html($tweet);
+}
+
+function button_room_cansel(){
+  rooms = [];
+  $('#below_rooms').empty();
 }
 
 function closePopup(){

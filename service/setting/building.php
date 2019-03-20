@@ -7,7 +7,13 @@ include $_SERVER['DOCUMENT_ROOT']."/view/service_header1_meta.php";
 include $_SERVER['DOCUMENT_ROOT']."/view/service_header2.php";
 include $_SERVER['DOCUMENT_ROOT']."/view/conn.php";
 ?>
-
+<style>
+        @media (max-width: 990px) {
+        .mobile {
+          display: none;
+          }
+        }
+</style>
 <div class="jumbotron">
   <h1 class="display-4">임대관리의 필요사항을 설정하세요!</h1>
   <p class="lead">예) '도레미고시원' 또는 '두드림센터' 등 평상시 관리하는 명칭을 적어주세요.</p>

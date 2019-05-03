@@ -37,7 +37,7 @@
   <input type="email" name="email" class="form-control" value='<?=$row['email']?>'>
 </div>
 
-<div class='form-group'>
+<div class='form-group mt-3'>
   <div class='form-row'>
     <label>주소</label>
   </div>
@@ -63,6 +63,8 @@
     </div>
   </div>
 </div>
+
+
 <!-- iOS에서는 position:fixed 버그가 있음, 적용하는 사이트에 맞게 position:absolute 등을 이용하여 top,left값 조정 필요 -->
 <div id='layer' style='display:none;position:fixed;overflow:hidden;z-index:1;-webkit-overflow-scrolling:touch;'>
 <img src='//t1.daumcdn.net/postcode/resource/images/close.png' id='btnCloseLayer' style='cursor:pointer;position:absolute;right:-3px;top:-3px;z-index:1' onclick='closeDaumPostcode()' alt='닫기 버튼'>
@@ -71,4 +73,23 @@
 <div class="form-row">
     <label>특이사항</label>
     <input type="text" name="etc" class="form-control" value='<?=$row['etc']?>'>
+</div>
+
+<div class="form-row mt-3">
+  <div class="form-group col-md-2">
+    <label>등록자명</label>
+    <input type="text" class="form-control" name="" value="<?=$_SESSION['damdangga_name']?>" disabled>
+  </div>
+  <div class="form-group col-md-4">
+    <label>등록일시</label>
+    <input type="text" class="form-control" name="" value="<?=$row['created']?>" disabled>
+  </div>
+  <div class="form-group col-md-2">
+    <label>수정자명</label>
+    <input type="text" class="form-control" name="" value="<?=$_SESSION['damdangga_name']?>" disabled>
+  </div>
+  <div class="form-group col-md-4">
+    <label>수정일시</label>
+    <input type="text" class="form-control" name="" value="<?=$row['updated']?>" disabled>
+  </div>
 </div>

@@ -17,7 +17,7 @@ include $_SERVER['DOCUMENT_ROOT']."/view/conn.php"; ?>
       @num := @num + 1 as num,
       building.id,
       lease_type,
-      name,
+      bName,
       pay
      from
       (select @num :=0)a,
@@ -32,7 +32,7 @@ include $_SERVER['DOCUMENT_ROOT']."/view/conn.php"; ?>
         'num' => htmlspecialchars($row1['num']),
         'id' => htmlspecialchars($row1['id']),//건물아이디
         'lease_type' => htmlspecialchars($row1['lease_type']),
-        'name' => htmlspecialchars($row1['name']),
+        'bName' => htmlspecialchars($row1['bName']),
         'pay' => htmlspecialchars($row1['pay']),
         'user_name' => htmlspecialchars($row1['user_name']),
         'created' => htmlspecialchars($row1['created']),
@@ -44,7 +44,7 @@ include $_SERVER['DOCUMENT_ROOT']."/view/conn.php"; ?>
       <!-- <td><?=$escaped1['id']?></td> 건물아이디 일부러 숨김처리-->
       <td><?=$escaped1['lease_type']?></td>
       <td>
-        <a href="modal_building_edit.php?id=<?=$escaped1['id']?>"><?=$escaped1['name']?></a>
+        <a href="modal_building_edit.php?id=<?=$escaped1['id']?>"><?=$escaped1['bName']?></a>
       </td>
       <td><?=$escaped1['pay']?></td>
       <td>
@@ -59,7 +59,7 @@ include $_SERVER['DOCUMENT_ROOT']."/view/conn.php"; ?>
           $result_count=mysqli_query($conn, $sql_count);
           $row_count=mysqli_fetch_array($result_count);
           ?>
-          <a href="modal_b_group_edit2.php?id=<?=$row2['id']?>"
+          <a href="modal_b_group_edit3.php?id=<?=$row2['id']?>"
             class='badge badge-info'>
             <?=$row2['gName'],"(",$row_count[0],")"?>
           </a><!--건물내그룹뱃지-->
@@ -94,4 +94,5 @@ include $_SERVER['DOCUMENT_ROOT']."/view/conn.php"; ?>
 <small class="form-text text-muted">
   . 그룹이란? 관리해야할 방 개수가 여러개일때, 편리하게 관리하도록 그룹으로 설정합니다. 예) 1층그룹 101호~120호, 2층그룹 201호~220호<br>
   . 기타상품이란? 임대계약 외에 일회성으로 매출이 발생하는 상품을 말합니다. 예) 노트북대여, 회의실대여 등<br>
+  . 관리번호(201호, 202호 등)를 생성했다면, '고객'화면으로 이동하여 세입자(또는 임차인)을 등록하세요!<br>
 </small> <!--건물리스트 출력 테이블 끝-->

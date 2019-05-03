@@ -6,6 +6,7 @@
 </footer>
 
 <!-- <script src="/js/jquery-3.2.1.min.js"></script> -->
+<script src="/js/jquery.number.min.js"></script>
 <script src="/js/jquery-ui.min.js"></script>
 <script src="/js/datepicker-ko.js"></script>
 <script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
@@ -79,7 +80,12 @@
           }
       });
       $('#navbarDropdown').dropdown('toggle');
+
+      $(".amountNumber").click(function(){
+        $(this).select();
+      });
   });
+  
   $('.dateType').datepicker({
     changeMonth: true,
     changeYear: true,
@@ -87,6 +93,9 @@
     // showOn: "button",
     buttonImage: "/img/calendar.svg",
     buttonImageOnly: false
+  });
+  $(document).on("keyup","input:text[numberOnly]", function(){
+    $(this).number(true);
   });
 </script>
 </body>

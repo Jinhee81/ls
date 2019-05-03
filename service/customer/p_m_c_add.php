@@ -33,7 +33,7 @@ if ($_POST['div1'] != '문의'){
   $result_addCheck1 = mysqli_query($conn, $addCheck1);
   $row_addCheck1 = mysqli_fetch_array($result_addCheck1);
 
-  if((int)$row_addCheck1[0]>0){
+  if((int)$row_addCheck1[0]>1){
     echo "<script>alert('중복된 이름이 존재합니다. 중복된 이름은 저장이 안돼요.');
           location.href = 'm_c_add.php';</script>";
     exit();

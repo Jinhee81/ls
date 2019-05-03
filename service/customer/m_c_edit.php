@@ -19,6 +19,45 @@ $result = mysqli_query($conn, $sql);
 $row = mysqli_fetch_array($result);
 // echo $sql;
 // print_r($row);
+$clist['id'] = htmlspecialchars($row['id']);
+$clist['num'] = htmlspecialchars($row['num']);
+$clist['div1'] = htmlspecialchars($row['div1']);
+$clist['div2'] = htmlspecialchars($row['div2']);
+$clist['contact1'] = htmlspecialchars($row['contact1']);
+$clist['contact2'] = htmlspecialchars($row['contact2']);
+$clist['contact3'] = htmlspecialchars($row['contact3']);
+$clist['email'] = htmlspecialchars($row['email']);
+$clist['etc'] = htmlspecialchars($row['etc']);
+$clist['name'] = htmlspecialchars($row['name']);
+$clist['companyname'] = htmlspecialchars($row['companyname']);
+$clist['cNumber1'] = htmlspecialchars($row['cNumber1']);
+$clist['cNumber2'] = htmlspecialchars($row['cNumber2']);
+$clist['cNumber3'] = htmlspecialchars($row['cNumber3']);
+
+$cNumber = $clist['cNumber1'].'-'.$clist['cNumber2'].'-'.$clist['cNumber3'];
+$cContact = $clist['contact1'].'-'.$clist['contact2'].'-'.$clist['contact3'];
+
+if($row['div3']==='주식회사'){
+  $cDiv3 = '(주)';
+} elseif($row['div3']==='유한회사'){
+  $cDiv3 = '(유)';
+} elseif($row['div3']==='합자회사'){
+  $cDiv3 = '(합)';
+} elseif($row['div3']==='기타'){
+  $cDiv3 = '(기타)';
+}
+
+if($clist['div2']==='개인사업자'){
+  $cName = $clist['name'].'('.$clist['companyname'].','.$cNumber.')';
+} else if($clist['div2']==='법인사업자'){
+  $cName = $cDiv3.$clist['companyname'].'('.$clist['name'].','.$cNumber.')';
+} else if($clist['div2']==='개인'){
+  $cName = $clist['name'];
+}
+
+if($clist['div1']==='문의'){
+  $cName = 'ㅇㅇㅇ';
+}
  ?>
 <section class="container">
   <div class="jumbotron">
@@ -34,29 +73,24 @@ $row = mysqli_fetch_array($result);
     <div class="form-row">
       <div class="form-group col-md-4">
         <label>구분(대)</label>
-      </div>
-      <div class="form-group col-md-8">
         <select id="div1" name="div1" class="form-control" onchange="div1Get();" disabled>
           <option value="문의" <?php if($row['div1']==='문의'){echo "selected";}?>>문의</option>
           <option value="진행고객" <?php if($row['div1']==='진행고객'){echo "selected";}?>>고객</option>
           <option value="거래처" <?php if($row['div1']==='거래처'){echo "selected";}?>>거래처</option>
         </select>
       </div>
-    </div>
-    <div class="form-row" id="idDiv2Large">
-      <div class="form-group col-md-4">
+      <div class="form-group col-md-4" id="idDiv2Large">
         <label>구분(소)</label>
-      </div>
-      <div class="form-group col-md-8 text-center">
         <select id="div2" name="div2" class="form-control" disabled>
           <option value="개인" <?php if($row['div2']==='개인'){echo "selected";}?>>개인</option>
           <option value="개인사업자" <?php if($row['div2']==='개인사업자'){echo "selected";}?>>개인사업자</option>
           <option value="법인사업자" <?php if($row['div2']==='법인사업자'){echo "selected";}?>>법인사업자</option>
         </select>
       </div>
-      <!-- <div class="form-group col-md-3">
-        <button type="button" name="button" class="btn btn-block btn-primary">변경하기</button>
-      </div> -->
+      <div class="form-group col-md-4">
+        <label>고객번호</label>
+        <input type="text" class="form-control" name="" value="<?=$clist['id']?>" disabled>
+      </div>
     </div>
     <div id="centerSection">
       <?php
@@ -76,7 +110,7 @@ if($row['div1']==='문의'){
     <div class="mt-3">
       <button type='submit' class='btn btn-primary'>수정</button>
       <a class='btn btn-warning' role='button' onclick='goCategoryPage(aa1,bb1,cc1,dd1);'>삭제</a>
-      <button type='button' class='btn btn-secondary' id="div2Transfer">구분(소)변경
+      <button type='button' class='btn btn-secondary' data-toggle="modal" data-target="#div2Transfer">구분(소)변경</button>
         <!-- 모달시작================================================================ -->
         <div class="modal fade" id="div2Transfer" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
           <div class="modal-dialog" role="document">
@@ -89,6 +123,9 @@ if($row['div1']==='문의'){
               </div>
               <div class="modal-body">
                 <div class="container">
+                  <div class="row justify-content-md-center">
+                    <label><?=$cName?></label>
+                  </div>
                   <div class="row justify-content-md-center">
                     <div class='form-check form-check-inline'>
                       <input class='form-check-input' type='radio' name='radiodiv2' value='개인'<?php if($row['div2']==='개인'){echo "disabled";}?>>
@@ -113,8 +150,7 @@ if($row['div1']==='문의'){
           </div>
         </div>
         <!-- 모달끝================================================================== -->
-      </button>
-      <a href='customer.php'><button type='button' class='btn btn-secondary'>고객리스트 화면으로</button></a>
+      <button id="historyBack" type='button' class='btn btn-secondary'>돌아가기</button>
     </div>
 
 
@@ -153,6 +189,11 @@ function div2TransferFn(a,b,c,d){
   frm = formInput(frm, ee, ff);
   formSubmit(frm);
 }
+
+$('#historyBack').on('click', function(){
+  console.log('minsun');
+  history.back();
+})
 </script>
 <!-- isright 4444? -->
 <?php include $_SERVER['DOCUMENT_ROOT']."/view/service_footer.php";?>

@@ -4,15 +4,16 @@ include $_SERVER['DOCUMENT_ROOT']."/view/service_header1_meta.php";
 include $_SERVER['DOCUMENT_ROOT']."/view/service_header2.php";
 include $_SERVER['DOCUMENT_ROOT']."/view/conn.php";
  ?>
-
- <div class="jumbotron">
-   <h3 class="display-4">내 정보를 확인 또는 수정합니다.</h3>
-   <hr class="my-4">
-   <!-- <p>It uses utility classes for typography and spacing to space content out within the larger container.</p> -->
-   <a class="btn btn-primary btn-sm" href="#" role="button">사용량조회</a>
-   <a class="btn btn-primary btn-sm" href="#" role="button">결제정보조회</a>
-   <!-- <a class="btn btn-primary btn-sm" href="#" role="button">비밀번호변경</a> -->
-</div>
+<section class="container">
+  <div class="jumbotron">
+    <h3 class="display-4">내 정보를 확인 또는 수정합니다.</h3>
+    <hr class="my-4">
+    <!-- <p>It uses utility classes for typography and spacing to space content out within the larger container.</p> -->
+    <a class="btn btn-primary btn-sm" href="#" role="button">사용량조회</a>
+    <a class="btn btn-primary btn-sm" href="#" role="button">결제정보조회</a>
+    <!-- <a class="btn btn-primary btn-sm" href="#" role="button">비밀번호변경</a> -->
+ </div>
+</section>
 
 <div class="container" style="max-width:500px;">
   <form id="myinfo" method="post" action ="myinfo_edit_proccess.php" class="form-signin">

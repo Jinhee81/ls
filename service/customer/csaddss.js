@@ -1,4 +1,3 @@
-//곧지울예정
 var div1, div2, cc, case1, case2, case3, case4;
 
 $(document).ready(function(){
@@ -86,14 +85,14 @@ function getCount(obj){
     //
     var corHead, corBody; //법인 변수
 
-    corHead="<tr><td style='width:5%'>순번</td><td style='width:8%'>구분</td><td style='width:20%'>"+starEx+"법인사업자명</td><td style='width:28%'>"+starEx+"연락처</td><td style='width:12%'>대표자명</td><td style='width:27%'>사업자번호</td></tr>";
+    corHead="<tr><td style='width:5%'>순번</td><td style='width:8%'>구분</td><td style='width:20%'>"+starEx+"법인사업자명</td><td style='width:12%'>대표자명</td><td style='width:28%'>"+starEx+"연락처</td><td style='width:27%'>사업자번호</td></tr>";
 
     for (var i = 1; i <= cc; i++){
       corBody += "<tr><td style='padding-top: 18px;'>"+i+"</td>";
-      corBody += "<td><select name='div3"+i+"' class='form-control' onchange='div1Get();'><option value='주식회사' selected>(주)</option><option value='유한회사'>(유)</option><option value='합자회사'>(합)</option><option value='기타'>(기)</option></select></td>";//구분
+      corBody += "<td><select name='div3"+i+"' class='form-control'><option value='주식회사' selected>(주)</option><option value='유한회사'>(유)</option><option value='합자회사'>(합)</option><option value='기타'>(기)</option></select></td>";//구분
       corBody += "<td><input type='text' name='companyname"+i+"' class='form-control text-center' maxlength='14' required></td>";//법인사업자명
-      corBody += "<td><div class='form-row'><div class='form-group col mb-0'><input type='number' name='contact1"+i+"' class='form-control text-center' maxlength='3' oninput='maxlengthCheck(this);' required></div><div class='form-group col mb-0'><input type='number' name='contact2"+i+"' class='form-control text-center' maxlength='4' oninput='maxlengthCheck(this);' required></div><div class='form-group col mb-0'><input type='number' name='contact3"+i+"' class='form-control text-center' maxlength='4' oninput='maxlengthCheck(this);' required></div></div></td>";//연락처
       corBody += "<td><input type='text' name='name"+i+"' class='form-control text-center' maxlength='9'></td>";//대표자명
+      corBody += "<td><div class='form-row'><div class='form-group col mb-0'><input type='number' name='contact1"+i+"' class='form-control text-center' maxlength='3' oninput='maxlengthCheck(this);' required></div><div class='form-group col mb-0'><input type='number' name='contact2"+i+"' class='form-control text-center' maxlength='4' oninput='maxlengthCheck(this);' required></div><div class='form-group col mb-0'><input type='number' name='contact3"+i+"' class='form-control text-center' maxlength='4' oninput='maxlengthCheck(this);' required></div></div></td>";//연락처
       corBody += "<td><div class='form-row'><div class='form-group col-md-4 mb-0'><input type='number' name='cNumber1"+i+"' class='form-control text-center' maxlength='3' oninput='maxlengthCheck(this);'></div><div class='form-group col-md-3 mb-0'><input type='number' name='cNumber2"+i+"' class='form-control text-center' maxlength='2' oninput='maxlengthCheck(this);'></div><div class='form-group col-md-5 mb-0'><input type='number' name='cNumber3"+i+"' class='form-control text-center' maxlength='5' oninput='maxlengthCheck(this);'></div></div></td></tr>";//사업자번호
     }
 
@@ -151,6 +150,7 @@ function pick(){
 
 function defaultCenterSection(){
   console.log('default');
+  $('#centerSection').empty();
 }
 
 // $('#datepicker').datepicker({

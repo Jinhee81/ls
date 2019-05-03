@@ -102,3 +102,23 @@
     <input type="text" name="etc" class="form-control" value='<?=$row['etc']?>'>
   <!-- </div> -->
 </div>
+
+
+<div class="form-row mt-3">
+  <div class="form-group col-md-2">
+    <label>등록자명</label>
+    <input type="text" class="form-control" name="" value="<?=$_SESSION['damdangga_name']?>" disabled>
+  </div>
+  <div class="form-group col-md-4">
+    <label>등록일시</label>
+    <input type="text" class="form-control" name="" value="<?=$row['created']?>" disabled>
+  </div>
+  <div class="form-group col-md-2">
+    <label>수정자명</label>
+    <input type="text" class="form-control" name="" value="<?=$_SESSION['damdangga_name']?>" disabled>
+  </div>
+  <div class="form-group col-md-4">
+    <label>수정일시</label>
+    <input type="text" class="form-control" name="" value="<?=$row['updated']?>" disabled>
+  </div>
+</div>

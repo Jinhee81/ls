@@ -13,7 +13,7 @@ $fil = array(
 
 settype($fil['id'], 'integer');
 
-$sql="UPDATE customer SET div2 = '{$fil['div2']}' WHERE id={$fil['id']}";
+$sql="UPDATE customer SET div2 = '{$fil['div2']}', updated = now() WHERE id={$fil['id']}";
 $result = mysqli_query($conn, $sql);
 if($result){
   echo "<script>alert('수정하였습니다.');

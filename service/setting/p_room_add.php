@@ -19,7 +19,7 @@ print_r($r_order);
 
 if($row[0] >= 100){
   echo "<script>alert('관리번호는 100개를 초과할 수 없습니다.');
-  location.href='modal_b_group_edit2.php?id=".$filtered['id'].";
+  location.href='modal_b_group_edit3.php?id=".$filtered['id'].";
   </script>";
 } else {
   $sql = "INSERT INTO r_g_in_building
@@ -44,7 +44,7 @@ if($row[0] >= 100){
   echo $sql_update;
   $result_update = mysqli_query($conn, $sql_update); //방갯수를 변경시킨다.
   echo "<script>alert('추가하였습니다.');
-  location.href='modal_b_group_edit2.php?id=".$filtered['id']."';
+  location.href='modal_b_group_edit3.php?id=".$filtered['id']."';
   </script>";
 }
 ?>

@@ -8,6 +8,14 @@ include $_SERVER['DOCUMENT_ROOT']."/view/service_header2.php";
 include $_SERVER['DOCUMENT_ROOT']."/view/conn.php";
 ?>
 
+<style>
+        @media (max-width: 990px) {
+        .mobile {
+          display: none;
+        }
+}
+</style>
+
 <script src="cadd.js"></script>
 <section class="container">
   <div class="jumbotron">
@@ -15,7 +23,7 @@ include $_SERVER['DOCUMENT_ROOT']."/view/conn.php";
     <p class="lead">고객이란 입주한 세입자 및 문의하는 문의고객, 거래처 등을 포함합니다. 고객등록이 되어야 임대계약 등록이 가능합니다!</p>
     <small>(1) * 표시는 필수입력값입니다. (2) 구분(대)의 값이 '고객'이어야 임대계약 등록이 가능합니다. (3) '고객'이란 단어는 세입자 또는 입주자를 의미합니다. (4)'일괄등록'은 데스크탑화면에서 가능합니다 (모바일화면 사용불가)</small>
     <hr class="my-4">
-    <a class="btn btn-primary btn-sm" href="m_c_adds.php" role="button">일괄등록</a>
+    <a class="btn btn-primary btn-sm mobile" href="m_c_adds.php" role="button">일괄등록</a>
   </div>
 </section>
 <section class="container" style="max-width:700px;">

@@ -20,7 +20,7 @@ include $_SERVER['DOCUMENT_ROOT']."/view/conn.php";
 <section class="container">
   <div class="jumbotron">
     <h1 class="display-4">임대계약리스트 화면입니다!</h1>
-    <p class="lead">고객이란 입주한 세입자 및 문의하는 예비고객, 거래처 등을 포함합니다. 고객등록이 되어야 임대계약 등록이 가능합니다!</p>
+    <p class="lead"></p>
   </div>
 
   <div class="p-3 mb-2 bg-light text-dark border border-info rounded">
@@ -28,8 +28,10 @@ include $_SERVER['DOCUMENT_ROOT']."/view/conn.php";
       <table>
         <tr>
           <td class="mobile"><select class="form-control form-control-sm selectCall">
-            <option value="등록일자">등록일자</option>
-            <option value="수정일자">수정일자</option>
+            <option value="">시작일자</option>
+            <option value="">종료일자</option>
+            <option value="">계약일자</option>
+            <option value="">등록일자</option>
           </select></td>
           <td class="mobile"><select class="form-control form-control-sm selectCall">
             <option value="등록일자">당월</option>
@@ -43,18 +45,24 @@ include $_SERVER['DOCUMENT_ROOT']."/view/conn.php";
           <td class="mobile">~</td>
           <td class="mobile"><input type="text" name="" value="" class="form-control form-control-sm text-center" id="datepicker"></td>
           <td class="mobile"><select class="form-control form-control-sm selectCall">
-            <option value="등록일자">구분</option>
-            <option value="수정일자">문의</option>
-            <option value="등록일자">진행고객</option>
-            <option value="수정일자">거래처</option>
+            <option value="">진행</option>
+            <option value="">종료</option>
+            <option value="">대기</option>
           </select>
           </td>
-          <td><select class="form-control form-control-sm selectCall">
-            <option value="등록일자">고객명</option>
-            <option value="수정일자">연락처</option>
-            <option value="등록일자">이메일</option>
-            <option value="수정일자">특이사항</option>
+          <td class="mobile"><select class="form-control form-control-sm selectCall">
+            <option value="등록일자">물건명</option>
           </select></td>
+          <td class="mobile"><select class="form-control form-control-sm selectCall">
+            <option value="등록일자">그룸명</option>
+          </select></td>
+          <td><select class="form-control form-control-sm selectCall">
+            <option value="">고객명</option>
+            <option value="">연락처</option>
+            <option value="">계약번호</option>
+            <option value="">관리번호</option>
+          </select>
+          </td>
           <td><input type="text" name="" value="" class="form-control form-control-sm text-center"></td>
           <td><button type="button" name="button" class="btn btn-info btn-sm">조회</button></td>
         </tr>
@@ -84,19 +92,19 @@ include $_SERVER['DOCUMENT_ROOT']."/view/conn.php";
     <div class="d-flex flex-row-reverse">
       <div class="float-right">
         <button type="submit" class="btn btn-secondary" name="submit" onsubmit="if(!confirm('정말 삭제하겠습니까?')){return false;}">삭제</button>
-        <a href="contract_add1.php"><button type="button" class="btn btn-primary" name="button">등록</button></a>
+        <a href="contract_add2.php"><button type="button" class="btn btn-primary" name="button">등록</button></a>
       </div>
     </div>
     <div class="mt-3">
-      <?php $sqlC = "select count(*) from customer where user_id={$_SESSION['id']}";
+      <?php $sqlC = "select count(*) from realContract where user_id={$_SESSION['id']}";
       // echo $sqlC;
       $resultC = mysqli_query($conn, $sqlC);
       $rowC = mysqli_fetch_array($resultC);
       // echo $rowC[0];
       if((int)$rowC[0]===0){
-        echo "고객등록한것이 없네요. 바로 위 오른쪽 등록버튼을 눌러서 등록해주세요.";
+        echo "계약 등록한것이 없네요. 바로 위 오른쪽 등록버튼을 눌러서 등록해주세요.";
       } else {
-        include $_SERVER['DOCUMENT_ROOT']."/service/customer/customer_table.php";
+        include $_SERVER['DOCUMENT_ROOT']."/service/contract/contract_table.php";
       }
       ?>
     </div>

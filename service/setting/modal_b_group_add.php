@@ -32,7 +32,7 @@ $row = mysqli_fetch_array($result);
     <table class="table table-bordered text-center">
       <tr>
         <td scope="col col-md-4">물건명</td>
-        <td scope="col col-md-8"><input class="form-control text-center" type="text" name="building_name" value="<?=$row['name']?>" disabled></td>
+        <td scope="col col-md-8"><input class="form-control text-center" type="text" name="building_name" value="<?=$row['bName']?>" disabled></td>
       </tr>
       <tr>
         <td scope="col col-md-4">그룹명</td>

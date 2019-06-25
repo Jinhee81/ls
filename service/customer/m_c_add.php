@@ -16,7 +16,7 @@ include $_SERVER['DOCUMENT_ROOT']."/view/conn.php";
 }
 </style>
 
-<script src="cadd.js"></script>
+<script src="cadd.js?v=<%=System.currentTimeMillis() %>"></script>
 <section class="container">
   <div class="jumbotron">
     <h1 class="display-4">고객등록 화면입니다!</h1>

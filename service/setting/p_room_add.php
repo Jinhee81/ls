@@ -2,7 +2,7 @@
 session_start();
 include $_SERVER['DOCUMENT_ROOT']."/view/conn.php";
 
-print_r($_POST);
+// print_r($_POST);
 
 $filtered = array(
   'id' => mysqli_real_escape_string($conn, $_POST['id']) //그룹아이디
@@ -12,7 +12,7 @@ settype($filtered['id'], 'integer');
 $sql_count = "select count(*) from r_g_in_building where group_in_building_id={$filtered['id']}";
 $result_count = mysqli_query($conn, $sql_count);
 $row = mysqli_fetch_array($result_count);
-print_r($row); //당방그룹의 방개수를 파악한다.
+// print_r($row); //당방그룹의 방개수를 파악한다.
 
 $r_order = $row[0]+1;
 print_r($r_order);

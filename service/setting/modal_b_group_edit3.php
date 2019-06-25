@@ -10,7 +10,7 @@ include $_SERVER['DOCUMENT_ROOT']."/view/conn.php";
 $filtered_id = mysqli_real_escape_string($conn, $_GET['id']);//그룹아이디?
 settype($filtered_id, 'integer');
 $sql = "SELECT group_in_building.id, group_in_building.created,
-  group_in_building.updated, gName, count, building.name
+  group_in_building.updated, gName, count, building.bName
   FROM group_in_building LEFT JOIN building
   ON group_in_building.building_id = building.id
   WHERE group_in_building.id={$filtered_id}";
@@ -20,20 +20,7 @@ $row = mysqli_fetch_array($result);
 // print_r($row);
 // print_r($_SESSION);
 ?>
-<style>
-  .deleteTimesTd{
-    padding-left: 0px;
-  }
-  .deleteTimesButton{
-    padding-left: 0px;
-    padding-top: 0px;
-    border-top-width: 0px;
-    border-left-width: 0px;
-  }
-  i {
-    color:#FE9A2E;
-  }
-</style>
+
 <section class="container">
   <div class="jumbotron">
     <h1 class="display-4"> >> 그룹 및 관리번호 수정 화면입니다!</h1>
@@ -52,7 +39,7 @@ $row = mysqli_fetch_array($result);
     <table class="table table-bordered text-center">
       <tr>
         <td scope="col col-md-4">물건명</td>
-        <td scope="col col-md-8"><input class="form-control text-center" type="text" name="building_name" value="<?=$row['name']?>" disabled></td>
+        <td scope="col col-md-8"><input class="form-control text-center" type="text" name="building_name" value="<?=$row['bName']?>" disabled></td>
       </tr>
       <tr>
         <td scope="col col-md-4">그룹명</td>
@@ -129,7 +116,7 @@ var dd2='<?=$filtered_id?>';
 function goCategoryPage(a,b,c,d){
   if(a==='groupDelete'){
     if(confirm('정말 삭제하시겠습니까?')){
-      var frm = formCreate(a, 'post', b,'')
+      var frm = formCreate(a, 'post', b,'');
       frm = formInput(frm, c, d);
       formSubmit(frm);
       // console.log(b);
@@ -137,7 +124,7 @@ function goCategoryPage(a,b,c,d){
       return false;
     }
   } else {
-    var frm = formCreate(a, 'post', b,'')
+    var frm = formCreate(a, 'post', b,'');
     frm = formInput(frm, c, d);
     formSubmit(frm);
   }

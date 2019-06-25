@@ -1,4 +1,6 @@
-<!-- 계약별 입금예정스케쥴화면, 데이터테이블 라이브러리로 본격 시작해봄 -->
+<!-- 계약별 입금예정스케쥴화면, 데이터테이블 라이브러리로 본격 시작해봄
+공급가액,세액을 다른셀에 하려다가안하기로 함 미리복사해놓음
+ -->
 <?php
 session_start();
 if(!isset($_SESSION['is_login'])){
@@ -179,9 +181,9 @@ if($row['div2']==='개인사업자'){
       <form class="" action="p_scheduleAdd.php" method="post">
       <div class="container form-row">
           <div class="form-group col-md-4">
-                <button type="button" id="button5" class="btn btn-outline-info btn-sm mobile">1개월 추가</button>
-                <button type="button" id="button6" class="btn btn-outline-info btn-sm mobile">n개월 추가</button>
-                <button type="button" id="button7" class="btn btn-outline-info btn-sm mobile">삭제</button>
+                <button type="button" name="button" class="btn btn-outline-info btn-sm mobile">1개월 추가</button>
+                <button type="button" name="button" class="btn btn-outline-info btn-sm mobile">n개월 추가</button>
+                <button type="button" name="button" class="btn btn-outline-info btn-sm mobile">삭제</button>
           </div>
           <div class="form-group col-md-4">
             <div class="form-row">
@@ -326,6 +328,14 @@ while($row2 = mysqli_fetch_array($result2)){
 
                     </div>
                     <div class="modal-footer">
+                      <!-- <?php if($row['executiveDate']) {
+                        echo "<button type='button' class='btn btn-secondary btn-sm mr-0' data-dismiss='modal'>닫기</button>
+                        <button type='button' class='btn btn-warning btn-sm mr-0 getExecuteBack'>입금취소</button>";
+                      } else {
+                        echo "<button type='button' class='btn btn-secondary btn-sm mr-0' data-dismiss='modal'>닫기</button>
+                        <button type='button' class='btn btn-warning btn-sm mr-0 getExecuteBack'>청구취소</button>
+                        <button type='button' class='btn btn-primary btn-sm getExecute'>입금완료</button>";
+                      }?> -->
                     </div>
                   </div>
 
@@ -512,7 +522,6 @@ while($row2 = mysqli_fetch_array($result2)){
           for (var i = 1; i <= allCnt; i++) {
             var expectedDayEle = [];
             expectedDayEle.push(i);
-            expectedDayEle.push(table.find("tr:eq("+i+")").find("td:eq(0)").children('input').val());
             expectedDayEle.push(table.find("tr:eq("+i+")").find("td:eq(6)").children('input').val());
             expectedDayArray.push(expectedDayEle);
           }
@@ -523,39 +532,17 @@ while($row2 = mysqli_fetch_array($result2)){
         }
     })
 
-    // $('.table').on('click',$(':checkbox:not(:first).is(":checked")'),function()
+    $('.table').on('click',':checkbox:not(:first)',function(){
 
-    $(":checkbox:not(:first)",table).click(function(){
       var expectedDayEle = [];
+      var currow = $(this).closest('tr');
+      var colOrder = Number(currow.find('td:eq(1)').text());
+      var colexpectDate = currow.find('td:eq(6)').children('input').val();
 
-      if($(this).is(":checked")){
-        var currow = $(this).closest('tr');
-        var colOrder = Number(currow.find('td:eq(1)').text());
-        var colid = currow.find('td:eq(0)').children('input').val();
-        var colexpectDate = currow.find('td:eq(6)').children('input').val();
-        expectedDayEle.push(colOrder, colid, colexpectDate);
-        expectedDayArray.push(expectedDayEle);
-        console.log(expectedDayArray);
-        // console.log('체크됨');
-      } else {
-        var currow = $(this).closest('tr');
-        var colOrder = Number(currow.find('td:eq(1)').text());
-        var colid = currow.find('td:eq(0)').children('input').val();
-        var colexpectDate = currow.find('td:eq(6)').children('input').val();
-        var dropReady = expectedDayEle.push(colOrder, colid, colexpectDate);
-        // console.log(dropReady);
-        // console.log('체크해제됨');
-        var index = expectedDayArray.indexOf(dropReady);
-        expectedDayArray.splice(index, 1);
-        console.log(expectedDayArray);
-      }
+      expectedDayEle.push(colOrder, colexpectDate);
+      expectedDayArray.push(expectedDayEle);
+      console.log(expectedDayArray);
     })
-
-
-
-
-
-
 
     $('.table').on('keyup', '.amountNumber:input[type="text"]', function(){
       var currow = $(this).closest('tr');
@@ -628,198 +615,6 @@ while($row2 = mysqli_fetch_array($result2)){
 
       }
     })
-
-    $('#button2').click(function(){ //청구취소버튼 클릭시
-
-      var contractScheduleArray = [];
-
-      for (var i = 0; i < expectedDayArray.length; i++) {
-
-        var csId = table.find("tr:eq("+expectedDayArray[i][0]+")").find('td:eq(0)').children('input').val();
-        var csCheck = table.find("tr:eq("+expectedDayArray[i][0]+")").find('td:eq(7)').text();
-        // console.log(csCheck);
-
-        if(csCheck ==!'계좌' || csCheck ==!'현금' || csCheck ==!'카드'){
-          alert('청구설정된것만 청구취소가 가능합니다.');
-          return false;
-        }
-
-        contractScheduleArray.push(csId, csCheck);
-      }
-      // console.log(contractScheduleArray);
-
-      var aa = 'payScheduleDrop';
-      var bb = 'p_payScheduleDropFor.php';
-      var cc = 'scheduleArray';
-      var dd = 'contractId';
-      var contractId = '<?=$filtered_id?>';
-
-      goCategoryPage(aa, bb, cc, contractScheduleArray, dd, contractId);
-
-      function goCategoryPage(a, b, c, d, e, f){
-        var frm = formCreate(a, 'post', b,'contractId');
-        frm = formInput(frm, c, d);
-        frm = formInput(frm, e, f);
-        formSubmit(frm);
-      }
-
-
-    })
-
-
-    $('#button3').click(function(){ //알괄입금버튼 클릭시
-
-      var contractScheduleArray = [];
-
-      for (var i = 0; i < expectedDayArray.length; i++) {
-
-        // var csId = table.find("tr:eq("+expectedDayArray[i][0]+")").find('td:eq(0)').children('input').val(); 계약스케줄을 가져오려다가 안가져옴, 왜냐면 필요가없음
-
-        var psId = table.find("tr:eq("+expectedDayArray[i][0]+")").find('td:eq(8)').children('p').children('u').text();
-        // console.log(psId); //제이쿼리로 트림을 하니 더 이상해져서 안하기로함
-
-        if(psId.trim()===""){ //trim()이거를 안넣으니 빈문자열로 인식이 안되어서 이거넣음
-          alert('청구번호가 존재해야 일괄입금처리가 가능합니다.');
-          return false;
-        }
-
-        contractScheduleArray.push(psId);
-      }
-      console.log(contractScheduleArray);
-
-      var aa = 'getAmountInput';
-      var bb = 'p_payScheduleGetAmountInputFor.php';
-      var cc = 'scheduleArray';
-      var dd = 'contractId';
-      var contractId = '<?=$filtered_id?>';
-
-      goCategoryPage(aa, bb, cc, contractScheduleArray, dd, contractId);
-
-      function goCategoryPage(a, b, c, d, e, f){
-        var frm = formCreate(a, 'post', b,'contractId');
-        frm = formInput(frm, c, d);
-        frm = formInput(frm, e, f);
-        formSubmit(frm);
-      }
-
-    })
-
-$('#button4').click(function(){ //알괄입금취소버튼 클릭시
-
-  var contractScheduleArray = [];
-
-  for (var i = 0; i < expectedDayArray.length; i++) {
-
-    var psId = table.find("tr:eq("+expectedDayArray[i][0]+")").find('td:eq(8)').children('p').children('u').text();
-
-    if(psId===""){ //trim()이거를 안넣으니 빈문자열로 인식이 안되어서 이거넣음
-      alert('청구번호가 존재해야 일괄입금취소 처리가 가능합니다.');
-      return false;
-    }
-
-    contractScheduleArray.push(psId);
-  }
-  console.log(contractScheduleArray);
-
-  var aa = 'getAmountDrop';
-  var bb = 'p_payScheduleGetAmountCanselFor.php';
-  var cc = 'scheduleArray';
-  var dd = 'contractId';
-  var contractId = '<?=$filtered_id?>';
-
-  goCategoryPage(aa, bb, cc, contractScheduleArray, dd, contractId);
-
-  function goCategoryPage(a, b, c, d, e, f){
-    var frm = formCreate(a, 'post', b,'contractId');
-    frm = formInput(frm, c, d);
-    frm = formInput(frm, e, f);
-    formSubmit(frm);
-  }
-
-})
-
-$('#button7').click(function(){ //삭제버튼 클릭시
-
-  var contractScheduleArray = [];
-  var allCnt = $(":checkbox:not(:first)", table).length;
-  console.log(allCnt);
-
-  for (var i = 0; i < expectedDayArray.length; i++) {
-
-    contractScheduleArray[i] = [];
-
-    var csId = table.find("tr:eq("+expectedDayArray[i][0]+")").find('td:eq(0)').children('input').val();
-
-    var csOrder = table.find("tr:eq("+expectedDayArray[i][0]+")").find('td:eq(1)').children('p').text();
-
-    var psId = table.find("tr:eq("+expectedDayArray[i][0]+")").find('td:eq(8)').children('p').children('u').text();
-
-    if(psId){
-      alert('청구번호가 존재하면 삭제할수 없습니다.');
-      return false;
-    }
-
-    contractScheduleArray[i].push(csId, csOrder, psId);
-  }
-  console.log(contractScheduleArray);
-
-var selectedOrderArray = [];
-      for (var i = 0; i < expectedDayArray.length; i++) {
-        selectedOrderArray.push(expectedDayArray[i][0]);
-      }
-      selectedOrderArray.sort(function(a,b) {
-        return a-b;
-      }); //선택한순번들을 오름차순으로 정렬해주는것
-      console.log(selectedOrderArray);
-
-var regularOrderArray=[];
-      for (var i = 0; i < contractScheduleArray.length; i++) {
-        var ele = allCnt - i;
-        regularOrderArray.push(ele);
-      }
-      regularOrderArray.sort(function(a,b) {
-        return a-b;
-      }); //정해진순번들을 오름차순으로 정렬해주는것
-      console.log(regularOrderArray);
-
-if(!selectedOrderArray.includes(allCnt)){
-  alert('스케줄 중간을 삭제할 수 없습니다.');
-  return false;
-  // location.href = 'contractEdit3.php?id=<?=$filtered_id?>';
-}
-
-for (var i = 0; i < regularOrderArray.length; i++) {
-  if(!((regularOrderArray[i]-selectedOrderArray[i])===0)){
-    alert('스케줄은 순차적으로 삭제되어야 합니다.');
-    return false;
-    // location.href = 'contractEdit3.php?id=<?=$filtered_id?>';
-  }
-  // console.log(regularOrderArray[i]);
-  // console.log(selectedOrderArray[i]);
-}
-
-var contractScheduleIdArray = [];
-for (var i = 0; i < contractScheduleArray.length; i++) {
-  contractScheduleIdArray.push(contractScheduleArray[i][0]);
-}
-console.log(contractScheduleIdArray);
-
-  var aa = 'contractScheduleDrop';
-  var bb = 'p_contractScheduleDrop.php';
-  var contractId = '<?=$filtered_id?>';
-
-  goCategoryPage(aa, bb, contractId, contractScheduleIdArray);
-
-  function goCategoryPage(a, b, c, d){
-    var frm = formCreate(a, 'post', b,'contractId');
-    frm = formInput(frm, 'contractId', c);
-    frm = formInput(frm, 'contractScheduleIdArray', d);
-    formSubmit(frm);
-  }
-
-})
-
-
 
 
 

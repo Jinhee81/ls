@@ -14,7 +14,19 @@ include $_SERVER['DOCUMENT_ROOT']."/view/conn.php";
 $filtered_id = mysqli_real_escape_string($conn, $_GET['id']);//고객아이디
 settype($filtered_id, 'integer');
 
-$sql = "select * from customer where id = {$filtered_id}";
+$sql = "select
+          customer.id, qdate, div2, name, contact1, contact2, contact3,
+          gender, customer.email, div3, div4, div5, companyname,
+          cNumber1, cNumber2, cNumber3,
+          zipcode, add1, add2, add3,
+          customer.created, customer.updated, createPerson,
+          (select damdangga_name from user where id=createPerson),
+          updatePerson,
+          (select damdangga_name from user where id=updatePerson)
+      from customer
+        left join user
+      on customer.createPerson = user.id
+        where customer.id = {$filtered_id}";
 $result = mysqli_query($conn, $sql);
 $row = mysqli_fetch_array($result);
 // echo $sql;

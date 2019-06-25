@@ -7,14 +7,14 @@ include $_SERVER['DOCUMENT_ROOT']."/view/service_header1_meta.php";
 include $_SERVER['DOCUMENT_ROOT']."/view/service_header2.php";
 include $_SERVER['DOCUMENT_ROOT']."/view/conn.php";
 
-print_r($_GET);
+// print_r($_GET);
 $filtered_id = mysqli_real_escape_string($conn, $_GET['id']);
 settype($filtered_id, 'integer');
 $sql = "select * from building where id={$filtered_id}";
-echo $sql;
+// echo $sql;
 $result = mysqli_query($conn, $sql);
 $row = mysqli_fetch_array($result);
-print_r($row);
+// print_r($row);
 ?>
 
 <section class="container">
@@ -33,7 +33,7 @@ print_r($row);
     <table class="table table-bordered text-center">
       <tr>
         <td scope="col col-md-4">물건명</td>
-        <td scope="col col-md-8"><input class="form-control text-center" type="text" name="building_name" value="<?=$row['name']?>" disabled></td>
+        <td scope="col col-md-8"><input class="form-control text-center" type="text" name="building_name" value="<?=$row['bName']?>" disabled></td>
       </tr>
       <tr>
         <td scope="col col-md-4">기타상품</td>

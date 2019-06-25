@@ -17,11 +17,17 @@
     <meta HTTP-EQUIV="Expires" CONTENT="-1">
     <link rel="stylesheet"
                href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
+
+
+    <!-- <script type="text/javascript" src="/js/dataTable.js"></script> -->
+
+    <link rel="stylesheet" href="/css/jquery-ui.min.css">
     <link rel="stylesheet" href="/css/bootstrap.min.css">
     <link rel="stylesheet" href="/css/custom.css">
+    <link rel="stylesheet" href="/css/dataTable.jquery.css">
+    <link rel="stylesheet" href="/css/dataTable.responsive.css">
 
-    <!-- <link rel="stylesheet" href="/css/font-awesome.min.css"> -->
-    <!-- <link href="https://fonts.googleapis.com/css?family=Gothic+A1:700|Nanum+Gothic" rel="stylesheet"> -->
-    <link rel="stylesheet" href="/css/jquery-ui.min.css">
-    <script src="/js/jquery-3.2.1.min.js"></script>
+    <script type="text/javascript" src="/js/jquery-3.3.1.min.js"></script>
+
+
   </head>

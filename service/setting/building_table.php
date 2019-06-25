@@ -26,6 +26,7 @@ include $_SERVER['DOCUMENT_ROOT']."/view/conn.php"; ?>
      order by
       num asc"; //세션아이디로 건물정보 호출하는거
     $result1 = mysqli_query($conn, $sql1);
+    // echo $sql1;
     // print_r($result);
     while($row1 = mysqli_fetch_array($result1)){
       $escaped1 = array(
@@ -42,7 +43,7 @@ include $_SERVER['DOCUMENT_ROOT']."/view/conn.php"; ?>
     <tr>
       <td><?=$escaped1['num']?></td>
       <!-- <td><?=$escaped1['id']?></td> 건물아이디 일부러 숨김처리-->
-      <td><?=$escaped1['lease_type']?></td>
+      <td><a href="modal_building_edit.php?id=<?=$escaped1['id']?>"><?=$escaped1['lease_type']?></a></td>
       <td>
         <a href="modal_building_edit.php?id=<?=$escaped1['id']?>"><?=$escaped1['bName']?></a>
       </td>

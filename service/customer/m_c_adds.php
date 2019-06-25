@@ -8,7 +8,7 @@ include $_SERVER['DOCUMENT_ROOT']."/view/service_header2.php";
 include $_SERVER['DOCUMENT_ROOT']."/view/conn.php";
 ?>
 
-<script src="csaddss.js"></script>
+<script src="csaddss.js?v=<%=System.currentTimeMillis() %>"></script>
 <section class="container">
   <div class="jumbotron">
     <h1 class="display-4">일괄등록 화면입니다!</h1>

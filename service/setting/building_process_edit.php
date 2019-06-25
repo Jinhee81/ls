@@ -11,17 +11,17 @@ $filtered = array(
 $sql  = "
     UPDATE building
     SET
-      name = '{$filtered['name']}',
+      bName = '{$filtered['name']}',
       pay = '{$filtered['pay']}'
     WHERE
       id = {$_POST['id']}
     ";
 echo $sql;
-var_dump($_POST['id']);
+// var_dump($_POST['id']);
 
 $result = mysqli_query($conn, $sql);
 $row = mysqli_fetch_array($result);
-print_r($row);
+// print_r($row);
 
 if($result === false){
   // echo "<script>

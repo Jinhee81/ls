@@ -1,3 +1,5 @@
+<!-- 이건 예전블로그에서 본 전체선택 자바스크립트 (표 전체선택부분, 이게 그런데 잘 안됨 ㅜㅜ) -->
+
 <hr>
 <footer class="text-center bg-light text-black pt-3">
   <div class="footer-above">
@@ -48,36 +50,48 @@
   }
 
   $(document).ready(function(){
-
-      // var tbl = $("#checkboxTestTbl");
-      var tbl = $('.table');
+      var tbl = $("#checkboxTestTbl");
 
       // 테이블 헤더에 있는 checkbox 클릭시
-      $(":checkbox:first", tbl).change(function(){
-        if($(":checkbox:first", tbl).is(":checked")){
-          $(":checkbox", tbl).prop('checked',true);
-          $(":checkbox").parent().parent().addClass("selected");
-        } else {
-          $(":checkbox", tbl).prop('checked',false);
-          $(":checkbox").parent().parent().removeClass("selected");
-        }
-      })
+      $(":checkbox:first", tbl).click(function(){
+          // 클릭한 체크박스가 체크상태인지 체크해제상태인지 판단
+          if( $(":checkbox:first", tbl).is(":checked") ){
+              // $(":checkbox", tbl).attr("checked", "checked");
+              // console.log('테이블헤더체크박스 클릭, 모든행체크된상태로변경');
+              $(":checkbox", tbl).attr('checked', 'checked').trigger("change");
+              // $(":checkbox", tbl).trigger("change");
+
+          } else{
+              // $(":checkbox", tbl).removeAttr("checked");
+              // console.log('테이블헤더체크박스 클릭, 모든행체크안된상태로변경');
+              $(":checkbox", tbl).attr("checked", false).trigger("change");
+              // $(":checkbox", tbl).trigger("change");
+
+          }
+
+          // 모든 체크박스에 change 이벤트 발생시키기
+          // $(":checkbox", tbl).trigger("change");
+      });
 
       // 헤더에 있는 체크박스외 다른 체크박스 클릭시
-      $(":checkbox:not(:first)", tbl).change(function(){
-        var allCnt = $(":checkbox:not(:first)", tbl).length;
-        var checkedCnt = $(":checkbox:not(:first)", tbl).filter(":checked").length;
+      $(":checkbox:not(:first)", tbl).click(function(){
+          var allCnt = $(":checkbox:not(:first)", tbl).length;
+          var checkedCnt = $(":checkbox:not(:first)", tbl).filter(":checked").length;
 
-        if($(this).prop("checked")==true){
-          $(this).parent().parent().addClass("selected");
-        } else {
-          $(this).parent().parent().removeClass("selected");
-        }
-
-        if( allCnt==checkedCnt ){
-          $(":checkbox:first", tbl).prop("checked", true);
-        }
-      })
+          // 전체 체크박스 갯수와 현재 체크된 체크박스 갯수를 비교해서 헤더에 있는 체크박스 체크할지 말지 판단
+          if( allCnt==checkedCnt ){
+              $(":checkbox:first", tbl).attr("checked", true);
+          } else{
+              $(":checkbox:first", tbl).attr("checked", false);
+          }
+      }).change(function(){
+          if( $(this).is(":checked") ){
+              // 체크박스의 부모 > 부모 니까 tr 이 되고 tr 에 selected 라는 class 를 추가한다.
+              $(this).parent().parent().addClass("selected");
+          } else{
+              $(this).parent().parent().removeClass("selected");
+          }
+      });
 
       $('#navbarDropdown').dropdown('toggle');
 
@@ -86,8 +100,6 @@
       });
 
       $("input:text[numberOnly]").number(true);
-
-      $(".numberComma").number(true);
       // $(document).on("keyup","input:text[numberOnly]", function(){
       //   $(this).number(true);
       // });

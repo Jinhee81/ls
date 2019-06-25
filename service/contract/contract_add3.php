@@ -1,4 +1,4 @@
-<!-- 계약등록 버전2, 모달없는거 -->
+<!-- 곧 지울예정임, 계약등록이 처음에 세로로좀 길었다가 세로를 짧게 변경하려고 함 -->
 <?php
 session_start();
 if(!isset($_SESSION['is_login'])){
@@ -49,9 +49,9 @@ foreach ($groupBuildingArray as $key => $value) {
   var buildingArray = <?php echo json_encode($buildingArray); ?>;
   var groupBuildingArray = <?php echo json_encode($groupBuildingArray); ?>;
   var roomArray = <?php echo json_encode($roomArray); ?>;
-  // console.log(buildingArray);
-  // console.log(groupBuildingArray);
-  // console.log(roomArray);
+  console.log(buildingArray);
+  console.log(groupBuildingArray);
+  console.log(roomArray);
 </script>
 <style>
   .inputWithIcon input[type=search]{
@@ -89,126 +89,162 @@ foreach ($groupBuildingArray as $key => $value) {
     <a class="btn btn-primary btn-sm" href="/service/customer/m_c_add.php" role="button">고객등록</a>
   </div>
 </section>
-<section class="container">
+<section class="container" style="max-width:700px;">
   <form method="post" action="p_realContract_add.php">
     <div class="form-row">
-        <div class="form-group col-md-2">
-              <label><b>[고객정보]</b></label>
+      <div class="form-group col-md-2">
+        <label><b>[고객정보]</b></label>
+      </div>
+      <div class="form-group col-md-10 inputWithIcon">
+        <input type="search" class="form-control" name="customer" id="customer" value="" required>
+        <i class="fas fa-search fa-lg fa-fw" aria-hidden="true"></i>
+        <div class="" id="customerList">
         </div>
-        <div class="form-group col-md-10 inputWithIcon">
-              <input type="search" class="form-control" name="customer" id="customer" value="" required>
-              <i class="fas fa-search fa-lg fa-fw" aria-hidden="true"></i>
-              <div class="" id="customerList">
-              </div>
-              <!-- <input type="hidden" name="customerId" id="customerId" value=""> 원래는 ajax로 별도로 고객번호를 가져오고싶었는데 방법을 몰라서 못한거고 별도로 가져올때 다시 수정할거2-->
-        </div>
+        <input type="hidden" name="customerId" id="customerId" value="">
+      </div>
     </div>
     <div class="form-row">
-        <div class="form-group col-md-2">
-            <label><b>[물건정보]</b></label>
-        </div>
-        <div class="form-group col-md-10" id="mulgunInfo">
-              <div class="form-row">
-                <div class="form-group col-md-2">
-                    <label>공실구분</label>
-                    <select id="select1" name="" class="form-control" onchange="">
-                      <option value="">전체</option>
-                      <option value="" selected>공실</option>
-                      <option value="">만실</option>
-                    </select>
-                </div>
-                <div class="form-group col-md-2"><!--물건목록-->
-                    <label>물건명</label>
-                    <select id="select2" name="building_id" class="form-control">
-                    </select>
-                </div>
-                <div class="form-group col-md-2"><!--그룹목록-->
-                    <label>그룹명</label>
-                    <select id="select3" name="group_id" class="form-control">
-                    </select>
-                </div>
-                <div class="form-group col-md-2"><!--관리번호목록-->
-                    <label>관리호수</label>
-                    <select id="select4" name="room_id" class="form-control" onchange="">
-                    </select>
-                </div>
-                <div class="form-group col-md-2">
-                    <label>계약일자</label>
-                    <input type="text" id="contractDate" class="form-control dateType" name="contractDate" placeholder="">
-                </div>
-              </div>
-        </div>
-    </div>
-
-    <div class="form-row">
-        <div class="form-group col-md-2 mb-0">
-            <label><b>[월이용료정보]</b></label>
-        </div>
-        <div class="form-group col-md-10 mb-0">
-          <div class="form-row">
-              <div class="form-group col-md-2 mb-0">
-                    <label><span id='star' style='color:#F7BE81;'>* </span>공급가액</label>
-                    <input type="text" class="form-control text-right amountNumber" name="mAmount" placeholder="0" numberOnly required>
-              </div>
-              <div class="form-group col-md-2 mb-0">
-                    <label>세액</label>
-                    <input type="text" class="form-control text-right amountNumber" name="mvAmount" value="0" numberOnly required>
-              </div>
-              <div class="form-group col-md-2 mb-0">
-                    <label>합계</label>
-                    <input type="text" class="form-control text-right amountNumber" name="mtAmount" placeholder="0" numberOnly>
-              </div>
-              <div class="form-group col-md-1 mb-0"><!--선불,후불체크-->
-                    <label>수납정보</label>
-                    <select id="select5" name="payOrder" class="form-control">
-                    </select>
-              </div>
-              <div class="form-group col-md-1 mb-0">
-                    <label><span id='star' style='color:#F7BE81;'>* </span>기간</label>
-                    <input type="number" class="form-control" name="monthCount" placeholder="" min="1" max="72" required>
-              </div>
-              <div class="form-group col-md-2 mb-0">
-                    <label><span id='star' style='color:#F7BE81;'>* </span>시작일자</label>
-                    <input type="text" id="startDate" class="form-control dateType" name="startDate" value="" placeholder="" required>
-              </div>
-              <div class="form-group col-md-2 mb-0">
-                    <label>종료일자</label>
-                    <input type="text" id="endDate" class="form-control" name="endDate" placeholder="">
-              </div>
+      <div class="form-group col-md-2">
+        <label><b>[물건정보]</b></label>
+      </div>
+      <div class="form-group col-md-10" id="mulgunInfo">
+        <div class="form-row">
+          <div class="form-group col-md-2">
+            <select id="select1" name="" class="form-control" onchange="">
+              <option value="">전체</option>
+              <option value="" selected>공실</option>
+              <option value="">만실</option>
+            </select>
+          </div>
+          <div class="form-group col-md-2">
+            <select id="select2" name="building_id" class="form-control"><!--물건목록-->
+            </select>
+          </div>
+          <div class="form-group col-md-3"><!--그룹목록-->
+            <select id="select3" name="group_id" class="form-control">
+            </select>
+          </div>
+          <div class="form-group col-md-3"><!--관리번호목록-->
+            <select id="select4" name="room_id" class="form-control" onchange="">
+            </select>
+          </div>
+          <div class="form-group col-md-2"><!--선불,후불체크-->
+            <select id="select5" name="payOrder" class="form-control">
+            </select>
+          </div>
         </div>
       </div>
     </div>
     <div class="form-row">
-        <div class="form-group col-md-2">
+      <div class="form-group col-md-2 mb-0">
+        <label><b>[기간정보]</b></label>
+      </div>
+      <div class="form-group col-md-10 mb-0">
+        <div class="form-row">
+          <div class="form-group col-md-3">
+            <label><span id='star' style='color:#F7BE81;'>* </span>기간(개월수)</label>
+            <input type="number" class="form-control" name="monthCount" placeholder="" min="1" max="72" required>
+          </div>
+          <div class="form-group col-md-3">
+            <label><span id='star' style='color:#F7BE81;'>* </span>시작일자</label>
+            <input type="text" id="startDate" class="form-control dateType" name="startDate" value="" placeholder="" required>
+          </div>
+          <div class="form-group col-md-3">
+            <label>종료일자</label>
+            <input type="text" id="endDate" class="form-control" name="endDate" placeholder="">
+          </div>
+          <div class="form-group col-md-3">
+            <label>계약일자</label>
+            <input type="text" id="contractDate" class="form-control dateType" name="contractDate" placeholder="">
+          </div>
         </div>
-        <div class="form-group col-md-10">
-            <small class="form-text text-muted">매월 받아야하는 임대료(월세)를 입력합니다.</small>
-        </div>
+      </div>
     </div>
+    <div class="form-row">
+      <label><b>[금액정보]</b></label>
+    </div>
+    <div class="form-row">
+      <div class="form-group col-md-2 mb-0">
+        <label>(1)월이용료</label>
+      </div>
+      <div class="form-group col-md-10 mb-0">
+        <div class="form-row">
+          <div class="form-group col-md-4 mb-0">
+            <label><span id='star' style='color:#F7BE81;'>* </span>공급가액</label>
+            <input type="text" class="form-control text-right amountNumber" name="mAmount" placeholder="0" numberOnly required>
+          </div>
+          <div class="form-group col-md-4 mb-0">
+            <label>세액</label>
+            <input type="text" class="form-control text-right amountNumber" name="mvAmount" placeholder="0" numberOnly>
+          </div>
+          <div class="form-group col-md-4 mb-0">
+            <label>합계</label>
+            <input type="text" class="form-control text-right amountNumber" name="mtAmount" placeholder="0" numberOnly>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="form-group col-md-2">
+      </div>
+      <div class="form-group col-md-10">
+        <small class="form-text text-muted">매월 받아야하는 임대료(월세)를 입력합니다.</small>
+      </div>
+    </div>
+    <!-- <div class="form-row">
+      <div class="form-group col-md-2 mb-0">
+        <label>(2)기타금액</label>
+      </div>
+      <div class="form-group col-md-10 mb-0">
+        <div class="form-row">
+          <div class="form-group col-md-4 mb-0">
+            <label>공급가액</label>
+            <input type="text" class="form-control text-right amountNumber" name="eAmount" placeholder="0" numberOnly>
+          </div>
+          <div class="form-group col-md-4 mb-0">
+            <label>세액</label>
+            <input type="text" class="form-control text-right amountNumber" name="evAmount" placeholder="0" numberOnly>
+          </div>
+          <div class="form-group col-md-4 mb-0">
+            <label>합계</label>
+            <input type="text" class="form-control text-right amountNumber" name="etAmount" id="etAmount" placeholder="0" numberOnly>
+          </div>
+        </div>
+      </div>
+    </div> 고민하다가 기타금액은 넣지 않기로 -->
+    <!-- <div class="form-row">
+      <div class="form-group col-md-2">
+      </div>
+      <div class="form-group col-md-10">
+        <small class="form-text text-muted">매월 받아야하는 관리비 등의 비용을 입력합니다.</small>
+      </div>
+    </div> 고민하다가 기타금액은 넣지 않기로 함-->
+    <div class="form-row">
+      <div class="form-group col-md-2 mb-0">
+        <label>(2)보증금</label>
+      </div>
+      <div class="form-group col-md-10 mb-0">
+        <div class="form-row">
+          <div class="form-group col-md-4 mb-0">
+            <label>금액</label>
+            <input type="text" class="form-control text-right amountNumber" name="depositAmount" value="" placeholder="0" numberOnly>
+          </div>
+          <div class="form-group col-md-4 mb-0">
+            <label>입금일자</label>
+            <input type="text" class="form-control dateType" name="depositInDate" id="depositInDate" value="" placeholder="">
+          </div>
+          <div class="form-group col-md-4 mb-0">
 
-    <div class="form-row">
-        <div class="form-group col-md-2 mb-0">
-          <label>(2)보증금</label>
+          </div>
         </div>
-        <div class="form-group col-md-10 mb-0">
-            <div class="form-row">
-                <div class="form-group col-md-3 mb-0">
-                    <label>금액</label>
-                    <input type="text" class="form-control text-right amountNumber" name="depositInAmount" value="" placeholder="0" numberOnly>
-                </div>
-                <div class="form-group col-md-3 mb-0">
-                    <label>입금일자</label>
-                    <input type="text" class="form-control dateType" name="depositInDate" id="depositInDate" value="" placeholder="">
-                </div>
-            </div>
-        </div>
+      </div>
     </div>
     <div class="form-row">
-        <div class="form-group col-md-2">
-        </div>
-        <div class="form-group col-md-10">
-            <small class="form-text text-muted">보증금을 받았다면, 보증금과 날짜를 입력하세요.</small>
-        </div>
+      <div class="form-group col-md-2">
+      </div>
+      <div class="form-group col-md-10">
+        <small class="form-text text-muted">보증금을 받았다면, 보증금과 날짜를 입력하세요.</small>
+      </div>
     </div>
     <div class="">
       <button type='submit' class='btn btn-primary'>저장</button>

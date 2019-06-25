@@ -21,7 +21,7 @@ $sql = "
       startDate,
       endDate,
       mtAmount,
-      depositAmount
+      depositInAmount
   from
       (select @num :=0)a,realContract
   left join customer
@@ -95,7 +95,7 @@ $result = mysqli_query($conn, $sql);
     <td><?=$row['rName']?></td>
     <td class="mobile"><?=$row['startDate']?></td>
     <td class="mobile"><?=$row['endDate']?></td>
-    <td><a href="contractEdit.php?id=<?=$row[1]?>"><?=$row['mtAmount']?></a></td>
+    <td><a href="contractEdit3.php?id=<?=$row[1]?>"><?=$row['mtAmount']?></a></td>
     <td class="mobile"></td>
     <td class="mobile"></td>
     <td class="mobile"><?=$row['depositAmount']?></td>

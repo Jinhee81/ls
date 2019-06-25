@@ -84,7 +84,8 @@ $sql = "
     add2 = '{$fil['add2']}',
     add3 = '{$fil['add3']}',
     etc = '{$fil['etc']}',
-    updated = now()
+    updated = now(),
+    updatePerson = {$_SESSION['id']}
   WHERE id = {$fil['id']}
 ";
 

@@ -12,8 +12,8 @@ settype($filtered_id, 'integer');
 $sql = "select * from building where id={$filtered_id}";
 $result = mysqli_query($conn, $sql);
 $row = mysqli_fetch_array($result);
-print_r($row);
-print_r($_SESSION);
+// print_r($row);
+// print_r($_SESSION);
 
 ?>
 
@@ -45,7 +45,7 @@ print_r($_SESSION);
     <div class="form-group row">
       <label class="col-sm-3 col-form-label">명칭</label>
       <div class="col-sm-9">
-        <input type="text" class="form-control" name="name" value="<?=$row['name']?>" required="">
+        <input type="text" class="form-control" name="name" value="<?=$row['bName']?>" required="">
       </div>
     </div>
     <div class="form-group row">

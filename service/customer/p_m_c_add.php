@@ -62,10 +62,10 @@ if((int)$row_addCheck2[0]>0){
 $sql = "
   INSERT INTO customer (
     div1, qDate, div2, name, contact1, contact2, contact3,
-    gender, email, div3, div4, div5, companyname, cNumber1, cNumber2, cNumber3, zipcode, add1, add2, add3, etc, created, user_id
+    gender, email, div3, div4, div5, companyname, cNumber1, cNumber2, cNumber3, zipcode, add1, add2, add3, etc, created, createPerson, user_id
     ) VALUES (
     '{$_POST['div1']}', '{$fil['qDate']}', '{$_POST['div2']}', '{$fil['name']}', '{$fil['contact1']}', '{$fil['contact2']}', '{$fil['contact3']}', '{$_POST['gender']}', '{$fil['email']}', '{$_POST['div3']}', '{$_POST['div4']}', '{$_POST['div5']}', '{$fil['companyname']}',
-    '{$fil['cNumber1']}', '{$fil['cNumber2']}','{$fil['cNumber3']}', '{$_POST['zipcode']}', '{$fil['add1']}','{$fil['add2']}', '{$fil['add3']}', '{$fil['etc']}', now(), {$_SESSION['id']}
+    '{$fil['cNumber1']}', '{$fil['cNumber2']}','{$fil['cNumber3']}', '{$_POST['zipcode']}', '{$fil['add1']}','{$fil['add2']}', '{$fil['add3']}', '{$fil['etc']}', now(), {$_SESSION['id']}, {$_SESSION['id']}
     )
 ";
 

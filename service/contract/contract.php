@@ -50,13 +50,13 @@ include $_SERVER['DOCUMENT_ROOT']."/view/conn.php";
             <option value="">대기</option>
           </select>
           </td>
-          <td class="mobile"><select class="form-control form-control-sm selectCall">
+          <td><select class="form-control form-control-sm selectCall">
             <option value="등록일자">물건명</option>
           </select></td>
-          <td class="mobile"><select class="form-control form-control-sm selectCall">
-            <option value="등록일자">그룸명</option>
-          </select></td>
           <td><select class="form-control form-control-sm selectCall">
+            <option value="등록일자">그룹명</option>
+          </select></td>
+          <td class="mobile"><select class="form-control form-control-sm selectCall">
             <option value="">고객명</option>
             <option value="">연락처</option>
             <option value="">계약번호</option>

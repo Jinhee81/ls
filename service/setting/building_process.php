@@ -9,7 +9,7 @@ $filtered = array(
 $query = "
   select count(*) from building
   where
-    user_id={$_SESSION['id']} and name = '{$filtered['name']}'
+    user_id={$_SESSION['id']} and bName = '{$filtered['name']}'
     ;";
 
 $result = mysqli_query($conn, $query);
@@ -18,7 +18,7 @@ $r_count = (int)$row['count(*)'];
 if ($r_count === 0) {
   $sql  = "
       INSERT INTO building (
-          name,
+          bName,
           pay,
           user_id,
           created

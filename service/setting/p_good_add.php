@@ -2,7 +2,7 @@
 session_start();
 include $_SERVER['DOCUMENT_ROOT']."/view/conn.php";
 
-print_r($_POST)."<br>";
+// print_r($_POST)."<br>";
 
 $filtered = array(
   'id' => mysqli_real_escape_string($conn, $_POST['id']), //건물아이디
@@ -26,7 +26,7 @@ if($row[0]>=1){
       now(),
       {$filtered['id']}
     )";
-  echo $sql;
+  // echo $sql;
   $result = mysqli_query($conn, $sql);
 
   if($result){

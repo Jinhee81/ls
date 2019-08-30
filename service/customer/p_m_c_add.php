@@ -69,7 +69,7 @@ $sql = "
     )
 ";
 
-echo $sql;
+// echo $sql;
 $result = mysqli_query($conn, $sql);
 if($result){
   echo "<script>alert('저장되었습니다.');

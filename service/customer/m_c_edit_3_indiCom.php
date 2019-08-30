@@ -72,6 +72,7 @@
   <div class='form-row'>
     <div class='form-group col-md-3'>
       <input type='text' id='sample2_postcode' placeholder='우편번호' class='form-control' disabled value='<?=$row['zipcode']?>'>
+      <input type='hidden' id='sample2_postcode_hidden' name="postcode">
     </div>
     <div class='form-group col-md-3'>
       <input type='button' onclick='sample2_execDaumPostcode()' value='우편번호 찾기' class='btn btn-secondary'><br>
@@ -79,15 +80,15 @@
   </div>
   <div class='form-row'>
     <div class='form-group col-md-6'>
-      <input type='text' id='sample2_address' placeholder='주소' class='form-control' value='<?=$row['add1']?>'>
+      <input type='text' id='sample2_address' placeholder='주소' class='form-control' name='add1' value='<?=$row['add1']?>'>
     </div>
     <div class='form-group col-md-6'>
-      <input type='text' id='sample2_detailAddress' placeholder='상세주소' class='form-control' value='<?=$row['add2']?>'>
+      <input type='text' id='sample2_detailAddress' placeholder='상세주소' class='form-control' name='add2' value='<?=$row['add2']?>'>
     </div>
   </div>
   <div class='form-row'>
     <div class='form-group col'>
-      <input type='text' id='sample2_extraAddress' placeholder='참고항목' class='form-control' value='<?=$row['add3']?>'>
+      <input type='text' id='sample2_extraAddress' placeholder='참고항목' class='form-control' name='add3' value='<?=$row['add3']?>'>
     </div>
   </div>
 </div>
@@ -107,7 +108,7 @@
 <div class="form-row mt-3">
   <div class="form-group col-md-2">
     <label>등록자명</label>
-    <input type="text" class="form-control form-control-sm" name="" value="<?=$row[23]?>" disabled>
+    <input type="text" class="form-control form-control-sm" name="" value="<?=$row[25]?>" disabled>
   </div>
   <div class="form-group col-md-4">
     <label>등록일시</label>
@@ -115,10 +116,14 @@
   </div>
   <div class="form-group col-md-2">
     <label>수정자명</label>
-    <input type="text" class="form-control form-control-sm" name="" value="<?=$row[25]?>" disabled>
+    <input type="text" class="form-control form-control-sm" name="" value="<?=$row[27]?>" disabled>
   </div>
   <div class="form-group col-md-4">
     <label>수정일시</label>
     <input type="text" class="form-control form-control-sm" name="" value="<?=$row['updated']?>" disabled>
   </div>
 </div>
+
+<script src="/js/daumAddressAPI.js?v=<%=System.currentTimeMillis() %>"></script>
+
+<script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>

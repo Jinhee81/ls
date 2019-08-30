@@ -1,11 +1,12 @@
+<!-- 고민하다가 회원가입시 휴대폰번호인증은 없애기로함, 이메일인증만 있으면 될것같음 -->
 <?php
 include $_SERVER['DOCUMENT_ROOT']."/view/header.php";
  ?>
  <div class="jumbotron">
    <h3 class="display-4">회원가입해주세요!</h3>
    <hr class="my-4">
-   <!-- <p>It uses utility classes for typography and spacing to space content out within the larger container.</p>
-   <a class="btn btn-primary btn-sm" href="#" role="button">비밀번호변경 클릭</a> -->
+   <p>회원가입 후 30일 무료이용 가능합니다. (단, 문자메시지 및 세금계산서발행 미포함)</p>
+   <!-- <a class="btn btn-primary btn-sm" href="#" role="button">비밀번호변경 클릭</a> -->
  </div>
 <div class="container" style="max-width:500px;">
   <form method="post" action ="signup_proccess.php" class="form-signin" id="signup_form">
@@ -58,7 +59,7 @@ include $_SERVER['DOCUMENT_ROOT']."/view/header.php";
           <input type="text" name="cellphone" class="form-control"      placeholder="담당자 휴대폰번호" required="" autofocus="">
         </div>
       </div>
-      <button type="submit" name="cellphone_auth" class="btn btn-sm btn-primary btn-block">휴대폰번호인증</button>
+      <!-- <button type="submit" name="cellphone_auth" class="btn btn-sm btn-primary btn-block">휴대폰번호인증</button> -->
     </div>
 
     <div class="form-group">

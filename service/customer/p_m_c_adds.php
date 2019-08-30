@@ -63,14 +63,14 @@ for ($i=1; $i <= $_POST['count']; $i++) {
   $sql = "
     INSERT INTO customer (
       div1, qDate, div2, name, contact1, contact2, contact3,
-      gender, email, div3, div4, div5, companyname, cNumber1, cNumber2, cNumber3, etc, created, user_id
+      gender, email, div3, div4, div5, companyname, cNumber1, cNumber2, cNumber3, etc, created, user_id, createPerson
       ) VALUES (
       '{$_POST['div1']}', '{$fil[$i]['qDate']}', '{$_POST['div2']}', '{$fil[$i]['name']}', '{$fil[$i]['contact1']}', '{$fil[$i]['contact2']}', '{$fil[$i]['contact3']}', '{$_POST['gender']}', '{$fil[$i]['email']}', '{$fil[$i]['div3']}', '{$_POST['div4']}', '{$_POST['div5']}', '{$fil[$i]['companyname']}',
-      '{$fil[$i]['cNumber1']}', '{$fil[$i]['cNumber2']}','{$fil[$i]['cNumber3']}', '{$fil[$i]['etc']}', now(), {$_SESSION['id']}
+      '{$fil[$i]['cNumber1']}', '{$fil[$i]['cNumber2']}','{$fil[$i]['cNumber3']}', '{$fil[$i]['etc']}', now(), {$_SESSION['id']}, {$_SESSION['id']}
       )
   ";
 
-  echo $sql;
+  // echo $sql;
   $result = mysqli_query($conn, $sql);
   if($result){
     echo "<script>alert('저장되었습니다.');

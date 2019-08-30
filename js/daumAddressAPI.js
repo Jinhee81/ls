@@ -1,4 +1,4 @@
-$(document).ready(function(){
+// $(document).ready(function(){
   // 우편번호 찾기 화면을 넣을 element
       var element_layer = document.getElementById('layer');
 
@@ -48,6 +48,7 @@ $(document).ready(function(){
 
                   // 우편번호와 주소 정보를 해당 필드에 넣는다.
                   document.getElementById('sample2_postcode').value = data.zonecode;
+                  document.getElementById('sample2_postcode_hidden').value = data.zonecode;
                   document.getElementById("sample2_address").value = addr;
                   // 커서를 상세주소 필드로 이동한다.
                   document.getElementById("sample2_detailAddress").focus();
@@ -84,4 +85,4 @@ $(document).ready(function(){
           element_layer.style.left = (((window.innerWidth || document.documentElement.clientWidth) - width)/2 - borderWidth) + 'px';
           element_layer.style.top = (((window.innerHeight || document.documentElement.clientHeight) - height)/2 - borderWidth) + 'px';
       }
-});
+// });

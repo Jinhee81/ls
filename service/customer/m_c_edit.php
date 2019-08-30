@@ -15,10 +15,10 @@ $filtered_id = mysqli_real_escape_string($conn, $_GET['id']);//고객아이디
 settype($filtered_id, 'integer');
 
 $sql = "select
-          customer.id, qdate, div2, name, contact1, contact2, contact3,
+          customer.id, div1, qDate, div2, name, contact1, contact2, contact3,
           gender, customer.email, div3, div4, div5, companyname,
           cNumber1, cNumber2, cNumber3,
-          zipcode, add1, add2, add3,
+          zipcode, add1, add2, add3, etc,
           customer.created, customer.updated, createPerson,
           (select damdangga_name from user where id=createPerson),
           updatePerson,
@@ -30,7 +30,7 @@ $sql = "select
 $result = mysqli_query($conn, $sql);
 $row = mysqli_fetch_array($result);
 // echo $sql;
-// print_r($row);
+print_r($row);
 $clist['id'] = htmlspecialchars($row['id']);
 $clist['num'] = htmlspecialchars($row['num']);
 $clist['div1'] = htmlspecialchars($row['div1']);
@@ -73,10 +73,50 @@ if($clist['div1']==='문의'){
  ?>
 <section class="container">
   <div class="jumbotron">
-    <h1 class="display-4">고객수정 화면입니다!</h1>
+    <h1 class="display-4">세입자 수정 화면입니다!</h1>
     <!-- <p class="lead">고객이란 입주한 세입자 및 문의하는 문의고객, 거래처 등을 포함합니다. 고객등록이 되어야 임대계약 등록이 가능합니다!</p>
-    <hr class="my-4">
-    <small>(1) * 표시는 필수입력값입니다. (2) 구분(대)의 값이 '고객'이어야 임대계약 등록이 가능합니다. (3) '고객'이란 단어는 세입자 또는 입주자를 의미합니다.</small> isright 9999-->
+    <hr class="my-4">-->
+    <button type='button' class='btn btn-secondary' data-toggle="modal" data-target="#div2Transfer">구분(소)변경</button>
+      <!-- 모달시작================================================================ -->
+      <div class="modal fade" id="div2Transfer" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel">구분(소) 변경하기</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <div class="container">
+                <div class="row justify-content-md-center">
+                  <label><?=$cName?></label>
+                </div>
+                <div class="row justify-content-md-center">
+                  <div class='form-check form-check-inline'>
+                    <input class='form-check-input' type='radio' name='radiodiv2' value='개인'<?php if($row['div2']==='개인'){echo "disabled";}?>>
+                    <label class='form-check-label'>개인</label>
+                  </div>
+                  <div class='form-check form-check-inline'>
+                    <input class='form-check-input' type='radio' name='radiodiv2' value='개인사업자'<?php if($row['div2']==='개인사업자'){echo "disabled";}?>>
+                    <label class='form-check-label'>개인사업자</label>
+                  </div>
+                  <div class='form-check form-check-inline'>
+                    <input class='form-check-input' type='radio' name='radiodiv2' value='법인사업자'<?php if($row['div2']==='법인사업자'){echo "disabled";}?>>
+                    <label class='form-check-label'>법인사업자</label>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">닫기</button>
+              <button type="button" class="btn btn-primary" onclick="div2TransferFn(aa2,bb2,cc1,dd1);">변경하기</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- 모달끝================================================================== -->
+    <!-- <small>(1) * 표시는 필수입력값입니다. (2) 구분(대)의 값이 '고객'이어야 임대계약 등록이 가능합니다. (3) '고객'이란 단어는 세입자 또는 입주자를 의미합니다.</small> isright 9999 -->
   </div>
 </section>
 <section class="container" style="max-width:700px;">
@@ -120,49 +160,11 @@ if($row['div1']==='문의'){
 ?>
     </div>
     <div class="mt-3">
-      <button type='submit' class='btn btn-primary'>수정</button>
+      <button type='submit' class='btn btn-primary' id="editbtn">수정</button>
       <a class='btn btn-warning' role='button' onclick='goCategoryPage(aa1,bb1,cc1,dd1);'>삭제</a>
-      <button type='button' class='btn btn-secondary' data-toggle="modal" data-target="#div2Transfer">구분(소)변경</button>
-        <!-- 모달시작================================================================ -->
-        <div class="modal fade" id="div2Transfer" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-          <div class="modal-dialog" role="document">
-            <div class="modal-content">
-              <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">구분(소) 변경하기</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                  <span aria-hidden="true">&times;</span>
-                </button>
-              </div>
-              <div class="modal-body">
-                <div class="container">
-                  <div class="row justify-content-md-center">
-                    <label><?=$cName?></label>
-                  </div>
-                  <div class="row justify-content-md-center">
-                    <div class='form-check form-check-inline'>
-                      <input class='form-check-input' type='radio' name='radiodiv2' value='개인'<?php if($row['div2']==='개인'){echo "disabled";}?>>
-                      <label class='form-check-label'>개인</label>
-                    </div>
-                    <div class='form-check form-check-inline'>
-                      <input class='form-check-input' type='radio' name='radiodiv2' value='개인사업자'<?php if($row['div2']==='개인사업자'){echo "disabled";}?>>
-                      <label class='form-check-label'>개인사업자</label>
-                    </div>
-                    <div class='form-check form-check-inline'>
-                      <input class='form-check-input' type='radio' name='radiodiv2' value='법인사업자'<?php if($row['div2']==='법인사업자'){echo "disabled";}?>>
-                      <label class='form-check-label'>법인사업자</label>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">닫기</button>
-                <button type="button" class="btn btn-primary" onclick="div2TransferFn(aa2,bb2,cc1,dd1);">변경하기</button>
-              </div>
-            </div>
-          </div>
-        </div>
-        <!-- 모달끝================================================================== -->
+
       <button id="historyBack" type='button' class='btn btn-secondary'>돌아가기</button>
+      <a role='button' class='btn btn-secondary' href='customer.php'>고객리스트로</a>
     </div>
 
 
@@ -201,6 +203,10 @@ function div2TransferFn(a,b,c,d){
   frm = formInput(frm, ee, ff);
   formSubmit(frm);
 }
+
+// $('#editbtn').on('click', function(){
+//
+// })
 
 $('#historyBack').on('click', function(){
   console.log('minsun');

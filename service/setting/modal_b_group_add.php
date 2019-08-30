@@ -116,7 +116,7 @@ function button_room_make(){ //방들을 만드는 함수, 생성하기버튼 �
      table = table + "<td>"+ "<input type='text' name='rName" + i + "' class='form-control text-center' value ='" + rooms[i] + "' required></td>";
    }
   }
-  table = table + "</table><div class='mt-7'><a class='btn btn-secondary' href='building.php' role='button'>취소/돌아가기</a><button type='submit' class='btn btn-primary ml-1'>저장</button></div>";
+  table = table + "</table><div class='mt-7'><button type='submit' class='btn btn-primary mr-1'>저장</button><a class='btn btn-secondary' href='building.php' role='button'>취소/돌아가기</a></div>";
 
   $tweet.append(table);
 

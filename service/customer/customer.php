@@ -19,8 +19,11 @@ include $_SERVER['DOCUMENT_ROOT']."/view/conn.php";
 </style>
 <section class="container">
   <div class="jumbotron">
-    <h1 class="display-4">고객리스트 화면입니다!</h1>
-    <p class="lead">고객이란 입주한 세입자 및 문의하는 예비고객, 거래처 등을 포함합니다. 고객등록이 되어야 임대계약 등록이 가능합니다!</p>
+    <h1 class="display-4">세입자리스트 화면입니다!</h1>
+    <p class="lead">
+      <!-- (1) 정확한 표현은 이해관계자리스트라고 보아도 무방합니다. 세입자(고객) 뿐만 아니라, 문의하는 사람 및 자주 거래하는 거래처도 저장할 수 있어요.<br> -->
+    (1) 방계약이 발생하면 숫자가 표시됩니다.
+    </p>
   </div>
 
   <div class="p-3 mb-2 bg-light text-dark border border-info rounded">
@@ -61,29 +64,11 @@ include $_SERVER['DOCUMENT_ROOT']."/view/conn.php";
       </table>
     </div>
   </div>
-  <?php
-  if (isset($_REQUEST['submit'])) {
-    $chk = $_REQUEST['chk'];
-    $a = implode(',', $chk);
-    if($a) {
-      $sql_d = "DELETE from customer where id in ($a)";
-      $result_d = mysqli_query($conn, $sql_d);
-      if($result_d) {
-        echo "<script>alert('삭제하였습니다');</script>";
-      } else {
-        echo "<script>alert('삭제 과정에 문제가 생겼습니다. 관리자에게 문의하세요.');
-        </script>";
-        error_log(mysqli_error($conn));
-      }
-    } else {
-      echo "<script>alert('한개이상을 선택해야 합니다.');</script>";
-    }
-  }
-   ?>
-  <form method="post">
+
+  <!-- <form method="post"> -->
     <div class="d-flex flex-row-reverse">
       <div class="float-right">
-        <button type="submit" class="btn btn-secondary" name="submit" onsubmit="if(!confirm('정말 삭제하겠습니까?')){return false;}">삭제</button>
+        <button type="button" class="btn btn-secondary" name="rowDeleteBtn">삭제</button>
         <a href="m_c_add.php"><button type="button" class="btn btn-primary" name="button">등록</button></a>
       </div>
     </div>
@@ -100,12 +85,87 @@ include $_SERVER['DOCUMENT_ROOT']."/view/conn.php";
       }
       ?>
     </div>
-  </form>
-<!-- <?php echo $sql; echo '3333', $a?> -->
+  <!-- </form> -->
 
 </section>
-<div class="" id="allVals">
-<!-- isright 6666? -->
-</div>
+<!-- <div class="" id="allVals">
+isright 6666?
+</div> -->
+
+<script>
+$(document).ready(function(){
+      $(function () {
+          $('[data-toggle="tooltip"]').tooltip()
+      })
+})
+
+var table = $("#checkboxTestTbl");
+
+var customerArray = [];
+
+$(":checkbox:first", table).click(function(){
+
+    var allCnt = $(":checkbox:not(:first)", table).length;
+    customerArray = [];
+
+    if($(":checkbox:first", table).is(":checked")){
+      for (var i = 1; i <= allCnt; i++) {
+        var customerArrayEle = [];
+        var colOrder = table.find("tr:eq("+i+")").find("td:eq(1)").text();
+        var colid = table.find("tr:eq("+i+")").find("td:eq(0)").children('input').val();
+        var colStep = table.find("tr:eq("+i+")").find("td:eq(3)").children('span').text();
+        customerArrayEle.push(colOrder, colid, colStep);
+        customerArray.push(customerArrayEle);
+      }
+    } else {
+      customerArray = [];
+    }
+    // console.log(customerArray);
+})
+
+$(":checkbox:not(:first)",table).click(function(){
+  var customerArrayEle = [];
+
+  if($(this).is(":checked")){
+    var currow = $(this).closest('tr');
+    var colOrder = Number(currow.find('td:eq(1)').text());
+    var colid = currow.find('td:eq(0)').children('input').val();
+    var colStep = currow.find('td:eq(3)').children('span').text();
+    customerArrayEle.push(colOrder, colid, colStep);
+    customerArray.push(customerArrayEle);
+  } else {
+    var currow = $(this).closest('tr');
+    var colOrder = Number(currow.find('td:eq(1)').text());
+    var colid = currow.find('td:eq(0)').children('input').val();
+    var colStep = currow.find('td:eq(3)').children('span').text();
+    var dropReady = customerArrayEle.push(colOrder, colid, colStep);
+    var index = customerArray.indexOf(dropReady);
+    customerArray.splice(index, 1);
+  }
+  // console.log(customerArray);
+})
+
+$('button[name="rowDeleteBtn"]').on('click', function(){
+  console.log(customerArray);
+  for (var i = 0; i < customerArray.length; i++) {
+    if(Number(customerArray[i][2])>0){
+      alert('계약등록된 고객이 포함될 경우 삭제 불가능합니다.');
+      return false;
+    }
+  }
+
+  var aa = 'customerDelete';
+  var bb = 'p_m_c_delete_for.php';
+
+  goCategoryPage(aa, bb, customerArray);
+
+  function goCategoryPage(a, b, c){
+    var frm = formCreate(a, 'post', b,'customerArray');
+    frm = formInput(frm, 'customerArray', c);
+    formSubmit(frm);
+  }
+
+})
+</script>
 
 <?php include $_SERVER['DOCUMENT_ROOT']."/view/service_footer.php";?>

@@ -19,6 +19,7 @@ if( $email === $row['email'] && password_verify($password, $row['password'])){
   $_SESSION['damdangga_name'] = $row['damdangga_name'];
   $_SESSION['cellphone'] = $row['cellphone'];
   $_SESSION['lease_type'] = $row['lease_type'];
+  $_SESSION['created'] = $row['created'];
   header('Location: /main/main.php');
   exit();
   // $_SESSION['email'] = $email;

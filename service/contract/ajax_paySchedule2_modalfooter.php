@@ -33,7 +33,7 @@ $('.getExecute').on('click', function(){ //입금완료버튼(모달안버튼) �
 
   var aa1 = 'payScheduleInput';
   var bb1 = 'p_payScheduleInput.php';
-  var contractId = '<?=$row['contractId']?>';
+  var contractId = '<?=$_POST['filtered_id']?>';
 
   var pid = $(this).parent().parent().children(':eq(0)').children(':eq(0)').children(':eq(0)').text(); //청구번호
 
@@ -63,7 +63,7 @@ $('.getExecute').on('click', function(){ //입금완료버튼(모달안버튼) �
 $('.getExecuteBack').on('click', function(){ //청구취소(삭제)버튼(모달안버튼) 클릭
   var aa1 = 'payScheduleDrop';
   var bb1 = 'p_payScheduleDrop.php';
-  var contractId = '<?=$row['contractId']?>';
+  var contractId = '<?=$_POST['filtered_id']?>'
 
   var pid = $(this).parent().parent().children(':eq(0)').children(':eq(0)').children(':eq(0)').text(); //청구번호
 
@@ -83,7 +83,7 @@ $('.getExecuteBack').on('click', function(){ //청구취소(삭제)버튼(모달
 $('.getExecuteBack2').on('click', function(){ //입금취소버튼(모달안버튼) 클릭
   var aa1 = 'payScheduleGetAmountCansel';
   var bb1 = 'p_payScheduleGetAmountCansel.php';
-  var contractId = '<?=$row['contractId']?>';
+  var contractId = '<?=$_POST['filtered_id']?>';
 
   var pid = $(this).parent().parent().children(':eq(0)').children(':eq(0)').children(':eq(0)').text(); //청구번호
 

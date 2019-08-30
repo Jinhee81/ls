@@ -3,7 +3,7 @@
 session_start();
 include $_SERVER['DOCUMENT_ROOT']."/view/conn.php";
 
-print_r($_POST);
+// print_r($_POST);
 // print_r($_SESSION);
 
 $sql = "
@@ -19,6 +19,23 @@ $sql = "
 $result = mysqli_query($conn, $sql);
 
 if($result){
+  $sql5 = "UPDATE realContract SET
+             updateTime = now(),
+             updatePerson = '{$_SESSION['id']}'
+           WHERE
+             id = {$_POST['realContract_id']}
+          ";
+  // echo $sql5;
+  $result5 = mysqli_query($conn, $sql5);
+
+  if($result5===false){
+    echo "<script>alert('저장과정에 문제가 생겼습니다. 관리자에게 문의하세요.');
+          location.href = 'contractEdit3.php?id=$_POST[realContract_id]';
+          </script>";
+    error_log(mysqli_error($conn));
+    exit();
+  }
+
   echo "<script>
           alert('입금취소하였습니다.');
           location.href = 'contractEdit3.php?id=$_POST[realContract_id]';

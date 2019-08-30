@@ -2,8 +2,8 @@
 session_start();
 include $_SERVER['DOCUMENT_ROOT']."/view/conn.php";
 
-print_r($_POST);
-print_r($_SESSION);
+// print_r($_POST);
+// print_r($_SESSION);
 
 $fil = array(
   'id' => mysqli_real_escape_string($conn, $_POST['id']),//고객아이디
@@ -18,6 +18,7 @@ $fil = array(
   'cNumber1' => mysqli_real_escape_string($conn, $_POST['cNumber1']),
   'cNumber2' => mysqli_real_escape_string($conn, $_POST['cNumber2']),
   'cNumber3' => mysqli_real_escape_string($conn, $_POST['cNumber3']),
+  'postcode' => mysqli_real_escape_string($conn, $_POST['postcode']),
   'add1' => mysqli_real_escape_string($conn, $_POST['add1']),
   'add2' => mysqli_real_escape_string($conn, $_POST['add2']),
   'add3' => mysqli_real_escape_string($conn, $_POST['add3'])
@@ -33,7 +34,7 @@ $addCheck1 = "
     user_id={$_SESSION['id']} and name = '{$fil['name']}' and
     id <> {$fil['id']}
     ";
-echo $addCheck1;
+// echo $addCheck1;
 $result_addCheck1 = mysqli_query($conn, $addCheck1);
 $row_addCheck1 = mysqli_fetch_array($result_addCheck1);
 
@@ -52,7 +53,7 @@ $addCheck2 = "
     contact3 = '{$fil['contact3']}' and
     id <> {$fil['id']}
     ";
-echo $addCheck2;
+// echo $addCheck2;
 $result_addCheck2 = mysqli_query($conn, $addCheck2);
 $row_addCheck2 = mysqli_fetch_array($result_addCheck2);
 
@@ -79,7 +80,7 @@ $sql = "
     cNumber1 = '{$fil['cNumber1']}',
     cNumber2 = '{$fil['cNumber2']}',
     cNumber3 = '{$fil['cNumber3']}',
-    zipcode = '{$_POST['zipcode']}',
+    zipcode = '{$fil['postcode']}',
     add1 = '{$fil['add1']}',
     add2 = '{$fil['add2']}',
     add3 = '{$fil['add3']}',
@@ -89,7 +90,7 @@ $sql = "
   WHERE id = {$fil['id']}
 ";
 
-echo $sql;
+// echo $sql;
 $result = mysqli_query($conn, $sql);
 if($result){
   echo "<script>alert('수정하였습니다.');

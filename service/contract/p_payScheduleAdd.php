@@ -37,10 +37,11 @@ for ($i=0; $i < count($payrow); $i++) {
   // echo $sql3;
   $result3 = mysqli_query($conn, $sql3);
   if($result3===false){
-    echo "<script>alert('저장과정에 문제가 생겼습니다. 관리자에게 문의하세요.')
+    echo "<script>alert('저장과정에 문제가 생겼습니다. 관리자에게 문의하세요.(1)')
                   location.href='contractEdit3.php?id=$filtered_id'
             </script>";
     error_log(mysqli_error($conn));
+    exit();
   }
 }//이작업을해야지 계약스케줄의 행별로 바뀐금액이 저장이 된다
 
@@ -49,7 +50,7 @@ for ($i=0; $i < count($a)/9; $i++) {
   array_push($expectedDateArray, $payrow[$i][7]);
 }
 
-print_r($expectedDateArray);
+// print_r($expectedDateArray);
 
 $expectedDateArray2= array_keys(array_count_values($expectedDateArray)); //입금예정일만 모인 배열에서 중복된 값 제거함
 
@@ -99,7 +100,7 @@ for ($i=0; $i < count($payExecutiveRow); $i++) {
   $sql = "
         INSERT INTO paySchedule2 (
           csIdArray, orderArray, pStartDate, pEndDate, pAmount,
-          pvAmount, ptAmount, pExpectedDate, paykind, getAmount, contractId)
+          pvAmount, ptAmount, pExpectedDate, paykind, getAmount, realContract_id)
         VALUES (
           '{$payExecutiveRow[$i][0]}',
           '{$payExecutiveRow[$i][1]}',
@@ -132,16 +133,43 @@ for ($i=0; $i < count($payExecutiveRow); $i++) {
               ";
       // echo $sql2; 청구번호를 계약스케줄번호에 넣음
       $result2 = mysqli_query($conn, $sql2);
+      if(!$result2){
+        echo "<script>alert('저장과정에 문제가 생겼습니다. 관리자에게 문의하세요.(4)');
+                 location.href='contractEdit3.php?id=$filtered_id';
+           </script>";
+           error_log(mysqli_error($conn));
+           exit();
+      }
     }
   } else {
-    echo "<script>alert('저장과정에 문제가 생겼습니다. 관리자에게 문의하세요.')
-             location.href='contractEdit3.php?id=$filtered_id'
+    echo "<script>alert('저장과정에 문제가 생겼습니다. 관리자에게 문의하세요.(2)');
+             location.href='contractEdit3.php?id=$filtered_id';
        </script>";
+       // echo "<script>alert('저장과정에 문제가 생겼습니다. 관리자에게 문의하세요.(2)');
+       //    </script>";
        error_log(mysqli_error($conn));
+       exit();
   }
 }
 
-echo "<script>alert('청구되었습니다.')
-         location.href='contractEdit3.php?id=$filtered_id'
-   </script>";
+$sql5 = "UPDATE realContract SET
+           updateTime = now(),
+           updatePerson = '{$_SESSION['id']}'
+         WHERE
+           id = {$filtered_id}
+        ";
+// echo $sql5;
+$result5 = mysqli_query($conn, $sql5);
+
+if($result5===false){
+  echo "<script>alert('저장과정에 문제가 생겼습니다. 관리자에게 문의하세요.(3)');
+        location.href = 'contractEdit3.php?id=$filtered_id';
+        </script>";
+  error_log(mysqli_error($conn));
+  exit();
+}
+
+echo "<script>alert('청구하였습니다.');
+         location.href='contractEdit3.php?id=$filtered_id';
+      </script>";
  ?>

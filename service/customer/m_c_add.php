@@ -17,11 +17,13 @@ include $_SERVER['DOCUMENT_ROOT']."/view/conn.php";
 </style>
 
 <script src="cadd.js?v=<%=System.currentTimeMillis() %>"></script>
+<script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script> <!-- 이건 필요한페이지에 넣기로 함 -->
+<script src="/js/daumAddressAPI.js"></script>
 <section class="container">
   <div class="jumbotron">
-    <h1 class="display-4">고객등록 화면입니다!</h1>
-    <p class="lead">고객이란 입주한 세입자 및 문의하는 문의고객, 거래처 등을 포함합니다. 고객등록이 되어야 임대계약 등록이 가능합니다!</p>
-    <small>(1) * 표시는 필수입력값입니다. (2) 구분(대)의 값이 '고객'이어야 임대계약 등록이 가능합니다. (3) '고객'이란 단어는 세입자 또는 입주자를 의미합니다. (4)'일괄등록'은 데스크탑화면에서 가능합니다 (모바일화면 사용불가)</small>
+    <h1 class="display-4">세입자 등록 화면입니다!</h1>
+    <p class="lead">입주한 세입자 뿐만아니라 문의하는 사람, 거래처도 등록할 수 있습니다.</p>
+    <small>(1) * 표시는 필수입력값입니다. (2) 구분(대)의 값이 '세입자'이어야 방계약 등록이 가능합니다. (3)'일괄등록'은 데스크탑화면에서 가능합니다 (모바일화면 사용불가)</small>
     <hr class="my-4">
     <a class="btn btn-primary btn-sm mobile" href="m_c_adds.php" role="button">일괄등록</a>
   </div>
@@ -35,7 +37,7 @@ include $_SERVER['DOCUMENT_ROOT']."/view/conn.php";
       <div class="form-group col-md-8">
         <select id="customer_div1" name="div1" class="form-control" onchange="div1Get();">
           <option value="문의">문의</option>
-          <option value="진행고객" selected>고객</option>
+          <option value="진행고객" selected>세입자</option>
           <option value="거래처">거래처</option>
         </select>
       </div>
@@ -58,7 +60,7 @@ include $_SERVER['DOCUMENT_ROOT']."/view/conn.php";
     </div>
     <div class="">
       <button type='submit' class='btn btn-primary'>저장</button>
-      <a href='customer.php'><button type='button' class='btn btn-secondary'>고객리스트화면으로</button></a>
+      <a href='customer.php'><button type='button' class='btn btn-secondary'>세입자리스트화면으로</button></a>
     </div>
   </form>
 </section>

@@ -11,10 +11,10 @@
         <a class="nav-link" href="/main/main.php">Home <span class="sr-only">(current)</span></a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="/service/customer/customer.php">고객</a>
+        <a class="nav-link" href="/service/customer/customer.php">세입자</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="/service/contract/contract.php">임대계약</a>
+        <a class="nav-link" href="/service/contract/contract.php">방계약</a>
       </li>
       <li class="nav-item">
         <a class="nav-link" href="#">기타계약</a>
@@ -23,7 +23,7 @@
         <a class="nav-link" href="#">입금예정</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="#">입금</a>
+        <a class="nav-link" href="#">입금완료</a>
       </li>
       <li class="nav-item dropdown">
         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">

@@ -17,10 +17,11 @@ $result = mysqli_query($conn, $sql);
       <th scope="col" class="mobile"><input type="checkbox"></th>
       <th scope="col">순번</th>
       <th scope="col" class="mobile">구분</th>
-      <th scope="col">고객명</th>
+      <th scope="col">세입자</th>
       <th scope="col">연락처</th>
       <th scope="col" class="mobile">이메일</th>
       <th scope="col" class="mobile">특이사항</th>
+      <th scope="col" class="mobile">바로가기</th>
     </tr>
   </thead>
   <tbody>
@@ -68,14 +69,32 @@ $result = mysqli_query($conn, $sql);
     }
     ?>
   <tr>
-    <td class="mobile"><input type="checkbox" name="chk[]" value="<?=$clist['id']?>"></td>
+    <td class="mobile"><input type="checkbox" value="<?=$clist['id']?>"></td>
     <td><?=$clist['num']?></td>
     <td class="mobile"><?=$clist['div1']?></td>
     <td class='text-center'><a href="m_c_edit.php?id=<?=$clist['id']?>">
-      <?=$cName?></a></td>
+      <?=$cName?></a>
+<?php
+$sql2 = "select count(*) from realContract where customer_id={$clist['id']}";
+// echo $sql2;
+$result2 = mysqli_query($conn, $sql2);
+$row2 = mysqli_fetch_array($result2);
+
+if((int)$row2[0]>0){
+  echo "<span class='badge badge-pill badge-warning'>".$row2[0]."</span>";
+}
+ ?>
+    </td>
     <td><?=$cContact?></td>
     <td class="mobile"><?=$clist['email']?></td>
     <td class="mobile"><?=$clist['etc']?></td>
+    <td class="mobile">
+      <?php
+          if($clist['div1']==='진행고객'){
+            echo "<a class='btn btn-info btn-sm' href='/service/contract/contract_add1.php?id=".$clist['id']."' role='button'>방계약</a>";
+          }
+       ?>
+    </td>
   </tr>
 <?php } ?>
   </tbody>

@@ -124,7 +124,7 @@ function printOut(){
 }
 
 
-var bbs ="<div><button type='submit' class='btn btn-primary mr-1'>저장</button><a href='customer.php'><button type='button' class='btn btn-secondary'>고객리스트화면으로</button></a></div>";
+var bbs ="<div><button type='submit' class='btn btn-primary mr-1'>저장</button><a href='customer.php'><button type='button' class='btn btn-secondary'>세입자리스트화면으로</button></a></div>";
 
 
 

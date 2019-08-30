@@ -17,7 +17,7 @@
     <label>문의일자</label>
     <div class="form-row">
       <div class="form-group col-md-9">
-        <input type="text" name="qDate" class="form-control" id="date1" value='<?=$row['qDate']?>'>
+        <input type="text" name="qDate" class="form-control dateType" id="date1" value='<?=$row['qDate']?>'>
       </div>
       <div class="form-group col-md-3">
         <span><img src="/img/calendar.svg" id="date1"></span>
@@ -33,7 +33,7 @@
 <div class="form-row mt-3">
   <div class="form-group col-md-2">
     <label>등록자명</label>
-    <input type="text" class="form-control form-control-sm" name="" value="<?=$row['createPerson']?>" disabled>
+    <input type="text" class="form-control form-control-sm" name="" value="<?=$row[25]?>" disabled>
   </div>
   <div class="form-group col-md-4">
     <label>등록일시</label>
@@ -41,7 +41,7 @@
   </div>
   <div class="form-group col-md-2">
     <label>수정자명</label>
-    <input type="text" class="form-control form-control-sm" name="" value="<?=$row['updatePerson']?>" disabled>
+    <input type="text" class="form-control form-control-sm" name="" value="<?=$row[27]?>" disabled>
   </div>
   <div class="form-group col-md-4">
     <label>수정일시</label>

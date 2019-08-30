@@ -79,6 +79,10 @@
         }
       })
 
+      $('#navbarDropdown').on('click', function(){
+          $('#navbarDropdown').dropdown('toggle');
+      })
+
       $('#navbarDropdown').dropdown('toggle');
 
       $(".amountNumber").click(function(){
@@ -88,10 +92,22 @@
       $("input:text[numberOnly]").number(true);
 
       $(".numberComma").number(true);
-      // $(document).on("keyup","input:text[numberOnly]", function(){
-      //   $(this).number(true);
-      // });
+
+      $(document).on("keyup","input:text[numberOnly]", function(){
+        $(this).number(true);
+      });
   });
+
+  // $('.dateType').on('click', function(){
+  //   $(this).datepicker({
+  //     changeMonth: true,
+  //     changeYear: true,
+  //     showButtonPanel: true,
+  //     // showOn: "button",
+  //     buttonImage: "/img/calendar.svg",
+  //     buttonImageOnly: false
+  //   })
+  // })
 
   $('.dateType').datepicker({
     changeMonth: true,
@@ -100,10 +116,9 @@
     // showOn: "button",
     buttonImage: "/img/calendar.svg",
     buttonImageOnly: false
-  });
-  $(document).on("keyup","input:text[numberOnly]", function(){
-    $(this).number(true);
-  });
+  })
+
+
 </script>
 </body>
 </html>

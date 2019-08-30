@@ -10,7 +10,7 @@ var div5 ="<label>업종</label><input type='text' name='div5' class='form-contr
 
 var gubun2 = "<div class='form-row' id='idDiv2Large'><div class='form-group col-md-4'><label>구분</label></div><div class='form-group col-md-8 text-center'><select id='idDiv2' name='div2' class='form-control' onchange='div2Get();'><option value=''></option><option value='개인'>개인</option><option value='개인사업자'>개인사업자</option><option value='법인사업자'>법인사업자</option></select></div></div>";
 
-var quest_date = "<label>문의일자</label><input type='text' name='qDate' class='form-control' id='datepicker'>";
+var quest_date = "<label>문의일자</label><input type='text' name='qDate' class='form-control dateType' id='datepicker'>";
 
 var contact ="<label>"+ starEx +"연락처</label><div class='form-row'><div class='form group col-md-4'><input type='number' name='contact1' id='contact1' class='form-control' maxlength='3' value='010' required oninput='maxlengthCheck(this);'></div><div class='form group col-md-4'><input type='number' name='contact2' id='contact2' class='form-control' maxlength='4' required oninput='maxlengthCheck(this);'></div><div class='form group col-md-4'><input type='number' name='contact3' id='contact3' class='form-control' maxlength='4' required oninput='maxlengthCheck(this);'></div></div>";
 

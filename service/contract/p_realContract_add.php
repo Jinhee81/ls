@@ -12,26 +12,13 @@ date_default_timezone_set('Asia/Seoul'); //이거있어야지 시간대가 맞�
 $currentDateTime = date('Y-m-d H:i:s');
 // echo $currentDateTime;
 
-if($currentDateTime >= $_POST['startDate']
-    && $currentDateTime <= $_POST['endDate']){
-  $status = '진행';
-} elseif ($currentDateTime < $_POST['startDate']) {
-  $status = '예정';
-} else {
-  $status = '종료';
-}
-
-// print_r($status);
-
 $sql = "
   INSERT INTO realContract (
-    status, customer_id, building_id, group_in_building_id, r_g_in_building_id,
+    customer_id, building_id, group_in_building_id, r_g_in_building_id,
     payOrder, monthCount, startDate, endDate, contractDate,
     mAmount, mvAmount, mtAmount,
-    depositInAmount, depositInDate,
     user_id, createTime, createPerson)
   VALUES (
-    '{$status}',
     {$customer_id},
     {$_POST['building_id']},
     {$_POST['group_id']},
@@ -39,13 +26,11 @@ $sql = "
     '{$_POST['payOrder']}',
     {$_POST['monthCount']},
     '{$_POST['startDate']}',
-    '{$_POST['endDate']}',
+    '{$_POST['endDate1']}',
     '{$_POST['contractDate']}',
     '{$_POST['mAmount']}',
     '{$_POST['mvAmount']}',
     '{$_POST['mtAmount']}',
-    '{$_POST['depositInAmount']}',
-    '{$_POST['depositInDate']}',
     {$_SESSION['id']},
     now(),
     {$_SESSION['id']}
@@ -57,6 +42,7 @@ $sql = "
 $result = mysqli_query($conn, $sql);
 
 $id = mysqli_insert_id($conn); //방금넣은 계약번호아이디를 가져오는거
+// print_r($id);
 
 $mStartDate = $_POST['startDate']; //초기시작일 가져오기
 
@@ -84,7 +70,7 @@ for ($i=1; $i <= count($contractRow); $i++) {
           ordered, mStartDate, mEndDate, mMamount, mVmAmount, mTmAmount,
           mExpectedDate, realContract_id)
         VALUES (
-          '{$contractRow[$i][0]}',
+          {$contractRow[$i][0]},
           '{$contractRow[$i][1]}',
           '{$contractRow[$i][2]}',
           '{$contractRow[$i][3]}',
@@ -104,6 +90,30 @@ for ($i=1; $i <= count($contractRow); $i++) {
     error_log(mysqli_error($conn));
     exit();
   }
+}
+
+$sql_deposit = "
+        INSERT INTO realContract_deposit
+          (inDate, inMoney, remainMoney, saved, realContract_id)
+        VALUES (
+          '{$_POST['depositInDate']}',
+          '{$_POST['depositInAmount']}',
+          '{$_POST['depositInAmount']}',
+          now(),
+          $id
+        )
+";
+// echo $sql_deposit;
+$result_deposit = mysqli_query($conn, $sql_deposit);
+
+if($result_deposit===false){
+  echo "<script>alert('보증금 저장과정에 문제가 생겼습니다. 관리자에게 문의하세요.');
+        location.href = 'contractEdit3.php?id=$id';
+        </script>";
+  // echo "<script>alert('보증금 저장과정에 문제가 생겼습니다. 관리자에게 문의하세요.');
+  //       </script>";
+  error_log(mysqli_error($conn));
+  exit();
 }
 
 echo "<script>alert('저장되었습니다.');

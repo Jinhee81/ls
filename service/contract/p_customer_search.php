@@ -11,10 +11,12 @@ if(isset($_POST['query'])){
     select
       id, div2, name, div3, companyname, contact1, contact2, contact3, cNumber1, cNumber2, cNumber3
     from customer
-    where regexp_like(name, '{$_POST['query']}')
-      or regexp_like(companyname, '{$_POST['query']}')
-      and user_id={$_SESSION['id']}
-      and div1='진행고객'";
+    where
+      user_id={$_SESSION['id']} and
+      div1='진행고객' and
+      (regexp_like(name, '{$_POST['query']}') or
+       regexp_like(companyname, '{$_POST['query']}'))
+      ";
 
     $result = mysqli_query($conn, $sql);
     $output = '<ul class="list-unstyled">';
@@ -48,9 +50,9 @@ if(isset($_POST['query'])){
         }
 
         if($clist['div2']==='개인사업자'){
-          $cName = $clist['name'].'('.$clist['companyname'].','.$cNumber.')';
+          $cName = $clist['name'].'('.$clist['companyname'].';'.$cNumber.')';
         } else if($clist['div2']==='법인사업자'){
-          $cName = $cDiv3.$clist['companyname'].'('.$clist['name'].','.$cNumber.')';
+          $cName = $cDiv3.$clist['companyname'].'('.$clist['name'].';'.$cNumber.')';
         } else if($clist['div2']==='개인'){
           $cName = $clist['name'];
         }

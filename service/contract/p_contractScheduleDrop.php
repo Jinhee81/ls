@@ -3,7 +3,7 @@
 session_start();
 include $_SERVER['DOCUMENT_ROOT']."/view/conn.php";
 
-print_r($_POST);
+// print_r($_POST);
 // print_r($_SESSION);
 
 $filtered_id = mysqli_real_escape_string($conn, $_POST['contractId']);
@@ -14,7 +14,7 @@ for ($i=0; $i < count($a); $i++) {
   $sql = "
         delete from contractSchedule where idcontractSchedule={$a[$i]}
   ";
-  echo $sql;
+  // echo $sql;
   $result = mysqli_query($conn, $sql);
 
   if($result===false){
@@ -25,18 +25,26 @@ for ($i=0; $i < count($a); $i++) {
   }
 }
 
-$sql2 = "select * from
-        contractSchedule where realContract_id={$filtered_id}";
-echo $sql2;
+$sql5 = "UPDATE realContract SET
+           updateTime = now(),
+           updatePerson = '{$_SESSION['id']}'
+         WHERE
+           id = {$filtered_id}
+        ";
+// echo $sql5;
+$result5 = mysqli_query($conn, $sql5);
 
-$result2 = mysqli_query($conn, $sql2);
-while($row=mysqli_fetch_array($result2)){
-  echo $row['ordered'], $row['mStartDate'], $row['mEndDate'];
+if($result5===false){
+  echo "<script>alert('저장과정에 문제가 생겼습니다. 관리자에게 문의하세요.');
+        location.href = 'contractEdit3.php?id=$filtered_id';
+        </script>";
+  error_log(mysqli_error($conn));
+  exit();
 }
 
-// echo "<script>
-//         alert('삭제하였습니다.');
-//         location.href = 'contractEdit3.php?id=$filtered_id';
-//       </script>";
+echo "<script>
+        alert('삭제하였습니다.');
+        location.href = 'contractEdit3.php?id=$filtered_id';
+      </script>";
 
 ?>

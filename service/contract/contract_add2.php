@@ -86,7 +86,8 @@ foreach ($groupBuildingArray as $key => $value) {
     <small>(1)<span id='star' style='color:#F7BE81;'> * </span>표시는 필수 입력값입니다. (2)<b>[세입자정보]</b>에는 세입자만 등록 가능합니다. (거래처 및 문의고객은 검색결과가 없다고 표시되니 주의하세요!) <b>[세입자정보]</b>의 제일우측 숫자는 고객번호로써 시스템데이터임을 참고하여주세요. (3)<b>[기간정보]</b>의 기간(개월수)에는 최대 72개월(6년)까지 등록 가능합니다.</small>
     <hr class="my-4">
     <a class="btn btn-primary btn-sm" href="contractAll.php" role="button">일괄계약등록</a>
-    <a class="btn btn-primary btn-sm" href="contractCustomer.php" role="button">일괄세입자등록</a>
+    <a class="btn btn-primary btn-sm" href="contractCustomer.php" role="button">그룹별세입자등록</a>
+    <a class="btn btn-primary btn-sm" href="contractRoom.php" role="button">방별세입자등록</a>
     <a class="btn btn-primary btn-sm" href="/service/customer/m_c_add.php" role="button">세입자등록</a>
   </div>
 </section>

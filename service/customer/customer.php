@@ -27,76 +27,90 @@ include $_SERVER['DOCUMENT_ROOT']."/view/conn.php";
   </div>
 
   <div class="p-3 mb-2 bg-light text-dark border border-info rounded">
-    <div class="row justify-content-md-center">
-      <table>
-        <tr>
-          <td class="mobile"><select class="form-control form-control-sm selectCall">
-            <option value="등록일자">등록일자</option>
-            <option value="수정일자">수정일자</option>
-          </select></td>
-          <td class="mobile"><select class="form-control form-control-sm selectCall">
-            <option value="등록일자">당월</option>
-            <option value="수정일자">전월</option>
-            <option value="등록일자">1개월</option>
-            <option value="수정일자">3개월</option>
-            <option value="등록일자">기타</option>
-            <option value="수정일자">없음</option>
-          </select></td>
-          <td class="mobile"><input type="text" name="" value="" class="form-control form-control-sm text-center" id="datepicker"></td>
-          <td class="mobile">~</td>
-          <td class="mobile"><input type="text" name="" value="" class="form-control form-control-sm text-center" id="datepicker"></td>
-          <td class="mobile"><select class="form-control form-control-sm selectCall">
-            <option value="등록일자">구분</option>
-            <option value="수정일자">문의</option>
-            <option value="등록일자">진행고객</option>
-            <option value="수정일자">거래처</option>
+    <form>
+      <div class="form-group row justify-content-md-center">
+        <div class="col-sm-1 pl-0 pr-0" style="">
+          <select class="form-control form-control-sm selectCall" name="dateDiv" id="dateDiv">
+            <option value="registerDate">등록일자</option>
+            <option value="updateDate">수정일자</option>
           </select>
-          </td>
-          <td><select class="form-control form-control-sm selectCall">
-            <option value="등록일자">고객명</option>
-            <option value="수정일자">연락처</option>
-            <option value="등록일자">이메일</option>
-            <option value="수정일자">특이사항</option>
-          </select></td>
-          <td><input type="text" name="" value="" class="form-control form-control-sm text-center"></td>
-          <td><button type="button" name="button" class="btn btn-info btn-sm">조회</button></td>
-        </tr>
-      </table>
-    </div>
+        </div>
+        <div class="col-sm-1 pl-0 pr-0" style="">
+          <select class="form-control form-control-sm selectCall" name="periodDiv" id="periodDiv">
+            <option value="allDate">--</option>
+            <option value="nowMonth">당월</option>
+            <option value="pastMonth">전월</option>
+            <option value="1pastMonth">1개월</option>
+            <option value="3pastMonth">3개월</option>
+          </select>
+        </div>
+        <div class="col-sm-2 pl-0 pr-0">
+          <input type="text" name="fromDate" value="" class="form-control form-control-sm text-center dateType" id="">
+        </div>
+        <div class="col-sm-2 pl-0 pr-0">
+          <input type="text" name="toDate" value="" class="form-control form-control-sm text-center dateType" id="">
+        </div>
+        <div class="col-sm-1 pl-0 pr-0">
+          <select name="customerDiv" class="form-control form-control-sm selectCall">
+            <option value="queryCustomer">문의</option>
+            <option value="ingCustomer" selected>세입자</option>
+            <option value="etcCustomer">거래처</option>
+          </select>
+        </div>
+        <div class="col-sm-1 pl-0 pr-0">
+          <select class="form-control form-control-sm selectCall" name="etcCondi">
+            <option value="customer">세입자</option>
+            <option value="contact">연락처</option>
+            <option value="email">이메일</option>
+            <option value="etc">특이사항</option>
+          </select>
+        </div>
+        <div class="col-sm-2 pl-0 pr-0">
+          <input type="text" name="cText" value="" class="form-control form-control-sm text-center">
+        </div>
+        <div class="col-sm-1 pl-0 pr-0">
+          <button type="button" name="btnLoad" class="btn btn-info btn-sm">조회</button>
+        </div>
+      </div>
+    </form>
   </div>
 
-  <!-- <form method="post"> -->
-    <div class="d-flex flex-row-reverse">
-      <div class="float-right">
-        <button type="button" class="btn btn-secondary" name="rowDeleteBtn">삭제</button>
-        <a href="m_c_add.php"><button type="button" class="btn btn-primary" name="button">등록</button></a>
-      </div>
+  <div class="d-flex flex-row-reverse">
+    <div class="float-right">
+      <button type="button" class="btn btn-secondary" name="rowDeleteBtn">삭제</button>
+      <a href="m_c_add.php"><button type="button" class="btn btn-primary" name="button">등록</button></a>
     </div>
-    <div class="mt-3">
-      <?php $sqlC = "select count(*) from customer where user_id={$_SESSION['id']}";
-      // echo $sqlC;
-      $resultC = mysqli_query($conn, $sqlC);
-      $rowC = mysqli_fetch_array($resultC);
-      // echo $rowC[0];
-      if((int)$rowC[0]===0){
-        echo "고객등록한것이 없네요. 바로 위 오른쪽 등록버튼을 눌러서 등록해주세요.";
-      } else {
-        include $_SERVER['DOCUMENT_ROOT']."/service/customer/customer_table.php";
-      }
-      ?>
-    </div>
-  <!-- </form> -->
+  </div>
+  <div class="mt-3" id="allVals">
+  </div>
 
 </section>
-<!-- <div class="" id="allVals">
-isright 6666?
-</div> -->
 
 <script>
 $(document).ready(function(){
       $(function () {
           $('[data-toggle="tooltip"]').tooltip()
       })
+
+      $.ajax({
+        url: 'ajax_customerLoad.php',
+        method: 'post',
+        data: $('form').serialize(),
+        success: function(data){
+          $('#allVals').html(data);
+        }
+      })
+})
+
+$('button[name="btnLoad"]').on('click', function(){
+    $.ajax({
+      url: 'ajax_customerLoad.php',
+      method: 'post',
+      data: $('form').serialize(),
+      success: function(data){
+        $('#allVals').html(data);
+      }
+    })
 })
 
 var table = $("#checkboxTestTbl");
@@ -166,6 +180,81 @@ $('button[name="rowDeleteBtn"]').on('click', function(){
   }
 
 })
+
+var today = new Date();
+var yyyy = today.getFullYear();
+var mm = today.getMonth() + 1;
+var dd = today.getDate();
+
+if(mm<10){
+  mm = '0'+mm;
+}
+if(dd<10){
+  dd = '0'+dd;
+}
+
+today = yyyy + '-' + mm + '-' + dd;
+//-------------------------------------------오늘날짜생성 끝 --------//
+
+$('select[name="periodDiv"]').on('change', function(){
+
+    var periodVal = $(this).val();
+    // console.log(periodVal);
+    if(periodVal === 'allDate'){
+      $('input[name="fromDate"]').val("");
+      $('input[name="toDate"]').val("");
+    }
+    if(periodVal === 'nowMonth'){
+      var fromDate = yyyy + '-' + mm + '-01';
+      $('input[name="fromDate"]').val(fromDate);
+      $('input[name="toDate"]').val(today);
+    }
+    if(periodVal === 'pastMonth'){
+      var pastMonth = Number(mm)-1;
+      // console.log(pastMonth);
+      var pastMonthDate = new Date(yyyy,pastMonth,0).getDate();
+      if(pastMonth<10){
+        pastMonth = '0' + pastMonth;
+      }
+      if(pastMonthDate<10){
+        pastMonthDate = '0' + pastMonthDate;
+      }
+      var fromDate = yyyy + '-' + pastMonth + '-01';
+      var toDate = yyyy + '-' + pastMonth + '-' + pastMonthDate;
+      $('input[name="fromDate"]').val(fromDate);
+      $('input[name="toDate"]').val(toDate);
+    }
+    if(periodVal === '1pastMonth'){
+      var pastMonth = Number(mm)-1;
+      // console.log(pastMonth);
+      var pastMonthDate = Number(dd);
+      if(pastMonth<10){
+        pastMonth = '0' + pastMonth;
+      }
+      if(pastMonthDate<10){
+        pastMonthDate = '0' + pastMonthDate;
+      }
+      var fromDate = yyyy + '-' + pastMonth + '-' + pastMonthDate;
+      $('input[name="fromDate"]').val(fromDate);
+      $('input[name="toDate"]').val(today);
+    }
+    if(periodVal === '3pastMonth'){
+      var pastMonth = Number(mm)-3;
+      // console.log(pastMonth);
+      var pastMonthDate = Number(dd);
+      if(pastMonth<10){
+        pastMonth = '0' + pastMonth;
+      }
+      if(pastMonthDate<10){
+        pastMonthDate = '0' + pastMonthDate;
+      }
+      var fromDate = yyyy + '-' + pastMonth + '-' + pastMonthDate;
+      $('input[name="fromDate"]').val(fromDate);
+      $('input[name="toDate"]').val(today);
+    }
+
+}) ////select periodDiv function closing
+
 </script>
 
 <?php include $_SERVER['DOCUMENT_ROOT']."/view/service_footer.php";?>

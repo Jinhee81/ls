@@ -40,7 +40,7 @@ include $_SERVER['DOCUMENT_ROOT']."/service/contract/building.php";
 
 <section class="container">
   <div class="jumbotron">
-    <h1 class="display-4">그룹별 세입자 등록 화면입니다!</h1>
+    <h1 class="display-4">방별 세입자 등록 화면입니다!</h1>
     <!-- <p class="lead">이 화면에서는 각 방의 세입자를 등록합니다.</p> -->
     <small>
       <!-- (1)<span id='star' style='color:#F7BE81;'>* </span>표시는 반드시 입력해야 합니다.  -->

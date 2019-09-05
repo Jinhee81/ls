@@ -12,8 +12,6 @@
 <script src="/js/jquery.number.min.js"></script>
 <script src="/js/jquery-ui.min.js"></script>
 <script src="/js/datepicker-ko.js"></script>
-<!-- <script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script> 이건 필요한페이지에 넣기로 함-->
-<!-- <script src="/js/daumAddressAPI.js"></script> -->
 <script src="/js/popper.min.js"></script>
 <script src="/js/bootstrap.min.js"></script>
 <script src="/js/mdb.min.js"></script> <!--이걸왜했지? 머티리얼디자인부트스트랩 js파일임-->
@@ -96,6 +94,14 @@
       $(document).on("keyup","input:text[numberOnly]", function(){
         $(this).number(true);
       });
+      $('.dateType').datepicker({
+        changeMonth: true,
+        changeYear: true,
+        showButtonPanel: true,
+        // showOn: "button",
+        buttonImage: "/img/calendar.svg",
+        buttonImageOnly: false
+      })
   });
 
   // $('.dateType').on('click', function(){
@@ -108,15 +114,6 @@
   //     buttonImageOnly: false
   //   })
   // })
-
-  $('.dateType').datepicker({
-    changeMonth: true,
-    changeYear: true,
-    showButtonPanel: true,
-    // showOn: "button",
-    buttonImage: "/img/calendar.svg",
-    buttonImageOnly: false
-  })
 
 
 </script>

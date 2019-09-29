@@ -48,8 +48,14 @@ include $_SERVER['DOCUMENT_ROOT']."/service/contract/building.php";
     <hr class="my-4">
   </div>
 </section>
-<section class="container-fluid">
-      <div class="container form-row justify-content-center">
+<section class="container">
+      <div class="d-flex justify-content-center">
+        <!-- <label for="">물건명</label>
+        <select class="form-control form-control-sm" id="select1">
+        </select>
+        <label for="">그룹명</label>
+        <select class="form-control form-control-sm" id="select2">
+        </select> -->
           <div class="form-group col-md-2 text-center">
               <label for="">물건명</label>
           </div>
@@ -69,16 +75,16 @@ include $_SERVER['DOCUMENT_ROOT']."/service/contract/building.php";
               </button>
           </div> -->
       </div>
-
-      <div class="container" id="" style="max-width:700px;">
-          <table class='table table-bordered text-center' id="table1">
-
-          </table>
-      </div>
-    <div class="bolowButtons">
-      <button type='button' class='btn btn-primary' id='saveBtn'>저장</button>
-      <a href='contract.php'><button type='button' class='btn btn-secondary'>계약리스트화면으로</button></a>
-    </div>
+      <form method="post" action="p_roomCustomer_add.php">
+          <div class="container" id="" style="max-width:800px;">
+              <table class='table table-bordered text-center' id="table1">
+              </table>
+          </div>
+          <div class="d-flex justify-content-center">
+              <button type='button' class='btn btn-primary mr-1' name='saveBtn'>저장</button>
+              <a href='contract.php'><button type='button' class='btn btn-secondary'>계약리스트화면으로</button></a>
+          </div>
+      </form>
 </section>
 
 <script>
@@ -192,8 +198,11 @@ include $_SERVER['DOCUMENT_ROOT']."/service/contract/building.php";
       currow.find('div[name="customerList"]').fadeOut();
   })
 
+  // $('button[name="saveBtn"]').on('click', function(){
+  //   $('form').submit();
+  // })
 
-$('#saveBtn').on('click', function(){
+$('button[name="saveBtn"]').on('click', function(){
   var allCnt = Number($('#table1 input[type="search"]').length);
   console.log(allCnt);
   var allArray = [];
@@ -213,8 +222,8 @@ $('#saveBtn').on('click', function(){
     allArray.push(curArray);
   }
 
-  var aa = 'p_realContractCustomer_add_for';
-  var bb = 'p_realContractCustomer_add_for.php';
+  var aa = 'p_roomCustomer_add';
+  var bb = 'p_roomCustomer_add.php';
   var cc = JSON.stringify(allArray);
 
   goCategoryPage(aa, bb, cc, buildingIdx, groupIdx);

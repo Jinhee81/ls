@@ -74,7 +74,7 @@ include $_SERVER['DOCUMENT_ROOT']."/service/contract/building.php";
           </div>
           <div class="col-sm-1 pl-0 pr-0">
             <select class="form-control form-control-sm selectCall" id="etcCondi" name="etcCondi">
-              <option value="customer">세입자</option>
+              <option value="customer">성명/사업자명</option>
               <option value="contact">연락처</option>
               <option value="contractId">계약번호</option>
               <option value="roomId">방번호</option>
@@ -93,7 +93,7 @@ include $_SERVER['DOCUMENT_ROOT']."/service/contract/building.php";
 
 </div>
 </section>
-  <?php
+  <!-- <?php
   if (isset($_REQUEST['submit'])) {
     $chk = $_REQUEST['chk'];
     $a = implode(',', $chk);
@@ -111,7 +111,7 @@ include $_SERVER['DOCUMENT_ROOT']."/service/contract/building.php";
       echo "<script>alert('한개이상을 선택해야 합니다.');</script>";
     }
   }
-   ?>
+   ?> -->
   <section class="container">
   <div class="d-flex flex-row-reverse">
       <div class="float-right">
@@ -119,19 +119,7 @@ include $_SERVER['DOCUMENT_ROOT']."/service/contract/building.php";
         <a href="contract_add2.php"><button type="button" class="btn btn-primary" name="button">등록</button></a>
       </div>
   </div>
-  <div class="mt-3">
-      <?php $sqlC = "select count(*) from realContract where user_id={$_SESSION['id']}";
-      // echo $sqlC;
-      $resultC = mysqli_query($conn, $sqlC);
-      $rowC = mysqli_fetch_array($resultC);
-      // echo $rowC[0];
-      if((int)$rowC[0]===0){
-        echo "계약 등록한것이 없네요. 바로 위 오른쪽 등록버튼을 눌러서 등록해주세요.";
-      } else {
-        // include $_SERVER['DOCUMENT_ROOT']."/service/contract/contract_table.php";
-      }
-      ?>
-  </div>
+
   <div class="" id="allVals">
   <!-- isright 6666? -->
   </div>

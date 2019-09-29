@@ -1,0 +1,13 @@
+<!-- <div class="mt-3">
+    <?php $sqlC = "select count(*) from realContract where user_id={$_SESSION['id']}";
+    // echo $sqlC;
+    $resultC = mysqli_query($conn, $sqlC);
+    $rowC = mysqli_fetch_array($resultC);
+    // echo $rowC[0];
+    if((int)$rowC[0]===0){
+      echo "계약 등록한것이 없네요. 바로 위 오른쪽 등록버튼을 눌러서 등록해주세요.";
+    } else {
+      // include $_SERVER['DOCUMENT_ROOT']."/service/contract/contract_table.php";
+    }
+    ?>
+</div> -->

@@ -13,7 +13,7 @@ if(isset($_POST['query'])){
     from customer
     where
       user_id={$_SESSION['id']} and
-      div1='진행고객' and
+      div1='세입자' and
       (regexp_like(name, '{$_POST['query']}') or
        regexp_like(companyname, '{$_POST['query']}'))
       ";

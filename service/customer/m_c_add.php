@@ -18,7 +18,7 @@ include $_SERVER['DOCUMENT_ROOT']."/view/conn.php";
 
 
 <script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
-<!-- <script src="/js/daumAddressAPI.js"></script> -->
+<script src="/js/daumAddressAPI.js"></script>
 <script src="cadd1.js?v=<%=System.currentTimeMillis() %>"></script>
 <section class="container">
   <div class="jumbotron">
@@ -27,7 +27,7 @@ include $_SERVER['DOCUMENT_ROOT']."/view/conn.php";
     <small>(1)<span id='star' style='color:#F7BE81;'>* </span>표시는 반드시 입력해야 합니다.(2) 구분(대)의 값이 '세입자'이어야 방계약 등록이 가능합니다. (3)'일괄등록'은 데스크탑화면에서 가능합니다 (모바일화면 사용불가) (4)'csv등록'은 데스크탑화면에서 가능합니다. </small>
     <hr class="my-4">
     <a class="btn btn-primary btn-sm mobile" href="m_c_adds.php" role="button">일괄등록</a>
-    <a class="btn btn-primary btn-sm mobile" href="m_c_add_csv.php" role="button">csv등록</a>
+    <a class="btn btn-primary btn-sm mobile" href="m_c_add_csv1.php" role="button">csv등록</a>
   </div>
 </section>
 <section class="container" style="max-width:700px;">

@@ -50,32 +50,7 @@
       // var tbl = $("#checkboxTestTbl");
       var tbl = $('.table');
 
-      // 테이블 헤더에 있는 checkbox 클릭시
-      $(":checkbox:first", tbl).change(function(){
-        if($(":checkbox:first", tbl).is(":checked")){
-          $(":checkbox", tbl).prop('checked',true);
-          $(":checkbox").parent().parent().addClass("selected");
-        } else {
-          $(":checkbox", tbl).prop('checked',false);
-          $(":checkbox").parent().parent().removeClass("selected");
-        }
-      })
 
-      // 헤더에 있는 체크박스외 다른 체크박스 클릭시
-      $(":checkbox:not(:first)", tbl).change(function(){
-        var allCnt = $(":checkbox:not(:first)", tbl).length;
-        var checkedCnt = $(":checkbox:not(:first)", tbl).filter(":checked").length;
-
-        if($(this).prop("checked")==true){
-          $(this).parent().parent().addClass("selected");
-        } else {
-          $(this).parent().parent().removeClass("selected");
-        }
-
-        if( allCnt==checkedCnt ){
-          $(":checkbox:first", tbl).prop("checked", true);
-        }
-      })
 
       $('#navbarDropdown').on('click', function(){
           $('#navbarDropdown').dropdown('toggle');

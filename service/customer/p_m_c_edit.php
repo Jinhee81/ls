@@ -26,7 +26,7 @@ $fil = array(
 
 settype($fil['id'], 'integer');
 
-print_r($fil);
+// print_r($fil);
 
 $addCheck1 = "
   select count(*) from customer

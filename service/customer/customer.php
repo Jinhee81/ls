@@ -59,7 +59,7 @@ include $_SERVER['DOCUMENT_ROOT']."/view/conn.php";
         </div>
         <div class="col-sm-1 pl-0 pr-0">
           <select class="form-control form-control-sm selectCall" name="etcCondi">
-            <option value="customer">세입자</option>
+            <option value="customer">성명/사업자명</option>
             <option value="contact">연락처</option>
             <option value="email">이메일</option>
             <option value="etc">특이사항</option>
@@ -113,51 +113,6 @@ $('button[name="btnLoad"]').on('click', function(){
     })
 })
 
-var table = $("#checkboxTestTbl");
-
-var customerArray = [];
-
-$(":checkbox:first", table).click(function(){
-
-    var allCnt = $(":checkbox:not(:first)", table).length;
-    customerArray = [];
-
-    if($(":checkbox:first", table).is(":checked")){
-      for (var i = 1; i <= allCnt; i++) {
-        var customerArrayEle = [];
-        var colOrder = table.find("tr:eq("+i+")").find("td:eq(1)").text();
-        var colid = table.find("tr:eq("+i+")").find("td:eq(0)").children('input').val();
-        var colStep = table.find("tr:eq("+i+")").find("td:eq(3)").children('span').text();
-        customerArrayEle.push(colOrder, colid, colStep);
-        customerArray.push(customerArrayEle);
-      }
-    } else {
-      customerArray = [];
-    }
-    // console.log(customerArray);
-})
-
-$(":checkbox:not(:first)",table).click(function(){
-  var customerArrayEle = [];
-
-  if($(this).is(":checked")){
-    var currow = $(this).closest('tr');
-    var colOrder = Number(currow.find('td:eq(1)').text());
-    var colid = currow.find('td:eq(0)').children('input').val();
-    var colStep = currow.find('td:eq(3)').children('span').text();
-    customerArrayEle.push(colOrder, colid, colStep);
-    customerArray.push(customerArrayEle);
-  } else {
-    var currow = $(this).closest('tr');
-    var colOrder = Number(currow.find('td:eq(1)').text());
-    var colid = currow.find('td:eq(0)').children('input').val();
-    var colStep = currow.find('td:eq(3)').children('span').text();
-    var dropReady = customerArrayEle.push(colOrder, colid, colStep);
-    var index = customerArray.indexOf(dropReady);
-    customerArray.splice(index, 1);
-  }
-  // console.log(customerArray);
-})
 
 $('button[name="rowDeleteBtn"]').on('click', function(){
   console.log(customerArray);
@@ -174,7 +129,7 @@ $('button[name="rowDeleteBtn"]').on('click', function(){
   goCategoryPage(aa, bb, customerArray);
 
   function goCategoryPage(a, b, c){
-    var frm = formCreate(a, 'post', b,'customerArray');
+    var frm = formCreate(a, 'post', b,'');
     frm = formInput(frm, 'customerArray', c);
     formSubmit(frm);
   }
@@ -254,6 +209,10 @@ $('select[name="periodDiv"]').on('change', function(){
     }
 
 }) ////select periodDiv function closing
+
+$('input[name="cText"]').click(function(){
+  $(this).select();
+})
 
 </script>
 

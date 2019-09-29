@@ -40,10 +40,11 @@ include $_SERVER['DOCUMENT_ROOT']."/service/contract/building.php";
 
 <section class="container">
   <div class="jumbotron">
-    <h1 class="display-4">일괄등록 화면입니다!</h1>
-    <p class="lead">이 화면에서는 한꺼번에 많은 방계약들을 등록합니다.</p>
+    <h1 class="display-4">계약일괄등록(1) 화면입니다!</h1>
+    <p class="lead">이 화면에서는 그룹별 방계약을 등록합니다.</p>
     <small>(1)<span id='star' style='color:#F7BE81;'>* </span>표시는 반드시 입력해야 합니다. (2)공실일 경우는 행삭제를 하여 없애주세요.</small>
     <hr class="my-4">
+    <a class="btn btn-primary btn-sm" href="contractAll2.php" role="button">일괄계약등록(2)</a>
   </div>
 </section>
 <section class="container-fluid">
@@ -99,7 +100,7 @@ include $_SERVER['DOCUMENT_ROOT']."/service/contract/building.php";
     }
     groupIdx = $('#select2').val();
 
-    var tableTitle = "<tr><td>관리호수</td><td><span id='star' style='color:#F7BE81;'>* </span>고객정보</td><td>계약일자</td><td><span id='star' style='color:#F7BE81;'>* </span>공급가액/세액</td><td><span id='star' style='color:#F7BE81;'>* </span>기간</td><td><span id='star' style='color:#F7BE81;'>* </span>시작일(종료일)</td><td>보증금</td><td>보증금입금일</td></tr>";
+    var tableTitle = "<tr><td>방번호</td><td><span id='star' style='color:#F7BE81;'>* </span>세입자</td><td>계약일자</td><td><span id='star' style='color:#F7BE81;'>* </span>공급가액/세액</td><td><span id='star' style='color:#F7BE81;'>* </span>기간</td><td><span id='star' style='color:#F7BE81;'>* </span>시작일(종료일)</td><td>보증금</td><td>보증금입금일</td></tr>";
     $('#table1').append(tableTitle);
 
     var tableCol2 ="<td><input type='search' name='customer' class='form-control form-control-sm text-center' required><div class='' name='customerList'></div></td>"; //고객정보
@@ -154,7 +155,7 @@ include $_SERVER['DOCUMENT_ROOT']."/service/contract/building.php";
 
         }
         $('div[name="rowDeleteBtn"]').on('click', function(){
-          console.log('삭제하기');
+          // console.log('삭제하기');
           var currow = $(this).closest('tr');
           currow.remove();
           // alert('삭제하였습니다');
@@ -196,7 +197,7 @@ include $_SERVER['DOCUMENT_ROOT']."/service/contract/building.php";
         }
 
         $('div[name="rowDeleteBtn"]').on('click', function(){
-          console.log('삭제하기');
+          // console.log('삭제하기');
           var currow = $(this).closest('tr');
           currow.remove();
           // alert('삭제하였습니다');
@@ -221,7 +222,7 @@ include $_SERVER['DOCUMENT_ROOT']."/service/contract/building.php";
     })
 
     $('div[name="rowDeleteBtn"]').on('click', function(){
-      console.log('삭제하기');
+      // console.log('삭제하기');
       var currow = $(this).closest('tr');
       currow.remove();
       // alert('삭제하였습니다');
@@ -355,7 +356,7 @@ $('#saveBtn').on('click', function(){
     var col11 = currow.find('td:eq(0)').children('input:eq(0)').val();//관리호수 idx
     var col2 = currow.find('td:eq(1)').children('input').val();//고객정보
     if(!col2){
-      alert('고객정보는 필수값입니다.');
+      alert('세입자는 필수값입니다.');
       return false;
     }
 

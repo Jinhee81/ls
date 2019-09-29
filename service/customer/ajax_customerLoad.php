@@ -17,30 +17,34 @@ if($_POST['customerDiv']==='etcCustomer'){
   $customerDiv = '거래처';
 }
 
+$etcCondi = "";
 
-$sqlC = "select count(*) from customer
-          where user_id={$_SESSION['id']} and
-          div1 = '{$customerDiv}'";
-// echo $sqlC;
-$resultC = mysqli_query($conn, $sqlC);
-$rowC = mysqli_fetch_array($resultC);
-// echo $rowC[0];
-if((int)$rowC[0]===0){
-  echo $customerDiv."를 등록한 것이 없네요. 바로 위 오른쪽 등록버튼을 눌러서 등록해주세요.";
-} else {
-  // include $_SERVER['DOCUMENT_ROOT']."/service/customer/customer_table.php";
+if($_POST['cText']){
+  if($_POST['etcCondi']==='customer'){
+    $etcCondi = " and (name like '%".$_POST['cText']."%' or companyname like '%".$_POST['cText']."%')";
+  } elseif($_POST['etcCondi']==='contact'){
+    $etcCondi = " and (contact1 like '%".$_POST['cText']."%' or contact2 like '%".$_POST['cText']."%' or contact3 like '%".$_POST['cText']."%')";
+  } elseif($_POST['etcCondi']==='email'){
+    $etcCondi = " and (email like '%".$_POST['cText']."%')";
+  } elseif($_POST['etcCondi']==='etc'){
+    $etcCondi = " and (etc like '%".$_POST['cText']."%')";
+  }
+}
 
-  $sql = "select
-            @num := @num + 1 as num,
-            id, div1, div2, name, div3, companyname, cNumber1, cNumber2, cNumber3, contact1, contact2, contact3, email, etc
-          from (select @num :=0)a, customer
-          where user_id={$_SESSION['id']} and
-                div1 = '{$customerDiv}'
-          order by num desc";
-  // echo $sql;
-  $result = mysqli_query($conn, $sql);
-  ?>
-
+$sql = "select
+          @num := @num + 1 as num,
+          id, div1, div2, name, div3, companyname, cNumber1, cNumber2, cNumber3, contact1, contact2, contact3, email, etc
+        from (select @num :=0)a, customer
+        where user_id={$_SESSION['id']} and
+              div1 = '{$customerDiv}'
+              $etcCondi
+        order by num desc";
+// echo $sql;
+$result = mysqli_query($conn, $sql);
+$total_rows = mysqli_num_rows($result);
+if($total_rows===0){
+  echo '조회된 값이 없습니다.';
+} else {?>
   <table class="table table-hover text-center" id="checkboxTestTbl">
     <thead>
       <tr class="table-info">
@@ -103,7 +107,7 @@ if((int)$rowC[0]===0){
         <td><?=$clist['num']?></td>
         <td class="mobile"><?=$clist['div1']?></td>
         <td class='text-center'><a href="m_c_edit.php?id=<?=$clist['id']?>">
-          <?=$cName?></a>
+          <?=mb_substr($cName,0,20)?></a>
           <?php
           $sql2 = "select count(*) from realContract where customer_id={$clist['id']}";
           // echo $sql2;
@@ -116,11 +120,11 @@ if((int)$rowC[0]===0){
            ?>
         </td>
         <td><?=$cContact?></td>
-        <td class="mobile"><?=$clist['email']?></td>
-        <td class="mobile"><?=$clist['etc']?></td>
+        <td class="mobile"><?=mb_substr($clist['email'],0,15)?></td>
+        <td class="mobile"><?=mb_substr($clist['etc'],0,10)?></td>
         <td class="mobile">
           <?php
-              if($clist['div1']==='진행고객'){
+              if($clist['div1']==='세입자'){
                 echo "<a class='btn btn-info btn-sm' href='/service/contract/contract_add1.php?id=".$clist['id']."' role='button'>방계약</a>";
               }
            ?>
@@ -147,4 +151,82 @@ if((int)$rowC[0]===0){
       </li>
     </ul>
   </nav>
-<?php } ?>
+<?php }
+?>
+
+
+
+<script>
+var table = $("#checkboxTestTbl");
+
+// 테이블 헤더에 있는 checkbox 클릭시
+$(":checkbox:first", table).change(function(){
+  if($(":checkbox:first", table).is(":checked")){
+    $(":checkbox", table).prop('checked',true);
+    $(":checkbox").parent().parent().addClass("selected");
+  } else {
+    $(":checkbox", table).prop('checked',false);
+    $(":checkbox").parent().parent().removeClass("selected");
+  }
+})
+
+// 헤더에 있는 체크박스외 다른 체크박스 클릭시
+$(":checkbox:not(:first)", table).change(function(){
+  var allCnt = $(":checkbox:not(:first)", table).length;
+  var checkedCnt = $(":checkbox:not(:first)", table).filter(":checked").length;
+
+  if($(this).prop("checked")==true){
+    $(this).parent().parent().addClass("selected");
+  } else {
+    $(this).parent().parent().removeClass("selected");
+  }
+
+  if( allCnt==checkedCnt ){
+    $(":checkbox:first", table).prop("checked", true);
+  }
+})
+
+var customerArray = [];
+
+$(":checkbox:first", table).click(function(){
+
+    var allCnt = $(":checkbox:not(:first)", table).length;
+    customerArray = [];
+
+    if($(":checkbox:first", table).is(":checked")){
+      for (var i = 1; i <= allCnt; i++) {
+        var customerArrayEle = [];
+        var colOrder = table.find("tr:eq("+i+")").find("td:eq(1)").text();
+        var colid = table.find("tr:eq("+i+")").find("td:eq(0)").children('input').val();
+        var colStep = table.find("tr:eq("+i+")").find("td:eq(3)").children('span').text();
+        customerArrayEle.push(colOrder, colid, colStep);
+        customerArray.push(customerArrayEle);
+      }
+    } else {
+      customerArray = [];
+    }
+    // console.log(customerArray);
+})
+
+$(":checkbox:not(:first)",table).click(function(){
+  var customerArrayEle = [];
+
+  if($(this).is(":checked")){
+    var currow = $(this).closest('tr');
+    var colOrder = Number(currow.find('td:eq(1)').text());
+    var colid = currow.find('td:eq(0)').children('input').val();
+    var colStep = currow.find('td:eq(3)').children('span').text();
+    customerArrayEle.push(colOrder, colid, colStep);
+    customerArray.push(customerArrayEle);
+  } else {
+    var currow = $(this).closest('tr');
+    var colOrder = Number(currow.find('td:eq(1)').text());
+    var colid = currow.find('td:eq(0)').children('input').val();
+    var colStep = currow.find('td:eq(3)').children('span').text();
+    var dropReady = customerArrayEle.push(colOrder, colid, colStep);
+    var index = customerArray.indexOf(dropReady);
+    customerArray.splice(index, 1);
+  }
+  console.log(customerArray);
+})
+</script>

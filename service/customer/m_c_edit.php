@@ -30,7 +30,7 @@ $sql = "select
 $result = mysqli_query($conn, $sql);
 $row = mysqli_fetch_array($result);
 // echo $sql;
-print_r($row);
+// print_r($row);
 $clist['id'] = htmlspecialchars($row['id']);
 $clist['num'] = htmlspecialchars($row['num']);
 $clist['div1'] = htmlspecialchars($row['div1']);
@@ -127,7 +127,7 @@ if($clist['div1']==='문의'){
         <label>구분(대)</label>
         <select id="div1" name="div1" class="form-control" onchange="div1Get();" disabled>
           <option value="문의" <?php if($row['div1']==='문의'){echo "selected";}?>>문의</option>
-          <option value="진행고객" <?php if($row['div1']==='진행고객'){echo "selected";}?>>고객</option>
+          <option value="세입자" <?php if($row['div1']==='세입자'){echo "selected";}?>>세입자</option>
           <option value="거래처" <?php if($row['div1']==='거래처'){echo "selected";}?>>거래처</option>
         </select>
       </div>

@@ -59,33 +59,8 @@ include $_SERVER['DOCUMENT_ROOT']."/service/contract/building.php";
           </div>
       </div>
 
-      <div class="container" id="" >
-          <table class='table table-bordered text-center' id="table1">
-            <tr>
-              <td>그룹명</td>
-              <td>방번호</td>
-              <td>세입자</td>
-              <td>계약일자</td>
-              <td>공급가액</td>
-              <td>세액</td>
-              <td>기간</td>
-              <td>시작일</td>
-              <td>보증금</td>
-              <td>보증금입금일</td>
-            </tr>
-            <tr>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-            </tr>
-          </table>
+      <div class="" id="allVals" >
+
       </div>
     <div class="d-flex justify-content-center">
       <button type='button' class='btn btn-primary mr-1' id='saveBtn'>저장</button>
@@ -95,13 +70,28 @@ include $_SERVER['DOCUMENT_ROOT']."/service/contract/building.php";
 
 <script>
 
-    var select1option, select2option, buildingIdx, groupIdx;
+var select1option, buildingIdx ;
 
-    for(var key in buildingArray){ //건물목록출력(비즈피스장암,비즈피스구로)
-        select1option = "<option value='"+key+"'>"+buildingArray[key][0]+"</option>";
-        $('#select1').append(select1option);
-    }
-    buildingIdx = $('#select1').val();
+for(var key in buildingArray){ //건물목록출력(비즈피스장암,비즈피스구로)
+    select1option = "<option value='"+key+"'>"+buildingArray[key][0]+"</option>";
+    $('#select1').append(select1option);
+}
+buildingIdx = $('#select1').val();
+// console.log(buildingIdx);
+
+$(document).ready(function(){
+
+    $.ajax({
+      url: 'ajax_realContractCsvLoad.php',
+      method: 'post',
+      data: { buildingIdx : buildingIdx },
+      success: function(data){
+        $('#allVals').html(data);
+      }
+    })
+})
+
+
 
 </script>
 <?php include $_SERVER['DOCUMENT_ROOT']."/view/service_footer.php";?>

@@ -150,7 +150,7 @@ for ($i=0; $i < count($contractRow); $i++) {
   }
 }//for count($contractRow) closing
 
-echo "<script>alert('계약들을 저장하였습니다.');
+echo "<script>alert('계약을 저장하였습니다.');
       location.href = 'contract.php';
       </script>";
 

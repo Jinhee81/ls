@@ -1,4 +1,4 @@
-<!-- 이파일은 세입자만 찾는 파일임(계약등록에서는 세입자만 찾아야하니깐) -->
+<!-- 이파일은 세입자랑 기타고객까지도찾는 파일임(기타계약에서는 세입자말고 기타분류도 찾아야햐니깐) -->
 <?php
 session_start();
 include $_SERVER['DOCUMENT_ROOT']."/view/conn.php";
@@ -14,7 +14,6 @@ if(isset($_POST['query'])){
     from customer
     where
       user_id={$_SESSION['id']} and
-      div1='세입자' and
       (regexp_like(name, '{$_POST['query']}') or
        regexp_like(companyname, '{$_POST['query']}'))
       ";

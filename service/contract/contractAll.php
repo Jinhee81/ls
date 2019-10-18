@@ -402,8 +402,8 @@ $('#saveBtn').on('click', function(){
     allArray.push(curArray);
   }
 
-  console.log(allArray);
-  console.log(typeof(col41), col42, col43);
+  // console.log(allArray);
+  // console.log(typeof(col41), col42, col43);
 
   var aa = 'p_realContract_add_for';
   var bb = 'p_realContract_add_for.php';
@@ -412,7 +412,7 @@ $('#saveBtn').on('click', function(){
   goCategoryPage(aa, bb, cc, allArray, buildingIdx, groupIdx);
 
   function goCategoryPage(a, b, c, d, e, f){
-    var frm = formCreate(a, 'post', b,'p_realContract_add_for');
+    var frm = formCreate(a, 'post', b,'');
     frm = formInput(frm, 'buildingId', e);
     frm = formInput(frm, 'groupId', f)
     frm = formInput(frm, c, d);

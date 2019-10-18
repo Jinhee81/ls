@@ -23,7 +23,7 @@ if($result === false){
   // echo $sql2;
   if(!$result2){
     echo "<script>
-        alert('삭제과정에 문제가생겼습니다. 계약이 생성된경우에는 계약을 먼저 지우고 삭제해야 합니다.');
+        alert('계약이 생성되어있어 삭제할 수 없습니다');
         location.href='building.php';
        </script>";
     } else {

@@ -5,35 +5,22 @@ session_start();
 include $_SERVER['DOCUMENT_ROOT']."/view/conn.php";
 
 // print_r($_POST);
-$filtered = mysqli_real_escape_string($conn, $_POST['scheduleArray']);
+// print_r($_SESSION);
 $filtered_id = mysqli_real_escape_string($conn, $_POST['contractId']);
 // print_r($filtered_id);
+
+$a = json_decode($_POST['scheduleArray']);
+// print_r($a);
 //
-$a = explode(",", $filtered);
-
-for ($i=0; $i < count($a)/9; $i++) {
-  $payrow[$i]=[];
-} //payrow라는 배열을 만듦
-
 for ($i=0; $i < count($a); $i++) {
-  if($i < 9){
-    array_push($payrow[0], $a[$i]);
-  } else {
-    array_push($payrow[floor($i/9)], $a[$i]);
-  }
-} //배열에다가 청구데이터를 추가시킴
-
-// print_r($payrow);
-
-for ($i=0; $i < count($payrow); $i++) {
   $sql3 = "
           UPDATE contractSchedule
             SET
-              mMamount = {$payrow[$i][4]},
-              mVmAmount = {$payrow[$i][5]},
-              mTmAmount = {$payrow[$i][6]}
+              mMamount = {$a[$i][4]},
+              mVmAmount = {$a[$i][5]},
+              mTmAmount = {$a[$i][6]}
             WHERE
-              idcontractSchedule = {$payrow[$i][0]}";
+              idcontractSchedule = {$a[$i][0]}";
   // echo $sql3;
   $result3 = mysqli_query($conn, $sql3);
   if($result3===false){
@@ -44,19 +31,19 @@ for ($i=0; $i < count($payrow); $i++) {
     exit();
   }
 }//이작업을해야지 계약스케줄의 행별로 바뀐금액이 저장이 된다
-
+//
 $expectedDateArray = []; //입금예정일만 모인 배열을 만듦
-for ($i=0; $i < count($a)/9; $i++) {
-  array_push($expectedDateArray, $payrow[$i][7]);
+for ($i=0; $i < count($a); $i++) {
+  array_push($expectedDateArray, $a[$i][7]);
 }
 
 // print_r($expectedDateArray);
-
+//
 $expectedDateArray2= array_keys(array_count_values($expectedDateArray)); //입금예정일만 모인 배열에서 중복된 값 제거함
-
-// print_r($expectedDateArray2);
-
-
+//
+// // print_r($expectedDateArray2);
+//
+//
 for ($i=0; $i < count($expectedDateArray2); $i++) {
   $contractScheduleIdArray = [];
   $orderedArray = [];
@@ -65,42 +52,43 @@ for ($i=0; $i < count($expectedDateArray2); $i++) {
   $pvAmountAccumulate = 0;
   $ptAmountAccumulate = 0;
 
-  for ($j=0; $j < count($payrow); $j++) {
-    if($payrow[$j][7] == $expectedDateArray2[$i]){
+  for ($j=0; $j < count($a); $j++) {
+    if($a[$j][7] == $expectedDateArray2[$i]){
 
-      array_push($contractScheduleIdArray, $payrow[$j][0]);
-      array_push($orderedArray, $payrow[$j][1]);
-      array_push($startDate, $payrow[$j][2]);
+      array_push($contractScheduleIdArray, $a[$j][0]);
+      array_push($orderedArray, $a[$j][1]);
+      array_push($startDate, $a[$j][2]);
 
       $payExecutiveRow[$i][0]=implode(',', $contractScheduleIdArray);
       $payExecutiveRow[$i][1]=implode(',', $orderedArray);
 
       $payExecutiveRow[$i][2]=$startDate[0];//시작일
-      $payExecutiveRow[$i][3]=$payrow[$j][3];//종료일
+      $payExecutiveRow[$i][3]=$a[$j][3];//종료일
 
-      $pAmountAccumulate += $payrow[$j][4];
-      $pvAmountAccumulate += $payrow[$j][5];
-      $ptAmountAccumulate += $payrow[$j][6];
+      $pAmountAccumulate += $a[$j][4];
+      $pvAmountAccumulate += $a[$j][5];
+      $ptAmountAccumulate += $a[$j][6];
 
       $payExecutiveRow[$i][4]=$pAmountAccumulate;//공급가액
       $payExecutiveRow[$i][5]=$pvAmountAccumulate;//세액
       $payExecutiveRow[$i][6]=$ptAmountAccumulate;//합계
 
-      $payExecutiveRow[$i][7]=$payrow[$j][7];//예정일
-      $payExecutiveRow[$i][8]=$payrow[$j][8];//입금구분
+      $payExecutiveRow[$i][7]=$a[$j][7];//예정일
+      $payExecutiveRow[$i][8]=$a[$j][8];//입금구분
+      $payExecutiveRow[$i][9] += 1;//청구개월수
 
     }
   }
 }
 
-// print_r($payExecutiveRow);
 
+// print_r($payExecutiveRow);
 
 for ($i=0; $i < count($payExecutiveRow); $i++) {
   $sql = "
         INSERT INTO paySchedule2 (
           csIdArray, orderArray, pStartDate, pEndDate, pAmount,
-          pvAmount, ptAmount, pExpectedDate, paykind, getAmount, realContract_id)
+          pvAmount, ptAmount, pExpectedDate, paykind, getAmount, realContract_id, user_id, monthCount)
         VALUES (
           '{$payExecutiveRow[$i][0]}',
           '{$payExecutiveRow[$i][1]}',
@@ -112,7 +100,9 @@ for ($i=0; $i < count($payExecutiveRow); $i++) {
           '{$payExecutiveRow[$i][7]}',
           '{$payExecutiveRow[$i][8]}',
           0,
-          {$filtered_id}
+          {$filtered_id},
+          {$_SESSION['id']},
+          {$payExecutiveRow[$i][9]}
         )
       ";
   // echo $sql;

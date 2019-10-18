@@ -20,9 +20,9 @@
 
 
     <!-- <script type="text/javascript" src="/js/dataTable.js"></script> -->
-
-    <link rel="stylesheet" href="/css/jquery-ui.min.css">
     <link rel="stylesheet" href="/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/jquery-ui.min.css">
+    <link rel="stylesheet" href="/css/jquery-ui-timepicker-addon.css">
     <link rel="stylesheet" href="/css/custom.css">
     <link rel="stylesheet" href="/css/dataTable.jquery.css">
     <link rel="stylesheet" href="/css/dataTable.responsive.css">

@@ -30,6 +30,7 @@ include $_SERVER['DOCUMENT_ROOT']."/view/conn.php";
                 <option value="문의">문의</option>
                 <option value="진행고객" selected>세입자</option>
                 <option value="거래처">거래처</option>
+                <option value="기타">기타</option>
               </select>
             </td>
             <td><label>구분(소)</label></td>

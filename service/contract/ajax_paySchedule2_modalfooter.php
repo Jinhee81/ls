@@ -32,7 +32,7 @@ if(isset($_POST['payNumber'])){
 $('.getExecute').on('click', function(){ //입금완료버튼(모달안버튼) 클릭
 
   var aa1 = 'payScheduleInput';
-  var bb1 = 'p_payScheduleInput.php';
+  var bb1 = 'p_payScheduleGetAmountInput.php';
   var contractId = '<?=$_POST['filtered_id']?>';
 
   var pid = $(this).parent().parent().children(':eq(0)').children(':eq(0)').children(':eq(0)').text(); //청구번호
@@ -50,7 +50,7 @@ $('.getExecute').on('click', function(){ //입금완료버튼(모달안버튼) �
   goCategoryPage(aa1, bb1, pid, ppayKind, pgetDate, pgetAmount, contractId);
 
   function goCategoryPage(a, b, c, d, e, f, g){
-    var frm = formCreate(a, 'post', b,'payid');
+    var frm = formCreate(a, 'post', b,'');
     frm = formInput(frm, 'realContract_id', g);
     frm = formInput(frm, 'payid', c);
     frm = formInput(frm, 'paykind', d);
@@ -72,7 +72,7 @@ $('.getExecuteBack').on('click', function(){ //청구취소(삭제)버튼(모달
   goCategoryPage(aa1, bb1, contractId, pid);
 
   function goCategoryPage(a, b, c, d){
-    var frm = formCreate(a, 'post', b,'payid');
+    var frm = formCreate(a, 'post', b,'');
     frm = formInput(frm, 'realContract_id', c);
     frm = formInput(frm, 'payid', d);
     formSubmit(frm);
@@ -92,7 +92,7 @@ $('.getExecuteBack2').on('click', function(){ //입금취소버튼(모달안버�
   goCategoryPage(aa1, bb1, contractId, pid);
 
   function goCategoryPage(a, b, c, d){
-    var frm = formCreate(a, 'post', b,'payid');
+    var frm = formCreate(a, 'post', b,'');
     frm = formInput(frm, 'realContract_id', c);
     frm = formInput(frm, 'payid', d);
     formSubmit(frm);

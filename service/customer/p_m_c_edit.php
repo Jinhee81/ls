@@ -66,6 +66,7 @@ if((int)$row_addCheck2[0]>0){
 $sql = "
   UPDATE customer
   SET
+    div1 = '{$_POST['div1']}',
     qDate = '{$fil['qDate']}',
     name = '{$fil['name']}',
     contact1 = '{$fil['contact1']}',

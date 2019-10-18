@@ -5,6 +5,54 @@ include $_SERVER['DOCUMENT_ROOT']."/view/conn.php";
 // print_r($_SESSION);
 // print_r($_POST);
 // echo '111';
+
+date_default_timezone_set('Asia/Seoul'); //이거있어야지 시간대가 맞게설정됨, 없으면 시간대가 안맞아짐
+$currentDate = date('Y-m-d');
+$etcIng = "";
+if($_POST['progress']==='pIng'){
+  $etcIng = " and (startDate <= '{$currentDate}' and endDate >= '{$currentDate}')";
+} elseif($_POST['progress']==='pWaiting'){
+  $etcIng = " and (startDate > '{$currentDate}')";
+} elseif($_POST['progress']==='pEnd'){
+  $etcIng = " and (endDate < '{$currentDate}')";
+}
+
+$etcCondi = "";
+if($_POST['cText']){
+  if($_POST['etcCondi']==='customer'){
+    $etcCondi = " and (name like '%".$_POST['cText']."%' or companyname like '%".$_POST['cText']."%')";
+  } elseif($_POST['etcCondi']==='contact'){
+    $etcCondi = " and (contact1 like '%".$_POST['cText']."%' or contact2 like '%".$_POST['cText']."%' or contact3 like '%".$_POST['cText']."%')";
+  } elseif($_POST['etcCondi']==='contractId'){
+    $etcCondi = " and (realContract.id like '%".$_POST['cText']."%')";
+  } elseif($_POST['etcCondi']==='roomId'){
+    $etcCondi = " and (r_g_in_building.rName like '%".$_POST['cText']."%')";
+  }
+}
+
+
+if($_POST['dateDiv']==='startDate'){
+  $dateDiv = 'startDate';
+} elseif($_POST['dateDiv']==='endDate'){
+  $dateDiv = 'endDate';
+} elseif($_POST['dateDiv']==='contractDate'){
+  $dateDiv = 'contractDate';
+} elseif($_POST['dateDiv']==='registerDate'){
+  $dateDiv = 'createTime';
+}
+$etcDate = "";
+$toDate1 = strtotime($_POST['toDate']);
+$toDate2 = date('Y-m-d', $toDate1);
+$toDate3 = date('Y-m-d', strtotime($toDate2.'+1 days'));
+
+if($_POST['fromDate'] && $_POST['toDate']){
+  $etcDate = " and ($dateDiv >= '{$_POST['fromDate']}' and $dateDiv <= '{$toDate3}')";
+} elseif($_POST['fromDate']){
+  $etcDate = " and ($dateDiv >= '{$_POST['fromDate']}')";
+} elseif($_POST['toDate']){
+  $etcDate = " and ($dateDiv <= '{$toDate3}')";
+}
+
 $sql = "
   select
       @num := @num + 1 as num,
@@ -35,6 +83,7 @@ $sql = "
   where realContract.user_id = {$_SESSION['id']} and
         realContract.building_id = {$_POST['select1']} and
         realContract.group_in_building_id = {$_POST['select2']}
+        $etcCondi $etcDate $etcIng
   order by
       num desc";
 // echo $sql;
@@ -124,9 +173,9 @@ if($total_rows===0){
       ?>
       </td>
       <td class='text-center'>
-        <a href="/service/customer/m_c_edit.php?id=<?=$row[2]?>">
+        <a href="/service/customer/m_c_edit.php?id=<?=$row[2]?>" data-toggle="tooltip" data-placement="top" title="<?=$cName.', '.$cContact?>">
           <!-- <u> -->
-          <?=$cName.', '.$cContact?>
+          <?=mb_substr($cName.', '.$cContact,0,20)?>
           <!-- </u> -->
         </a>
       </td><!--고객정보-->
@@ -214,3 +263,122 @@ if($total_rows===0){
   </nav>
 
 <?php } ?>
+
+<script>
+$(function () {
+    $('[data-toggle="tooltip"]').tooltip()
+})
+
+var table = $("#checkboxTestTbl");
+
+// 테이블 헤더에 있는 checkbox 클릭시
+$(":checkbox:first", table).change(function(){
+  if($(":checkbox:first", table).is(":checked")){
+    $(":checkbox", table).prop('checked',true);
+    $(":checkbox").parent().parent().addClass("selected");
+  } else {
+    $(":checkbox", table).prop('checked',false);
+    $(":checkbox").parent().parent().removeClass("selected");
+  }
+})
+
+// 헤더에 있는 체크박스외 다른 체크박스 클릭시
+$(":checkbox:not(:first)", table).change(function(){
+  var allCnt = $(":checkbox:not(:first)", table).length;
+  var checkedCnt = $(":checkbox:not(:first)", table).filter(":checked").length;
+
+  if($(this).prop("checked")==true){
+    $(this).parent().parent().addClass("selected");
+  } else {
+    $(this).parent().parent().removeClass("selected");
+  }
+
+  if( allCnt==checkedCnt ){
+    $(":checkbox:first", table).prop("checked", true);
+  }
+})
+
+var contractArray = [];
+
+$(":checkbox:first", table).click(function(){
+
+  var allCnt = $(":checkbox:not(:first)", table).length;
+  contractArray = [];
+
+  if($(":checkbox:first", table).is(":checked")){
+    for (var i = 1; i <= allCnt; i++) {
+      var contractArrayEle = [];
+      var colOrder = table.find("tr:eq("+i+")").find("td:eq(1)").text();
+      var colid = table.find("tr:eq("+i+")").find("td:eq(0)").children('input').val();
+      var colStep = table.find("tr:eq("+i+")").find("td:eq(8)").children('div').text();
+      var colFile = table.find("tr:eq("+i+")").find("td:eq(9)").children('a:eq(0)').text();
+      var colMemo = table.find("tr:eq("+i+")").find("td:eq(9)").children('a:eq(1)').text();
+      contractArrayEle.push(colOrder, colid, $.trim(colStep), colFile, colMemo);
+      contractArray.push(contractArrayEle);
+    }
+  } else {
+    contractArray = [];
+  }
+  // console.log(contractArray);
+})
+
+$(":checkbox:not(:first)",table).click(function(){
+var contractArrayEle = [];
+
+if($(this).is(":checked")){
+  var currow = $(this).closest('tr');
+  var colOrder = Number(currow.find('td:eq(1)').text());
+  var colid = currow.find('td:eq(0)').children('input').val();
+  var colStep = currow.find('td:eq(8)').children('div').text();
+  var colFile = currow.find("td:eq(9)").children('a:eq(0)').text();
+  var colMemo = currow.find("td:eq(9)").children('a:eq(1)').text();
+  contractArrayEle.push(colOrder, colid, $.trim(colStep), colFile, colMemo);
+  contractArray.push(contractArrayEle);
+} else {
+  var currow = $(this).closest('tr');
+  var colOrder = Number(currow.find('td:eq(1)').text());
+  var colid = currow.find('td:eq(0)').children('input').val();
+  var colStep = currow.find('td:eq(8)').children('div').text();
+  var colFile = currow.find("td:eq(9)").children('a:eq(0)').text();
+  var colMemo = currow.find("td:eq(9)").children('a:eq(1)').text();
+  var dropReady = contractArrayEle.push(colOrder, colid, $.trim(colStep), colFile, colMemo);
+  var index = contractArray.indexOf(dropReady);
+  contractArray.splice(index, 1);
+}
+// console.log(contractArray);
+// console.log(typeof(contractArray[3]));
+})
+
+$('button[name="rowDeleteBtn"]').on('click', function(){
+// console.log(contractArray);
+for (var i = 0; i < contractArray.length; i++) {
+  if(contractArray[i][2] === '청구' || contractArray[i][2] === '입금'){
+    alert('단계가 clear 이어야만 삭제 가능합니다.');
+    return false;
+  }
+  if(!(contractArray[i][3]==="")){
+    alert('메모 또는 파일이 존재하면 삭제 불가합니다.');
+    return false;
+  }
+  if(!(contractArray[i][4]==="")){
+    alert('메모 또는 파일이 존재하면 삭제 불가합니다.');
+    return false;
+  }
+}
+
+var aa = 'realContractDelete';
+var bb = 'p_realContract_delete_for.php';
+var cc = JSON.stringify(contractArray);
+
+goCategoryPage(aa, bb, cc);
+
+function goCategoryPage(a, b, c){
+  var frm = formCreate(a, 'post', b,'');
+  frm = formInput(frm, 'contractArray', c);
+  formSubmit(frm);
+}
+
+}) //rowDeleteBtn function closing
+
+$(".numberComma").number(true);
+</script>

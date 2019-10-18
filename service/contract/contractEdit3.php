@@ -203,10 +203,6 @@ function fnUpload(){
         }
   }
 
-  .appi{
-    color:#F7819F;
-  }
-
   .green{
     color: #04B486;
   }
@@ -264,10 +260,14 @@ function fnUpload(){
     <!-- <small>(1)<span id='star' style='color:#F7BE81;'> * </span>표시는 필수 입력값입니다. (2)<b>[고객정보]</b>에는 진행고객만 등록 가능합니다. (거래처 및 문의고객은 검색결과가 없다고 표시되니 주의하세요!) (3)<b>[기간정보]</b>의 기간(개월수)에는 최대 72개월(6년)까지 등록 가능합니다.</small>
     <hr class="my-4"> -->
     <a class="btn btn-secondary" href="contract.php" role="button">계약리스트 화면으로</a>
+    <a class="btn btn-secondary" href="/service/account/deposit.php" role="button">보증금리스트 화면으로</a>
     <a href="contract_add1_edit.php?id=<?=$filtered_id?>">
       <button name="contractEdit" class="btn btn-warning">계약수정</button>
     </a>
     <button type="button" name="contractDelete" class="btn btn-danger" data-toggle="tooltip" data-placement="bottom" title="청구정보가 없어야 삭제가능합니다">삭제하기</button>
+    <a class="btn btn-outline-primary btn-sm" href="contract_add2.php" role="button">계약등록</a>
+    <a class="btn btn-outline-primary btn-sm" href="contractAll.php" role="button">일괄계약등록(1)</a>
+    <a class="btn btn-outline-primary btn-sm" href="contractAll2.php" role="button">일괄계약등록(2)</a>
   </div>
 </section>
 
@@ -402,9 +402,9 @@ function fnUpload(){
               </div>
               <div class="form-group col-md-4">
                 <select class="form-control form-control-sm" id="paykind">
-                  <option value="">계좌</option>
-                  <option value="">현금</option>
-                  <option value="">카드</option>
+                  <option value="계좌">계좌</option>
+                  <option value="현금">현금</option>
+                  <option value="카드">카드</option>
                 </select>
               </div>
             </div>
@@ -430,15 +430,12 @@ function fnUpload(){
               <td scope="col">공급가액/세액</td>
               <!-- <td scope="col" class="mobile">세액</td> -->
               <td scope="col" class="">합계</td>
-              <td scope="col">입금예정일
-                <!-- <input type="text" class="form-control form-control-sm text-center" name="" value="" placeholder="예정일변경"> 이거할려다가 안했다-->
-              </td>
+              <td scope="col">입금예정일</td>
               <td scope="col" class="">입금구분</td>
               <td scope="col" class="">청구번호</td>
               <td scope="col" class="">수납구분</td>
               <td scope="col">입금일</td>
               <td scope="col" class="">입금(미납)액</td>
-
               <td scope="col" class="">연체일수</td>
               <td scope="col" class="">연체이자</td>
               <!-- <td scope="col" class="mobile">세금계산서</td> -->
@@ -489,14 +486,14 @@ while($row2 = mysqli_fetch_array($result2)){
     ?>
   </td>
   <td><!--입금예정일-->
-    <?php
-    if($row3['payId']){
-      echo "<p class='text-center font-weight-light'>".$row3['pExpectedDate']."</p>";
-      // echo "exists";
-    } else {
-      echo "<input type='text' size='10' class='form-control form-control-sm text-center dateType' name='expecteDay' value='".$row2['mExpectedDate']."'>";
-    }
-    ?>
+   <?php
+   if($row3['payId']){
+     echo "<p class='text-center font-weight-light'>".$row3['pExpectedDate']."</p>";
+     // echo "exists";
+   } else {
+     echo "<input type='text' size='10' class='form-control form-control-sm text-center dateType' name='expecteDay' value='".$row2['mExpectedDate']."'>";
+   }
+   ?>
   </td>
   <td><!--입금구분 계좌/현금/카드-->
     <?php
@@ -1077,6 +1074,8 @@ $('#button1').click(function(){ //청구설정버튼 클릭시
   }
   // console.log(paySchedule);
 
+  var paySchedule11 = JSON.stringify(paySchedule);
+
   var aa = 'payScheduleAdd';
   var bb = 'p_payScheduleAdd.php';
   var cc = 'scheduleArray';
@@ -1089,10 +1088,10 @@ $('#button1').click(function(){ //청구설정버튼 클릭시
 
   } else if (expectedDayArray.length <= 72) {
 
-    goCategoryPage(aa, bb, cc, paySchedule, dd, contractId);
+    goCategoryPage(aa, bb, cc, paySchedule11, dd, contractId);
 
     function goCategoryPage(a, b, c, d, e, f){
-      var frm = formCreate(a, 'post', b,'contractId');
+      var frm = formCreate(a, 'post', b,'');
       frm = formInput(frm, c, d);
       frm = formInput(frm, e, f);
       formSubmit(frm);
@@ -1129,7 +1128,7 @@ $('#button2').click(function(){ //청구취소버튼 클릭시
   goCategoryPage(aa, bb, cc, contractScheduleArray, dd, contractId);
 
   function goCategoryPage(a, b, c, d, e, f){
-    var frm = formCreate(a, 'post', b,'contractId');
+    var frm = formCreate(a, 'post', b,'');
     frm = formInput(frm, c, d);
     frm = formInput(frm, e, f);
     formSubmit(frm);
@@ -1168,7 +1167,7 @@ $('#button3').click(function(){ //일괄입금버튼 클릭시
   goCategoryPage(aa, bb, cc, contractScheduleArray, dd, contractId);
 
   function goCategoryPage(a, b, c, d, e, f){
-    var frm = formCreate(a, 'post', b,'contractId');
+    var frm = formCreate(a, 'post', b,'');
     frm = formInput(frm, c, d);
     frm = formInput(frm, e, f);
     formSubmit(frm);
@@ -1202,7 +1201,7 @@ var contractId = '<?=$filtered_id?>';
 goCategoryPage(aa, bb, cc, contractScheduleArray, dd, contractId);
 
 function goCategoryPage(a, b, c, d, e, f){
-var frm = formCreate(a, 'post', b,'contractId');
+var frm = formCreate(a, 'post', b,'');
 frm = formInput(frm, c, d);
 frm = formInput(frm, e, f);
 formSubmit(frm);
@@ -1290,7 +1289,7 @@ var contractId = '<?=$filtered_id?>';
 goCategoryPage(aa, bb, contractId, contractScheduleIdArray);
 
 function goCategoryPage(a, b, c, d){
-var frm = formCreate(a, 'post', b,'contractId');
+var frm = formCreate(a, 'post', b,'');
 frm = formInput(frm, 'contractId', c);
 frm = formInput(frm, 'contractScheduleIdArray', d);
 formSubmit(frm);
@@ -1311,7 +1310,7 @@ return false;
 goCategoryPage(aa,bb,contractId);
 
 function goCategoryPage(a,b,c){
-var frm = formCreate(a, 'post', b,'contractId');
+var frm = formCreate(a, 'post', b,'');
 frm = formInput(frm, 'contractId', c);
 formSubmit(frm);
 }
@@ -1334,7 +1333,7 @@ $('#memoButton').click(function(){
     goCategoryPage(aa,bb,contractId,memoInputer,memoContent);
 
     function goCategoryPage(a,b,c,d,e){
-        var frm = formCreate(a, 'post', b,'contractId');
+        var frm = formCreate(a, 'post', b,'');
         frm = formInput(frm, 'contractId', c);
         frm = formInput(frm, 'memoInputer', d);
         frm = formInput(frm, 'memoContent', e);
@@ -1367,7 +1366,7 @@ $("button[name='memoEdit']").click(function(){
         goCategoryPage(aa,bb,contractId,memoid,memoCreator,memoContent);
 
         function goCategoryPage(a,b,c,d,e,f){
-            var frm = formCreate(a, 'post', b,'contractId');
+            var frm = formCreate(a, 'post', b,'');
             frm = formInput(frm, 'contractId', c);
             frm = formInput(frm, 'memoid', d);
             frm = formInput(frm, 'memoCreator', e);
@@ -1461,7 +1460,7 @@ $("button[name='depositSaveBtn']").on('click', function(){
     goCategoryPage(aa,bb,contractId,depositInDate,depositInAmount,depositOutDate,depositOutAmount,depositMoney);
 
     function goCategoryPage(a,b,c,d,e,f,g,h){
-        var frm = formCreate(a, 'post', b,'contractId');
+        var frm = formCreate(a, 'post', b,'');
         frm = formInput(frm, 'contractId', c);
         frm = formInput(frm, 'depositInDate', d);
         frm = formInput(frm, 'depositInAmount', e);
@@ -1495,7 +1494,7 @@ $("button[name='contractDelete']").on('click', function(){
     goCategoryPage(aa,bb,contractId);
 
     function goCategoryPage(a,b,c){
-      var frm = formCreate(a, 'post', b,'contractId');
+      var frm = formCreate(a, 'post', b,'');
       frm = formInput(frm, 'contractId', c);
       formSubmit(frm);
     }
@@ -1536,7 +1535,7 @@ $('#button6').click(function(){ //n개월추가 버튼, 모달클릭으로 바�
     goCategoryPage(aa,bb,contractId,addMonth,changeAmount1,changeAmount2,changeAmount3);
 
     function goCategoryPage(a,b,c,d,e,f,g){
-        var frm = formCreate(a, 'post', b,'contractId');
+        var frm = formCreate(a, 'post', b,'');
         frm = formInput(frm, 'contractId', c);
         frm = formInput(frm, 'addMonth', d);
         frm = formInput(frm, 'changeAmount1', e);

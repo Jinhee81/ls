@@ -6,7 +6,7 @@ if(!isset($_SESSION['is_login'])){
 include $_SERVER['DOCUMENT_ROOT']."/view/service_header1_meta.php";
 include $_SERVER['DOCUMENT_ROOT']."/view/service_header2.php";
 include $_SERVER['DOCUMENT_ROOT']."/view/conn.php";
-include $_SERVER['DOCUMENT_ROOT']."/service/contract/building.php";
+include $_SERVER['DOCUMENT_ROOT']."/service/contractetc/good.php";
 ?>
 <style>
         #checkboxTestTbl tr.selected{background-color: #A9D0F5;}
@@ -20,11 +20,9 @@ include $_SERVER['DOCUMENT_ROOT']."/service/contract/building.php";
 </style>
 <section class="container">
   <div class="jumbotron">
-    <h1 class="display-4">방계약리스트 화면입니다!</h1>
+    <h1 class="display-4">기타계약리스트 화면입니다!</h1>
     <p class="lead">
-      (1) 상태(진행 - 현재 계약 진행 중), (대기 - 곧 계약시작임), (종료 - 종료된 계약)로 구분합니다.<br>
-      (2) 월이용료를 클릭하면 해당 계약의 상세페이지가 나옵니다.<br>
-      (3) 단계는 (clear-계약을 입력하자마자), (청구- 언제돈입금예정인지 설정), 입금(이용료(임대료)가 입금되고있는 상태)로 구분됩니다.
+
     </p>
   </div>
 </section>
@@ -35,10 +33,9 @@ include $_SERVER['DOCUMENT_ROOT']."/service/contract/building.php";
         <div class="form-group row justify-content-md-center">
           <div class="col-sm-1 pl-0 pr-0">
             <select class="form-control form-control-sm selectCall" id="dateDiv" name="dateDiv">
-              <option value="startDate">시작일자</option>
-              <option value="endDate">종료일자</option>
-              <option value="contractDate">계약일자</option>
-              <option value="registerDate">등록일자</option>
+              <option value="executiveDate">입금일자</option>
+              <option value="createTime">등록일자</option>
+              <option value="updateTime">수정일자</option>
             </select><!--codi1-->
           </div>
           <div class="col-sm-1 pl-0 pr-0">
@@ -48,6 +45,7 @@ include $_SERVER['DOCUMENT_ROOT']."/service/contract/building.php";
               <option value="pastMonth">전월</option>
               <option value="1pastMonth">1개월</option>
               <option value="3pastMonth">3개월</option>
+              <option value="nowYear">당년</option>
             </select><!--codi2-->
           </div>
           <div class="col-sm-1 pl-0 pr-0">
@@ -55,14 +53,6 @@ include $_SERVER['DOCUMENT_ROOT']."/service/contract/building.php";
           </div>
           <div class="col-sm-1 pl-0 pr-0">
             <input type="text" name="toDate" value="" class="form-control form-control-sm text-center dateType" id=""><!--codi4-->
-          </div>
-          <div class="col-sm-1 pl-0 pr-0">
-            <select class="form-control form-control-sm selectCall" id="progress" name="progress">
-              <option value="pAll">전체</option>
-              <option value="pIng" selected>진행</option>
-              <option value="pEnd">종료</option>
-              <option value="pWaiting">대기</option>
-            </select><!--codi5-->
           </div>
           <div class="col-sm-1 pl-0 pr-0">
             <select class="form-control form-control-sm selectCall" id="select1" name="select1">
@@ -77,7 +67,6 @@ include $_SERVER['DOCUMENT_ROOT']."/service/contract/building.php";
               <option value="customer">성명/사업자명</option>
               <option value="contact">연락처</option>
               <option value="contractId">계약번호</option>
-              <option value="roomId">방번호</option>
             </select><!--codi8-->
           </div>
           <div class="col-sm-1 pl-0 pr-0">
@@ -98,7 +87,7 @@ include $_SERVER['DOCUMENT_ROOT']."/service/contract/building.php";
     <div class="d-flex flex-row-reverse">
         <div class="float-right">
           <button type="button" class="btn btn-secondary" name="rowDeleteBtn" data-toggle="tooltip" data-placement="top" title="단계가 clear인 것들만 삭제가 가능합니다">삭제</button>
-          <a href="contract_add2.php"><button type="button" class="btn btn-primary" name="button">등록</button></a>
+          <a href="contractetc_add.php"><button type="button" class="btn btn-primary" name="button">등록</button></a>
         </div>
     </div>
 
@@ -124,7 +113,7 @@ if(dd<10){
 today = yyyy + '-' + mm + '-' + dd;
 //-------------------------------------------오늘날짜생성 끝 --------//
 
-var select1option, select2option, buildingIdx, groupIdx;
+var select1option, select2option, buildingIdx, goodIdx;
 
 for(var key in buildingArray){ //건물목록출력(비즈피스장암,비즈피스구로)
   select1option = "<option value='"+key+"'>"+buildingArray[key][0]+"</option>";
@@ -132,24 +121,24 @@ for(var key in buildingArray){ //건물목록출력(비즈피스장암,비즈피
 }
 buildingIdx = $('#select1').val();
 
-for(var key2 in groupBuildingArray[buildingIdx]){ //그룹목록출력(상주,비상주)
-  select2option = "<option value='"+key2+"'>"+groupBuildingArray[buildingIdx][key2]+"</option>";
+for(var key2 in goodBuildingArray[buildingIdx]){ //상품목록출력(빔,회의실)
+  select2option = "<option value='"+key2+"'>"+goodBuildingArray[buildingIdx][key2]+"</option>";
   // console.log(select3option);
   $('#select2').append(select2option);
 }
-groupIdx = $('#select2').val();
+goodIdx = $('#select2').val();
 
 $('#select1').on('change', function(event){
   buildingIdx = $('#select1').val();
   $('#select2').empty();
-  for(var key2 in groupBuildingArray[buildingIdx]){ //그룹목록출력(상주,비상주)
-    select2option = "<option value='"+key2+"'>"+groupBuildingArray[buildingIdx][key2]+"</option>";
+  for(var key2 in goodBuildingArray[buildingIdx]){ //상품목록출력(빔,회의실)
+    select2option = "<option value='"+key2+"'>"+goodBuildingArray[buildingIdx][key2]+"</option>";
     // console.log(select3option);
     $('#select2').append(select2option);
   }
-  groupIdx = $('#select2').val();
+  goodIdx = $('#select2').val();
 })
-//------------------------------------------------건물,그룹출력 끝------//
+//------------------------------------------------건물,상품출력 끝------//
 
 $(document).ready(function(){
     $(function () {
@@ -157,7 +146,7 @@ $(document).ready(function(){
     })
 
     $.ajax({
-      url: 'ajax_realContractLoad.php',
+      url: 'ajax_etcContractLoad.php',
       method: 'post',
       data: $('form').serialize(),
       success: function(data){
@@ -168,7 +157,7 @@ $(document).ready(function(){
 
 $('button[name="btnLoad"]').on('click', function(){
     $.ajax({
-      url: 'ajax_realContractLoad.php',
+      url: 'ajax_etcContractLoad.php',
       method: 'post',
       data: $('form').serialize(),
       success: function(data){
@@ -226,6 +215,20 @@ $('select[name="periodDiv"]').on('change', function(){
       var pastMonth = Number(mm)-3;
       // console.log(pastMonth);
       var pastMonthDate = Number(dd);
+      if(pastMonth<10){
+        pastMonth = '0' + pastMonth;
+      }
+      if(pastMonthDate<10){
+        pastMonthDate = '0' + pastMonthDate;
+      }
+      var fromDate = yyyy + '-' + pastMonth + '-' + pastMonthDate;
+      $('input[name="fromDate"]').val(fromDate);
+      $('input[name="toDate"]').val(today);
+    }
+    if(periodVal === 'nowYear'){
+      var pastMonth = Number(1);
+      // console.log(pastMonth);
+      var pastMonthDate = Number(1);
       if(pastMonth<10){
         pastMonth = '0' + pastMonth;
       }

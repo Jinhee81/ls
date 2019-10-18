@@ -73,7 +73,7 @@ if($result4){
     error_log(mysqli_error($conn));
     exit();
   }
-  
+
   echo "<script>
             alert('계약기간1개월이 추가되었습니다.');
             location.href = 'contractEdit3.php?id=$filtered_id';

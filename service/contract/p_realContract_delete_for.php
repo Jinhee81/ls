@@ -2,24 +2,11 @@
 session_start();
 include $_SERVER['DOCUMENT_ROOT']."/view/conn.php";
 
-// print_r($_POST);
+print_r($_POST);
 // print_r($_SESSION);
 
-$a = explode(",", $_POST['contractArray']);
-// print_r($a);
-
-for ($i=0; $i < count($a)/3; $i++) {
-  $contractRow[$i]=[];
-} //$contractRow 라는 배열을 만듦
-
-for ($i=0; $i < count($a); $i++) {
-  if($i < 3){
-    array_push($contractRow[0], $a[$i]);
-  } else {
-    array_push($contractRow[floor($i/3)], $a[$i]);
-  }
-}
-// print_r($contractRow);계약스케줄삭제
+$contractRow = json_decode($_POST['contractArray']);
+// print_r($contractRow);
 
 for ($i=0; $i < count($contractRow); $i++) {
   $sql = "
@@ -46,14 +33,14 @@ for ($i=0; $i < count($contractRow); $i++) {
     $result2 = mysqli_query($conn, $sql2);
 
     if(!$result2){
-      echo "<script>alert('삭제과정에 문제가 생겼습니다. 관리자에게 문의하세요.');
+      echo "<script>alert('삭제과정에 문제가 생겼습니다. 관리자에게 문의하세요.(1)');
             location.href = 'contract.php';
             </script>";
       error_log(mysqli_error($conn));
       exit();
     }
   } else {
-    echo "<script>alert('삭제과정에 문제가 생겼습니다. 관리자에게 문의하세요.');
+    echo "<script>alert('삭제과정에 문제가 생겼습니다. 관리자에게 문의하세요.(2)');
           location.href = 'contract.php';
           </script>";
     error_log(mysqli_error($conn));

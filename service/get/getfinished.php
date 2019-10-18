@@ -20,11 +20,9 @@ include $_SERVER['DOCUMENT_ROOT']."/service/contract/building.php";
 </style>
 <section class="container">
   <div class="jumbotron">
-    <h1 class="display-4">방계약리스트 화면입니다!</h1>
+    <h1 class="display-4">입금완료리스트 화면입니다!</h1>
     <p class="lead">
-      (1) 상태(진행 - 현재 계약 진행 중), (대기 - 곧 계약시작임), (종료 - 종료된 계약)로 구분합니다.<br>
-      (2) 월이용료를 클릭하면 해당 계약의 상세페이지가 나옵니다.<br>
-      (3) 단계는 (clear-계약을 입력하자마자), (청구- 언제돈입금예정인지 설정), 입금(이용료(임대료)가 입금되고있는 상태)로 구분됩니다.
+
     </p>
   </div>
 </section>
@@ -48,6 +46,7 @@ include $_SERVER['DOCUMENT_ROOT']."/service/contract/building.php";
               <option value="pastMonth">전월</option>
               <option value="1pastMonth">1개월</option>
               <option value="3pastMonth">3개월</option>
+              <option value="nowYear">당년</option>
             </select><!--codi2-->
           </div>
           <div class="col-sm-1 pl-0 pr-0">
@@ -98,7 +97,7 @@ include $_SERVER['DOCUMENT_ROOT']."/service/contract/building.php";
     <div class="d-flex flex-row-reverse">
         <div class="float-right">
           <button type="button" class="btn btn-secondary" name="rowDeleteBtn" data-toggle="tooltip" data-placement="top" title="단계가 clear인 것들만 삭제가 가능합니다">삭제</button>
-          <a href="contract_add2.php"><button type="button" class="btn btn-primary" name="button">등록</button></a>
+          <a href="contractetc_add.php"><button type="button" class="btn btn-primary" name="button">등록</button></a>
         </div>
     </div>
 
@@ -187,11 +186,8 @@ $('select[name="periodDiv"]').on('change', function(){
     }
     if(periodVal === 'nowMonth'){
       var fromDate = yyyy + '-' + mm + '-01';
-      var nowMonth = Number(mm);
-      var nowMonthDate = new Date(yyyy,nowMonth,0).getDate();
-      var toDate = yyyy + '-' + nowMonth + '-' + nowMonthDate;
       $('input[name="fromDate"]').val(fromDate);
-      $('input[name="toDate"]').val(toDate);
+      $('input[name="toDate"]').val(today);
     }
     if(periodVal === 'pastMonth'){
       var pastMonth = Number(mm)-1;
@@ -226,6 +222,20 @@ $('select[name="periodDiv"]').on('change', function(){
       var pastMonth = Number(mm)-3;
       // console.log(pastMonth);
       var pastMonthDate = Number(dd);
+      if(pastMonth<10){
+        pastMonth = '0' + pastMonth;
+      }
+      if(pastMonthDate<10){
+        pastMonthDate = '0' + pastMonthDate;
+      }
+      var fromDate = yyyy + '-' + pastMonth + '-' + pastMonthDate;
+      $('input[name="fromDate"]').val(fromDate);
+      $('input[name="toDate"]').val(today);
+    }
+    if(periodVal === 'nowYear'){
+      var pastMonth = Number(1);
+      // console.log(pastMonth);
+      var pastMonthDate = Number(1);
       if(pastMonth<10){
         pastMonth = '0' + pastMonth;
       }

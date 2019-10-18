@@ -17,8 +17,11 @@ if($_POST['customerDiv']==='etcCustomer'){
   $customerDiv = '거래처';
 }
 
-$etcCondi = "";
+if($_POST['customerDiv']==='etcCustomer2'){
+  $customerDiv = '기타';
+}
 
+$etcCondi = "";
 if($_POST['cText']){
   if($_POST['etcCondi']==='customer'){
     $etcCondi = " and (name like '%".$_POST['cText']."%' or companyname like '%".$_POST['cText']."%')";
@@ -31,13 +34,33 @@ if($_POST['cText']){
   }
 }
 
+if($_POST['dateDiv']==='registerDate'){
+  $dateDiv = 'created';
+} elseif($_POST['dateDiv']==='updateDate'){
+  $dateDiv = 'updated';
+}
+$etcDate = "";
+$toDate1 = strtotime($_POST['toDate']);
+$toDate2 = date('Y-m-d', $toDate1);
+$toDate3 = date('Y-m-d', strtotime($toDate2.'+1 days'));
+// echo $toDate3.'1111';
+
+// $toDate2 = strtotime($toDate1.'+1 days');
+if($_POST['fromDate'] && $_POST['toDate']){
+  $etcDate = " and ($dateDiv >= '{$_POST['fromDate']}' and $dateDiv <= '{$toDate3}')";
+} elseif($_POST['fromDate']){
+  $etcDate = " and ($dateDiv >= '{$_POST['fromDate']}')";
+} elseif($_POST['toDate']){
+  $etcDate = " and ($dateDiv <= '{$toDate3}')";
+}
+
 $sql = "select
           @num := @num + 1 as num,
           id, div1, div2, name, div3, companyname, cNumber1, cNumber2, cNumber3, contact1, contact2, contact3, email, etc
         from (select @num :=0)a, customer
         where user_id={$_SESSION['id']} and
               div1 = '{$customerDiv}'
-              $etcCondi
+              $etcCondi $etcDate
         order by num desc";
 // echo $sql;
 $result = mysqli_query($conn, $sql);

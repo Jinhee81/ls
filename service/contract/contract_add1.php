@@ -201,7 +201,7 @@ foreach ($groupBuildingArray as $key => $value) {
               </div>
               <div class="form-group col-md-2 mb-0">
                     <label>합계</label>
-                    <input type="text" class="form-control text-right amountNumber" name="mtAmount" placeholder="0" numberOnly>
+                    <input type="text" class="form-control text-right amountNumber" name="mtAmount" placeholder="0" numberOnly readonly>
               </div>
               <div class="form-group col-md-1 mb-0"><!--선불,후불체크-->
                     <label>수납</label>
@@ -218,8 +218,7 @@ foreach ($groupBuildingArray as $key => $value) {
               </div>
               <div class="form-group col-md-2 mb-0">
                     <label>종료일자</label>
-                    <input type="text" id="endDate" class="form-control" name="endDate" placeholder="" disabled>
-                    <input type="hidden" id="endDate1" class="form-control" name="endDate1">
+                    <input type="text" id="endDate" class="form-control" name="endDate" placeholder="" readonly>
               </div>
         </div>
       </div>

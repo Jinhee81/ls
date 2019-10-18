@@ -67,7 +67,7 @@ $sql_main = "select * from realContract where id={$filtered_id}";
 $result_main = mysqli_query($conn, $sql_main);
 $row_main = mysqli_fetch_array($result_main);
 
-// print_r($row_main);
+print_r($row_main);
 
 $sql = "select * from building where user_id = {$row_main['user_id']}";
 // echo $sql;
@@ -161,7 +161,7 @@ foreach ($groupBuildingArray as $key => $value) {
         </div>
         <div class="form-group col-md-10 inputWithIcon">
               <input type="text" class="form-control" name="customer" id="customer" value="<?=$output?>" disabled>
-              <input type="hidden" name="customer" value="<?=$clist['id']?>">
+              <input type="hidden" name="customer2" value="<?=$clist['id']?>">
               <input type="hidden" name="contract" value="<?=$filtered_id?>">
         </div>
     </div>
@@ -171,14 +171,6 @@ foreach ($groupBuildingArray as $key => $value) {
         </div>
         <div class="form-group col-md-10" id="mulgunInfo">
               <div class="form-row">
-                <!-- <div class="form-group col-md-2">
-                    <label>공실구분</label>
-                    <select id="select1" name="" class="form-control" onchange="">
-                      <option value="">전체</option>
-                      <option value="" selected>공실</option>
-                      <option value="">만실</option>
-                    </select>
-                </div> -->
                 <div class="form-group col-md-2"><!--물건목록-->
                     <label>물건명</label>
                     <select id="select2" name="building_id" class="form-control">
@@ -250,7 +242,7 @@ while($row_room = mysqli_fetch_array($result_room)){?>
               </div>
               <div class="form-group col-md-2 mb-0">
                     <label>합계</label>
-                    <input type="text" class="form-control text-right amountNumber numberComma" name="mtAmount" value="<?=$row_main['mtAmount']?>" disabled>
+                    <input type="text" class="form-control text-right amountNumber numberComma" name="mtAmount" value="<?=$row_main['mtAmount']?>" readonly>
               </div>
               <div class="form-group col-md-1 mb-0"><!--선불,후불체크-->
                     <label>수납</label>
@@ -290,7 +282,7 @@ while($row_room = mysqli_fetch_array($result_room)){?>
     </div>
 
     <div class="">
-      <button type='submit' class='btn btn-primary'>수정</button>
+      <button type='submit' id="submitbtn" class='btn btn-primary'>수정</button>
       <a href='contract.php'><button type='button' class='btn btn-secondary'>방계약리스트화면으로</button></a>
     </div>
   </form>
@@ -435,6 +427,9 @@ $("input[name='mvAmount']").on('keyup', function(){
   $("input[name='mtAmount']").val(amount12);
 })
 
+$('#submitbtn').on('click', function(){
+
+})
 </script>
 
 <?php include $_SERVER['DOCUMENT_ROOT']."/view/service_footer.php";?>

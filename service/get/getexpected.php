@@ -16,15 +16,23 @@ include $_SERVER['DOCUMENT_ROOT']."/service/contract/building.php";
         .mobile {
           display: none;
         }
+        .green{
+          color: #04B486;
+        }
+
+        .pink{
+          color: #F7819F;
+        }
+        .appi{
+          color:#F7819F;
+        }
 }
 </style>
 <section class="container">
   <div class="jumbotron">
-    <h1 class="display-4">방계약리스트 화면입니다!</h1>
+    <h1 class="display-4">입금예정리스트 화면입니다!</h1>
     <p class="lead">
-      (1) 상태(진행 - 현재 계약 진행 중), (대기 - 곧 계약시작임), (종료 - 종료된 계약)로 구분합니다.<br>
-      (2) 월이용료를 클릭하면 해당 계약의 상세페이지가 나옵니다.<br>
-      (3) 단계는 (clear-계약을 입력하자마자), (청구- 언제돈입금예정인지 설정), 입금(이용료(임대료)가 입금되고있는 상태)로 구분됩니다.
+
     </p>
   </div>
 </section>
@@ -35,10 +43,7 @@ include $_SERVER['DOCUMENT_ROOT']."/service/contract/building.php";
         <div class="form-group row justify-content-md-center">
           <div class="col-sm-1 pl-0 pr-0">
             <select class="form-control form-control-sm selectCall" id="dateDiv" name="dateDiv">
-              <option value="startDate">시작일자</option>
-              <option value="endDate">종료일자</option>
-              <option value="contractDate">계약일자</option>
-              <option value="registerDate">등록일자</option>
+              <option value="pExpectedDate">예정일자</option>
             </select><!--codi1-->
           </div>
           <div class="col-sm-1 pl-0 pr-0">
@@ -48,6 +53,7 @@ include $_SERVER['DOCUMENT_ROOT']."/service/contract/building.php";
               <option value="pastMonth">전월</option>
               <option value="1pastMonth">1개월</option>
               <option value="3pastMonth">3개월</option>
+              <option value="nowYear">당년</option>
             </select><!--codi2-->
           </div>
           <div class="col-sm-1 pl-0 pr-0">
@@ -57,20 +63,12 @@ include $_SERVER['DOCUMENT_ROOT']."/service/contract/building.php";
             <input type="text" name="toDate" value="" class="form-control form-control-sm text-center dateType" id=""><!--codi4-->
           </div>
           <div class="col-sm-1 pl-0 pr-0">
-            <select class="form-control form-control-sm selectCall" id="progress" name="progress">
-              <option value="pAll">전체</option>
-              <option value="pIng" selected>진행</option>
-              <option value="pEnd">종료</option>
-              <option value="pWaiting">대기</option>
-            </select><!--codi5-->
-          </div>
-          <div class="col-sm-1 pl-0 pr-0">
             <select class="form-control form-control-sm selectCall" id="select1" name="select1">
             </select><!--codi6-->
           </div>
           <div class="col-sm-1 pl-0 pr-0">
             <select class="form-control form-control-sm selectCall" id="select2" name="select2">
-            </select><!--codi7-->
+            </select><!--codi6-->
           </div>
           <div class="col-sm-1 pl-0 pr-0">
             <select class="form-control form-control-sm selectCall" id="etcCondi" name="etcCondi">
@@ -95,12 +93,33 @@ include $_SERVER['DOCUMENT_ROOT']."/service/contract/building.php";
 </section>
 
 <section class="container">
-    <div class="d-flex flex-row-reverse">
-        <div class="float-right">
-          <button type="button" class="btn btn-secondary" name="rowDeleteBtn" data-toggle="tooltip" data-placement="top" title="단계가 clear인 것들만 삭제가 가능합니다">삭제</button>
-          <a href="contract_add2.php"><button type="button" class="btn btn-primary" name="button">등록</button></a>
+    <div class="row">
+        <div class="col">
+          <div class="row">
+            <div class="col-sm-3 pr-0">
+              <select class="form-control form-control-sm" id="" name="">
+                <option value="">상용구없음</option>
+              </select><!--codi8-->
+            </div>
+            <div class="col-sm-3">
+              <a href="contractetc_add.php"><button type="button" class="btn btn-sm btn-block btn-outline-primary" name="button"><i class="far fa-envelope"></i> 보내기</button></a>
+            </div>
+          </div>
+
+
+        </div>
+        <div class="col">
+          <div class="float-right">
+            <label>전체 TOTAL : <span id="ptAmountTotal"></span>원</label>
+            <label style="color:#007bff;font-style:italic;"> 체크 : <span id="ptAmountSelectCount" class="numberComma">0</span>건, <span id="ptAmountSelectAmount" class="numberComma">0</span>원</label>
+          </div>
+
+
         </div>
     </div>
+    <!-- <div class="d-flex-reverse flex-row">
+
+    </div> -->
 
     <div class="" id="allVals">
     <!-- isright 6666? -->
@@ -109,22 +128,14 @@ include $_SERVER['DOCUMENT_ROOT']."/service/contract/building.php";
 
 <script>
 
-var today = new Date();
-var yyyy = today.getFullYear();
-var mm = today.getMonth() + 1;
-var dd = today.getDate();
+// var select1option = "<option value='all'>전체</option>";
+// $('#select1').append(select1option); //관리물건 전체를 넣으려다가 안넣-
+var select1option;
 
-if(mm<10){
-  mm = '0'+mm;
-}
-if(dd<10){
-  dd = '0'+dd;
-}
+var select2option = "<option value='all'>전체</option>";
+$('#select2').append(select2option);
 
-today = yyyy + '-' + mm + '-' + dd;
-//-------------------------------------------오늘날짜생성 끝 --------//
-
-var select1option, select2option, buildingIdx, groupIdx;
+var buildingIdx, groupIdx;
 
 for(var key in buildingArray){ //건물목록출력(비즈피스장암,비즈피스구로)
   select1option = "<option value='"+key+"'>"+buildingArray[key][0]+"</option>";
@@ -142,6 +153,8 @@ groupIdx = $('#select2').val();
 $('#select1').on('change', function(event){
   buildingIdx = $('#select1').val();
   $('#select2').empty();
+  var select2option = "<option value='all'>전체</option>";
+  $('#select2').append(select2option);
   for(var key2 in groupBuildingArray[buildingIdx]){ //그룹목록출력(상주,비상주)
     select2option = "<option value='"+key2+"'>"+groupBuildingArray[buildingIdx][key2]+"</option>";
     // console.log(select3option);
@@ -157,25 +170,60 @@ $(document).ready(function(){
     })
 
     $.ajax({
-      url: 'ajax_realContractLoad.php',
+      url: 'ajax_getexpectedLoad.php',
       method: 'post',
       data: $('form').serialize(),
       success: function(data){
         $('#allVals').html(data);
+      }
+    })
+
+    $.ajax({
+      url: 'ajax_getexpectedAmount.php',
+      method: 'post',
+      data: $('form').serialize(),
+      success: function(data){
+        $('#ptAmountTotal').html(data);
       }
     })
 })
 
 $('button[name="btnLoad"]').on('click', function(){
     $.ajax({
-      url: 'ajax_realContractLoad.php',
+      url: 'ajax_getexpectedLoad.php',
       method: 'post',
       data: $('form').serialize(),
       success: function(data){
         $('#allVals').html(data);
       }
     })
+
+    $.ajax({
+      url: 'ajax_getexpectedAmount.php',
+      method: 'post',
+      data: $('form').serialize(),
+      success: function(data){
+        $('#ptAmountTotal').html(data);
+      }
+    })
 })
+//=====================================================================//
+
+var today = new Date();
+var yyyy = today.getFullYear();
+var mm = today.getMonth() + 1;
+var dd = today.getDate();
+
+if(mm<10){
+  mm = '0'+mm;
+}
+if(dd<10){
+  dd = '0'+dd;
+}
+
+today = yyyy + '-' + mm + '-' + dd;
+//-------------------------------------------오늘날짜생성 끝 --------//
+
 
 $('select[name="periodDiv"]').on('change', function(){
 
@@ -226,6 +274,20 @@ $('select[name="periodDiv"]').on('change', function(){
       var pastMonth = Number(mm)-3;
       // console.log(pastMonth);
       var pastMonthDate = Number(dd);
+      if(pastMonth<10){
+        pastMonth = '0' + pastMonth;
+      }
+      if(pastMonthDate<10){
+        pastMonthDate = '0' + pastMonthDate;
+      }
+      var fromDate = yyyy + '-' + pastMonth + '-' + pastMonthDate;
+      $('input[name="fromDate"]').val(fromDate);
+      $('input[name="toDate"]').val(today);
+    }
+    if(periodVal === 'nowYear'){
+      var pastMonth = Number(1);
+      // console.log(pastMonth);
+      var pastMonthDate = Number(1);
       if(pastMonth<10){
         pastMonth = '0' + pastMonth;
       }

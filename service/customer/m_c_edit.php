@@ -125,10 +125,11 @@ if($clist['div1']==='문의'){
     <div class="form-row">
       <div class="form-group col-md-4">
         <label>구분(대)</label>
-        <select id="div1" name="div1" class="form-control" onchange="div1Get();" disabled>
+        <select id="div1" name="div1" class="form-control">
           <option value="문의" <?php if($row['div1']==='문의'){echo "selected";}?>>문의</option>
           <option value="세입자" <?php if($row['div1']==='세입자'){echo "selected";}?>>세입자</option>
           <option value="거래처" <?php if($row['div1']==='거래처'){echo "selected";}?>>거래처</option>
+          <option value="기타" <?php if($row['div1']==='기타'){echo "selected";}?>>기타</option>
         </select>
       </div>
       <div class="form-group col-md-4" id="idDiv2Large">
@@ -177,8 +178,13 @@ var cc1='id';
 var dd1='<?=$filtered_id?>';
 
 var aa2 = 'div2Transfer';
-var bb2 = 'p_m_c_edit_div2.php'
+var bb2 = 'p_m_c_edit_div2.php';
 
+var div1 = $('#div1').val();
+// console.log(div1);
+if(div1 === '문의'){
+  $('#div1').attr('disabled', true);
+}
 
 function goCategoryPage(a,b,c,d){
   if(confirm('정말 삭제하시겠습니까?')){
@@ -209,7 +215,7 @@ function div2TransferFn(a,b,c,d){
 // })
 
 $('#historyBack').on('click', function(){
-  console.log('minsun');
+  // console.log('minsun');
   history.back();
 })
 </script>

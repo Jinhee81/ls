@@ -27,7 +27,7 @@ $sql = "
     '{$_POST['payOrder']}',
     {$_POST['monthCount']},
     '{$_POST['startDate']}',
-    '{$_POST['endDate1']}',
+    '{$_POST['endDate']}',
     '{$_POST['contractDate']}',
     '{$_POST['mAmount']}',
     '{$_POST['mvAmount']}',

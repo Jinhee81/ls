@@ -22,7 +22,7 @@ include $_SERVER['DOCUMENT_ROOT']."/view/conn.php";
     <h1 class="display-4">세입자리스트 화면입니다!</h1>
     <p class="lead">
       <!-- (1) 정확한 표현은 이해관계자리스트라고 보아도 무방합니다. 세입자(고객) 뿐만 아니라, 문의하는 사람 및 자주 거래하는 거래처도 저장할 수 있어요.<br> -->
-    (1) 방계약이 발생하면 숫자가 표시됩니다.
+    (1) 방계약이 발생하면 숫자가 표시됩니다. (2)'기타' 분류는 방계약 외의 일회성매출에 대한 고객을 분류할 수 있습니다.
     </p>
   </div>
 
@@ -55,6 +55,7 @@ include $_SERVER['DOCUMENT_ROOT']."/view/conn.php";
             <option value="queryCustomer">문의</option>
             <option value="ingCustomer" selected>세입자</option>
             <option value="etcCustomer">거래처</option>
+            <option value="etcCustomer2">기타</option>
           </select>
         </div>
         <div class="col-sm-1 pl-0 pr-0">
@@ -161,8 +162,11 @@ $('select[name="periodDiv"]').on('change', function(){
     }
     if(periodVal === 'nowMonth'){
       var fromDate = yyyy + '-' + mm + '-01';
+      var nowMonth = Number(mm);
+      var nowMonthDate = new Date(yyyy,nowMonth,0).getDate();
+      var toDate = yyyy + '-' + nowMonth + '-' + nowMonthDate;
       $('input[name="fromDate"]').val(fromDate);
-      $('input[name="toDate"]').val(today);
+      $('input[name="toDate"]').val(toDate);
     }
     if(periodVal === 'pastMonth'){
       var pastMonth = Number(mm)-1;

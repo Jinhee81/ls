@@ -20,11 +20,11 @@ include $_SERVER['DOCUMENT_ROOT']."/service/contract/building.php";
 </style>
 <section class="container">
   <div class="jumbotron">
-    <h1 class="display-4">방계약리스트 화면입니다!</h1>
+    <h1 class="display-4">보증금조회 화면입니다!</h1>
     <p class="lead">
-      (1) 상태(진행 - 현재 계약 진행 중), (대기 - 곧 계약시작임), (종료 - 종료된 계약)로 구분합니다.<br>
+      <!-- (1) 상태(진행 - 현재 계약 진행 중), (대기 - 곧 계약시작임), (종료 - 종료된 계약)로 구분합니다.<br>
       (2) 월이용료를 클릭하면 해당 계약의 상세페이지가 나옵니다.<br>
-      (3) 단계는 (clear-계약을 입력하자마자), (청구- 언제돈입금예정인지 설정), 입금(이용료(임대료)가 입금되고있는 상태)로 구분됩니다.
+      (3) 단계는 (clear-계약을 입력하자마자), (청구- 언제돈입금예정인지 설정), 입금(이용료(임대료)가 입금되고있는 상태)로 구분됩니다. -->
     </p>
   </div>
 </section>
@@ -95,10 +95,12 @@ include $_SERVER['DOCUMENT_ROOT']."/service/contract/building.php";
 </section>
 
 <section class="container">
-    <div class="d-flex flex-row-reverse">
+    <div class="d-flex-reverse flex-row">
         <div class="float-right">
-          <button type="button" class="btn btn-secondary" name="rowDeleteBtn" data-toggle="tooltip" data-placement="top" title="단계가 clear인 것들만 삭제가 가능합니다">삭제</button>
-          <a href="contract_add2.php"><button type="button" class="btn btn-primary" name="button">등록</button></a>
+          <!-- <button type="button" class="btn btn-secondary" name="rowDeleteBtn" data-toggle="tooltip" data-placement="top" title="단계가 clear인 것들만 삭제가 가능합니다">삭제</button>
+          <a href="contract_add2.php"><button type="button" class="btn btn-primary" name="button">등록</button></a> -->
+          <label>잔액 TOTAL : <span id="depositTotal"></span>원</label>
+          <label style="color:#007bff;font-style:italic;"> 체크 : <span id="depositSelectCount" class="numberComma">0</span>건, <span id="depositSelectAmount" class="numberComma">0</span>원</label>
         </div>
     </div>
 
@@ -157,22 +159,40 @@ $(document).ready(function(){
     })
 
     $.ajax({
-      url: 'ajax_realContractLoad.php',
+      url: 'ajax_depositLoad.php',
       method: 'post',
       data: $('form').serialize(),
       success: function(data){
         $('#allVals').html(data);
       }
     })
+
+    $.ajax({
+      url: 'ajax_depositAmount.php',
+      method: 'post',
+      data: $('form').serialize(),
+      success: function(data){
+        $('#depositTotal').html(data);
+      }
+    })
 })
 
 $('button[name="btnLoad"]').on('click', function(){
     $.ajax({
-      url: 'ajax_realContractLoad.php',
+      url: 'ajax_depositLoad.php',
       method: 'post',
       data: $('form').serialize(),
       success: function(data){
         $('#allVals').html(data);
+      }
+    })
+
+    $.ajax({
+      url: 'ajax_depositAmount.php',
+      method: 'post',
+      data: $('form').serialize(),
+      success: function(data){
+        $('#depositTotal').html(data);
       }
     })
 })
@@ -187,11 +207,8 @@ $('select[name="periodDiv"]').on('change', function(){
     }
     if(periodVal === 'nowMonth'){
       var fromDate = yyyy + '-' + mm + '-01';
-      var nowMonth = Number(mm);
-      var nowMonthDate = new Date(yyyy,nowMonth,0).getDate();
-      var toDate = yyyy + '-' + nowMonth + '-' + nowMonthDate;
       $('input[name="fromDate"]').val(fromDate);
-      $('input[name="toDate"]').val(toDate);
+      $('input[name="toDate"]').val(today);
     }
     if(periodVal === 'pastMonth'){
       var pastMonth = Number(mm)-1;
@@ -238,7 +255,6 @@ $('select[name="periodDiv"]').on('change', function(){
     }
 
 }) ////select periodDiv function closing
-
 
 </script>
 

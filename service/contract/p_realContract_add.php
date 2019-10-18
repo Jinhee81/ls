@@ -26,7 +26,7 @@ $sql = "
     '{$_POST['payOrder']}',
     {$_POST['monthCount']},
     '{$_POST['startDate']}',
-    '{$_POST['endDate1']}',
+    '{$_POST['endDate']}',
     '{$_POST['contractDate']}',
     '{$_POST['mAmount']}',
     '{$_POST['mvAmount']}',
@@ -40,6 +40,14 @@ $sql = "
 // echo $sql;
 
 $result = mysqli_query($conn, $sql);
+
+if(!$result){
+  echo "<script>alert('저장과정에 문제가 생겼습니다. 관리자에게 문의하세요.(1)');
+        location.href = 'contract_add2.php';
+        </script>";
+  error_log(mysqli_error($conn));
+  exit();
+}
 
 $id = mysqli_insert_id($conn); //방금넣은 계약번호아이디를 가져오는거
 // print_r($id);
@@ -84,7 +92,7 @@ for ($i=1; $i <= count($contractRow); $i++) {
   // echo $sql2;
 
   if($result2===false){
-    echo "<script>alert('저장과정에 문제가 생겼습니다. 관리자에게 문의하세요.');
+    echo "<script>alert('저장과정에 문제가 생겼습니다. 관리자에게 문의하세요.(2)');
           location.href = 'contract_add2.php';
           </script>";
     error_log(mysqli_error($conn));

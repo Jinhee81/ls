@@ -81,8 +81,16 @@ for ($i=0; $i < count($expectedDateArray2); $i++) {
   }
 }
 
-
 // print_r($payExecutiveRow);
+for ($i=0; $i < count($payExecutiveRow); $i++) {
+  if($payExecutiveRow[$i][6]===0){
+    echo "<script>
+            alert('0원은 청구 불가합니다.');
+            location.href='contractEdit3.php?id=$filtered_id';
+          </script>";
+    exit();
+  }
+}
 
 for ($i=0; $i < count($payExecutiveRow); $i++) {
   $sql = "

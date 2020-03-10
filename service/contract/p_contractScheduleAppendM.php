@@ -82,6 +82,8 @@ for ($i=0; $i < count($newArray); $i++) {
 
 
 $sql5 = "UPDATE realContract SET
+           count2 = {$new_order}-1,
+           endDate2 = '{$newArray[count($newArray)-1][2]}',
            updateTime = now(),
            updatePerson = '{$_SESSION['id']}'
          WHERE

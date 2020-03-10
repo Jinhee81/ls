@@ -1,3 +1,4 @@
+<!-- 처음에 만들때는 구분2가 있었는데 그거 자체를 삭제하고 다시 만듬 -->
 <?php
 session_start();
 if(!isset($_SESSION['is_login'])){
@@ -8,7 +9,7 @@ include $_SERVER['DOCUMENT_ROOT']."/view/service_header2.php";
 include $_SERVER['DOCUMENT_ROOT']."/view/conn.php";
 ?>
 
-<script src="csaddss.js?v=<%=System.currentTimeMillis() %>"></script>
+<script src="csaddss.js?<?=date('YmdHis')?>"></script>
 <section class="container">
   <div class="jumbotron">
     <h1 class="display-4">일괄등록 화면입니다!</h1>
@@ -31,15 +32,6 @@ include $_SERVER['DOCUMENT_ROOT']."/view/conn.php";
                 <option value="진행고객" selected>세입자</option>
                 <option value="거래처">거래처</option>
                 <option value="기타">기타</option>
-              </select>
-            </td>
-            <td><label>구분(소)</label></td>
-            <td>
-              <select id="div2" name="div2" class="form-control" onchange="div2Get();">
-                <option value=""></option>
-                <option value="개인">개인</option>
-                <option value="개인사업자">개인사업자</option>
-                <option value="법인사업자">법인사업자</option>
               </select>
             </td>
             <td><label>개수</label></td>

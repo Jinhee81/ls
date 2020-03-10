@@ -59,7 +59,8 @@ $row = mysqli_fetch_array($result);
     // echo $sql7;
     $result7 = mysqli_query($conn, $sql7);
     while($row7 = mysqli_fetch_array($result7)){
-      array_push($editRooms, $row7['rName']);
+      $editRooms[] = $row7;
+      // array_push($editRooms, $row7['id'], $row7['rName']);
     }
     // print_r($editRooms);
     $table2 = "<table class='table table-borderless table-sm text-center' id='roomList'";
@@ -74,13 +75,13 @@ $row = mysqli_fetch_array($result);
       if(in_array($i, $trArray)){
 
         $table2 = $table2 ."<tr>
-          <td style='padding-right:0px;'><input id='siwon' class='form-control text-center' required='' type='text' name='rName" . $i . "' value='" . $editRooms[$i] . "'></td>";
+          <td style='padding-right:0px;'><input id='siwon' class='form-control text-center' required='' type='text' name='rName".$i."' value='".$editRooms[$i]['rName']."' data-toggle='tooltip' data-placement='top' title='".$editRooms[$i]['id']."'></td>";
       } else if(in_array($i, $closeTrArray)){
         $table2 = $table2 . "
-        <td style='padding-right:0px;'><input id='siwon' class='form-control text-center' required='' type='text' name='rName" . $i . "' value='" . $editRooms[$i] . "'></td></tr>";
+        <td style='padding-right:0px;'><input id='siwon' class='form-control text-center' required='' type='text' name='rName".$i."' value='". $editRooms[$i]['rName']."' data-toggle='tooltip' data-placement='top' title='".$editRooms[$i]['id']."'></td></tr>";
       } else {
         $table2 = $table2 . "
-        <td style='padding-right:0px;'><input id='siwon' class='form-control text-center' required='' type='text' name='rName" . $i . "' value='" . $editRooms[$i] . "'></td>";
+        <td style='padding-right:0px;'><input id='siwon' class='form-control text-center' required='' type='text' name='rName".$i."' value='". $editRooms[$i]['rName']."' data-toggle='tooltip' data-placement='top' title='".$editRooms[$i]['id']."'></td>";
       }
     }
 
@@ -100,7 +101,13 @@ $row = mysqli_fetch_array($result);
     </div>
   </form>
 </section>
+
 <script>
+
+$(function () {
+    $('[data-toggle="tooltip"]').tooltip()
+})
+
 
 var aa1='groupDelete';
 var bb1='p_modal_b_group_delete.php';

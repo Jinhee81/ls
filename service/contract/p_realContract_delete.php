@@ -2,8 +2,8 @@
 session_start();
 include $_SERVER['DOCUMENT_ROOT']."/view/conn.php";
 
-print_r($_POST);
-print_r($_SESSION);
+// print_r($_POST);
+// print_r($_SESSION);
 
 $filtered_id = mysqli_real_escape_string($conn, $_POST['contractId']);
 

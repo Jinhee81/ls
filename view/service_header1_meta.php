@@ -1,9 +1,5 @@
-<?php session_start(); ?>
-<!DOCTYPE html>
-<html lang="en" dir="ltr">
-  <head>
-    <title>리스맨</title>
-    <link rel="icon" type="image/svg" href="/img/favicon.png">
+<!-- 위에 뭐가있었는데 삭제했음, 원래있던거는 예비파일에 둠 -->
+    <link rel="icon" type="image/x-icon" href="/img/leaseman2.ico">
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1,
       shrink-to-fit=no">
@@ -23,9 +19,9 @@
     <link rel="stylesheet" href="/css/bootstrap.min.css">
     <link rel="stylesheet" href="/css/jquery-ui.min.css">
     <link rel="stylesheet" href="/css/jquery-ui-timepicker-addon.css">
-    <link rel="stylesheet" href="/css/custom.css">
-    <link rel="stylesheet" href="/css/dataTable.jquery.css">
-    <link rel="stylesheet" href="/css/dataTable.responsive.css">
+    <!-- <link rel="stylesheet" href="/css/custom.css"> -->
+    <!-- <link rel="stylesheet" href="/css/dataTable.jquery.css">
+    <link rel="stylesheet" href="/css/dataTable.responsive.css"> -->
 
     <script type="text/javascript" src="/js/jquery-3.3.1.min.js"></script>
 

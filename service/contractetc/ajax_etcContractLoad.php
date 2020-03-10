@@ -13,23 +13,27 @@ if($_POST['dateDiv']==='executiveDate'){
 } elseif($_POST['dateDiv']==='updateTime'){
   $dateDiv = 'updateTime';
 }
+
+$goodCondi = "";
+if($_POST['good'] <> 'goodAll'){
+  $goodCondi = "and etcContract.good_in_building_id = {$_POST['good']}";
+}
+
 $etcDate = "";
-$toDate1 = strtotime($_POST['toDate']);
-$toDate2 = date('Y-m-d', $toDate1);
-$toDate3 = date('Y-m-d', strtotime($toDate2.'+1 days'));
 
 if($_POST['fromDate'] && $_POST['toDate']){
-  $etcDate = " and ($dateDiv >= '{$_POST['fromDate']}' and $dateDiv <= '{$toDate3}')";
+  $etcDate = " and (DATE($dateDiv) BETWEEN '{$_POST['fromDate']}' and '{$_POST['toDate']}')";
 } elseif($_POST['fromDate']){
-  $etcDate = " and ($dateDiv >= '{$_POST['fromDate']}')";
+  $etcDate = " and (DATE($dateDiv) >= '{$_POST['fromDate']}')";
 } elseif($_POST['toDate']){
-  $etcDate = " and ($dateDiv <= '{$toDate3}')";
+  $etcDate = " and (DATE($dateDiv) <= '{$_POST['toDate']}')";
 }
+
 
 $etcCondi = "";
 if($_POST['cText']){
   if($_POST['etcCondi']==='customer'){
-    $etcCondi = " and (name like '%".$_POST['cText']."%' or companyname like '%".$_POST['cText']."%')";
+    $etcCondi = " and (customer.name like '%".$_POST['cText']."%' or companyname like '%".$_POST['cText']."%')";
   } elseif($_POST['etcCondi']==='contact'){
     $etcCondi = " and (contact1 like '%".$_POST['cText']."%' or contact2 like '%".$_POST['cText']."%' or contact3 like '%".$_POST['cText']."%')";
   } elseif($_POST['etcCondi']==='contractId'){
@@ -39,7 +43,6 @@ if($_POST['cText']){
 
 $sql = "
   select
-      @num := @num + 1 as num,
       etcContract.id,
       customer.id,
       customer.name,
@@ -58,7 +61,7 @@ $sql = "
       payKind,
       etcContract.etc
   from
-      (select @num :=0)a,etcContract
+      etcContract
   left join customer
       on etcContract.customer_id = customer.id
   left join building
@@ -66,11 +69,10 @@ $sql = "
   left join good_in_building
       on etcContract.good_in_building_id = good_in_building.id
   where etcContract.user_id = {$_SESSION['id']} and
-        etcContract.building_id = {$_POST['select1']} and
-        etcContract.good_in_building_id = {$_POST['select2']}
-        $etcCondi $etcDate
+        etcContract.building_id = {$_POST['building']}
+        $goodCondi $etcCondi $etcDate
   order by
-      num desc";
+      executiveDate desc";
 // echo $sql;
 
 $result = mysqli_query($conn, $sql);
@@ -92,11 +94,11 @@ for ($i=0; $i < count($allRows); $i++) {
   }
 
   if($allRows[$i]['div2']==='개인사업자'){
-    $allRows[$i]['cname'] = $allRows[$i][3].'('.$allRows[$i]['companyname'].')';
+    $allRows[$i]['cname'] = $allRows[$i][2].'('.$allRows[$i]['companyname'].')';
   } else if($allRows[$i]['div2']==='법인사업자'){
-    $allRows[$i]['cname'] = $allRows[$i]['cdiv3'].$allRows[$i]['companyname'].'('.$allRows[$i][3].')';
+    $allRows[$i]['cname'] = $allRows[$i]['cdiv3'].$allRows[$i]['companyname'].'('.$allRows[$i][2].')';
   } else if($allRows[$i]['div2']==='개인'){
-    $allRows[$i]['cname'] = $allRows[$i][3];
+    $allRows[$i]['cname'] = $allRows[$i][2];
   }
 
   $allRows[$i]['contact'] = $allRows[$i]['contact1'].'-'.$allRows[$i]['contact2'].'-'.$allRows[$i]['contact3'];
@@ -106,14 +108,30 @@ for ($i=0; $i < count($allRows); $i++) {
 // print_r($allRows);
 ?>
 
-<?php if(count($allRows)===0){
-   echo "조회값이 없습니다.";
- } else {?>
-  <table class="table table-hover text-center mt-2" id="checkboxTestTbl">
+<?php if(count($allRows)===0){ ?>
+  <table class="table table-sm table-hover text-center mt-2" id="checkboxTestTbl">
     <thead>
       <tr class="table-info">
         <th scope="col"><input type="checkbox"></th>
         <th scope="col">순번</th>
+        <th scope="col">상품</th>
+        <th scope="col">성명</th>
+        <th scope="col">입금일</th>
+        <th scope="col">공급가액</th>
+        <th scope="col">세액</th>
+        <th scope="col">합계</th>
+        <th scope="col">입금구분</th>
+        <th scope="col">특이사항</th>
+      </tr>
+    </thead>
+<?php   echo "<tr><td colspan='14'>조회값이 없습니다.</td></tr>";
+ } else {?>
+  <table class="table table-sm table-hover text-center mt-2" id="checkboxTestTbl">
+    <thead>
+      <tr class="table-info">
+        <th scope="col"><input type="checkbox"></th>
+        <th scope="col">순번</th>
+        <th scope="col">상품</th>
         <th scope="col">성명</th>
         <th scope="col">입금일</th>
         <th scope="col">공급가액</th>
@@ -128,9 +146,14 @@ for ($i=0; $i < count($allRows); $i++) {
     <?php for ($i=0; $i < count($allRows); $i++) {?>
       <tr>
         <td><input type="checkbox" value="<?=$allRows[$i][1]?>"></td>
-        <td><?=$allRows[$i]['num']?></td><!--순번-->
         <td>
-          <a href="/service/customer/m_c_edit.php?id=<?=$allRows[$i][2]?>" data-toggle="tooltip" data-placement="top" title="<?=$allRows[$i]['cname'].', '.$allRows[$i]['contact']?>">
+          <label data-toggle="tooltip" data-placement="top" title="<?=$allRows[$i][0]?>">
+            <?=$i+1?>
+          </label>
+        </td><!--순번-->
+        <td><?=$allRows[$i]['name']?></td><!--상품-->
+        <td>
+          <a href="/service/customer/m_c_edit.php?id=<?=$allRows[$i][1]?>" data-toggle="tooltip" data-placement="top" title="<?=$allRows[$i]['cname'].', '.$allRows[$i]['contact']?>">
             <?=mb_substr($allRows[$i]['cname'].', '.$allRows[$i]['contact'],0,20)?>
           </a>
         </td><!--성명-->
@@ -142,7 +165,7 @@ for ($i=0; $i < count($allRows); $i++) {
           <?=$allRows[$i]['pvAmount']?>
         </td><!--세액-->
         <td>
-          <a href="contractetc_edit.php?id=<?=$allRows[$i][1]?>" style="color:
+          <a href="contractetc_edit.php?id=<?=$allRows[$i][0]?>" style="color:
         #04B486;">
             <label class="numberComma mb-0">
               <?=$allRows[$i]['ptAmount']?>

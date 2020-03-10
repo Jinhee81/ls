@@ -3,9 +3,16 @@ session_start();
 if(!isset($_SESSION['is_login'])){
   header('Location: /user/login.php');
 }
+?>
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <title>세입자리스트</title>
+<?php
 include $_SERVER['DOCUMENT_ROOT']."/view/service_header1_meta.php";
 include $_SERVER['DOCUMENT_ROOT']."/view/service_header2.php";
 include $_SERVER['DOCUMENT_ROOT']."/view/conn.php";
+include $_SERVER['DOCUMENT_ROOT']."/main/condition.php";
 ?>
 <style>
         #checkboxTestTbl tr.selected{background-color: #A9D0F5;}
@@ -40,8 +47,8 @@ include $_SERVER['DOCUMENT_ROOT']."/view/conn.php";
             <option value="allDate">--</option>
             <option value="nowMonth">당월</option>
             <option value="pastMonth">전월</option>
-            <option value="1pastMonth">1개월</option>
-            <option value="3pastMonth">3개월</option>
+            <option value="1pastMonth">1개월전</option>
+            <option value="3pastMonth">당년</option>
           </select>
         </div>
         <div class="col-sm-2 pl-0 pr-0">
@@ -52,10 +59,11 @@ include $_SERVER['DOCUMENT_ROOT']."/view/conn.php";
         </div>
         <div class="col-sm-1 pl-0 pr-0">
           <select name="customerDiv" class="form-control form-control-sm selectCall">
-            <option value="queryCustomer">문의</option>
-            <option value="ingCustomer" selected>세입자</option>
-            <option value="etcCustomer">거래처</option>
-            <option value="etcCustomer2">기타</option>
+            <option value="customerAll">구분전체</option>
+            <option value="세입자">세입자</option>
+            <option value="문의">문의</option>
+            <option value="거래처">거래처</option>
+            <option value="기타">기타</option>
           </select>
         </div>
         <div class="col-sm-1 pl-0 pr-0">
@@ -69,9 +77,9 @@ include $_SERVER['DOCUMENT_ROOT']."/view/conn.php";
         <div class="col-sm-2 pl-0 pr-0">
           <input type="text" name="cText" value="" class="form-control form-control-sm text-center">
         </div>
-        <div class="col-sm-1 pl-0 pr-0">
+        <!-- <div class="col-sm-1 pl-0 pr-0">
           <button type="button" name="btnLoad" class="btn btn-info btn-sm">조회</button>
-        </div>
+        </div> -->
       </div>
     </form>
   </div>
@@ -87,6 +95,11 @@ include $_SERVER['DOCUMENT_ROOT']."/view/conn.php";
 
 </section>
 
+<script src="/js/jquery-ui.min.js"></script>
+<script src="/js/datepicker-ko.js"></script>
+<script src="/js/jquery-ui-timepicker-addon.js"></script>
+<script src="/js/etc/newdate5.js?v=<%=System.currentTimeMillis()%"></script>
+
 <script>
 $(document).ready(function(){
       $(function () {
@@ -101,9 +114,18 @@ $(document).ready(function(){
           $('#allVals').html(data);
         }
       })
+
+      $('.dateType').datepicker({
+        changeMonth: true,
+        changeYear: true,
+        showButtonPanel: true,
+        // showOn: "button",
+        buttonImage: "/img/calendar.svg",
+        buttonImageOnly: false
+      })
 })
 
-$('button[name="btnLoad"]').on('click', function(){
+$('select[name=periodDiv]').on('change', function(){
     $.ajax({
       url: 'ajax_customerLoad.php',
       method: 'post',
@@ -113,6 +135,63 @@ $('button[name="btnLoad"]').on('click', function(){
       }
     })
 })
+
+$('input[name=fromDate]').on('change', function(){
+    $.ajax({
+      url: 'ajax_customerLoad.php',
+      method: 'post',
+      data: $('form').serialize(),
+      success: function(data){
+        $('#allVals').html(data);
+      }
+    })
+})
+
+$('input[name=toDate]').on('change', function(){
+    $.ajax({
+      url: 'ajax_customerLoad.php',
+      method: 'post',
+      data: $('form').serialize(),
+      success: function(data){
+        $('#allVals').html(data);
+      }
+    })
+})
+
+$('select[name=customerDiv]').on('change', function(){
+    $.ajax({
+      url: 'ajax_customerLoad.php',
+      method: 'post',
+      data: $('form').serialize(),
+      success: function(data){
+        $('#allVals').html(data);
+      }
+    })
+})
+
+$('select[name=etcCondi]').on('change', function(){
+    $.ajax({
+      url: 'ajax_customerLoad.php',
+      method: 'post',
+      data: $('form').serialize(),
+      success: function(data){
+        $('#allVals').html(data);
+      }
+    })
+})
+
+$('input[name=cText]').on('keyup', function(){
+    $.ajax({
+      url: 'ajax_customerLoad.php',
+      method: 'post',
+      data: $('form').serialize(),
+      success: function(data){
+        $('#allVals').html(data);
+      }
+    })
+
+})
+//---------조회버튼클릭평션 end and 증빙일자 펑션 시작--------------//
 
 
 $('button[name="rowDeleteBtn"]').on('click', function(){
@@ -137,86 +216,7 @@ $('button[name="rowDeleteBtn"]').on('click', function(){
 
 })
 
-var today = new Date();
-var yyyy = today.getFullYear();
-var mm = today.getMonth() + 1;
-var dd = today.getDate();
 
-if(mm<10){
-  mm = '0'+mm;
-}
-if(dd<10){
-  dd = '0'+dd;
-}
-
-today = yyyy + '-' + mm + '-' + dd;
-//-------------------------------------------오늘날짜생성 끝 --------//
-
-$('select[name="periodDiv"]').on('change', function(){
-
-    var periodVal = $(this).val();
-    // console.log(periodVal);
-    if(periodVal === 'allDate'){
-      $('input[name="fromDate"]').val("");
-      $('input[name="toDate"]').val("");
-    }
-    if(periodVal === 'nowMonth'){
-      var fromDate = yyyy + '-' + mm + '-01';
-      var nowMonth = Number(mm);
-      var nowMonthDate = new Date(yyyy,nowMonth,0).getDate();
-      var toDate = yyyy + '-' + nowMonth + '-' + nowMonthDate;
-      $('input[name="fromDate"]').val(fromDate);
-      $('input[name="toDate"]').val(toDate);
-    }
-    if(periodVal === 'pastMonth'){
-      var pastMonth = Number(mm)-1;
-      // console.log(pastMonth);
-      var pastMonthDate = new Date(yyyy,pastMonth,0).getDate();
-      if(pastMonth<10){
-        pastMonth = '0' + pastMonth;
-      }
-      if(pastMonthDate<10){
-        pastMonthDate = '0' + pastMonthDate;
-      }
-      var fromDate = yyyy + '-' + pastMonth + '-01';
-      var toDate = yyyy + '-' + pastMonth + '-' + pastMonthDate;
-      $('input[name="fromDate"]').val(fromDate);
-      $('input[name="toDate"]').val(toDate);
-    }
-    if(periodVal === '1pastMonth'){
-      var pastMonth = Number(mm)-1;
-      // console.log(pastMonth);
-      var pastMonthDate = Number(dd);
-      if(pastMonth<10){
-        pastMonth = '0' + pastMonth;
-      }
-      if(pastMonthDate<10){
-        pastMonthDate = '0' + pastMonthDate;
-      }
-      var fromDate = yyyy + '-' + pastMonth + '-' + pastMonthDate;
-      $('input[name="fromDate"]').val(fromDate);
-      $('input[name="toDate"]').val(today);
-    }
-    if(periodVal === '3pastMonth'){
-      var pastMonth = Number(mm)-3;
-      // console.log(pastMonth);
-      var pastMonthDate = Number(dd);
-      if(pastMonth<10){
-        pastMonth = '0' + pastMonth;
-      }
-      if(pastMonthDate<10){
-        pastMonthDate = '0' + pastMonthDate;
-      }
-      var fromDate = yyyy + '-' + pastMonth + '-' + pastMonthDate;
-      $('input[name="fromDate"]').val(fromDate);
-      $('input[name="toDate"]').val(today);
-    }
-
-}) ////select periodDiv function closing
-
-$('input[name="cText"]').click(function(){
-  $(this).select();
-})
 
 </script>
 

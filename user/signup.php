@@ -12,15 +12,19 @@ include $_SERVER['DOCUMENT_ROOT']."/view/header.php";
   <form method="post" action ="signup_proccess.php" class="form-signin" id="signup_form">
     <div class="form-group">
       <div class="form-row">
-        <div class="form-group col-md-8">
+        <div class="form-group col-md-8 mb-0">
           <input type="email" name="email" id="chk_email1" class="form-control" placeholder="이메일주소" required="" autofocus="">
         </div>
-        <div class="form-group col-md-4">
+        <div class="form-group col-md-4 mb-0">
           <input type="button" class="form-control" value="중복체크" onclick="email_check();">
           <input type=hidden id="chk_email2" name="chk_email2" value="0">
           <!-- hidden 이건 중복체크했는지 안했는지 판단하는 bool변수 -->
         </div>
       </div>
+      <div class="form-group">
+        <small>사용하는 이메일 계정을 넣어주세요(휴면 또는 미사용중인 이메일은 넣지 말아주세요)</small>
+      </div>
+
 
       <!-- <script>
       if(getElementById("chk_id2").value === "1"){
@@ -39,28 +43,23 @@ include $_SERVER['DOCUMENT_ROOT']."/view/header.php";
         <div class="form-group col-md-4">
           <select name="user_div" class="form-control" onclick="tocheckpw2();">
             <option value="개인">개인</option>
-            <option value="개인사업자">개인사업자</option>
-            <option value="법인사업자">법인사업자</option>
+            <option value="사업자">사업자</option>
+            <!-- <option value="개인사업자">개인사업자</option>
+            <option value="법인사업자">법인사업자</option> -->
           </select>
         </div>
         <div class="form-group col-md-8">
-          <input type="text" name="user_name" class="form-control"      placeholder="회원명" required="" autofocus="" onclick="final_check();">
+          <input type="text" name="user_name" class="form-control"      placeholder="성명" required="" autofocus="" onclick="final_check();">
         </div>
       </div>
     </div>
 
     <div class="form-group">
-      <label>담당자 정보</label>
-      <div class="form-row">
-        <div class="form-group col-md-4 mb-1">
-          <input type="text" name="damdangga_name" class="form-control" placeholder="담당자명">
-        </div>
-        <div class="form-group col-md-8 mb-1">
-          <input type="text" name="cellphone" class="form-control"      placeholder="담당자 휴대폰번호" required="" autofocus="">
-        </div>
-      </div>
-      <!-- <button type="submit" name="cellphone_auth" class="btn btn-sm btn-primary btn-block">휴대폰번호인증</button> -->
+      <label>연락처</label><br>
+      <input type="text" name="cellphone" class="form-control"      placeholder="휴대폰번호" required>
+      <button type="submit" name="cellphone_auth" class="btn btn-sm btn-primary btn-block">휴대폰번호인증</button>
     </div>
+
 
     <div class="form-group">
       <label>임대유형</label>
@@ -73,9 +72,12 @@ include $_SERVER['DOCUMENT_ROOT']."/view/header.php";
         <option value="임대관리회사">임대관리회사</option>
         <option value="기타">기타</option>
       </select>
+      <div name="lease_etc">
+
+      </div>
     </div>
 
-    <div class="form-group">
+    <div class="form-group" name="">
       <label>가입경로</label>
       <select name="regist_channel" class="form-control">
         <option value="메일수신">메일수신</option>
@@ -84,6 +86,9 @@ include $_SERVER['DOCUMENT_ROOT']."/view/header.php";
         <option value="인터넷검색">인터넷검색</option>
         <option value="기타">기타</option>
       </select>
+      <div name="regist_etc">
+
+      </div>
     </div>
 
     <div class="form-group">
@@ -135,6 +140,19 @@ include $_SERVER['DOCUMENT_ROOT']."/view/header.php";
    }
  }
 
+ // function isNumber(event){
+ //   var keycode = event.keyCode;
+ //   if(keycode > 48 && keycode < 57){
+ //     return true;
+ //   } else {
+ //     return false;
+ //   }
+ // }
+ //
+ // $('input[name=cellphone]').on('keypress', function(){
+ //   isNumber(event);
+ // }) //이거를 했는데 잘 안되네 ㅠ
+
  function final_check(){
    var button_signup = document.getElementById('button_signup');
    if(document.getElementById("chk_email2").value===1 && document.getElementById('password_check_id').value===1) {
@@ -143,8 +161,42 @@ include $_SERVER['DOCUMENT_ROOT']."/view/header.php";
      return false;
    }
  }
+
+ $('select[name=user_div]').on('change', function(){
+   if($(this).val()==='사업자'){
+     $('input[name=user_name]').attr('placeholder', '사업자명');
+   } else {
+     $('input[name=user_name]').attr('placeholder', '성명');
+   }
+ })
+
+ $('select[name=lease_type]').on('change', function(){
+   // console.log($(this).val());
+
+   if($(this).val() === '기타'){
+     var etc_lease = "<input type='text' class='form-control' name='lease_type_text'>";
+     $('div[name=lease_etc]').html(etc_lease);
+   } else {
+     $('div[name=lease_etc]').empty();
+   }
+
+ })
+
+ $('select[name=regist_channel]').on('change', function(){
+   // console.log($(this).val());
+
+   if($(this).val() === '기타'){
+     var etc_regist = "<input type='text' class='form-control' name='regist_channel_text'>";
+     $('div[name=regist_etc]').html(etc_regist);
+   } else {
+     $('div[name=regist_etc]').empty();
+   }
+
+ })
+
+
 </script>
 
 <?php
-include $_SERVER['DOCUMENT_ROOT']."/view/footer.php";
+include $_SERVER['DOCUMENT_ROOT']."/view/service_footer.php";
 ?>

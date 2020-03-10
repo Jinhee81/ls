@@ -89,11 +89,11 @@ if(isset($_POST['payNumber'])){
       </div>';
   if($row['executiveDate']){
     $output .= '<div class="form-group col-md-8 mb-0">
-      <input type="text" class="form-control form-control-sm dateType" style="color:#F7819F;" value="'.$row['pExpectedDate'].'" disabled>
+      <input type="text" class="form-control form-control-sm dateType" style="color:#F7819F;" value="'.$row['executiveDate'].'" disabled required>
     </div></div>';
   } else {
     $output .= '<div class="form-group col-md-8 mb-0">
-      <input type="text" class="form-control form-control-sm dateType" style="color:#F7819F;" value="'.$row['pExpectedDate'].'">
+      <input type="text" class="form-control form-control-sm dateType" style="color:#F7819F;" value="'.$row['pExpectedDate'].'" required>
     </div>
   </div>';
   }
@@ -105,11 +105,11 @@ if(isset($_POST['payNumber'])){
 
   if($row['executiveDate']){
     $output .= '<div class="form-group col-md-6 mb-0">
-      <input type="text" class="form-control form-control-sm amountNumber" style="color:#F7819F;" value="'.$row['ptAmount'].'" numberOnly disabled>
+      <input type="text" class="form-control form-control-sm amountNumber" style="color:#F7819F;" value="'.$row['getAmount'].'" numberOnly disabled required>
     </div>';
   } else {
     $output .= '<div class="form-group col-md-6 mb-0">
-      <input type="text" class="form-control form-control-sm amountNumber" style="color:#F7819F;" value="'.$row['ptAmount'].'" numberOnly>
+      <input type="text" class="form-control form-control-sm amountNumber" style="color:#F7819F;" value="'.$row['ptAmount'].'" numberOnly required>
     </div>';
   }
 

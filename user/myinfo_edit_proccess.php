@@ -1,35 +1,38 @@
+<!-- 담당자명 항목이 있었는데 없애서 담당자명 부분을 주석처리함 -->
 <?php
 session_start();
 include $_SERVER['DOCUMENT_ROOT']."/view/conn.php";
 
+print_r($_POST);
+
 $filtered = array(
-  'user_name' => mysqli_real_escape_string($conn, $_POST['user_name']),
-  'damdangga_name' => mysqli_real_escape_string($conn, $_POST['damdangga_name'])
+  'user_name' => mysqli_real_escape_string($conn, $_POST['user_name'])
 );
+
+// 'damdangga_name' => mysqli_real_escape_string($conn, $_POST['damdangga_name'])
 
 $sql  = "
     UPDATE user
     SET
       user_div = '{$_POST['user_div']}',
       user_name = '{$filtered['user_name']}',
-      damdangga_name = '{$filtered['damdangga_name']}',
       cellphone = '{$_POST['cellphone']}',
       lease_type = '{$_POST['lease_type']}',
       updated = NOW()
     WHERE
-      email = '{$_POST['email']}'
+      id = {$_SESSION['id']}
     ";
 $result = mysqli_query($conn, $sql);
 
 
-$sql = "SELECT * FROM user WHERE email = '{$_POST['email']}'";
-$result = mysqli_query($conn, $sql);
-$row = mysqli_fetch_array($result);
-$_SESSION['user_div'] = $row['user_div'];
-$_SESSION['user_name'] = $row['user_name'];
-$_SESSION['damdangga_name'] = $row['damdangga_name'];
-$_SESSION['cellphone'] = $row['cellphone'];
-$_SESSION['lease_type'] = $row['lease_type'];
+$sql2 = "SELECT * FROM user WHERE id = {$_SESSION['id']}";
+$result2 = mysqli_query($conn, $sql2);
+$row2 = mysqli_fetch_array($result2);
+$_SESSION['user_div'] = $row2['user_div'];
+$_SESSION['user_name'] = $row2['user_name'];
+// $_SESSION['damdangga_name'] = $row['damdangga_name'];
+$_SESSION['cellphone'] = $row2['cellphone'];
+$_SESSION['lease_type'] = $row2['lease_type'];
 
 // echo $_SESSION['user_div'];
 // echo $_SESSION['user_name'];
@@ -38,7 +41,7 @@ $_SESSION['lease_type'] = $row['lease_type'];
 // echo $_SESSION['lease_type'];
 
 
-if($result === false){
+if($result2 === false){
     echo mysqli_error($conn);
 } else {
   echo "<script>
@@ -46,5 +49,6 @@ if($result === false){
   window.location.href='myinfo.php';
   </script>";
 }
-mysqli_close($conn);
+// mysqli_close($conn);
+
 ?>

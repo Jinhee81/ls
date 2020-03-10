@@ -4,6 +4,12 @@ session_start();
 if(!isset($_SESSION['is_login'])){
   header('Location: /user/login.php');
 }
+?>
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <title>방계약등록</title>
+<?php
 include $_SERVER['DOCUMENT_ROOT']."/view/service_header1_meta.php";
 include $_SERVER['DOCUMENT_ROOT']."/view/service_header2.php";
 include $_SERVER['DOCUMENT_ROOT']."/view/conn.php";
@@ -261,7 +267,26 @@ foreach ($groupBuildingArray as $key => $value) {
     </div>
   </form>
 </section>
+
+<script src="/js/jquery-ui.min.js"></script>
+<script src="/js/datepicker-ko.js"></script>
 <script>
+$(document).ready(function(){
+  $('.dateType').datepicker({
+    changeMonth: true,
+    changeYear: true,
+    showButtonPanel: true,
+    // showOn: "button",
+    buttonImage: "/img/calendar.svg",
+    buttonImageOnly: false
+  })
+
+  $('.amountNumber').on('click keyup', function(){
+    $(this).select();
+  })
+
+  $("input:text[numberOnly]").number(true);
+})
 
 $('#contractDate').on('change', function(){
   var readyStartDate = $('#contractDate').val();

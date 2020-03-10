@@ -4,22 +4,12 @@ include $_SERVER['DOCUMENT_ROOT']."/view/conn.php";
 
 // print_r($_POST);
 
-if($_POST['customerDiv']==='queryCustomer'){
-  $customerDiv = '문의';
-}
-if($_POST['customerDiv']==='ingCustomer'){
-  $customerDiv = '세입자';
-}
-// if($_POST['customerDiv']==='endCustomer'){
-//   $customerDiv = '종료세입자';
-// }
-if($_POST['customerDiv']==='etcCustomer'){
-  $customerDiv = '거래처';
+if($_POST['customerDiv']==='customerAll'){
+  $customerCondi = "";
+} else {
+  $customerCondi = "and div1 = '{$_POST['customerDiv']}'";
 }
 
-if($_POST['customerDiv']==='etcCustomer2'){
-  $customerDiv = '기타';
-}
 
 $etcCondi = "";
 if($_POST['cText']){
@@ -39,34 +29,44 @@ if($_POST['dateDiv']==='registerDate'){
 } elseif($_POST['dateDiv']==='updateDate'){
   $dateDiv = 'updated';
 }
-$etcDate = "";
-$toDate1 = strtotime($_POST['toDate']);
-$toDate2 = date('Y-m-d', $toDate1);
-$toDate3 = date('Y-m-d', strtotime($toDate2.'+1 days'));
-// echo $toDate3.'1111';
 
-// $toDate2 = strtotime($toDate1.'+1 days');
+$etcDate = "";
+
 if($_POST['fromDate'] && $_POST['toDate']){
-  $etcDate = " and ($dateDiv >= '{$_POST['fromDate']}' and $dateDiv <= '{$toDate3}')";
+  $etcDate = " and (DATE($dateDiv) BETWEEN '{$_POST['fromDate']}' and '{$_POST['toDate']}')";
 } elseif($_POST['fromDate']){
-  $etcDate = " and ($dateDiv >= '{$_POST['fromDate']}')";
+  $etcDate = " and (DATE($dateDiv) >= '{$_POST['fromDate']}')";
 } elseif($_POST['toDate']){
-  $etcDate = " and ($dateDiv <= '{$toDate3}')";
+  $etcDate = " and (DATE($dateDiv) <= '{$_POST['toDate']}')";
 }
+
 
 $sql = "select
           @num := @num + 1 as num,
           id, div1, div2, name, div3, companyname, cNumber1, cNumber2, cNumber3, contact1, contact2, contact3, email, etc
         from (select @num :=0)a, customer
-        where user_id={$_SESSION['id']} and
-              div1 = '{$customerDiv}'
-              $etcCondi $etcDate
+        where user_id={$_SESSION['id']}
+              $customerCondi $etcCondi $etcDate
         order by num desc";
-// echo $sql;
+echo $sql;
+
 $result = mysqli_query($conn, $sql);
 $total_rows = mysqli_num_rows($result);
-if($total_rows===0){
-  echo '조회된 값이 없습니다.';
+if($total_rows===0){ ?>
+  <table class="table table-hover text-center" id="checkboxTestTbl">
+    <thead>
+      <tr class="table-info">
+        <th scope="col" class="mobile"><input type="checkbox"></th>
+        <th scope="col">순번</th>
+        <th scope="col" class="mobile">구분</th>
+        <th scope="col">성명</th>
+        <th scope="col">연락처</th>
+        <th scope="col" class="mobile">이메일</th>
+        <th scope="col" class="mobile">특이사항</th>
+        <th scope="col" class="mobile">바로가기</th>
+      </tr>
+    </thead>
+<?php  echo '<tbody><tr><td colspan="8">조회된 값이 없습니다. 세입자를 등록해주세요!</td></tr></tbody>';
 } else {?>
   <table class="table table-hover text-center" id="checkboxTestTbl">
     <thead>
@@ -74,7 +74,7 @@ if($total_rows===0){
         <th scope="col" class="mobile"><input type="checkbox"></th>
         <th scope="col">순번</th>
         <th scope="col" class="mobile">구분</th>
-        <th scope="col">세입자</th>
+        <th scope="col">성명</th>
         <th scope="col">연락처</th>
         <th scope="col" class="mobile">이메일</th>
         <th scope="col" class="mobile">특이사항</th>
@@ -129,7 +129,7 @@ if($total_rows===0){
         <td class="mobile"><input type="checkbox" value="<?=$clist['id']?>"></td>
         <td><?=$clist['num']?></td>
         <td class="mobile"><?=$clist['div1']?></td>
-        <td class='text-center'><a href="m_c_edit.php?id=<?=$clist['id']?>">
+        <td class='text-center'><a href="m_c_edit.php?id=<?=$clist['id']?>" data-toggle="tooltip" data-placement="top" title="<?=$cName?>">
           <?=mb_substr($cName,0,20)?></a>
           <?php
           $sql2 = "select count(*) from realContract where customer_id={$clist['id']}";
@@ -144,11 +144,19 @@ if($total_rows===0){
         </td>
         <td><?=$cContact?></td>
         <td class="mobile"><?=mb_substr($clist['email'],0,15)?></td>
-        <td class="mobile"><?=mb_substr($clist['etc'],0,10)?></td>
+        <td class="mobile">
+          <label data-toggle="tooltip" data-placement="top" title="<?=$clist['etc']?>">
+            <?=mb_substr($clist['etc'],0,10)?>
+          </label>
+        </td>
         <td class="mobile">
           <?php
               if($clist['div1']==='세입자'){
                 echo "<a class='btn btn-info btn-sm' href='/service/contract/contract_add1.php?id=".$clist['id']."' role='button'>방계약</a>";
+              }
+
+              if($clist['div1']==='기타'){
+                echo "<a class='btn btn-info btn-sm' href='/service/contractetc/contractetc_add1.php?id=".$clist['id']."' role='button'>기타계약</a>";
               }
            ?>
         </td>
@@ -180,6 +188,10 @@ if($total_rows===0){
 
 
 <script>
+$(function () {
+    $('[data-toggle="tooltip"]').tooltip()
+})
+
 var table = $("#checkboxTestTbl");
 
 // 테이블 헤더에 있는 checkbox 클릭시

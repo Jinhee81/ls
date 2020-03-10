@@ -6,30 +6,47 @@ include "password.php";
 $email = $_POST['email'];
 $password = $_POST['password'];
 
-$check = "SELECT * from user WHERE email = '{$email}' LIMIT 1;";
+$check = "SELECT * from user WHERE email = '{$email}' LIMIT 1";
 $result = mysqli_query($conn, $check);
 $row = mysqli_fetch_array($result);
 
-if( $email === $row['email'] && password_verify($password, $row['password'])){
-  $_SESSION['is_login'] = true;
-  $_SESSION['id'] = $row['id'];
-  $_SESSION['email'] = $email;
-  $_SESSION['user_div'] = $row['user_div'];
-  $_SESSION['user_name'] = $row['user_name'];
-  $_SESSION['damdangga_name'] = $row['damdangga_name'];
-  $_SESSION['cellphone'] = $row['cellphone'];
-  $_SESSION['lease_type'] = $row['lease_type'];
-  $_SESSION['created'] = $row['created'];
-  header('Location: /main/main.php');
-  exit();
-  // $_SESSION['email'] = $email;
-  // if(isset($_SESSION['email'])){
-  //
-  // }
-} else {
+$check_emailauth = "select emailauth from user
+                    where email = '{$email}' LIMIT 1";
+$result_emailauth = mysqli_query($conn, $check_emailauth);
+$row_emailauth = mysqli_fetch_array($result_emailauth);
+
+// print_r($row_emailauth);
+
+if($row_emailauth[0] === 'no'){
   echo "<script>
-  alert('아이디 또는 비밀번호가 일치하지 않습니다.');
+  alert('이메일인증을 완료해야 리스맨 사용이 가능합니다. 이메일을 확인하세요.');
   location.href='login.php';
   </script>";
+} else {
+  if( $email === $row['email'] && password_verify($password, $row['password'])){
+    $_SESSION['is_login'] = true;
+    $_SESSION['id'] = $row['id'];
+    $_SESSION['email'] = $email;
+    $_SESSION['user_div'] = $row['user_div'];
+    $_SESSION['user_name'] = $row['user_name'];
+    $_SESSION['damdangga_name'] = $row['damdangga_name'];
+    $_SESSION['cellphone'] = $row['cellphone'];
+    $_SESSION['lease_type'] = $row['lease_type'];
+    $_SESSION['created'] = $row['created'];
+    $_SESSION['gradename'] = $row['gradename'];
+    header('Location: /main/main.php');
+    exit();
+    // $_SESSION['email'] = $email;
+    // if(isset($_SESSION['email'])){
+    //
+    // }
+  } else {
+    echo "<script>
+    alert('아이디 또는 비밀번호가 일치하지 않습니다.');
+    location.href='login.php';
+    </script>";
+  }
 }
+
+
  ?>

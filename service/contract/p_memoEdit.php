@@ -18,7 +18,7 @@ $sql = "UPDATE realContract_memo
             memoContent = '{$filtered_content}',
             updated = now()
         where
-            id = {$filtered_memoid} and
+            idrealContract_memo = {$filtered_memoid} and
             realContract_id = {$filtered_id}
         ";
 // echo $sql;

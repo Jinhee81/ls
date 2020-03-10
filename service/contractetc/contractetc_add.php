@@ -138,6 +138,10 @@ include $_SERVER['DOCUMENT_ROOT']."/service/contractetc/good.php";
     </div>
   </form>
 </section>
+
+<script src="/js/jquery-ui.min.js"></script>
+<script src="/js/datepicker-ko.js"></script>
+<script src="/js/jquery-ui-timepicker-addon.js"></script>
 <script>
 $(document).ready(function(){
   $('#customer').keyup(function(){
@@ -155,6 +159,34 @@ $(document).ready(function(){
       })
     }
   })
+
+  $('.timeType').datetimepicker({
+    dateFormat:'yy-mm-dd',
+    monthNamesShort:[ '1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월' ],
+    dayNamesMin:[ '일', '월', '화', '수', '목', '금', '토' ],
+    changeMonth:true,
+    changeYear:true,
+    showMonthAfterYear:true,
+
+    timeFormat: 'HH:mm:ss',
+    controlType: 'select',
+    oneLine: true
+  })
+
+  $('.dateType').datepicker({
+    changeMonth: true,
+    changeYear: true,
+    showButtonPanel: true,
+    // showOn: "button",
+    buttonImage: "/img/calendar.svg",
+    buttonImageOnly: false
+  })
+
+  $(".amountNumber").click(function(){
+    $(this).select();
+  });
+
+  $("input:text[numberOnly]").number(true);
 })
 
 $(document).on('click', 'li', function(){

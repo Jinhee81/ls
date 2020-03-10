@@ -1,6 +1,7 @@
 <body>
+
 <nav class="navbar navbar-expand-lg navbar-dark" style="background-color:#0B173B;">
-  <a class="navbar-brand" href="/main/main.php"><img src="/img/leaseman_logo.png" width="100" height="30" class="d-inline-block align-top" alt=""></a>
+  <a class="navbar-brand" href="/main/main.php"><img src="/img/h1b.png" width="100" height="30" class="d-inline-block align-top" alt=""></a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
@@ -20,7 +21,7 @@
         <a class="nav-link" href="/service/contractetc/contractetc.php">기타계약</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="/service/get/getexpected.php">입금예정</a>
+        <a class="nav-link" href="/service/get/getexpected1.php">입금예정</a>
       </li>
       <li class="nav-item">
         <a class="nav-link" href="/service/get/getfinished.php">입금완료</a>
@@ -30,12 +31,12 @@
           회계관리
         </a>
         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-          <a class="dropdown-item" href="#">고정비</a>
-          <a class="dropdown-item" href="#">기타비용</a>
+          <a class="dropdown-item" href="/service/account/fixcost.php">고정비설정</a>
+          <a class="dropdown-item" href="/service/account/flexCost/flexCost.php">지출입력</a>
           <div class="dropdown-divider"></div>
-          <a class="dropdown-item" href="#">월별회계조회</a>
-          <a class="dropdown-item" href="#">연도별회계조회</a>
-          <a class="dropdown-item" href="#">보증금조회</a>
+          <a class="dropdown-item" href="/service/account/monthAccount/monthAccount.php">월별회계조회</a>
+          <a class="dropdown-item" href="/service/account/yearAccount/yearAccount.php">연도별회계조회</a>
+          <a class="dropdown-item" href="/service/account/deposit.php">보증금조회</a>
         </div>
       </li>
     </ul>
@@ -45,7 +46,7 @@
         <a href="/service/setting/building.php">
         <i class="fas fa-cog"></i>&nbsp;환경설정</a>
       </span>&nbsp;
-      <span class="navbar-text">
+      <span class="navbar-text" data-toggle="tooltip" data-placement="bottom" title="<?=$_SESSION['gradename']?>">
         <a href="/user/myinfo.php">
         <i class="fas fa-user"></i>&nbsp;나의정보</a>
       </span>&nbsp;&nbsp;

@@ -87,8 +87,8 @@ foreach ($groupBuildingArray as $key => $value) {
     <hr class="my-4">
     <a class="btn btn-primary btn-sm" href="contractAll.php" role="button">일괄계약등록(1)</a>
     <a class="btn btn-primary btn-sm" href="contractAll2.php" role="button">일괄계약등록(2)</a>
-    <!-- <a class="btn btn-primary btn-sm" href="contractCustomer.php" role="button">그룹별세입자등록</a>
-    <a class="btn btn-primary btn-sm" href="contractCsv.php" role="button">계약csv등</a>  이거 만드려고했는데 필요가없음-->
+    <!-- <a class="btn btn-primary btn-sm" href="contractCustomer.php" role="button">그룹별세입자등록</a>-->
+    <a class="btn btn-primary btn-sm" href="contractCsv.php" role="button">계약csv등</a>
     <a class="btn btn-primary btn-sm" href="/service/customer/m_c_add.php" role="button">세입자등록</a>
   </div>
 </section>
@@ -219,6 +219,9 @@ foreach ($groupBuildingArray as $key => $value) {
     </div>
   </form>
 </section>
+
+<script src="/js/jquery-ui.min.js"></script>
+<script src="/js/datepicker-ko.js"></script>
 <script>
 $(document).ready(function(){
   $('#customer').keyup(function(){
@@ -236,6 +239,21 @@ $(document).ready(function(){
       })
     }
   })
+
+  $('.dateType').datepicker({
+    changeMonth: true,
+    changeYear: true,
+    showButtonPanel: true,
+    // showOn: "button",
+    buttonImage: "/img/calendar.svg",
+    buttonImageOnly: false
+  })
+
+  $('.amountNumber').on('click keyup', function(){
+    $(this).select();
+  })
+
+  $("input:text[numberOnly]").number(true);
 })
 
 $(document).on('click', 'li', function(){

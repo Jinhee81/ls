@@ -12,7 +12,7 @@ $filtered_memoid = mysqli_real_escape_string($conn, $_POST['memoid']);
 
 $sql = "DELETE from realContract_memo
         WHERE
-          id = {$filtered_memoid} and
+          idrealContract_memo = {$filtered_memoid} and
           realContract_id = {$filtered_id}
         ";
 // echo $sql;

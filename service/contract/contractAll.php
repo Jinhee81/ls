@@ -3,6 +3,12 @@ session_start();
 if(!isset($_SESSION['is_login'])){
   header('Location: /user/login.php');
 }
+?>
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <title>일괄계약등록1</title>
+<?php
 include $_SERVER['DOCUMENT_ROOT']."/view/service_header1_meta.php";
 include $_SERVER['DOCUMENT_ROOT']."/view/service_header2.php";
 include $_SERVER['DOCUMENT_ROOT']."/view/conn.php";
@@ -53,14 +59,14 @@ include $_SERVER['DOCUMENT_ROOT']."/service/contract/building.php";
               <label for="">물건명</label>
           </div>
           <div class="form-group col-md-2">
-              <select class="form-control form-control-sm" id="select1">
+              <select class="form-control form-control-sm" id="building">
               </select>
           </div>
           <div class="form-group col-md-2 text-center">
               <label for="">그룹명</label>
           </div>
           <div class="form-group col-md-2">
-              <select class="form-control form-control-sm" id="select2">
+              <select class="form-control form-control-sm" id="group">
               </select>
           </div>
           <!-- <div class="form-group col-md-2">
@@ -83,63 +89,88 @@ include $_SERVER['DOCUMENT_ROOT']."/service/contract/building.php";
     </div>
 </section>
 
+<script src="/js/jquery-ui.min.js"></script>
+<script src="/js/datepicker-ko.js"></script>
 <script>
 
-    var select1option, select2option, buildingIdx, groupIdx;
+var buildingoption, groupoption, buildingIdx, groupIdx;
 
-    for(var key in buildingArray){ //건물목록출력(비즈피스장암,비즈피스구로)
-        select1option = "<option value='"+key+"'>"+buildingArray[key][0]+"</option>";
-        $('#select1').append(select1option);
-    }
-    buildingIdx = $('#select1').val();
+for(var key in buildingArray){ //건물목록출력(비즈피스장암,비즈피스구로)
+    buildingoption = "<option value='"+key+"'>"+buildingArray[key][0]+"</option>";
+    $('#building').append(buildingoption);
+}
+buildingIdx = $('#building').val();
 
-    for(var key2 in groupBuildingArray[buildingIdx]){ //그룹목록출력(상주,비상주)
-        select2option = "<option value='"+key2+"'>"+groupBuildingArray[buildingIdx][key2]+"</option>";
-        // console.log(select3option);
-        $('#select2').append(select2option);
-    }
-    groupIdx = $('#select2').val();
+for(var key2 in groupBuildingArray[buildingIdx]){ //그룹목록출력(상주,비상주)
+    groupoption = "<option value='"+key2+"'>"+groupBuildingArray[buildingIdx][key2]+"</option>";
+    // console.log(select3option);
+    $('#group').append(groupoption);
+}
+groupIdx = $('#group').val();
 
-    var tableTitle = "<tr><td>방번호</td><td><span id='star' style='color:#F7BE81;'>* </span>세입자</td><td>계약일자</td><td><span id='star' style='color:#F7BE81;'>* </span>공급가액/세액</td><td><span id='star' style='color:#F7BE81;'>* </span>기간</td><td><span id='star' style='color:#F7BE81;'>* </span>시작일(종료일)</td><td>보증금</td><td>보증금입금일</td></tr>";
-    $('#table1').append(tableTitle);
+var tableTitle = "<tr><td>방번호</td><td><span id='star' style='color:#F7BE81;'>* </span>세입자</td><td>계약일자</td><td><span id='star' style='color:#F7BE81;'>* </span>공급가액/세액</td><td><span id='star' style='color:#F7BE81;'>* </span>기간</td><td><span id='star' style='color:#F7BE81;'>* </span>시작일(종료일)</td><td>보증금</td><td>보증금입금일</td></tr>";
 
-    var tableCol2 ="<td><input type='search' name='customer' class='form-control form-control-sm text-center' required><div class='' name='customerList'></div></td>"; //고객정보
+$('#table1').append(tableTitle);
 
-    var tableCol3 ="<td><input type='text' name='contractDate' class='form-control form-control-sm text-center dateType'></td>"; //계약일자
+var tableCol2 ="<td><input type='search' name='customer' class='form-control form-control-sm text-center' required><div class='' name='customerList'></div></td>"; //고객정보
 
-    var tableCol4 ="<td><input type='text' class='form-control form-control-sm text-right amountNumber numberComma' value='0'><input type='text' class='form-control form-control-sm text-right amountNumber numberComma' value='0'><input type='text' class='form-control form-control-sm text-right amountNumber numberComma' value='0' disabled></td>"; //공급가액/세액
+var tableCol3 ="<td><input type='text' name='contractDate' class='form-control form-control-sm text-center dateType'></td>"; //계약일자
 
-    var tableCol5 ="<td><input type='number' class='form-control form-control-sm text-center' min='1' max='72' name='monthCount'></td>"; //기간
+var tableCol4 ="<td><input type='text' class='form-control form-control-sm text-right amountNumber numberComma' value='0' numberOnly><input type='text' class='form-control form-control-sm text-right amountNumber numberComma' value='0' numberOnly><input type='text' class='form-control form-control-sm text-right amountNumber numberComma' value='0' disabled></td>"; //공급가액/세액/합계
 
-    var tableCol6 ="<td><input type='text' class='form-control form-control-sm text-center dateType' name='startDate'><input type='text' class='form-control form-control-sm text-center dateType' name='endDate' disabled></td>"; //시작일(종료일)
+var tableCol5 ="<td><input type='number' class='form-control form-control-sm text-center' min='1' max='72' name='monthCount'></td>"; //기간
 
-    var tableCol7 ="<td><input type='text' class='form-control form-control-sm text-center amountNumber numberComma' value='0'></td>"; //보증금
+var tableCol6 ="<td><input type='text' class='form-control form-control-sm text-center dateType' name='startDate'><input type='text' class='form-control form-control-sm text-center dateType' name='endDate' disabled></td>"; //시작일(종료일)
 
-    var tableCol8 ="<td><input type='text' class='form-control form-control-sm text-center dateType' name='depositInDate'></td></tr>"; //입금일자
+var tableCol7 ="<td><input type='text' class='form-control form-control-sm text-center amountNumber numberComma' value='0'></td>"; //보증금
 
-
-    for(var key in roomArray[groupIdx]){
-
-        // customerSearch();
-
-        var tableCol1 = "<tr><td><input type='hidden' value='"+key+"'><input type='text' class='form-control form-control-sm text-center' value='"+roomArray[groupIdx][key]+"' disabled><div class='badge badge-warning text-wrap' style='width: 3rem;' name='rowDeleteBtn'>행삭제</div></td>";
-
-        var tableRow = tableCol1 + tableCol2 + tableCol3 + tableCol4 + tableCol5 + tableCol6 + tableCol7 + tableCol8;
-
-        $('#table1').append(tableRow);//관리호수
-
-    }
+var tableCol8 ="<td><input type='text' class='form-control form-control-sm text-center dateType' name='depositInDate'></td></tr>"; //입금일자
 
 
-    $('#select1').on('change', function(event){
-        buildingIdx = $('#select1').val();
-        $('#select2').empty();
+for(var key in roomArray[groupIdx]){
+
+    // customerSearch();
+
+    var tableCol1 = "<tr><td><input type='hidden' value='"+key+"'><input type='text' class='form-control form-control-sm text-center' value='"+roomArray[groupIdx][key]+"' disabled><div class='badge badge-warning text-wrap' style='width: 3rem;' name='rowDeleteBtn'>행삭제</div></td>";
+
+    var tableRow = tableCol1 + tableCol2 + tableCol3 + tableCol4 + tableCol5 + tableCol6 + tableCol7 + tableCol8;
+
+    $('#table1').append(tableRow);//관리호수
+
+}
+
+
+
+$(document).ready(function(){
+  $('.dateType').datepicker({
+    changeMonth: true,
+    changeYear: true,
+    showButtonPanel: true,
+    // showOn: "button",
+    buttonImage: "/img/calendar.svg",
+    buttonImageOnly: false
+  });
+
+  $(".amountNumber").on('click keyup', function(){
+    $(this).select();
+  });
+
+  $("input:text[numberOnly]").number(true);
+}) //document.ready function closing}
+
+
+
+
+    $('#building').on('change', function(){
+        console.log('solmi');
+        buildingIdx = $('#building').val();
+        $('#group').empty();
         for(var key2 in groupBuildingArray[buildingIdx]){ //그룹목록출력(상주,비상주)
-          select2option = "<option value='"+key2+"'>"+groupBuildingArray[buildingIdx][key2]+"</option>";
+          groupoption = "<option value='"+key2+"'>"+groupBuildingArray[buildingIdx][key2]+"</option>";
           // console.log(select3option);
-          $('#select2').append(select2option);
+          $('#group').append(groupoption);
         }
-        groupIdx = $('#select2').val();
+        groupIdx = $('#group').val();
 
         $('#table1').empty();
         $('#table1').append(tableTitle);
@@ -175,12 +206,12 @@ include $_SERVER['DOCUMENT_ROOT']."/service/contract/building.php";
           $(this).select();
         });
 
-        $(".numberComma").number(true);
+        // $(".numberComma").number(true);
 
     })
 
-    $('#select2').on('change', function(event){
-        groupIdx = $('#select2').val();
+    $('#group').on('change', function(event){
+        groupIdx = $('#group').val();
         $('#table1').empty();
         $('#table1').append(tableTitle);
         for(var key in roomArray[groupIdx]){
@@ -218,7 +249,7 @@ include $_SERVER['DOCUMENT_ROOT']."/service/contract/building.php";
           $(this).select();
         });
 
-        $(".numberComma").number(true);
+        // $(".numberComma").number(true);
     })
 
     $('div[name="rowDeleteBtn"]').on('click', function(){

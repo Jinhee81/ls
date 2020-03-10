@@ -6,14 +6,11 @@ include $_SERVER['DOCUMENT_ROOT']."/view/conn.php";
 // print_r($_SESSION);
 
 $fil = array(
-  'pAmount' => mysqli_real_escape_string($conn, $_POST['pAmount']),
-  'pvAmount' => mysqli_real_escape_string($conn, $_POST['pvAmount']),
-  'ptAmount' => mysqli_real_escape_string($conn, $_POST['ptAmount']),
   'etc' => mysqli_real_escape_string($conn, $_POST['etc'])
 );
 
-$filtered_id = settype($_POST['etcContract_id'], 'integer'); //기타계약번호
-
+$filtered_id = mysqli_real_escape_string($conn, $_POST['etcContract_id']); //기타계약번호
+//
 $sql = "
   UPDATE etcContract
   SET
@@ -22,9 +19,9 @@ $sql = "
     startTime = '{$_POST['startTime']}',
     endTime = '{$_POST['endTime']}',
     payKind = '{$_POST['payKind']}',
-    pAmount = '{$fil['pAmount']}',
-    pvAmount = '{$fil['pvAmount']}',
-    ptAmount = '{$fil['ptAmount']}',
+    pAmount = '{$_POST['pAmount']}',
+    pvAmount = '{$_POST['pvAmount']}',
+    ptAmount = '{$_POST['ptAmount']}',
     executiveDate = '{$_POST['executiveDate']}',
     etc = '{$fil['etc']}',
     updateTime = now(),
@@ -43,16 +40,16 @@ if(!$result){
   error_log(mysqli_error($conn));
   exit();
 }
-
+//
 $sql2 = "
   UPDATE paySchedule2
   SET
-    pAmount = '{$fil['pAmount']}',
-    pvAmount = '{$fil['pvAmount']}',
-    ptAmount = '{$fil['ptAmount']}',
+    pAmount = '{$_POST['pAmount']}',
+    pvAmount = '{$_POST['pvAmount']}',
+    ptAmount = '{$_POST['ptAmount']}',
     payKind = '{$_POST['payKind']}',
-    executiveDate = '{$_POST['pAmount']}',
-    getAmount = '{$fil['ptAmount']}'
+    executiveDate = '{$_POST['executiveDate']}',
+    getAmount = '{$_POST['ptAmount']}'
   WHERE
     etcContract_id = {$filtered_id}";
 // echo $sql2;//청구테이블에다가 입력하는거

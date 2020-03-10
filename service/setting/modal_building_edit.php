@@ -57,6 +57,18 @@ $row = mysqli_fetch_array($result);
         </select>
       </div>
     </div>
+    <div class="form-group row">
+      <label class="col-sm-3 col-form-label">사업자번호</label>
+      <div class="col-sm-9">
+        <input type="text" class="form-control" name="companynumber" value="<?=$row['companynumber']?>">
+      </div>
+    </div>
+    <div class="form-group row">
+      <label class="col-sm-3 col-form-label">팝빌아이디</label>
+      <div class="col-sm-9">
+        <input type="text" class="form-control" name="popbillid" value="<?=$row['popbillid']?>">
+      </div>
+    </div>
     <div class="mt-7">
       <a class="btn btn-secondary" href="building.php" role="button">취소/돌아가기</a>
       <button type="submit" class="btn btn-primary">수정</button>

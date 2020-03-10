@@ -19,7 +19,7 @@ include $_SERVER['DOCUMENT_ROOT']."/view/conn.php";
     <h1 class="display-4">임대관리의 필요사항을 설정하세요!</h1>
     <p class="lead">예) '도레미고시원' 또는 '두드림센터' 등 평상시 관리하는 명칭을 적어주세요.</p>
     <hr class="my-4">
-    <p></p>
+    <p>리스맨 회원가입후 30일동안 무료이용 가능합니다. 30일 이후 요금은 <a href="/main/payment.php" class="badge badge-warning">요금안내</a> 페이지를 참조하세요.</p>
     <a class="btn btn-primary btn-lg" href="modal_building_add.php" role="button">물건등록</a>
   </div>
 </section>

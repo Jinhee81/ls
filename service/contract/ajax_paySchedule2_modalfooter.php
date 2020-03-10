@@ -43,9 +43,14 @@ $('.getExecute').on('click', function(){ //입금완료버튼(모달안버튼) �
 
   var pgetAmount = $(this).parent().prev().children().children(':eq(4)').children(':eq(1)').children().val(); //입금액
 
-  // console.log(pid, ppayKind, pgetDate, pgetAmount);
+  var pExpectedAmount = $(this).parent().prev().children().children(':eq(0)').children(':eq(1)').children().val(); //예정금액
 
+  // console.log(pExpectedAmount);
 
+  if(pgetAmount != pExpectedAmount){
+    alert('입금액과 예정금액은 같아야 합니다.');
+    return false;
+  }
 
   goCategoryPage(aa1, bb1, pid, ppayKind, pgetDate, pgetAmount, contractId);
 

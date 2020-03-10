@@ -67,7 +67,7 @@ $sql_main = "select * from realContract where id={$filtered_id}";
 $result_main = mysqli_query($conn, $sql_main);
 $row_main = mysqli_fetch_array($result_main);
 
-print_r($row_main);
+// print_r($row_main);
 
 $sql = "select * from building where user_id = {$row_main['user_id']}";
 // echo $sql;
@@ -287,6 +287,9 @@ while($row_room = mysqli_fetch_array($result_room)){?>
     </div>
   </form>
 </section>
+
+<script src="/js/jquery-ui.min.js"></script>
+<script src="/js/datepicker-ko.js"></script>
 <script>
 
 $('#contractDate').on('change', function(){
@@ -430,6 +433,16 @@ $("input[name='mvAmount']").on('keyup', function(){
 $('#submitbtn').on('click', function(){
 
 })
+
+$('.dateType').datepicker({
+  changeMonth: true,
+  changeYear: true,
+  showButtonPanel: true,
+  // showOn: "button",
+  buttonImage: "/img/calendar.svg",
+  buttonImageOnly: false
+})
+
 </script>
 
 <?php include $_SERVER['DOCUMENT_ROOT']."/view/service_footer.php";?>

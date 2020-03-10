@@ -1,9 +1,15 @@
-<!-- 계약별 입금예정스케쥴화면, 데이터테이블 라이브러리로 본격 시작해봄 -->
+<!-- 입금완료인거는 처음부터 숨기기처리하게 할것, 예전거는 예비파일 contractEdit30으로 저장되었7 -->
 <?php
 session_start();
 if(!isset($_SESSION['is_login'])){
   header('Location: /user/login.php');
 }
+?>
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <title>방계약상세</title>
+<?php
 include $_SERVER['DOCUMENT_ROOT']."/view/service_header1_meta.php";
 include $_SERVER['DOCUMENT_ROOT']."/view/service_header2.php";
 include $_SERVER['DOCUMENT_ROOT']."/view/conn.php";
@@ -277,7 +283,7 @@ function fnUpload(){
       <div class="form-group col-md-4">
         <label class="mb-0">고객정보</label><br>
           <a href="/service/customer/m_c_edit.php?id=<?=$row[1]?>">
-            <input type="text" class="form-control form-control-sm" name="" value="<?php if($row['etc']) {
+            <input type="text" class="form-control form-control-sm" name="" style="color:#2E9AFE;" value="<?php if($row['etc']) {
               echo $cName.', '.$cContact.', ('.$row['etc'].')';
             } else {
               echo $cName.', '.$cContact;
@@ -334,65 +340,12 @@ function fnUpload(){
 <section class="container-fluid">
     <div class="p-3 mb-2 text-dark border border-info rounded">
       <!-- <div class="d-flex justify-content-center bd-highlight mb-3"> -->
-      <div class="container form-row">
+      <div class="form-row">
           <div class="form-group col-md-4">
                 <button type="button" id="button5" class="btn btn-outline-info btn-sm mobile">1개월 추가</button>
                 <button type="button" class="btn btn-outline-info btn-sm mobile" data-toggle="modal" data-target="#nAddBtn">n개월 추가</button>
 
-<!-- 모달시작============================================================== -->
-<div class="modal fade bd-example-modal-sm" id="nAddBtn" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-sm" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="">n개월 추가</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        <div class="container">
-            <div class="form-row">
-                <div class="form-group col-md-5">
-                    <label>추가개월수</label>
-                </div>
-                <div class="form-group col-md-7">
-                    <input type="text" class="form-control form-control-sm text-right" name="addMonth" value="" numberOnly required>
-                </div>
-            </div>
-            <div class="form-row">
-                <div class="form-group col-md-5">
-                    <label>공급가액</label>
-                </div>
-                <div class="form-group col-md-7">
-                    <input type="text" class="form-control form-control-sm text-right amountNumber grey" name="modalAmount1" value="<?=$row['mAmount']?>" numberOnly required>
-                </div>
-            </div>
-            <div class="form-row">
-                <div class="form-group col-md-5">
-                    <label>세액</label>
-                </div>
-                <div class="form-group col-md-7">
-                    <input type="text" class="form-control form-control-sm text-right amountNumber grey" name="modalAmount2" value="<?=$row['mvAmount']?>" numberOnly required>
-                </div>
-            </div>
-            <div class="form-row">
-                <div class="form-group col-md-5">
-                    <label>합계</label>
-                </div>
-                <div class="form-group col-md-7">
-                    <input type="text" class="form-control form-control-sm text-right amountNumber grey" name="modalAmount3" value="<?=$row['mtAmount']?>" numberOnly required disabled>
-                </div>
-            </div>
-        </div>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">닫기</button>
-        <button type="button" class="btn btn-primary" id="button6">추가하기</button>
-      </div>
-    </div>
-  </div>
-</div>
-<!-- 모달끝================================================================== -->
+
                 <button type="button" id="button7" class="btn btn-outline-info btn-sm mobile">삭제</button>
           </div>
           <div class="form-group col-md-4">
@@ -409,11 +362,12 @@ function fnUpload(){
               </div>
             </div>
           </div>
-          <div class="form-group col-md-4 text-right">
+          <div class="form-group col-md-4">
               <button type="button" id="button1" class="btn btn-outline-info btn-sm" data-toggle="tooltip" data-placement="top" title="체크된것을 청구설정합니다">청구설정</button>
               <button type="button" id="button2" class="btn btn-outline-info btn-sm" data-toggle="tooltip" data-placement="top" title="체크된것의 청구정보를 취소합니다">청구취소</button>
               <button type="button" id="button3" class="btn btn-outline-info btn-sm mobile" data-toggle="tooltip" data-placement="top" title="체크된것들을 입금처리합니다(청구번호가있어야 입금처리 가능해요.)">일괄입금</button>
               <button type="button" id="button4" class="btn btn-outline-info btn-sm mobile" data-toggle="tooltip" data-placement="top" title="체크된것의 입금내역을 취소합니다">일괄입금취소</button>
+              <button type="button" id="button8" class="btn btn-outline-danger btn-sm mobile">입금완료보이기</button>
           </div>
       </div> <!--<div class="container form-row"> closing div-->
       <!-- <div class="">
@@ -425,8 +379,8 @@ function fnUpload(){
             <tr class="table-info">
               <td scope="col" class=""><input type="checkbox" id="checkAll"></td>
               <td scope="col">순번</td>
-              <td scope="col">시작일</td>
-              <td scope="col">종료일</td>
+              <td scope="col">시작일/종료일</td>
+              <!-- <td scope="col">종료일</td> -->
               <td scope="col">공급가액/세액</td>
               <!-- <td scope="col" class="mobile">세액</td> -->
               <td scope="col" class="">합계</td>
@@ -436,9 +390,9 @@ function fnUpload(){
               <td scope="col" class="">수납구분</td>
               <td scope="col">입금일</td>
               <td scope="col" class="">입금(미납)액</td>
-              <td scope="col" class="">연체일수</td>
-              <td scope="col" class="">연체이자</td>
-              <!-- <td scope="col" class="mobile">세금계산서</td> -->
+              <td scope="col" class="">연체일수/이자</td>
+              <!-- <td scope="col" class="">연체이자</td> -->
+              <td scope="col" class="mobile">증빙</td>
             </tr>
           </thead>
 
@@ -456,8 +410,11 @@ while($row2 = mysqli_fetch_array($result2)){
   <td><input type='checkbox' class='checkSelect' name='chk[]' value='<?=$row2['idcontractSchedule']?>'>
   </td>
   <td><p class="font-weight-light"><?=$row2['ordered']?></p></td>
-  <td><p class="font-weight-light"><?=$row2['mStartDate']?></p></td>
-  <td><p class="font-weight-light"><?=$row2['mEndDate']?></p></td>
+  <td>
+    <label class="font-weight-light mb-0"><?=$row2['mStartDate']?></label><br>
+    <label class="font-weight-light mb-0"><?=$row2['mEndDate']?></label>
+  </td>
+  <!-- <td><p class="font-weight-light"><?=$row2['mEndDate']?></p></td> -->
   <td><!--공급가액,세액-->
     <?php
     $sql3 = "Select * from contractSchedule left join paySchedule2
@@ -468,10 +425,10 @@ while($row2 = mysqli_fetch_array($result2)){
     $row3 = mysqli_fetch_array($result3);
     // print_r($row3);
     if($row3['payId']){
-      echo "<label class='text-right font-weight-light numberComma'>".$row3['mMamount']."</label><br><label class='text-right font-weight-light numberComma'>".$row3['mVmAmount']."</label>";
+      echo "<label class='text-right font-weight-light numberComma mb-0'>".$row3['mMamount']."</label><br><label class='text-right font-weight-light numberComma mb-0'>".$row3['mVmAmount']."</label>";
       // echo "exists";
     } else {
-      echo "<input type='text' size='10' class='form-control form-control-sm text-right amountNumber' name='mAmount' value='".$row2['mMamount']."' numberOnly><input type='text' size='10' class='form-control form-control-sm text-right amountNumber' name='mAmount' value='".$row2['mVmAmount']."' numberOnly>";
+      echo "<input type='text' size='10' class='form-control form-control-sm text-right amountNumber mb-0' name='mAmount' value='".$row2['mMamount']."' numberOnly><input type='text' size='10' class='form-control form-control-sm text-right amountNumber mb-0' name='mAmount' value='".$row2['mVmAmount']."' numberOnly>";
     }
     ?>
   </td>
@@ -507,44 +464,6 @@ while($row2 = mysqli_fetch_array($result2)){
     // var_dump($row3['payIdOrder']);
     if($row3['payId'] && $row3['payIdOrder']==='0'){
       echo "<p class='text-primary modalAsk font-weight-light' data-toggle='modal' data-target='#pPay'><u>".$row3['payId']."</u></p>";
-    }
-    ?>
-    <?php
-    if($row3['payId']){
-      // echo "<script>document.write(payNumber);</script>";
-      // echo $payNumber;
-      $sql4 = "select * from paySchedule2 where idpaySchedule2={$row3['payId']}";
-      // echo $sql4;
-      $result4 = mysqli_query($conn, $sql4);
-      $row4 = mysqli_fetch_array($result4) ?>
-        <!-- 모달시작================================================================ -->
-
-              <div class="modal fade" id="pPay" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                <div class="modal-dialog modal-sm" role="document">
-
-                  <div class="modal-content">
-                    <!-- <input type="hidden" name="payid" value=""> -->
-
-                    <div class="modal-header">
-                      <h6 class="modal-title" id="exampleModalLabel">입금처리 - 청구번호 <span class='payid'></span></h6>
-
-                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                      </button>
-                    </div>
-
-                    <div class="modal-body">
-
-                    </div>
-                    <div class="modal-footer">
-                    </div>
-                  </div>
-
-                </div>
-              </div>
-
-              <!-- 모달끝================================================================== -->
-    <?php
     }
     ?>
   </td>
@@ -605,43 +524,44 @@ while($row2 = mysqli_fetch_array($result2)){
     if($row3['payId'] && $row3['payIdOrder']==='0'){
       if($row3['executiveDate']) {
         if($row3['executiveDate'] <= $row3['pExpectedDate']) {
-          echo "<p class='text-center font-weight-light green'>0</p>";
+          echo "<label class='text-center font-weight-light green mb-0'>0</label><br>";
         } else {
           $notGetDayCount = date_diff($executiveDate, $expectedDate);
-          echo "<p class='text-center numberComma font-weight-light green'>";echo $notGetDayCount->days."</p>";
+          echo "<label class='text-center numberComma font-weight-light green mb-0'>";echo $notGetDayCount->days."</label><br>";
         }
       } else {
         if($row3['pExpectedDate'] >= $currentDate) {
-          echo "<p class='text-center font-weight-light sky'>0</p>";
+          echo "<label class='text-center font-weight-light sky mb-0'>0</label><br>";
         } else {
           $notGetDayCount = date_diff($currentDateDate, $expectedDate);
-          echo "<p class='text-center numberComma font-weight-light pink'>";echo $notGetDayCount->days."</p>";
+          echo "<label class='text-center numberComma font-weight-light pink mb-0'>";echo $notGetDayCount->days."</label><br>";
         }
       }
     }
-    ?>
-  </td>
-  <td><!--연체이자-->
+    ?><!--연체일수-->
     <?php
     if($row3['payId'] && $row3['payIdOrder']==='0'){
       if($row3['executiveDate']) {
         if($row3['executiveDate'] <= $row3['pExpectedDate']) {
-          echo "<p class='text-center font-weight-light green'>0</p>";
+          echo "<p class='text-center font-weight-light green mb-0'>0</p>";
         } else {
           $notGetDayCountAmount = $row3['ptAmount'] * ($notGetDayCount->days / 365) * 0.27;
-          echo "<p class='text-center numberComma font-weight-light green'>".(int)$notGetDayCountAmount."</p>";
+          echo "<p class='text-center numberComma font-weight-light green mb-0'>".(int)$notGetDayCountAmount."</p>";
         }
       } else {
         if($row3['pExpectedDate'] >= $currentDate) {
-          echo "<p class='text-center font-weight-light sky'>0</p>";
+          echo "<p class='text-center font-weight-light sky mb-0'>0</p>";
         } else {
           $notGetDayCountAmount = $row3['ptAmount'] * ($notGetDayCount->days / 365) * 0.27;
-          echo "<p class='text-center numberComma font-weight-light pink'>".(int)$notGetDayCountAmount."</p>";
+          echo "<p class='text-center numberComma font-weight-light pink mb-0'>".(int)$notGetDayCountAmount."</p>";
         }
       }
     }
-    ?>
+    ?><!--연체이자-->
   </td>
+  <td>
+
+  </td><!--증빙-->
 </tr>
 <?php } ?>
             </tbody>
@@ -651,7 +571,86 @@ while($row2 = mysqli_fetch_array($result2)){
 
     </div>
 </section>
+<!-- n개월추가 모달 시작  -->
+<div class="modal fade bd-example-modal-sm" id="nAddBtn" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-sm" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="">n개월 추가</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="container">
+            <div class="form-row">
+                <div class="form-group col-md-5">
+                    <label>추가개월수</label>
+                </div>
+                <div class="form-group col-md-7">
+                    <input type="text" class="form-control form-control-sm text-right" name="addMonth" value="" numberOnly required>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group col-md-5">
+                    <label>공급가액</label>
+                </div>
+                <div class="form-group col-md-7">
+                    <input type="text" class="form-control form-control-sm text-right amountNumber grey" name="modalAmount1" value="<?=$row['mAmount']?>" numberOnly required>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group col-md-5">
+                    <label>세액</label>
+                </div>
+                <div class="form-group col-md-7">
+                    <input type="text" class="form-control form-control-sm text-right amountNumber grey" name="modalAmount2" value="<?=$row['mvAmount']?>" numberOnly required>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group col-md-5">
+                    <label>합계</label>
+                </div>
+                <div class="form-group col-md-7">
+                    <input type="text" class="form-control form-control-sm text-right amountNumber grey" name="modalAmount3" value="<?=$row['mtAmount']?>" numberOnly required disabled>
+                </div>
+            </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">닫기</button>
+        <button type="button" class="btn btn-primary" id="button6">추가하기</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- n개월추가 모달 끝  -->
 
+<!-- 청구번호 모달 시작  -->
+<div class="modal fade" id="pPay" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-sm" role="document">
+
+    <div class="modal-content">
+      <!-- <input type="hidden" name="payid" value=""> -->
+
+      <div class="modal-header">
+        <h6 class="modal-title" id="exampleModalLabel">입금처리 - 청구번호 <span class='payid'></span></h6>
+
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+
+      <div class="modal-body">
+
+      </div>
+      <div class="modal-footer">
+      </div>
+    </div>
+
+  </div>
+</div>
+<!-- 청구번호 모달 끝  -->
 <hr>
 <section class="container-fluid"> <!--보증금등록 섹션-->
 <?php
@@ -668,27 +667,27 @@ $row_deposit = mysqli_fetch_array($result_deposit);
         <h3>보증금 현황<span>&nbsp;&nbsp;&nbsp;<button type="button" class="btn btn-info btn-sm" name="depositSaveBtn">저장</button></span></h3>
             <div class="form-row d-flex justify-content-center">
                 <div class="form-group col-md-2">
-                  <label class="mb-0 text-center">입금일</label><br>
+                  <p class="mb-0 text-center">입금일</p><br>
                   <input type="text" name="depositInDate" class="form-control form-control-sm dateType text-center" value="<?=$row_deposit['inDate']?>">
                 </div>
                 <div class="form-group col-md-2">
-                  <label class="mb-0 text-center">입금액</label><br>
+                  <p class="mb-0 text-center">입금액</p><br>
                   <input type="text" name ="depositInAmount" class="form-control form-control-sm amountNumber text-center" value="<?=$row_deposit['inMoney']?>" numberOnly>
                 </div>
                 <div class="form-group col-md-2">
-                  <label class="mb-0 text-center">출금일</label><br>
+                  <p class="mb-0 text-center">출금일</p><br>
                   <input type="text" name="depositOutDate" class="form-control form-control-sm dateType text-center" value="<?=$row_deposit['outDate']?>">
                 </div>
                 <div class="form-group col-md-2">
-                  <label class="mb-0 text-center">출금액</label><br>
+                  <p class="mb-0 text-center">출금액</p><br>
                   <input type="text" name="depositOutAmount" class="form-control form-control-sm amountNumber text-center" value="<?=$row_deposit['outMoney']?>" numberOnly>
                 </div>
                 <div class="form-group col-md-2">
-                  <label class="mb-0 text-center">잔액</label><br>
+                  <p class="mb-0 text-center">잔액</p><br>
                   <input type="text" name="depositMoney" class="form-control form-control-sm amountNumber text-center green" value="<?=$row_deposit['remainMoney']?>" disabled numberOnly>
                 </div>
                 <div class="form-group col-md-2">
-                  <label class="mb-0 text-center">저장일시</label><br>
+                  <p class="mb-0 text-center">저장일시</p><br>
                   <input type="text" class="form-control form-control-sm text-center" value="<?=$row_deposit['saved']?>" disabled>
                 </div>
             </div>
@@ -841,7 +840,7 @@ if((int)$row_memoC[0]===0){
 if((int)$row_memoC[0]>0) {
   $sql_memoS = "select
                   @num := @num + 1 as num,
-                  id,
+                  idrealContract_memo,
                   memoCreator,
                   memoContent,
                   created,
@@ -859,7 +858,7 @@ if((int)$row_memoC[0]>0) {
 <tr>
    <td>
      <label class="grey"><?=$row_memoS['num']?></label>
-     <input type="hidden" name="memoid" value="<?=$row_memoS['id']?>">
+     <input type="hidden" name="memoid" value="<?=$row_memoS['idrealContract_memo']?>">
    </td>
    <td><input class="form-control form-control-sm text-center" name="memoCreator" value="<?=$row_memoS['memoCreator']?>" disabled></td>
    <td><input class="form-control form-control-sm text-center" name="memoContent" value="<?=$row_memoS['memoContent']?>" disabled></td>
@@ -897,8 +896,8 @@ if((int)$row_memoC[0]>0) {
 
 </section>
 
-<!-- <script type="text/javascript" src="/js/dataTable.js"></script> -->
-<script src="/js/jquery.number.min.js"></script>
+<script src="/js/jquery-ui.min.js"></script>
+<script src="/js/datepicker-ko.js"></script>
 <script>
 
 $(document).ready(function(){
@@ -916,7 +915,7 @@ $(document).ready(function(){
   $('.modalAsk').on('click', function(){ //청구번호클릭하는거(모달클릭)
 
     var currow2 = $(this).closest('tr');
-    var payNumber = currow2.find('td:eq(8)').children('p').children('u').text();
+    var payNumber = currow2.find('td:eq(7)').children('p').children('u').text();
     // console.log(payNumber);
     var filtered_id = '<?=$filtered_id?>';
     // console.log(filtered_id);
@@ -949,6 +948,59 @@ $(document).ready(function(){
       })
   }) //청구번호클릭하는거(모달클릭) closing}
 
+  var allCnt = $(":checkbox:not(:first)", table).length;
+
+  for (var i = 1; i <= allCnt; i++) {
+    var executiveDateIs = table.find("tr:eq("+i+")").children("td:eq(9)").children('p').text();
+    console.log(executiveDateIs);
+    if(executiveDateIs){
+      table.find("tr:eq("+i+")").css('display', 'none');
+    }
+  }//이거는 처음에 로딩할때 입금완료상태이면 안보이게하려고 하는거임
+
+
+  $(".amountNumber").click(function(){
+    $(this).select();
+  });
+
+  $("input:text[numberOnly]").number(true);
+
+  $(".numberComma").number(true);
+
+  var tbl = $("#checkboxTestTbl");
+
+  // 테이블 헤더에 있는 checkbox 클릭시
+  $(":checkbox:first", tbl).change(function(){
+    if($(":checkbox:first", tbl).is(":checked")){
+      $(":checkbox", tbl).prop('checked',true);
+      $(":checkbox").parent().parent().addClass("selected");
+    } else {
+      $(":checkbox", tbl).prop('checked',false);
+      $(":checkbox").parent().parent().removeClass("selected");
+    }
+  })
+  // 헤더에 있는 체크박스외 다른 체크박스 클릭시
+  $(":checkbox:not(:first)", tbl).change(function(){
+    var allCnt = $(":checkbox:not(:first)", tbl).length;
+    var checkedCnt = $(":checkbox:not(:first)", tbl).filter(":checked").length;
+    if($(this).prop("checked")==true){
+      $(this).parent().parent().addClass("selected");
+    } else {
+      $(this).parent().parent().removeClass("selected");
+    }
+    if( allCnt==checkedCnt ){
+      $(":checkbox:first", tbl).prop("checked", true);
+    }
+  })
+
+  $('.dateType').datepicker({
+    changeMonth: true,
+    changeYear: true,
+    showButtonPanel: true,
+    // showOn: "button",
+    buttonImage: "/img/calendar.svg",
+    buttonImageOnly: false
+  })
 
 }) //document.ready function closing}
 
@@ -1017,24 +1069,18 @@ $(":checkbox:not(:first)",table).click(function(){
   }
 })
 
-
-
-
-
-
-
 $('.table').on('keyup', '.amountNumber:input[type="text"]', function(){
   var currow = $(this).closest('tr');
   var colOrder = Number(currow.find('td:eq(1)').text());
 
   // console.log(colOrder);
 
-  var colmAmount = Number(currow.find('td:eq(4)').children('input:eq(0)').val());
-  var colmvAmount = Number(currow.find('td:eq(4)').children('input:eq(1)').val());
+  var colmAmount = Number(currow.find('td:eq(3)').children('input:eq(0)').val());
+  var colmvAmount = Number(currow.find('td:eq(3)').children('input:eq(1)').val());
 
   var colmtAmount = colmAmount + colmvAmount;
-  currow.find('td:eq(5)').children('input').val(colmtAmount);
-  console.log(colmAmount);
+  currow.find('td:eq(4)').children('input').val(colmtAmount);
+  // console.log(colmAmount);
 })
 
 
@@ -1043,7 +1089,7 @@ $('#groupExpecteDay').change(function(){ //입금예정일 변경버튼 이벤�
   var expectedDayGroup = $('#groupExpecteDay').val();
   if(expectedDayArray.length >= 1) {
     for (var i in expectedDayArray) {
-       table.find("tr:eq("+expectedDayArray[i][0]+")").find("td:eq(6)").children('input').val(expectedDayGroup);
+       table.find("tr:eq("+expectedDayArray[i][0]+")").find("td:eq(5)").children('input').val(expectedDayGroup);
       // console.log(expectedDayArray[i][0], a);
     }
   }
@@ -1056,19 +1102,19 @@ $('#button1').click(function(){ //청구설정버튼 클릭시
   var paySchedule = [];
 
   for (var i = 0; i < expectedDayArray.length; i++) {
-    table.find("tr:eq("+expectedDayArray[i][0]+")").find("td:eq(7)").text(paykind);
+    table.find("tr:eq("+expectedDayArray[i][0]+")").find("td:eq(6)").text(paykind);
     // console.log(expectedDayArray[i][0], a);
     // 입금구분을 변경시키는 것
     var payScheduleEle = [];
     payScheduleEle.push(table.find("tr:eq("+expectedDayArray[i][0]+")").find('td:eq(0)').children('input').val()); //계약번호
     payScheduleEle.push(table.find("tr:eq("+expectedDayArray[i][0]+")").find('td:eq(1)').text()); //순번
-    payScheduleEle.push(table.find("tr:eq("+expectedDayArray[i][0]+")").find('td:eq(2)').text()); //시작일
-    payScheduleEle.push(table.find("tr:eq("+expectedDayArray[i][0]+")").find('td:eq(3)').text()); //종료일
-    payScheduleEle.push(table.find("tr:eq("+expectedDayArray[i][0]+")").find('td:eq(4)').children('input:eq(0)').val()); //공급가액
-    payScheduleEle.push(table.find("tr:eq("+expectedDayArray[i][0]+")").find('td:eq(4)').children('input:eq(1)').val()); //세액
-    payScheduleEle.push(table.find("tr:eq("+expectedDayArray[i][0]+")").find('td:eq(5)').children('input:eq(0)').val()); //합계금액
-    payScheduleEle.push(table.find("tr:eq("+expectedDayArray[i][0]+")").find('td:eq(6)').children('input:eq(0)').val()); //예정일
-    payScheduleEle.push(table.find("tr:eq("+expectedDayArray[i][0]+")").find('td:eq(7)').text()); //입금구분
+    payScheduleEle.push(table.find("tr:eq("+expectedDayArray[i][0]+")").find('td:eq(2)').children('label:eq(0)').text()); //시작일
+    payScheduleEle.push(table.find("tr:eq("+expectedDayArray[i][0]+")").find('td:eq(2)').children('label:eq(1)').text()); //종료일
+    payScheduleEle.push(table.find("tr:eq("+expectedDayArray[i][0]+")").find('td:eq(3)').children('input:eq(0)').val()); //공급가액
+    payScheduleEle.push(table.find("tr:eq("+expectedDayArray[i][0]+")").find('td:eq(3)').children('input:eq(1)').val()); //세액
+    payScheduleEle.push(table.find("tr:eq("+expectedDayArray[i][0]+")").find('td:eq(4)').children('input:eq(0)').val()); //합계금액
+    payScheduleEle.push(table.find("tr:eq("+expectedDayArray[i][0]+")").find('td:eq(5)').children('input:eq(0)').val()); //예정일
+    payScheduleEle.push(table.find("tr:eq("+expectedDayArray[i][0]+")").find('td:eq(6)').text()); //입금구분
 
     paySchedule.push(payScheduleEle);
   }
@@ -1142,6 +1188,13 @@ $('#button3').click(function(){ //일괄입금버튼 클릭시
 
   var contractScheduleArray = [];
 
+  // console.log(expectedDayArray);
+
+  if(expectedDayArray.length===0){
+    alert('청구설정된것을 선택해야 일괄입금처리가 가능합니다.');
+    return false;
+  }
+
   for (var i = 0; i < expectedDayArray.length; i++) {
 
     // var csId = table.find("tr:eq("+expectedDayArray[i][0]+")").find('td:eq(0)').children('input').val(); 계약스케줄을 가져오려다가 안가져옴, 왜냐면 필요가없음
@@ -1156,7 +1209,7 @@ $('#button3').click(function(){ //일괄입금버튼 클릭시
 
     contractScheduleArray.push(psId);
   }
-  console.log(contractScheduleArray);
+  // console.log(contractScheduleArray);
 
   var aa = 'getAmountInput';
   var bb = 'p_payScheduleGetAmountInputFor.php';
@@ -1175,7 +1228,7 @@ $('#button3').click(function(){ //일괄입금버튼 클릭시
 
 })
 
-$('#button4').click(function(){ //알괄입금취소버튼 클릭시
+$('#button4').click(function(){ //일괄입금취소버튼 클릭시
 
 var contractScheduleArray = [];
 
@@ -1211,89 +1264,89 @@ formSubmit(frm);
 
 $('#button7').click(function(){ //삭제버튼 클릭시
 
-var contractScheduleArray = [];
-var allCnt = $(":checkbox:not(:first)", table).length;
-// console.log(allCnt);
+    var contractScheduleArray = [];
+    var allCnt = $(":checkbox:not(:first)", table).length;
+    // console.log(allCnt);
 
-for (var i = 0; i < expectedDayArray.length; i++) {
+    for (var i = 0; i < expectedDayArray.length; i++) {
 
-contractScheduleArray[i] = [];
+    contractScheduleArray[i] = [];
 
-var csId = table.find("tr:eq("+expectedDayArray[i][0]+")").find('td:eq(0)').children('input').val();
+    var csId = table.find("tr:eq("+expectedDayArray[i][0]+")").find('td:eq(0)').children('input').val();
 
-var csOrder = table.find("tr:eq("+expectedDayArray[i][0]+")").find('td:eq(1)').children('p').text();
+    var csOrder = table.find("tr:eq("+expectedDayArray[i][0]+")").find('td:eq(1)').children('p').text();
 
-var psId = table.find("tr:eq("+expectedDayArray[i][0]+")").find('td:eq(8)').children('p').children('u').text();
+    var psId = table.find("tr:eq("+expectedDayArray[i][0]+")").find('td:eq(8)').children('p').children('u').text();
 
-if(psId){
-  alert('청구번호가 존재하면 삭제할수 없습니다.');
-  return false;
-}
+    if(psId){
+      alert('청구번호가 존재하면 삭제할수 없습니다.');
+      return false;
+    }
 
-contractScheduleArray[i].push(csId, csOrder, psId);
-}
-// console.log(contractScheduleArray);
+    contractScheduleArray[i].push(csId, csOrder, psId);
+    }
+    // console.log(contractScheduleArray);
 
-var selectedOrderArray = [];
-  for (var i = 0; i < expectedDayArray.length; i++) {
-    selectedOrderArray.push(expectedDayArray[i][0]);
-  }
-  selectedOrderArray.sort(function(a,b) {
-    return a-b;
-  }); //선택한순번들을 오름차순으로 정렬해주는것
-  // console.log(selectedOrderArray);
+    var selectedOrderArray = [];
+      for (var i = 0; i < expectedDayArray.length; i++) {
+        selectedOrderArray.push(expectedDayArray[i][0]);
+      }
+      selectedOrderArray.sort(function(a,b) {
+        return a-b;
+      }); //선택한순번들을 오름차순으로 정렬해주는것
+      // console.log(selectedOrderArray);
 
-var regularOrderArray=[];
-  for (var i = 0; i < contractScheduleArray.length; i++) {
-    var ele = allCnt - i;
-    regularOrderArray.push(ele);
-  }
-  regularOrderArray.sort(function(a,b) {
-    return a-b;
-  }); //정해진순번들을 오름차순으로 정렬해주는것
-  // console.log(regularOrderArray);
-if(selectedOrderArray.length===0){
-alert('한개 이상을 선택해야 삭제 가능합니다.');
-return false;
-}
-
-if(!selectedOrderArray.includes(allCnt)){
-alert('스케줄 중간을 삭제할 수 없습니다.');
-return false;
-}
-
-if(selectedOrderArray.includes(1)){
-alert('순번1은 삭제할 수 없습니다. 1개이상의 스케쥴은 존재해야 합니다.');
-return false;
-}
-
-for (var i = 0; i < regularOrderArray.length; i++) {
-    if(!((regularOrderArray[i]-selectedOrderArray[i])===0)){
-    alert('스케줄은 순차적으로 삭제되어야 합니다.');
+    var regularOrderArray=[];
+      for (var i = 0; i < contractScheduleArray.length; i++) {
+        var ele = allCnt - i;
+        regularOrderArray.push(ele);
+      }
+      regularOrderArray.sort(function(a,b) {
+        return a-b;
+      }); //정해진순번들을 오름차순으로 정렬해주는것
+      // console.log(regularOrderArray);
+    if(selectedOrderArray.length===0){
+    alert('한개 이상을 선택해야 삭제 가능합니다.');
     return false;
     }
-    // console.log(regularOrderArray[i]);
-    // console.log(selectedOrderArray[i]);
-}
 
-var contractScheduleIdArray = [];
-for (var i = 0; i < contractScheduleArray.length; i++) {
-contractScheduleIdArray.push(contractScheduleArray[i][0]);
-}
-// console.log(contractScheduleIdArray);
+    if(!selectedOrderArray.includes(allCnt)){
+    alert('스케줄 중간을 삭제할 수 없습니다.');
+    return false;
+    }
 
-var aa = 'contractScheduleDrop';
-var bb = 'p_contractScheduleDrop.php';
-var contractId = '<?=$filtered_id?>';
+    if(selectedOrderArray.includes(1)){
+    alert('순번1은 삭제할 수 없습니다. 1개이상의 스케쥴은 존재해야 합니다.');
+    return false;
+    }
 
-goCategoryPage(aa, bb, contractId, contractScheduleIdArray);
+    for (var i = 0; i < regularOrderArray.length; i++) {
+        if(!((regularOrderArray[i]-selectedOrderArray[i])===0)){
+        alert('스케줄은 순차적으로 삭제되어야 합니다.');
+        return false;
+        }
+        // console.log(regularOrderArray[i]);
+        // console.log(selectedOrderArray[i]);
+    }
 
-function goCategoryPage(a, b, c, d){
-var frm = formCreate(a, 'post', b,'');
-frm = formInput(frm, 'contractId', c);
-frm = formInput(frm, 'contractScheduleIdArray', d);
-formSubmit(frm);
-}
+    var contractScheduleIdArray = [];
+    for (var i = 0; i < contractScheduleArray.length; i++) {
+    contractScheduleIdArray.push(contractScheduleArray[i][0]);
+    }
+    // console.log(contractScheduleIdArray);
+
+    var aa = 'contractScheduleDrop';
+    var bb = 'p_contractScheduleDrop.php';
+    var contractId = '<?=$filtered_id?>';
+
+    goCategoryPage(aa, bb, contractId, contractScheduleIdArray);
+
+    function goCategoryPage(a, b, c, d){
+    var frm = formCreate(a, 'post', b,'');
+    frm = formInput(frm, 'contractId', c);
+    frm = formInput(frm, 'contractScheduleIdArray', d);
+    formSubmit(frm);
+    }
 }) //삭제버튼 클릭시
 
 $('#button5').click(function(){ //1개월추가 버튼클릭
@@ -1347,11 +1400,14 @@ $("button[name='memoEdit']").click(function(){
     var memoCreator = $(this).parent().parent().children().children('input:eq(1)');
     var memoContent = $(this).parent().parent().children().children('input:eq(2)');
     // console.log(memoid, memoCreator, memoContent);
-    var smallEditButton = "<button type='button' name='smallEditButton' class='btn btn-secondary btn-sm'>수정</button><button type='button' name='smallEditButtonCansel' class='btn btn-secondary btn-sm'>취소</button>";
+    var smallEditButton = "<button type='button' name='smallEditButton' class='btn btn-secondary btn-sm'>수정</button><button type='button' name='smallEditButtonCancel' class='btn btn-secondary btn-sm'>취소</button>";
 
     memoCreator.removeAttr("disabled");
     memoContent.removeAttr("disabled");
+    $(this).hide();//편집버튼을 누르면 편집아이콘 및 휴지통아이콘은 없어져야한다.
+    $(this).next().hide();
     memoContent.after(smallEditButton);
+    // console.log('solmi');
 
     $("button[name='smallEditButton']").click(function(){
         // console.log('작은버튼클릭');
@@ -1375,7 +1431,7 @@ $("button[name='memoEdit']").click(function(){
         }
     });
 
-    $("button[name='smallEditButtonCansel']").click(function(){
+    $("button[name='smallEditButtonCancel']").click(function(){
       // var memoid = $(this).parent().parent().children().children('input:eq(0)').val();
       // var memoCreator = $(this).parent().parent().children().children('input:eq(1)').val();
       // var memoContent = $(this).parent().parent().children().children('input:eq(2)').val();
@@ -1385,9 +1441,13 @@ $("button[name='memoEdit']").click(function(){
       var memoContent = $(this).parent().parent().children().children('input:eq(2)');
 
       // console.log(memoid, memoCreator, memoContent);
+      var smallsubmitButton = "<button type='submit' name='memoEdit' class='btn btn-default grey'><i class='far fa-edit'></i></button><button type='submit' name='memoDelete' class='btn btn-default grey'><i class='far fa-trash-alt'></i></button>";
 
       memoCreator.attr("disabled", true);
       memoContent.attr("disabled", true);
+      $(this).hide();
+      $(this).prev().hide();
+      $(this).parent().parent().find('td:eq(5)').html(smallsubmitButton)
     });
 
 
@@ -1543,7 +1603,20 @@ $('#button6').click(function(){ //n개월추가 버튼, 모달클릭으로 바�
         frm = formInput(frm, 'changeAmount3', g);
         formSubmit(frm);
     }
-}); //n개월추가 버튼
+}); //n개월추가
+
+
+
+$('#button8').on('click', function(){
+  var allCnt = $(":checkbox:not(:first)", table).length;
+
+  for (var i = 1; i <= allCnt; i++) {
+    var executiveDateIs = table.find("tr:eq("+i+")").find("td:eq(9)").children('p').text();
+    if(executiveDateIs){
+      table.find("tr:eq("+i+")").css('display', '');
+    }
+  }
+})
 
 
 

@@ -15,6 +15,7 @@
     <link rel="stylesheet" href="/css/bootstrap.min.css">
     <link rel="stylesheet" href="/css/custom.css">
     <link href="https://fonts.googleapis.com/css?family=Gothic+A1:700|Nanum+Gothic" rel="stylesheet">
+    <script type="text/javascript" src="/js/jquery-3.3.1.min.js"></script>
   </head>
   <body>
     <nav class="navbar bg-dark">
@@ -29,7 +30,7 @@
         <a class="nav-link" href="/user/signup.php">회원가입</a>
         </li>
         <li class="nav-item">
-        <a class="nav-link" href="/admin/admin_index.php">관리자페이지</a>
+        <a class="nav-link" href="/admin/main/alogin.php">관리자페이지</a>
         </li>
       </ul>
     </nav>

@@ -5,10 +5,16 @@ include "password.php";
 $password = $_POST['password'];
 $hash = password_hash($password, PASSWORD_DEFAULT);
 
+// print_r($_POST);
+
+$currentDate = date('Y-m-d');
+$month1later = date('Y-m-d', strtotime($currentDate.'+1 month -1 days'));
+
 $filtered = array(
   'email' => mysqli_real_escape_string($conn, $_POST['email']),
   'user_name' => mysqli_real_escape_string($conn, $_POST['user_name']),
-  'damdangga_name' => mysqli_real_escape_string($conn, $_POST['damdangga_name'])
+  'damdangga_name' => mysqli_real_escape_string($conn, $_POST['damdangga_name']),
+  'regist_etc' => mysqli_real_escape_string($conn, $_POST['regist_channel_text'])
 );
 
 $sql  = "
@@ -21,7 +27,11 @@ $sql  = "
         cellphone,
         lease_type,
         regist_channel,
-        created
+        regist_etc,
+        created,
+        gradename,
+        emailauth,
+        coin
     ) VALUES (
         '{$filtered['email']}',
         '{$hash}',
@@ -31,7 +41,11 @@ $sql  = "
         '{$_POST['cellphone']}',
         '{$_POST['lease_type']}',
         '{$_POST['regist_channel']}',
-        NOW()
+        '{$filtered['regist_etc']}',
+        NOW(),
+        'feefree',
+        'no',
+        1000
     )";
 // echo $sql;
 $result = mysqli_query($conn, $sql);
@@ -41,6 +55,25 @@ if($result === false){
   </script>";
   error_log(mysqli_error($conn));
 } else {
-  echo "저장되었습니다.<a href='/admin/user_list.php'>돌아가기</a>";
+  $id = mysqli_insert_id($conn); //방금넣은 아이디를 가져오는거
+
+  $sql2 = "insert into grade
+           (user_id, gradename, executiveDate, startdate, enddate, formonth, payamount, ordered)
+           values
+           ({$id}, 'feefree', '{$currentDate}', '{$currentDate}', '{$month1later}', 1, 0, 1)
+           ";
+  // echo $sql2;
+
+  $result2 = mysqli_query($conn, $sql2);
+
+  if($result2){
+    echo "<script>alert('축하합니다. 리스맨 회원가입이 되었습니다. 이메일인증까지 완료하면 바로 사용할 수 있습니다!');
+    location.href = '/user/login.php';
+    </script>";
+  } else {
+    echo "<script>alert('저장과정에 문제가 생겼습니다. 관리자에게 문의하세요.');
+    location.href = 'signup.php';
+    </script>";
+  }
 }
 ?>

@@ -3,9 +3,16 @@ session_start();
 if(!isset($_SESSION['is_login'])){
   header('Location: /user/login.php');
 }
+?>
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <title>기타계약리스트</title>
+<?php
 include $_SERVER['DOCUMENT_ROOT']."/view/service_header1_meta.php";
 include $_SERVER['DOCUMENT_ROOT']."/view/service_header2.php";
 include $_SERVER['DOCUMENT_ROOT']."/view/conn.php";
+include $_SERVER['DOCUMENT_ROOT']."/main/condition.php";
 include $_SERVER['DOCUMENT_ROOT']."/service/contractetc/good.php";
 ?>
 <style>
@@ -41,7 +48,7 @@ include $_SERVER['DOCUMENT_ROOT']."/service/contractetc/good.php";
           <div class="col-sm-1 pl-0 pr-0">
             <select class="form-control form-control-sm selectCall" id="periodDiv" name="periodDiv">
               <option value="allDate">--</option>
-              <option value="nowMonth">당월</option>
+              <option value="nowMonth" selected>당월</option>
               <option value="pastMonth">전월</option>
               <option value="1pastMonth">1개월</option>
               <option value="3pastMonth">3개월</option>
@@ -55,11 +62,12 @@ include $_SERVER['DOCUMENT_ROOT']."/service/contractetc/good.php";
             <input type="text" name="toDate" value="" class="form-control form-control-sm text-center dateType" id=""><!--codi4-->
           </div>
           <div class="col-sm-1 pl-0 pr-0">
-            <select class="form-control form-control-sm selectCall" id="select1" name="select1">
+            <select class="form-control form-control-sm selectCall" id="building" name="building">
             </select><!--codi6-->
           </div>
           <div class="col-sm-1 pl-0 pr-0">
-            <select class="form-control form-control-sm selectCall" id="select2" name="select2">
+            <select class="form-control form-control-sm selectCall" id="good" name="good">
+              <option value="goodAll">상품전체</option>
             </select><!--codi7-->
           </div>
           <div class="col-sm-1 pl-0 pr-0">
@@ -69,12 +77,12 @@ include $_SERVER['DOCUMENT_ROOT']."/service/contractetc/good.php";
               <option value="contractId">계약번호</option>
             </select><!--codi8-->
           </div>
-          <div class="col-sm-1 pl-0 pr-0">
+          <div class="col-sm-2 pl-0 pr-0">
             <input type="text" name="cText" value="" class="form-control form-control-sm text-center"><!--codi9-->
           </div>
-          <div class="col-sm-1 pl-0 pr-0">
+          <!-- <div class="col-sm-1 pl-0 pr-0">
             <button type="button" name="btnLoad" class="btn btn-info btn-sm">조회</button>
-          </div>
+          </div> -->
         </div>
       </form>
 
@@ -96,51 +104,48 @@ include $_SERVER['DOCUMENT_ROOT']."/service/contractetc/good.php";
     </div>
 </section>
 
+<script src="/js/jquery-ui.min.js"></script>
+<script src="/js/datepicker-ko.js"></script>
+<script src="/js/etc/newdate5.js?v=<%=System.currentTimeMillis()%"></script>
+<script src="/js/etc/sms_noneparase3.js?v=<%=System.currentTimeMillis()%>"></script>
+<script src="/js/etc/sms_existparase10.js?v=<%=System.currentTimeMillis()%>"></script>
+<script src="/js/etc/sms1.js?v=<%=System.currentTimeMillis()%>"></script>
+
 <script>
 
-var today = new Date();
-var yyyy = today.getFullYear();
-var mm = today.getMonth() + 1;
-var dd = today.getDate();
-
-if(mm<10){
-  mm = '0'+mm;
-}
-if(dd<10){
-  dd = '0'+dd;
-}
-
-today = yyyy + '-' + mm + '-' + dd;
-//-------------------------------------------오늘날짜생성 끝 --------//
-
-var select1option, select2option, buildingIdx, goodIdx;
+var buildingoption, goodoption, buildingIdx, goodIdx;
 
 for(var key in buildingArray){ //건물목록출력(비즈피스장암,비즈피스구로)
-  select1option = "<option value='"+key+"'>"+buildingArray[key][0]+"</option>";
-  $('#select1').append(select1option);
+  buildingoption = "<option value='"+key+"'>"+buildingArray[key][0]+"</option>";
+  $('#building').append(buildingoption);
 }
-buildingIdx = $('#select1').val();
+buildingIdx = $('#building').val();
 
 for(var key2 in goodBuildingArray[buildingIdx]){ //상품목록출력(빔,회의실)
-  select2option = "<option value='"+key2+"'>"+goodBuildingArray[buildingIdx][key2]+"</option>";
+  goodoption = "<option value='"+key2+"'>"+goodBuildingArray[buildingIdx][key2]+"</option>";
   // console.log(select3option);
-  $('#select2').append(select2option);
+  $('#good').append(goodoption);
 }
-goodIdx = $('#select2').val();
+goodIdx = $('#good').val();
 
-$('#select1').on('change', function(event){
-  buildingIdx = $('#select1').val();
-  $('#select2').empty();
+$('#building').on('change', function(event){
+  buildingIdx = $('#building').val();
+  $('#good').empty();
+  $('#good').append('<option value="goodAll">상품전체</option>');
   for(var key2 in goodBuildingArray[buildingIdx]){ //상품목록출력(빔,회의실)
-    select2option = "<option value='"+key2+"'>"+goodBuildingArray[buildingIdx][key2]+"</option>";
+    goodoption = "<option value='"+key2+"'>"+goodBuildingArray[buildingIdx][key2]+"</option>";
     // console.log(select3option);
-    $('#select2').append(select2option);
+    $('#good').append(goodoption);
   }
-  goodIdx = $('#select2').val();
+  goodIdx = $('#good').val();
 })
 //------------------------------------------------건물,상품출력 끝------//
 
 $(document).ready(function(){
+
+    $('input[name="fromDate"]').val(todayMonthFirst);
+    $('input[name="toDate"]').val(todayMonthLast);
+
     $(function () {
         $('[data-toggle="tooltip"]').tooltip()
     })
@@ -153,9 +158,19 @@ $(document).ready(function(){
         $('#allVals').html(data);
       }
     })
-})
 
-$('button[name="btnLoad"]').on('click', function(){
+    $('.dateType').datepicker({
+      changeMonth: true,
+      changeYear: true,
+      showButtonPanel: true,
+      // showOn: "button",
+      buttonImage: "/img/calendar.svg",
+      buttonImageOnly: false
+    })
+}) //==================document.ready function end and the other load start!
+
+
+$('select[name=periodDiv]').on('change', function(){
     $.ajax({
       url: 'ajax_etcContractLoad.php',
       method: 'post',
@@ -166,81 +181,63 @@ $('button[name="btnLoad"]').on('click', function(){
     })
 })
 
-$('select[name="periodDiv"]').on('change', function(){
+$('input[name=fromDate]').on('change', function(){
+    $.ajax({
+      url: 'ajax_etcContractLoad.php',
+      method: 'post',
+      data: $('form').serialize(),
+      success: function(data){
+        $('#allVals').html(data);
+      }
+    })
+})
 
-    var periodVal = $(this).val();
-    // console.log(periodVal);
-    if(periodVal === 'allDate'){
-      $('input[name="fromDate"]').val("");
-      $('input[name="toDate"]').val("");
-    }
-    if(periodVal === 'nowMonth'){
-      var fromDate = yyyy + '-' + mm + '-01';
-      var nowMonth = Number(mm);
-      var nowMonthDate = new Date(yyyy,nowMonth,0).getDate();
-      var toDate = yyyy + '-' + nowMonth + '-' + nowMonthDate;
-      $('input[name="fromDate"]').val(fromDate);
-      $('input[name="toDate"]').val(toDate);
-    }
-    if(periodVal === 'pastMonth'){
-      var pastMonth = Number(mm)-1;
-      // console.log(pastMonth);
-      var pastMonthDate = new Date(yyyy,pastMonth,0).getDate();
-      if(pastMonth<10){
-        pastMonth = '0' + pastMonth;
+$('input[name=toDate]').on('change', function(){
+    $.ajax({
+      url: 'ajax_etcContractLoad.php',
+      method: 'post',
+      data: $('form').serialize(),
+      success: function(data){
+        $('#allVals').html(data);
       }
-      if(pastMonthDate<10){
-        pastMonthDate = '0' + pastMonthDate;
-      }
-      var fromDate = yyyy + '-' + pastMonth + '-01';
-      var toDate = yyyy + '-' + pastMonth + '-' + pastMonthDate;
-      $('input[name="fromDate"]').val(fromDate);
-      $('input[name="toDate"]').val(toDate);
-    }
-    if(periodVal === '1pastMonth'){
-      var pastMonth = Number(mm)-1;
-      // console.log(pastMonth);
-      var pastMonthDate = Number(dd);
-      if(pastMonth<10){
-        pastMonth = '0' + pastMonth;
-      }
-      if(pastMonthDate<10){
-        pastMonthDate = '0' + pastMonthDate;
-      }
-      var fromDate = yyyy + '-' + pastMonth + '-' + pastMonthDate;
-      $('input[name="fromDate"]').val(fromDate);
-      $('input[name="toDate"]').val(today);
-    }
-    if(periodVal === '3pastMonth'){
-      var pastMonth = Number(mm)-3;
-      // console.log(pastMonth);
-      var pastMonthDate = Number(dd);
-      if(pastMonth<10){
-        pastMonth = '0' + pastMonth;
-      }
-      if(pastMonthDate<10){
-        pastMonthDate = '0' + pastMonthDate;
-      }
-      var fromDate = yyyy + '-' + pastMonth + '-' + pastMonthDate;
-      $('input[name="fromDate"]').val(fromDate);
-      $('input[name="toDate"]').val(today);
-    }
-    if(periodVal === 'nowYear'){
-      var pastMonth = Number(1);
-      // console.log(pastMonth);
-      var pastMonthDate = Number(1);
-      if(pastMonth<10){
-        pastMonth = '0' + pastMonth;
-      }
-      if(pastMonthDate<10){
-        pastMonthDate = '0' + pastMonthDate;
-      }
-      var fromDate = yyyy + '-' + pastMonth + '-' + pastMonthDate;
-      $('input[name="fromDate"]').val(fromDate);
-      $('input[name="toDate"]').val(today);
-    }
+    })
+})
 
-}) ////select periodDiv function closing
+$('select[name=building]').on('change', function(){
+    $.ajax({
+      url: 'ajax_etcContractLoad.php',
+      method: 'post',
+      data: $('form').serialize(),
+      success: function(data){
+        $('#allVals').html(data);
+      }
+    })
+})
+
+$('select[name=good]').on('change', function(){
+    $.ajax({
+      url: 'ajax_etcContractLoad.php',
+      method: 'post',
+      data: $('form').serialize(),
+      success: function(data){
+        $('#allVals').html(data);
+      }
+    })
+})
+
+
+$('input[name=cText]').on('keyup', function(){
+    $.ajax({
+      url: 'ajax_etcContractLoad.php',
+      method: 'post',
+      data: $('form').serialize(),
+      success: function(data){
+        $('#allVals').html(data);
+      }
+    })
+
+})
+//---------조회버튼클릭평션 end and 증빙일자 펑션 시작--------------//
 
 
 </script>

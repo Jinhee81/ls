@@ -43,7 +43,7 @@ include $_SERVER['DOCUMENT_ROOT']."/view/conn.php"; ?>
     <tr>
       <td><?=$escaped1['num']?></td>
       <!-- <td><?=$escaped1['id']?></td> 건물아이디 일부러 숨김처리-->
-      <td><a href="modal_building_edit.php?id=<?=$escaped1['id']?>"><?=$escaped1['lease_type']?></a></td>
+      <td><?=$escaped1['lease_type']?></td>
       <td>
         <a href="modal_building_edit.php?id=<?=$escaped1['id']?>"><?=$escaped1['bName']?></a>
       </td>

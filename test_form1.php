@@ -1,5 +1,0 @@
-<?php
-print_r($_POST);
-echo "test1";
-
- ?>

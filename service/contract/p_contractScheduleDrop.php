@@ -25,7 +25,21 @@ for ($i=0; $i < count($a); $i++) {
   }
 }
 
+$query = "select count(*) from contractSchedule where realContract_id={$filtered_id}";
+$result = mysqli_query($conn, $query);
+$row = mysqli_fetch_array($result);
+
+$query2 = "
+    select mEndDate
+    from contractSchedule
+    where realContract_id={$filtered_id} and ordered = {$row[0]}
+    ";
+$result2 = mysqli_query($conn, $query2);
+$row2 = mysqli_fetch_array($result2);
+
 $sql5 = "UPDATE realContract SET
+           count2 = {$row[0]},
+           endDate2 = '{$row2[0]}',
            updateTime = now(),
            updatePerson = '{$_SESSION['id']}'
          WHERE

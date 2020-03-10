@@ -58,6 +58,8 @@ $result4 = mysqli_query($conn, $sql4);
 
 if($result4){
   $sql5 = "UPDATE realContract SET
+             count2 = {$new_order},
+             endDate2 = '{$new_endDate}',
              updateTime = now(),
              updatePerson = '{$_SESSION['id']}'
            WHERE

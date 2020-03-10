@@ -1,27 +1,27 @@
 <?php
 
+// print_r($_POST);
+
 $currentDate = date('Y-m-d');
 
 if($_POST['dateDiv']==='pExpectedDate'){
   $dateDiv = 'pExpectedDate';
 }
+
 $etcDate = "";
-$toDate1 = strtotime($_POST['toDate']);
-$toDate2 = date('Y-m-d', $toDate1);
-$toDate3 = date('Y-m-d', strtotime($toDate2.'+1 days'));
 
 if($_POST['fromDate'] && $_POST['toDate']){
-  $etcDate = " and ($dateDiv >= '{$_POST['fromDate']}' and $dateDiv <= '{$toDate3}')";
+  $etcDate = " and (DATE($dateDiv) BETWEEN '{$_POST['fromDate']}' and '{$_POST['toDate']}')";
 } elseif($_POST['fromDate']){
-  $etcDate = " and ($dateDiv >= '{$_POST['fromDate']}')";
+  $etcDate = " and (DATE($dateDiv) >= '{$_POST['fromDate']}')";
 } elseif($_POST['toDate']){
-  $etcDate = " and ($dateDiv <= '{$toDate3}')";
+  $etcDate = " and (DATE($dateDiv) <= '{$_POST['toDate']}')";
 }
 
-if($_POST['select2']==='all'){
+if($_POST['group']==='all'){
   $groupCondi = "";
 } else {
-  $groupCondi = " and (realContract.group_in_building_id = {$_POST['select2']})";
+  $groupCondi = " and (realContract.group_in_building_id = {$_POST['group']})";
 }
 
 $etcCondi = "";
@@ -39,7 +39,6 @@ if($_POST['cText']){
 
 $sql = "
   select
-      @num := @num + 1 as num,
       realContract_id,
       realContract.building_id,
       building.bName,
@@ -55,6 +54,7 @@ $sql = "
       customer.contact3,
       customer.div3,
       customer.companyname,
+      customer.email,
       idpaySchedule2,
       paySchedule2.monthCount,
       paySchedule2.pStartDate,
@@ -63,7 +63,9 @@ $sql = "
       paySchedule2.pvAmount,
       paySchedule2.ptAmount,
       paySchedule2.pExpectedDate,
-      paySchedule2.payKind
+      paySchedule2.payKind,
+      paySchedule2.taxSelect,
+      paySchedule2.taxDate
   from
       (select @num:=0)a,
       paySchedule2
@@ -78,11 +80,11 @@ $sql = "
   left join r_g_in_building
       on realContract.r_g_in_building_id = r_g_in_building.id
   where paySchedule2.user_id={$_SESSION['id']} and
-        realContract.building_id = {$_POST['select1']} and
+        realContract.building_id = {$_POST['building']} and
         paySchedule2.executiveDate is null
         $groupCondi $etcCondi $etcDate
   order by
-        num desc
+        pExpectedDate asc
   ";
 // echo $sql;
 
@@ -117,4 +119,12 @@ for ($i=0; $i < count($allRows); $i++) {
 } //for문closing
 
 // print_r($allRows);
+
+$amountTotalArray = [0,0,0];
+
+for ($i=0; $i < count($allRows); $i++) {
+  $amountTotalArray[0] += str_replace(",", "", $allRows[$i]['pAmount']);
+  $amountTotalArray[1] += str_replace(",", "", $allRows[$i]['pvAmount']);
+  $amountTotalArray[2] += str_replace(",", "", $allRows[$i]['ptAmount']);
+}
 ?>

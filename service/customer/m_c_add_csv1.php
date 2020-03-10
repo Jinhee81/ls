@@ -114,13 +114,13 @@ function fnUpload(){
       </tr>
       <tr>
         <td colspan="12" class="text-left font-weight-light">
-          (1) <div class="badge badge-primary text-wrap" style="width: 3rem;">구분1</div> : '세입자','거래처' 중 1개의 값만 넣으세요. 오타/띄어쓰기 오류 등등 안됍니다.(필수값)<br>
-          (2) <div class="badge badge-primary text-wrap" style="width: 3rem;">구분2</div> : '개인','개인사업자','법인사업자' 중 1개의 값만 넣으세요. 오타/띄어쓰기 오류 등등 안됍니다.(필수값)<br>
+          (1) <div class="badge badge-primary text-wrap" style="width: 3rem;">구분1</div> : '세입자','거래처' 중 1개의 값만 넣으세요. 오타/띄어쓰기에 유의하여 주세요.(필수값)<br>
+          (2) <div class="badge badge-primary text-wrap" style="width: 3rem;">구분2</div> : '개인','개인사업자','법인사업자' 중 1개의 값만 넣으세요. 오타/띄어쓰기에 유의하여 주세요.(필수값)<br>
           (3) <div class="badge badge-primary text-wrap" style="width: 3rem;">성명</div> : 자유롭게 적어주는데 보통 사람이름을 적어주세요. 글자수는 20글자로 제한됩니다.<br>
           (4) <div class="badge badge-primary text-wrap" style="width: 3rem;">연락처</div> : '010-1234-1234' 형식으로 넣어주세요. 만약 유선번호일경우 반드시 지역번호 포함하여 '02-111-1234'로 '-'가 2개이며, 숫자만 입력되어야 합니다.<br>
-          (5) <div class="badge badge-primary text-wrap" style="width: 3rem;">성별</div> : '남','여' 중 1개의 값만 넣으세요. 오타/띄어쓰기 안됍니다.<br>
+          (5) <div class="badge badge-primary text-wrap" style="width: 3rem;">성별</div> : '남','여' 중 1개의 값만 넣으세요. 오타/띄어쓰기에 유의하여 주세요.<br>
           (6) <div class="badge badge-primary text-wrap" style="width: 3rem;">이메일</div> : @를 포함한 이메일형식으로 넣어주세요. 글자수 40글자로 제한됩니다.<br>
-          (7) <div class="badge badge-primary text-wrap" style="width: 6rem;">법인사업자구분</div> : '구분2'의 값이 '법인사업자'인 경우, '주식회사','합자회사','유한회사','기타'중 1개의 값만 넣으세요. 오타/띄어쓰기 오류 등등 안됩니다.<br>
+          (7) <div class="badge badge-primary text-wrap" style="width: 6rem;">법인사업자구분</div> : '구분2'의 값이 '법인사업자'인 경우, '주식회사','합자회사','유한회사','기타'중 1개의 값만 넣으세요. 오타/띄어쓰기에 유의하여 주세요.<br>
           (8) <div class="badge badge-primary text-wrap" style="width: 3rem;">업태</div> : '구분2'의 값이 '개인사업자' 또는 '법인사업자'인 경우, 자유롭게 적어주세요. 글자수는 9글자로 제한됩니다.<br>
           (9) <div class="badge badge-primary text-wrap" style="width: 3rem;">업종</div> : '구분2'의 값이 '개인사업자' 또는 '법인사업자'인 경우, 자유롭게 적어주세요. 글자수는 14글자로 제한됩니다.<br>
           (10) <div class="badge badge-primary text-wrap" style="width: 4rem;">사업자명</div> : '구분2'의 값이 '개인사업자' 또는 '법인사업자'인 경우, 자유롭게 적어주세요. 글자수는 14글자로 제한됩니다.<br>

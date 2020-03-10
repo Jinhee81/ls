@@ -16,7 +16,7 @@ $sql  = "
     WHERE
       id = {$_POST['id']}
     ";
-echo $sql;
+// echo $sql;
 // var_dump($_POST['id']);
 
 $result = mysqli_query($conn, $sql);
@@ -34,3 +34,5 @@ if($result === false){
   location.href='building.php';
   </script>";
 }
+
+?>

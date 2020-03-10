@@ -55,7 +55,7 @@ $sql = "
 // echo $sql;
 $result = mysqli_query($conn, $sql);
 $row = mysqli_fetch_array($result);
-print_r($row);
+// print_r($row);
 
 if ($result->num_rows === 0) {
   echo "<script>

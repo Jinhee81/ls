@@ -2,7 +2,7 @@
 <html lang="en" dir="ltr">
   <head>
     <title>리스맨 관리자</title>
-    <link rel="icon" type="image/png" href="/img/logo.png">
+    <link rel="icon" type="image/svg" href="/img/favicon.png">
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1,
       shrink-to-fit=no">
@@ -26,7 +26,7 @@
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav mr-auto">
           <li class="nav-item">
-            <a class="nav-link" href="#">리스맨관리자</a>
+            <a class="nav-link" href=/admin/main/alogin.php>리스맨관리자</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="/admin/user_list.php">회원리스트</a>
@@ -38,7 +38,7 @@
 
         <form class="form-inline my-2 my-lg-0">
 
-          <a class="btn btn-outline-danger" href="/user/logout.php" role="button">로그아웃</a>
+          <a class="btn btn-outline-danger" href="/admin/main/alogout.php" role="button">로그아웃</a>
         </form>
         <script src="/js/jquery-3.2.1.min.js"></script>
         <script src="/js/popper.min.js"></script>

@@ -31,13 +31,13 @@ $sql = "
     {$_SESSION['id']}
   )
 ";
-// echo $sql;//기타계약테이블에 입력
+echo $sql;//기타계약테이블에 입력
 
 $result = mysqli_query($conn, $sql);
 
 if(!$result){
   echo "<script>alert('저장과정에 문제가 생겼습니다. 관리자에게 문의하세요.(1)');
-        location.href = 'contractetc_add2.php';
+        location.href = 'contractetc_add1.php';
         </script>";
   error_log(mysqli_error($conn));
   exit();
@@ -55,7 +55,7 @@ $sql2 = "
     '{$_POST['pAmount']}',
     '{$_POST['pvAmount']}',
     '{$_POST['ptAmount']}',
-    '{$_POST['paykind']}',
+    '{$_POST['payKind']}',
     '{$_POST['executiveDate']}',
     '{$_POST['ptAmount']}',
     {$id},
@@ -68,7 +68,7 @@ $result2 = mysqli_query($conn, $sql2);
 
 if(!$result2){
   echo "<script>alert('저장과정에 문제가 생겼습니다. 관리자에게 문의하세요.(2)');
-        location.href = 'contractetc_add2.php';
+        location.href = 'contractetc_add1.php';
         </script>";
   error_log(mysqli_error($conn));
   exit();

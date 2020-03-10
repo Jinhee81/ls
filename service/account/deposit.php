@@ -6,6 +6,7 @@ if(!isset($_SESSION['is_login'])){
 include $_SERVER['DOCUMENT_ROOT']."/view/service_header1_meta.php";
 include $_SERVER['DOCUMENT_ROOT']."/view/service_header2.php";
 include $_SERVER['DOCUMENT_ROOT']."/view/conn.php";
+include $_SERVER['DOCUMENT_ROOT']."/main/condition.php";
 include $_SERVER['DOCUMENT_ROOT']."/service/contract/building.php";
 ?>
 <style>

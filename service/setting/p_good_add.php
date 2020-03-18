@@ -30,11 +30,13 @@ if($row[0]>=1){
   $result = mysqli_query($conn, $sql);
 
   if($result){
-    echo "<script>alert('저장되었습니다.');
+    echo "<script>alert('추가하였습니다.');
     location.href = 'building.php';
     </script>";
   } else {
-    echo "저장되지 않았습니다.";
+    echo "<script>alert('저장과정에 문제가 발생했습니다. 관리자에게 문의하세요.');
+    location.href = 'building.php';
+    </script>";
     error_log(mysqli_error($conn));
   }
 }

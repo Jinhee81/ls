@@ -21,11 +21,13 @@ if ($r_count === 0) {
           bName,
           pay,
           user_id,
+          popbill,
           created
       ) VALUES (
           '{$filtered['name']}',
           '{$_POST['pay']}',
           {$_SESSION['id']},
+          'popbillno',
           now()
       )";
 } else {

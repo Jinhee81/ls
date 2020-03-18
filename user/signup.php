@@ -5,7 +5,7 @@ include $_SERVER['DOCUMENT_ROOT']."/view/header.php";
  <div class="jumbotron">
    <h3 class="display-4">회원가입해주세요!</h3>
    <hr class="my-4">
-   <p>회원가입 후 30일 무료이용 가능합니다. (단, 문자메시지 및 세금계산서발행 미포함)</p>
+   <p>회원가입 후 30일 무료이용 가능합니다. 그리고 1000코인이 무료로 지급됩니다.</p>
    <!-- <a class="btn btn-primary btn-sm" href="#" role="button">비밀번호변경 클릭</a> -->
  </div>
 <div class="container" style="max-width:500px;">
@@ -57,7 +57,7 @@ include $_SERVER['DOCUMENT_ROOT']."/view/header.php";
     <div class="form-group">
       <label>연락처</label><br>
       <input type="text" name="cellphone" class="form-control"      placeholder="휴대폰번호" required>
-      <button type="submit" name="cellphone_auth" class="btn btn-sm btn-primary btn-block">휴대폰번호인증</button>
+      <button type="button" name="cellphone_auth" class="btn btn-sm btn-primary btn-block">휴대폰번호인증</button>
     </div>
 
 
@@ -174,7 +174,7 @@ include $_SERVER['DOCUMENT_ROOT']."/view/header.php";
    // console.log($(this).val());
 
    if($(this).val() === '기타'){
-     var etc_lease = "<input type='text' class='form-control' name='lease_type_text'>";
+     var etc_lease = "<input type='text' class='form-control' name='lease_type_text' required>";
      $('div[name=lease_etc]').html(etc_lease);
    } else {
      $('div[name=lease_etc]').empty();
@@ -186,7 +186,7 @@ include $_SERVER['DOCUMENT_ROOT']."/view/header.php";
    // console.log($(this).val());
 
    if($(this).val() === '기타'){
-     var etc_regist = "<input type='text' class='form-control' name='regist_channel_text'>";
+     var etc_regist = "<input type='text' class='form-control' name='regist_channel_text' required>";
      $('div[name=regist_etc]').html(etc_regist);
    } else {
      $('div[name=regist_etc]').empty();

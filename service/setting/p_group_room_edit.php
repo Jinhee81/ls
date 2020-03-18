@@ -66,12 +66,12 @@ foreach($roomArray as $key => $value){
 echo
 "<script>
 alert('수정하였습니다.');
-location.href='modal_b_group_edit3.php?id=".$filtered['id']."';
+location.href='b_group_room_edit3.php?id=".$filtered['id']."';
 </script>";
 
 
 end :
 echo "<script>
-  location.href='modal_b_group_edit3.php?id=".$filtered['id']."';</script>";
+  location.href='b_group_room_edit3.php?id=".$filtered['id']."';</script>";
 
 ?>

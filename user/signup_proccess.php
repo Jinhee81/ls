@@ -13,7 +13,6 @@ $month1later = date('Y-m-d', strtotime($currentDate.'+1 month -1 days'));
 $filtered = array(
   'email' => mysqli_real_escape_string($conn, $_POST['email']),
   'user_name' => mysqli_real_escape_string($conn, $_POST['user_name']),
-  'damdangga_name' => mysqli_real_escape_string($conn, $_POST['damdangga_name']),
   'regist_etc' => mysqli_real_escape_string($conn, $_POST['regist_channel_text'])
 );
 
@@ -23,7 +22,6 @@ $sql  = "
         password,
         user_div,
         user_name,
-        damdangga_name,
         cellphone,
         lease_type,
         regist_channel,
@@ -37,7 +35,6 @@ $sql  = "
         '{$hash}',
         '{$_POST['user_div']}',
         '{$filtered['user_name']}',
-        '{$filtered['damdangga_name']}',
         '{$_POST['cellphone']}',
         '{$_POST['lease_type']}',
         '{$_POST['regist_channel']}',
@@ -50,7 +47,7 @@ $sql  = "
 // echo $sql;
 $result = mysqli_query($conn, $sql);
 if($result === false){
-  echo "<script>alert('저장과정에 문제가 생겼습니다. 관리자에게 문의하세요.');
+  echo "<script>alert('저장과정에 문제가 생겼습니다. 관리자에게 문의하세요.(1)');
   location.href = 'signup.php';
   </script>";
   error_log(mysqli_error($conn));
@@ -66,12 +63,21 @@ if($result === false){
 
   $result2 = mysqli_query($conn, $sql2);
 
-  if($result2){
-    echo "<script>alert('축하합니다. 리스맨 회원가입이 되었습니다. 이메일인증까지 완료하면 바로 사용할 수 있습니다!');
-    location.href = '/user/login.php';
+  $sql3 = "insert into coin
+           (user_id, date, description, payAmount, coinAmount)
+           values
+           ({$id}, '{$currentDate}', '회원가입축하', 0, 1000)
+           ";
+  // echo $sql3;
+
+  $result3 = mysqli_query($conn, $sql3);
+
+  if($result2 && $result3){
+    echo "<script>alert('축하합니다. 리스맨 회원가입이 되었습니다. 리스맨 임대관리시스템으로 새로운 임대관리를 경험해보세요!');
+    location.href = '/main/main.php';
     </script>";
   } else {
-    echo "<script>alert('저장과정에 문제가 생겼습니다. 관리자에게 문의하세요.');
+    echo "<script>alert('저장과정에 문제가 생겼습니다. 관리자에게 문의하세요.(2)');
     location.href = 'signup.php';
     </script>";
   }

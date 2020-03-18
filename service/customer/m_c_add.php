@@ -3,6 +3,12 @@ session_start();
 if(!isset($_SESSION['is_login'])){
   header('Location: /user/login.php');
 }
+?>
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <title>세입자등록</title>
+<?php
 include $_SERVER['DOCUMENT_ROOT']."/view/service_header1_meta.php";
 include $_SERVER['DOCUMENT_ROOT']."/view/service_header2.php";
 include $_SERVER['DOCUMENT_ROOT']."/view/conn.php";
@@ -23,8 +29,11 @@ include $_SERVER['DOCUMENT_ROOT']."/view/conn.php";
 <section class="container">
   <div class="jumbotron">
     <h1 class="display-4">세입자 등록 화면입니다!</h1>
-    <p class="lead">입주한 세입자 뿐만아니라 문의하는 사람, 거래처도 등록할 수 있습니다.</p>
-    <small>(1)<span id='star' style='color:#F7BE81;'>* </span>표시는 반드시 입력해야 합니다.(2) 구분(대)의 값이 '세입자'이어야 방계약 등록이 가능합니다. (3)'일괄등록'은 데스크탑화면에서 가능합니다 (모바일화면 사용불가) (4)'csv등록'은 데스크탑화면에서 가능합니다. </small>
+    <p class="lead">
+      (1)입주한 세입자 뿐만아니라 문의하는 사람, 거래처도 등록할 수 있습니다.<br>
+      (2)<a href="m_c_adds.php" target="_blank">'일괄등록'</a>화면에서 여러명의 세입자를 등록하세요.
+    </p>
+    <small>(1)<span id='star' style='color:#F7BE81;'>* </span>표시는 반드시 입력해야 합니다.(2) 구분(대)의 값이 '세입자'이어야 방계약 등록이 가능합니다. (3)'일괄등록','csv등록'은 데스크탑 디스플레이에서 사용가능 </small>
     <hr class="my-4">
     <a class="btn btn-primary btn-sm mobile" href="m_c_adds.php" role="button">일괄등록</a>
     <a class="btn btn-primary btn-sm mobile" href="m_c_add_csv1.php" role="button">csv등록</a>
@@ -135,8 +144,8 @@ include $_SERVER['DOCUMENT_ROOT']."/view/conn.php";
     </div>
 
 
-    <div class="">
-      <button type='submit' class='btn btn-primary'>저장</button>
+    <div class="row justify-content-md-center">
+      <button type='submit' class='btn btn-primary mr-1'>저장</button>
       <a href='customer.php'><button type='button' class='btn btn-secondary'>세입자리스트화면으로</button></a>
     </div>
   </form>

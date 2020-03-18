@@ -45,7 +45,7 @@ include $_SERVER['DOCUMENT_ROOT']."/view/conn.php"; ?>
       <!-- <td><?=$escaped1['id']?></td> 건물아이디 일부러 숨김처리-->
       <td><?=$escaped1['lease_type']?></td>
       <td>
-        <a href="modal_building_edit.php?id=<?=$escaped1['id']?>"><?=$escaped1['bName']?></a>
+        <a href="building_edit.php?id=<?=$escaped1['id']?>"><?=$escaped1['bName']?></a>
       </td>
       <td><?=$escaped1['pay']?></td>
       <td>
@@ -60,27 +60,27 @@ include $_SERVER['DOCUMENT_ROOT']."/view/conn.php"; ?>
           $result_count=mysqli_query($conn, $sql_count);
           $row_count=mysqli_fetch_array($result_count);
           ?>
-          <a href="modal_b_group_edit3.php?id=<?=$row2['id']?>"
+          <a href="b_group_room_edit3.php?id=<?=$row2['id']?>"
             class='badge badge-info'>
             <?=$row2['gName'],"(",$row_count[0],")"?>
           </a><!--건물내그룹뱃지-->
       <?php } ?><!--상주/비상주수정 모달 호출 버튼-->
-        <a class="btn btn-outline-warning btn-sm" href="modal_b_group_add.php?id=<?=$escaped1['id']?>">추가하기</a>
+        <a class="btn btn-outline-warning btn-sm" href="b_group_room_add.php?id=<?=$escaped1['id']?>">추가하기</a>
      </td><!--상주/비상주 그룹추가 호출 버튼, 건물아이디에 추가해야한다-->
      <td>
        <?php $sql = "select * from good_in_building where building_id = {$escaped1['id']}";
         // echo $sql;
         $result = mysqli_query($conn, $sql);
         while($row = mysqli_fetch_array($result)){?>
-          <a href="modal_b_good_edit.php?id=<?=$row['id']?>"
+          <a href="b_good_edit.php?id=<?=$row['id']?>"
             class='badge badge-info'>
             <?=$row['name']?>
           </a>
     <?php }?>
-       <a class="btn btn-outline-warning btn-sm" href="modal_b_good_add.php?id=<?=$escaped1['id']?>">추가하기</a>
+       <a class="btn btn-outline-warning btn-sm" href="b_good_add.php?id=<?=$escaped1['id']?>">추가하기</a>
      </td><!--기타계약상품추가 모달 호출버튼 -->
       <td class="mobile">
-        <form class="" action="building_process_delete.php" method="post" onsubmit="if(!confirm('정말 삭제하겠습니까?')){return false;}">
+        <form class="" action="p_building_delete.php" method="post" onsubmit="if(!confirm('정말 삭제하겠습니까?')){return false;}">
           <input type="hidden" name="id" value="<?=$escaped1['id']?>">
           <button type="submit" class="btn btn-default">
             <i class='far fa-trash-alt'></i>

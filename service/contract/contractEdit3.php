@@ -50,11 +50,7 @@ $sql = "
           mvAmount,
           mtAmount,
           realContract.createTime,
-          realContract.createPerson,
-          (select damdangga_name from user where id=realContract.createPerson),
-          realContract.updateTime,
-          realContract.updatePerson,
-          (select damdangga_name from user where id=realContract.updatePerson)
+          realContract.updateTime
       from
           realContract
       left join customer

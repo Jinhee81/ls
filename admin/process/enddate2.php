@@ -7,7 +7,7 @@ $sql = "select
           (select count(*) from contractSchedule where realContract_id=id) as counted,
           (select mEndDate from contractSchedule where realContract_id=id and ordered=counted) as end2
         from realContract
-        where user_id=9
+        where user_id=1
         ";
 // echo $sql;
 

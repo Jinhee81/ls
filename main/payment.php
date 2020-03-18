@@ -41,7 +41,6 @@ $payAmount = [
               [7, 400, 119900, 107900, 59900]
              ];
 
-//date_default_timezone_set('Asia/Seoul');
 $currentDate = date('Y-m-d');
 
 $currentDateDate = new DateTime($currentDate);

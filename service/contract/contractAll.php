@@ -114,17 +114,17 @@ $('#table1').append(tableTitle);
 
 var tableCol2 ="<td><input type='search' name='customer' class='form-control form-control-sm text-center' required><div class='' name='customerList'></div></td>"; //고객정보
 
-var tableCol3 ="<td><input type='text' name='contractDate' class='form-control form-control-sm text-center dateType'></td>"; //계약일자
+var tableCol3 ="<td><input type='text' name='contractDate' class='form-control form-control-sm text-center dateType yyyymmdd'  maxlength=10></td>"; //계약일자
 
 var tableCol4 ="<td><input type='text' class='form-control form-control-sm text-right amountNumber numberComma' value='0' numberOnly><input type='text' class='form-control form-control-sm text-right amountNumber numberComma' value='0' numberOnly><input type='text' class='form-control form-control-sm text-right amountNumber numberComma' value='0' disabled></td>"; //공급가액/세액/합계
 
 var tableCol5 ="<td><input type='number' class='form-control form-control-sm text-center' min='1' max='72' name='monthCount'></td>"; //기간
 
-var tableCol6 ="<td><input type='text' class='form-control form-control-sm text-center dateType' name='startDate'><input type='text' class='form-control form-control-sm text-center dateType' name='endDate' disabled></td>"; //시작일(종료일)
+var tableCol6 ="<td><input type='text' class='form-control form-control-sm text-center dateType yyyymmdd' name='startDate'  maxlength=10><input type='text' class='form-control form-control-sm text-center dateType' name='endDate' disabled></td>"; //시작일(종료일)
 
-var tableCol7 ="<td><input type='text' class='form-control form-control-sm text-center amountNumber numberComma' value='0'></td>"; //보증금
+var tableCol7 ="<td><input type='text' class='form-control form-control-sm text-center amountNumber numberComma' value='0' numberOnly></td>"; //보증금
 
-var tableCol8 ="<td><input type='text' class='form-control form-control-sm text-center dateType' name='depositInDate'></td></tr>"; //입금일자
+var tableCol8 ="<td><input type='text' class='form-control form-control-sm text-center dateType yyyymmdd' maxlength=10 name='depositInDate'></td></tr>"; //보증금입금일자
 
 
 for(var key in roomArray[groupIdx]){
@@ -156,6 +156,23 @@ $(document).ready(function(){
   });
 
   $("input:text[numberOnly]").number(true);
+
+  $('.yyyymmdd').keydown(function (event) {
+   var key = event.charCode || event.keyCode || 0;
+   $text = $(this);
+   if (key !== 8 && key !== 9) {
+       if ($text.val().length === 4) {
+           $text.val($text.val() + '-');
+       }
+       if ($text.val().length === 7) {
+           $text.val($text.val() + '-');
+       }
+   }
+
+   return (key == 8 || key == 9 || key == 46 || (key >= 48 && key <= 57) || (key >= 96 && key <= 105));
+  // Key 8번 백스페이스, Key 9번 탭, Key 46번 Delete 부터 0 ~ 9까지, Key 96 ~ 105까지 넘버패트
+  // 한마디로 JQuery 0 ~~~ 9 숫자 백스페이스, 탭, Delete 키 넘버패드외에는 입력못함
+  })
 }) //document.ready function closing}
 
 

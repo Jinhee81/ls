@@ -3,7 +3,7 @@
     <hr>
     <footer class="text-center bg-light text-black pt-3">
       <div class="footer-above">
-        Copyright &copy; 유진희 2018 1111</footer>
+        Copyright &copy; 유진희 2018 1111
       </div>
     </footer>
     <script src="/js/jquery.number.min.js"></script><!--number함수호출에필요함-->

@@ -170,7 +170,7 @@ $('button[name="edit"]').on('click', function(){
   $(this).next().hide();
   $('#lastRow2').append(newTr2);
 
-  console.log('solmi');
+  // console.log('solmi');
 
   $("button[name='smallEditButton']").click(function(){
       // console.log('작은버튼클릭');

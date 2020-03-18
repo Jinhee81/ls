@@ -34,6 +34,8 @@ if((int)$row5[0] >= 1){
         NOW(),
         {$filtered['id']}
     )";
+
+    // echo $sql6;
   $result6 = mysqli_query($conn, $sql6); //건물안에 그룹명 생성
 
   $id = mysqli_insert_id($conn); //이거가 건물안에 그룹명아이디(중요,완전헷갈렸음)
@@ -54,30 +56,30 @@ if((int)$row5[0] >= 1){
     $r_order = $r_order + 1;
     // echo $sql."<br>";
 
-    $sql_overlap_check =
-      "select count(*) from r_g_in_building
-      where group_in_building_id={$id}
-      and rName = {$value}
-      ";
-    $result_overlap_check = mysqli_query($conn, $sql_overlap_check);
-    $row_overlap_check = mysqli_fetch_array($result_overlap_check);
-
-    if($row_overlap_check[0] >= 2 ){
-      echo "<script>
-      alert('동일한 관리번호는 사용 불가합니다.');</script>";
-      goto end;
-    }//건물안 그룹명 내에 방번호 생성
+    // $sql_overlap_check =
+    //   "select count(*) from r_g_in_building
+    //   where group_in_building_id={$id}
+    //   and rName = {$value}
+    //   ";
+    // $result_overlap_check = mysqli_query($conn, $sql_overlap_check);
+    // $row_overlap_check = mysqli_fetch_array($result_overlap_check);
+    //
+    // if((int)$row_overlap_check[0] >= 2 ){
+    //   echo "<script>
+    //   alert('동일한 관리번호는 사용 불가합니다.');</script>";
+    //   goto end;
+    // }//건물안 그룹명 내에 방번호 생성
 
   }
 
 echo
 "<script>
-alert('저장되었습니다.');
+alert('추가하였습니다.');
 location.href='building.php';
 </script>";
 
-end :
-echo "<script>
-location.href='building.php';</script>";
+// end :
+// echo "<script>
+// location.href='building.php';</script>";
 }
 ?>

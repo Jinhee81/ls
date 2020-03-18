@@ -7,7 +7,7 @@ include $_SERVER['DOCUMENT_ROOT']."/view/service_header1_meta.php";
 include $_SERVER['DOCUMENT_ROOT']."/view/service_header2.php";
 include $_SERVER['DOCUMENT_ROOT']."/view/conn.php";
 
-$filtered_id = mysqli_real_escape_string($conn, $_GET['id']);
+$filtered_id = mysqli_real_escape_string($conn, $_GET['id']);//빌딩아이디
 settype($filtered_id, 'integer');
 $sql = "select * from building where id={$filtered_id}";
 $result = mysqli_query($conn, $sql);
@@ -21,18 +21,20 @@ $row = mysqli_fetch_array($result);
     <hr class="my-4">
     <p class="lead">(1) 그룹명에는 '1층', '2층' 등의 명칭을 적어주세요. 만약 그룹명이 생각나지 않으면 '기본'이라고 적어주세요. 추후 언제든 수정가능합니다.<br>
     (2) 관리개수에는 1~100사이 숫자를 입력해주세요.<br>
-    (3) 관리번호가 만약 꽃잎반, 열매반 등 한글 이름인 경우(숫자 호수가 아닌경우) 시작번호 값을 비운채 생성하기 버튼을 눌러주세요.</p>
+    (3) 관리번호가 만약 꽃잎반, 열매반 등 한글 이름인 경우(숫자 호수가 아닌경우) 시작번호 값을 비운채 생성하기 버튼을 눌러주세요.<br>
+    (4) 관리번호는 통상적으로 '101호', '102호' 등의 식별번호를 입력합니다.
+    </p>
     <!-- <hr class="my-4">
     <small>(1) '명칭'은 평상시 부르는 이름으로 적어주세요. 예)도레미고시원, 성공빌딩 (2) '수금방법'은 임대료를 선불로 수납할 경우 선불 선택, 후불로 수납할경우 후불을 선택하세요.</small> -->
   </div>
 </section>
 <section class="container" style="max-width:600px;">
-  <form action="p_room_make.php" method="post">
+  <form action="p_group_room_add.php" method="post">
     <input type="hidden" name="id" value="<?=$row['id']?>">
     <table class="table table-bordered text-center">
       <tr>
         <td scope="col col-md-4">물건명</td>
-        <td scope="col col-md-8"><input class="form-control text-center" type="text" name="building_name" value="<?=$row['bName']?>" disabled></td>
+        <td scope="col col-md-8"><input class="form-control text-center" type="text" name="building_name" value="<?=$row['bName'].'('.$filtered_id.')'?>" disabled></td>
       </tr>
       <tr>
         <td scope="col col-md-4">그룹명</td>

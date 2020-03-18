@@ -44,7 +44,7 @@ if($row[0] >= 100){
   echo $sql_update;
   $result_update = mysqli_query($conn, $sql_update); //방갯수를 변경시킨다.
   echo "<script>alert('추가하였습니다.');
-  location.href='modal_b_group_edit3.php?id=".$filtered['id']."';
+  location.href='b_group_room_edit3.php?id=".$filtered['id']."';
   </script>";
 }
 ?>

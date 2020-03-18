@@ -38,7 +38,7 @@ for ($i=0; $i < count($contractRow); $i++) {
         customer_id, building_id, group_in_building_id, r_g_in_building_id,
         payOrder, monthCount, startDate, endDate, contractDate,
         mAmount, mvAmount, mtAmount,
-        user_id, createTime, createPerson)
+        user_id, createTime, endDate2)
       VALUES (
           {$contractRow[$i][2]},
           {$_POST['buildingId']},
@@ -54,7 +54,7 @@ for ($i=0; $i < count($contractRow); $i++) {
           '{$contractRow[$i][6]}',
           {$_SESSION['id']},
           now(),
-          {$_SESSION['id']}
+          '{$contractRow[$i][9]}'
           )
   ";
   // echo $sql;

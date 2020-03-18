@@ -31,11 +31,11 @@ if($_POST['fromDate'] && $_POST['toDate']){
 }
 
 if($_POST['progress']==='pIng'){
-  $etcIng = " and getStatus2(startDate, endDate2) = 'present'";
+  $etcIng = " and getStatus(startDate, endDate2) = 'present'";
 } elseif($_POST['progress']==='pWaiting'){
-  $etcIng = " and getStatus2(startDate, endDate2) = 'waiting'";
+  $etcIng = " and getStatus(startDate, endDate2) = 'waiting'";
 } elseif($_POST['progress']==='pEnd'){
-  $etcIng = " and getStatus2(startDate, endDate2) = 'the_end'";
+  $etcIng = " and getStatus(startDate, endDate2) = 'the_end'";
 } elseif($_POST['progress']==='pAll'){
   $etcIng = "";
 }
@@ -95,12 +95,12 @@ $sql = "
         $etcDate $etcIng $groupCondi $etcCondi
   order by
       group_in_building.id asc, r_g_in_building.id asc";
-// echo $sql;
+echo $sql;
 $result = mysqli_query($conn, $sql);
 
 $allRows = array();
 while($row = mysqli_fetch_array($result)){
-  $allRows[]=$row;
+  $allRows[] = $row;
 }
 
 for ($i=0; $i < count($allRows); $i++) {

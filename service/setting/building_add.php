@@ -17,7 +17,7 @@ include $_SERVER['DOCUMENT_ROOT']."/view/conn.php";
   </div>
 </section>
 <section class="container" style="max-width:500px;">
-  <form action="building_process.php" method="post">
+  <form action="p_building_add.php" method="post">
     <div class="form-group row">
       <label for="staticEmail" class="col-sm-3 col-form-label">형태</label>
       <div class="col-sm-9">

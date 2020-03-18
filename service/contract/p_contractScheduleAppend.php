@@ -60,8 +60,7 @@ if($result4){
   $sql5 = "UPDATE realContract SET
              count2 = {$new_order},
              endDate2 = '{$new_endDate}',
-             updateTime = now(),
-             updatePerson = '{$_SESSION['id']}'
+             updateTime = now()
            WHERE
              id = {$filtered_id}
           ";

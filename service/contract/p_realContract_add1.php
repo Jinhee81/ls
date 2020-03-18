@@ -8,7 +8,6 @@ include $_SERVER['DOCUMENT_ROOT']."/view/conn.php";
 
 $customer_id = $_POST['customer'];
 
-date_default_timezone_set('Asia/Seoul'); //이거있어야지 시간대가 맞게설정됨, 없으면 시간대가 안맞아짐
 
 $currentDateTime = date('Y-m-d H:i:s');
 // echo $currentDateTime;
@@ -18,7 +17,7 @@ $sql = "
     customer_id, building_id, group_in_building_id, r_g_in_building_id,
     payOrder, monthCount, startDate, endDate, contractDate,
     mAmount, mvAmount, mtAmount,
-    user_id, createTime, createPerson)
+    user_id, createTime, endDate2)
   VALUES (
     {$customer_id},
     {$_POST['building_id']},
@@ -34,7 +33,7 @@ $sql = "
     '{$_POST['mtAmount']}',
     {$_SESSION['id']},
     now(),
-    {$_SESSION['id']}
+    '{$_POST['endDate']}'
   )
 ";
 

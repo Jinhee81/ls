@@ -48,8 +48,7 @@ for ($i=0; $i < count($payrow); $i++) {
       $result2 = mysqli_query($conn, $sql2);
 
       $sql5 = "UPDATE realContract SET
-                 updateTime = now(),
-                 updatePerson = '{$_SESSION['id']}'
+                 updateTime = now()
                WHERE
                  id = {$filtered_id}
               ";
@@ -63,7 +62,7 @@ for ($i=0; $i < count($payrow); $i++) {
         error_log(mysqli_error($conn));
         exit();
       }
-      
+
       echo "<script>alert('청구취소하였습니다.');
                location.href='contractEdit3.php?id=$filtered_id';
             </script>";

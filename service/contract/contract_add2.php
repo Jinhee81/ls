@@ -93,7 +93,7 @@ foreach ($groupBuildingArray as $key => $value) {
   </div>
 </section>
 <section class="container">
-  <form method="post" action="p_realContract_add.php">
+  <form method="post" action="p_realContract_add2.php">
     <div class="form-row">
         <div class="form-group col-md-2">
               <label><b>[세입자정보]</b></label>

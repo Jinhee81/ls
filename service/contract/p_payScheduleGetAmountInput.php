@@ -25,8 +25,7 @@ $result = mysqli_query($conn, $sql);
 if($result){
 
   $sql5 = "UPDATE realContract SET
-             updateTime = now(),
-             updatePerson = {$_SESSION['id']}
+             updateTime = now()
            WHERE
              id = {$filtered_id}
           ";

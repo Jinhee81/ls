@@ -40,8 +40,7 @@ $row2 = mysqli_fetch_array($result2);
 $sql5 = "UPDATE realContract SET
            count2 = {$row[0]},
            endDate2 = '{$row2[0]}',
-           updateTime = now(),
-           updatePerson = '{$_SESSION['id']}'
+           updateTime = now()
          WHERE
            id = {$filtered_id}
         ";

@@ -1,3 +1,4 @@
+<!-- 이건 계약리스트화면에서 계약등록누르는 화면을 처리하는 프로세스파일  -->
 <?php
 session_start();
 include $_SERVER['DOCUMENT_ROOT']."/view/conn.php";
@@ -7,8 +8,6 @@ include $_SERVER['DOCUMENT_ROOT']."/view/conn.php";
 
 $customer_id = substr($_POST['customer'],-9); //이거는 고객관련문자열에서 뒤9자리 고객번호만 가져오는 명령
 
-date_default_timezone_set('Asia/Seoul'); //이거있어야지 시간대가 맞게설정됨, 없으면 시간대가 안맞아짐
-
 $currentDateTime = date('Y-m-d H:i:s');
 // echo $currentDateTime;
 
@@ -17,7 +16,7 @@ $sql = "
     customer_id, building_id, group_in_building_id, r_g_in_building_id,
     payOrder, monthCount, startDate, endDate, contractDate,
     mAmount, mvAmount, mtAmount,
-    user_id, createTime, createPerson, count2, endDate2)
+    user_id, createTime, count2, endDate2)
   VALUES (
     {$customer_id},
     {$_POST['building_id']},
@@ -33,7 +32,6 @@ $sql = "
     '{$_POST['mtAmount']}',
     {$_SESSION['id']},
     now(),
-    {$_SESSION['id']},
     {$_POST['monthCount']},
     '{$_POST['endDate']}'
   )

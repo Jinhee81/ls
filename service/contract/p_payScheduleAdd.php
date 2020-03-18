@@ -151,8 +151,7 @@ for ($i=0; $i < count($payExecutiveRow); $i++) {
 }
 
 $sql5 = "UPDATE realContract SET
-           updateTime = now(),
-           updatePerson = '{$_SESSION['id']}'
+           updateTime = now()
          WHERE
            id = {$filtered_id}
         ";

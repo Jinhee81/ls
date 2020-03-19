@@ -42,7 +42,7 @@ $sql  = "
         NOW(),
         'feefree',
         'no',
-        1000
+        3000
     )";
 // echo $sql;
 $result = mysqli_query($conn, $sql);
@@ -66,7 +66,7 @@ if($result === false){
   $sql3 = "insert into coin
            (user_id, date, description, payAmount, coinAmount)
            values
-           ({$id}, '{$currentDate}', '회원가입축하', 0, 1000)
+           ({$id}, '{$currentDate}', '회원가입축하', 0, 3000)
            ";
   // echo $sql3;
 

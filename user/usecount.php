@@ -101,6 +101,17 @@ while($row_grade = mysqli_fetch_array($result_grage)){
   $gradeArray[] = $row_grade;
 }
 
+for ($i=0; $i < count($gradeArray); $i++) {
+  $replaceStar = '<i class="fas fa-star"></i>(스타)';
+  $replaceSubscription = '&nbsp;<span class="badge badge-danger">구독</span>';
+
+  if($gradeArray[$i]['gradename']==='feefree'){
+    $gradeArray[$i]['gradename'] = '무료';
+  } else {
+    $gradeArray[$i]['gradename'] = str_replace("star", $replaceStar, $gradeArray[$i]['gradename']);
+    $gradeArray[$i]['gradename'] = str_replace("(s)", $replaceSubscription, $gradeArray[$i]['gradename']);
+  }
+}
 
  ?>
 <section class="container">
@@ -153,12 +164,7 @@ while($row_grade = mysqli_fetch_array($result_grage)){
       for ($i=0; $i < count($gradeArray); $i++) {?>
         <tr>
           <td>
-            <?php if($gradeArray[$i]['gradename']==='feefree'){
-              echo "무료";
-            } else {
-              echo $gradeArray[$i]['gradename'];
-            }
-            ?>
+            <?=$gradeArray[$i]['gradename']?>
           </td>
           <td><?=$gradeArray[$i]['executivedate']?></td>
           <td><?=$gradeArray[$i]['startdate']?></td>
@@ -171,6 +177,8 @@ while($row_grade = mysqli_fetch_array($result_grage)){
       }
        ?>
   </table>
+
+  <!-- <?php echo 111;?> -->
 </section>
 
 <script>

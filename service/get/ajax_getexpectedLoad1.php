@@ -6,70 +6,55 @@ include $_SERVER['DOCUMENT_ROOT']."/view/conn.php";
 include "ajax_getexpectedCondi.php";
 
 ?>
+<table class="table table-hover text-center mt-2 table-sm" id="checkboxTestTbl">
+  <thead>
+    <tr class="table-info">
+      <th scope="col"><input type="checkbox"></th>
+      <th scope="col">순번</th>
+      <th scope="col" class="mobile">그룹명</th>
+      <th scope="col">방번호</th>
+      <th scope="col">세입자</th>
+      <!-- <th scope="col">청구번호</th> -->
+      <th scope="col" class="mobile">개월</th>
+      <th scope="col" class="mobile">시작일/종료일</th>
+      <!-- <th scope="col" class="mobile">종료일</th> -->
+      <th scope="col">예정일</th>
+      <th scope="col" class="mobile">공급가액</th>
+      <th scope="col" class="mobile">세액</th>
+      <th scope="col">합계</th>
+      <th scope="col" class="mobile">입금구분</th>
+      <th scope="col" class="mobile">연체일수/이자</th>
+      <!-- <th scope="col" class="mobile">연체이자</th> -->
+      <th scope="col" class="mobile">증빙</th>
+    </tr>
+  </thead>
 
-<?php if(count($allRows)===0){?>
-  <table class="table table-hover text-center mt-2 table-sm" id="checkboxTestTbl">
-    <thead>
-      <tr class="table-info">
-        <th scope="col"><input type="checkbox"></th>
-        <th scope="col">순번</th>
-        <th scope="col" class="mobile">그룹명</th>
-        <th scope="col">방번호</th>
-        <th scope="col">세입자</th>
-        <!-- <th scope="col">청구번호</th> -->
-        <th scope="col" class="mobile">개월</th>
-        <th scope="col" class="mobile">시작일/종료일</th>
-        <!-- <th scope="col" class="mobile">종료일</th> -->
-        <th scope="col">예정일</th>
-        <th scope="col" class="mobile">공급가액</th>
-        <th scope="col" class="mobile">세액</th>
-        <th scope="col">합계</th>
-        <th scope="col" class="mobile">입금구분</th>
-        <th scope="col" class="mobile">연체일수/이자</th>
-        <!-- <th scope="col" class="mobile">연체이자</th> -->
-        <th scope="col" class="mobile">증빙</th>
-      </tr>
-    </thead>
-  <?php echo "<tr><td colspan='14'>조회값이 없습니다.</td></tr>";
- } else {?>
-  <table class="table table-hover text-center mt-2 table-sm" id="checkboxTestTbl">
-    <thead>
-      <tr class="table-info">
-        <th scope="col"><input type="checkbox"></th>
-        <th scope="col">순번</th>
-        <th scope="col" class="mobile">그룹명</th>
-        <th scope="col">방번호</th>
-        <th scope="col">세입자</th>
-        <!-- <th scope="col">청구번호</th> -->
-        <th scope="col" class="mobile">개월</th>
-        <th scope="col" class="mobile">시작일/종료일</th>
-        <!-- <th scope="col" class="mobile">종료일</th> -->
-        <th scope="col">예정일</th>
-        <th scope="col" class="mobile">공급가액</th>
-        <th scope="col" class="mobile">세액</th>
-        <th scope="col">합계</th>
-        <th scope="col" class="mobile">입금구분</th>
-        <th scope="col" class="mobile">연체일수/이자</th>
-        <!-- <th scope="col" class="mobile">연체이자</th> -->
-        <th scope="col" class="mobile">증빙</th>
-      </tr>
-    </thead>
-    <tbody>
-
-    <?php for ($i=0; $i < count($allRows); $i++) {?>
+<?php
+  if(count($allRows)===0){
+    echo "<tr><td colspan='14'>조회값이 없습니다.</td></tr>";
+  } else { ?>
+    <?php
+    $j = count($allRows);
+    for ($i=0; $i < count($allRows); $i++) {?>
       <tr>
         <td><input type="checkbox" value="<?=$allRows[$i]['idpaySchedule2']?>"></td>
-        <td><?=$i+1?></td><!--순번-->
+        <td><?=$j?></td><!--순번-->
         <td class="mobile"><?=$allRows[$i]['gName']?></td><!--그룹명-->
         <td><?=$allRows[$i]['rName']?></td><!--방번호-->
         <td>
           <a href="/service/customer/m_c_edit.php?id=<?=$allRows[$i]['customer_id']?>" data-toggle="tooltip" data-placement="top" title="<?=$allRows[$i]['cname'].', '.$allRows[$i]['contact']?>">
             <?=mb_substr($allRows[$i]['cname'].', '.$allRows[$i]['contact'],0,5)?>
           </a>
-          <input type="hidden" name="name" value="<?=$allRows[$i]['cname']?>">
+          <input type="hidden" name="cname" value="<?=$allRows[$i]['cname']?>">
           <input type="hidden" name="contact" value="<?=$allRows[$i]['contact']?>">
           <input type="hidden" name="email" value="<?=$allRows[$i]['email']?>">
           <input type="hidden" name="customer_id" value="<?=$allRows[$i]['customer_id']?>">
+          <input type="hidden" name="name" value="<?=$allRows[$i]['name']?>">
+          <input type="hidden" name="companynumber" value="<?=$allRows[$i]['companynumber']?>">
+          <input type="hidden" name="companyname" value="<?=$allRows[$i]['companyname']?>">
+          <input type="hidden" name="address" value="<?=$allRows[$i]['address']?>">
+          <input type="hidden" name="div4" value="<?=$allRows[$i]['div4']?>">
+          <input type="hidden" name="div5" value="<?=$allRows[$i]['div5']?>">
         </td><!--세입자-->
         <!-- <td>
           <p class='text-primary modalAsk font-weight-light' data-toggle='modal' data-target='#pPay'>
@@ -170,7 +155,8 @@ include "ajax_getexpectedCondi.php";
         </td><!--증빙일자-->
       </tr>
     <?php
-  } ?>
+    $j -= 1;
+  } ?> <!--for closing } -->
     <tr class="table-secondary">
       <td colspan="8">Total</td>
       <td><label class="numberComma mb-0"><?=$amountTotalArray[0]?></label></td>
@@ -402,7 +388,7 @@ $(":checkbox:first", table).click(function(){
   } else {
     smsReadyArray = [];
   }
-  console.log(smsReadyArray);
+  // console.log(smsReadyArray);
 })
 
 $(":checkbox:not(:first)",table).click(function(){
@@ -470,7 +456,7 @@ var smsReadyArrayEle = [];
       // console.log(smsReadyArray);
     }
 
-console.log(smsReadyArray);
+// console.log(smsReadyArray);
 })
 
 // console.log(smsReadyArray.length);
@@ -486,18 +472,35 @@ $(":checkbox:first", table).click(function(){
   if($(":checkbox:first", table).is(":checked")){
     for (var i = 1; i <= allCnt; i++) {
       var taxArrayEle = [];
-      var colOrder = Number(table.find("tr:eq("+i+")").find("td:eq(1)").text());
-      var colid = Number(table.find("tr:eq("+i+")").find("td:eq(0)").children('input').val());
-      var coltax = table.find("tr:eq("+i+")").find("td:eq(4)").children('label').text();
-      var colpay = table.find("tr:eq("+i+")").find("td:eq(6)").text().trim();
-      var coltaxdate = table.find("tr:eq("+i+")").find("td:eq(9)").text().trim();
-      taxArrayEle.push(colOrder, colid, coltax, colpay, coltaxdate)
+      var colOrder = Number(table.find("tr:eq("+i+")").find("td:eq(1)").text());//순번,이건굳이왜넣었을까? 빼도되지 않을까?
+      var colid = Number(table.find("tr:eq("+i+")").find("td:eq(0)").children('input').val());//paySchedule2id 청구번호
+      var companynumber = table.find("tr:eq("+i+")").find("td:eq(4)").children('input:eq(5)').val();//사업자번호
+      var companyname = table.find("tr:eq("+i+")").find("td:eq(4)").children('input:eq(6)').val();//사업자명
+      var name = table.find("tr:eq("+i+")").find("td:eq(4)").children('input:eq(4)').val();//성명
+      var address = table.find("tr:eq("+i+")").find("td:eq(4)").children('input:eq(7)').val();//주소
+      var div4 = table.find("tr:eq("+i+")").find("td:eq(4)").children('input:eq(8)').val();//업태
+      var div5 = table.find("tr:eq("+i+")").find("td:eq(4)").children('input:eq(9)').val();//종목
+      var contact = table.find("tr:eq("+i+")").find("td:eq(4)").children('input:eq(1)').val();//연락처
+      var email = table.find("tr:eq("+i+")").find("td:eq(4)").children('input:eq(2)').val();//이메일
+      var supplyamount = table.find("tr:eq("+i+")").find("td:eq(8)").children().text();//공급가액
+      var vatamount = table.find("tr:eq("+i+")").find("td:eq(9)").children().text();//세액
+      var totalamount = table.find("tr:eq("+i+")").find("td:eq(10)").children().children().text();//합계
+      var startdate = table.find("tr:eq("+i+")").find("td:eq(6)").children('label:eq(0)').text();//청구시작일
+      var enddate = table.find("tr:eq("+i+")").find("td:eq(6)").children('label:eq(1)').text();//청구종료일
+      var monthcount = table.find("tr:eq("+i+")").find("td:eq(5)").text();//청구개월
+      var comment = "기간 ("+startdate+"~"+enddate+", "+monthcount+"개월 이용료)";//비고
+      var acceptdiv = table.find("tr:eq("+i+")").find("td:eq(11)").text().trim();//입금구분
+      var evidencedate = table.find("tr:eq("+i+")").find("td:eq(13)").children('label').text();//증빙일자
+
+
+      taxArrayEle.push({'순번':colOrder}, {'청구번호':colid}, {'사업자번호':companynumber}, {'사업자명':companyname}, {'성명':name}, {'주소':address}, {'업태':div4}, {'종목':div5}, {'연락처':contact}, {'이메일':email}, {'공급가액':supplyamount}, {'세액':vatamount}, {'합계':totalamount}, {'비고':comment}, {'입금구분':acceptdiv}, {'증빙일자':evidencedate});
+
       taxArray.push(taxArrayEle);
     }
   } else {
     taxArray = [];
   }
-  // console.log(taxArray);
+  console.log(taxArray);
 })
 
 $(":checkbox:not(:first)",table).click(function(){
@@ -507,20 +510,54 @@ var taxArrayEle = [];
       var currow = $(this).closest('tr');
       var colOrder = Number(currow.find('td:eq(1)').text());
       var colid = Number(currow.find("td:eq(0)").children('input').val());
-      var coltax = currow.find("td:eq(4)").children('label').text();
-      var colpay = currow.find("td:eq(6)").text().trim();
-      var coltaxdate = currow.find("td:eq(9)").text().trim();
-      taxArrayEle.push(colOrder, colid, coltax, colpay, coltaxdate);
+
+      var companynumber = currow.find("td:eq(4)").children('input:eq(5)').val();//사업자번호
+      var companyname = currow.find("td:eq(4)").children('input:eq(6)').val();//사업자명
+      var name = currow.find("td:eq(4)").children('input:eq(4)').val();//성명
+      var address = currow.find("td:eq(4)").children('input:eq(7)').val();//주소
+      var div4 = currow.find("td:eq(4)").children('input:eq(8)').val();//업태
+      var div5 = currow.find("td:eq(4)").children('input:eq(9)').val();//종목
+      var contact = currow.find("td:eq(4)").children('input:eq(1)').val();//연락처
+      var email = currow.find("td:eq(4)").children('input:eq(2)').val();//이메일
+      var supplyamount = currow.find("td:eq(8)").children().text();//공급가액
+      var vatamount = currow.find("td:eq(9)").children().text();//세액
+      var totalamount = currow.find("td:eq(10)").children().children().text();//합계
+      var startdate = currow.find("td:eq(6)").children('label:eq(0)').text();//청구시작일
+      var enddate = currow.find("td:eq(6)").children('label:eq(1)').text();//청구종료일
+      var monthcount = currow.find("td:eq(5)").text();//청구개월
+      var comment = "기간 ("+startdate+"~"+enddate+", "+monthcount+"개월 이용료)";//비고
+      var acceptdiv = currow.find("td:eq(11)").text().trim();//입금구분
+      var evidencedate = currow.find("td:eq(13)").children('label').text();//증빙일자
+
+      taxArrayEle.push({'순번':colOrder}, {'청구번호':colid}, {'사업자번호':companynumber}, {'사업자명':companyname}, {'성명':name}, {'주소':address}, {'업태':div4}, {'종목':div5}, {'연락처':contact}, {'이메일':email}, {'공급가액':supplyamount}, {'세액':vatamount}, {'합계':totalamount}, {'비고':comment}, {'입금구분':acceptdiv}, {'증빙일자':evidencedate});
+
       taxArray.push(taxArrayEle);
+
     } else {
       var dropReady = [];
       var currow = $(this).closest('tr');
       var colOrder = Number(currow.find('td:eq(1)').text());
       var colid = Number(currow.find("td:eq(0)").children('input').val());
-      var coltax = currow.find("td:eq(4)").children('label').text();
-      var colpay = currow.find("td:eq(6)").text().trim();
-      var coltaxdate = currow.find("td:eq(9)").text().trim();
-      dropReady.push(colOrder, colid, coltax, colpay, coltaxdate);
+
+      var companynumber = currow.find("td:eq(4)").children('input:eq(5)').val();//사업자번호
+      var companyname = currow.find("td:eq(4)").children('input:eq(6)').val();//사업자명
+      var name = currow.find("td:eq(4)").children('input:eq(4)').val();//성명
+      var address = currow.find("td:eq(4)").children('input:eq(7)').val();//주소
+      var div4 = currow.find("td:eq(4)").children('input:eq(8)').val();//업태
+      var div5 = currow.find("td:eq(4)").children('input:eq(9)').val();//종목
+      var contact = currow.find("td:eq(4)").children('input:eq(1)').val();//연락처
+      var email = currow.find("td:eq(4)").children('input:eq(2)').val();//이메일
+      var supplyamount = currow.find("td:eq(8)").children().text();//공급가액
+      var vatamount = currow.find("td:eq(9)").children().text();//세액
+      var totalamount = currow.find("td:eq(10)").children().children().text();//합계
+      var startdate = currow.find("td:eq(6)").children('label:eq(0)').text();//청구시작일
+      var enddate = currow.find("td:eq(6)").children('label:eq(1)').text();//청구종료일
+      var monthcount = currow.find("td:eq(5)").text();//청구개월
+      var comment = "기간 ("+startdate+"~"+enddate+", "+monthcount+"개월 이용료)";//비고
+      var acceptdiv = currow.find("td:eq(11)").text().trim();//입금구분
+      var evidencedate = currow.find("td:eq(13)").children('label').text();//증빙일자
+
+      dropReady.push({'순번':colOrder}, {'청구번호':colid}, {'사업자번호':companynumber}, {'사업자명':companyname}, {'성명':name}, {'주소':address}, {'업태':div4}, {'종목':div5}, {'연락처':contact}, {'이메일':email}, {'공급가액':supplyamount}, {'세액':vatamount}, {'합계':totalamount}, {'비고':comment}, {'입금구분':acceptdiv}, {'증빙일자':evidencedate});
 
       for (var i = 0; i < taxArray.length; i++) {
         var join1 = taxArray[i].join(',');
@@ -534,7 +571,7 @@ var taxArrayEle = [];
       taxArray.splice(index, 1);
 
     }
-// console.log(taxArray);
+console.log(taxArray);
 })
 
 

@@ -7,7 +7,6 @@ include $_SERVER['DOCUMENT_ROOT']."/view/conn.php";
 // print_r($_POST);
 // echo '111';
 
-date_default_timezone_set('Asia/Seoul'); //이거있어야지 시간대가 맞게설정됨, 없으면 시간대가 안맞아짐
 $currentDate = date('Y-m-d');
 
 if($_POST['dateDiv']==='startDate'){
@@ -164,9 +163,7 @@ for ($i=0; $i < count($allRows); $i++) {
 } //for문closing
 
 // print_r($allRows);
-
-
-if(count($allRows)===0){ ?>
+?>
   <table class="table table-hover text-center mt-2" id="checkboxTestTbl">
     <thead>
       <tr class="table-info">
@@ -189,37 +186,17 @@ if(count($allRows)===0){ ?>
       </tr>
     </thead>
 <?php
+if(count($allRows)===0){
 echo "<tr><td colspan='12'>조회값이 없습니다.</td></tr>";
 } else { ?>
-  <table class="table table-hover text-center mt-2" id="checkboxTestTbl">
-    <thead>
-      <tr class="table-info">
-        <th scope="col" class="mobile"><input type="checkbox"></th>
-        <th scope="col">순번</th>
-        <th scope="col">상태</th>
-        <th scope="col">세입자</th>
-        <th scope="col">연락처</th>
-        <th scope="col" class="mobile">그룹명</th>
-        <th scope="col">방번호<i class="fas fa-sort"></i></th>
-        <th scope="col" class="mobile">시작일<i class="fas fa-sort"></i></th>
-        <th scope="col" class="mobile">종료일<i class="fas fa-sort"></i></th>
-        <th scope="col" class="mobile">기간<i class="fas fa-sort"></i></th>
-        <th scope="col">월세<i class="fas fa-sort"></i></th>
-        <!-- <th scope="col" class="mobile">단계<i class="fas fa-sort"></i></th> -->
-        <th scope="col" class="mobile">
-          <span class="badge badge-light">파일</span>
-          <span class="badge badge-dark">메모</span>
-        </th>
-      </tr>
-    </thead>
-    <tbody>
       <?php
+      $j = count($allRows);
       for ($i=0; $i < count($allRows); $i++) {
         ?>
       <tr>
         <td class="mobile"><input type="checkbox" name="chk[]" value="<?=$allRows[$i]['rid']?>"></td>
         <td>
-          <label data-toggle="tooltip" data-placement="top" title="<?=$allRows[$i]['rid']?>"><?=$i+1?>
+          <label data-toggle="tooltip" data-placement="top" title="<?=$allRows[$i]['rid']?>"><?=$j?>
           </label>
         </td><!--순번-->
         <td>
@@ -294,8 +271,8 @@ echo "<tr><td colspan='12'>조회값이 없습니다.</td></tr>";
         </td><!--파일,메모-->
       </tr>
       <?php
+      $j -= 1;
     } ?>
-    </tbody>
   </table>
 
   <nav aria-label="Page navigation example">

@@ -1,4 +1,5 @@
-<!-- 2가 붙은 이 파일이 왜 있는지 모르겠네. 확인해야겠음 -->
+<!-- 2가 붙은 이 파일이 왜 있는지 모르겠네. 확인해야겠음
+그래서 예비파일로 옮겨놓음 -->
 <?php
 session_start();
 include $_SERVER['DOCUMENT_ROOT']."/view/conn.php";

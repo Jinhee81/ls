@@ -1,3 +1,4 @@
+<!-- 이건 방별로 계약을 등록하는거여서 필요함 -->
 <?php
 session_start();
 if(!isset($_SESSION['is_login'])){

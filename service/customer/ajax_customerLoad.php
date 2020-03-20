@@ -42,17 +42,51 @@ if($_POST['fromDate'] && $_POST['toDate']){
 
 
 $sql = "select
-          @num := @num + 1 as num,
-          id, div1, div2, name, div3, companyname, cNumber1, cNumber2, cNumber3, contact1, contact2, contact3, email, etc
-        from (select @num :=0)a, customer
+          id, div1, div2, name, div3, companyname, cNumber1, cNumber2, cNumber3, contact1, contact2, contact3, email, etc, created
+        from customer
         where user_id={$_SESSION['id']}
               $customerCondi $etcCondi $etcDate
-        order by num desc";
+        order by created desc";
 echo $sql;
 
 $result = mysqli_query($conn, $sql);
 $total_rows = mysqli_num_rows($result);
-if($total_rows===0){ ?>
+
+$allRows = array();
+while($row = mysqli_fetch_array($result)){
+  $allRows[] = $row;
+}
+
+for ($i=0; $i < count($allRows); $i++) {
+  $allRows[$i]['cNumber'] = $allRows[$i]['cNumber1'].'-'.$allRows[$i]['cNumber2'].'-'.$allRows[$i]['cNumber3'];
+
+  $allRows[$i]['cContact'] = $allRows[$i]['contact1'].'-'.$allRows[$i]['contact2'].'-'.$allRows[$i]['contact3'];
+
+  if($allRows[$i]['div3']==='주식회사'){
+    $allRows[$i]['cdiv3'] = '(주)';
+  } elseif($allRows[$i]['div3']==='유한회사'){
+    $allRows[$i]['cdiv3'] = '(유)';
+  } elseif($allRows[$i]['div3']==='합자회사'){
+    $allRows[$i]['cdiv3'] = '(합)';
+  } elseif($allRows[$i]['div3']==='기타'){
+    $allRows[$i]['cdiv3'] = '(기)';
+  }
+
+  if($allRows[$i]['div2']==='개인사업자'){
+    $allRows[$i]['cName'] = $allRows[$i]['name'].'('.$allRows[$i]['companyname'].','.$allRows[$i]['cNumber'].')';
+  } else if($allRows[$i]['div2']==='법인사업자'){
+    $allRows[$i]['cName'] = $allRows[$i]['cdiv3'].$allRows[$i]['companyname'].'('.$allRows[$i]['name'].','.$allRows[$i]['cNumber'].')';
+  } else if($allRows[$i]['div2']==='개인'){
+    $allRows[$i]['cName'] = $allRows[$i]['name'];
+  }
+
+  if($clist['div1']==='문의'){
+    $allRows[$i]['cName'] = 'ㅇㅇㅇ';
+  }
+}
+?>
+
+
   <table class="table table-hover text-center" id="checkboxTestTbl">
     <thead>
       <tr class="table-info">
@@ -66,106 +100,58 @@ if($total_rows===0){ ?>
         <th scope="col" class="mobile">바로가기</th>
       </tr>
     </thead>
-<?php  echo '<tbody><tr><td colspan="8">조회된 값이 없습니다. 세입자를 등록해주세요!</td></tr></tbody>';
-} else {?>
-  <table class="table table-hover text-center" id="checkboxTestTbl">
-    <thead>
-      <tr class="table-info">
-        <th scope="col" class="mobile"><input type="checkbox"></th>
-        <th scope="col">순번</th>
-        <th scope="col" class="mobile">구분</th>
-        <th scope="col">성명</th>
-        <th scope="col">연락처</th>
-        <th scope="col" class="mobile">이메일</th>
-        <th scope="col" class="mobile">특이사항</th>
-        <th scope="col" class="mobile">바로가기</th>
-      </tr>
-    </thead>
-    <tbody>
-    <?php
-    // echo $sql;
-      while($row = mysqli_fetch_array($result)){
-        $clist['id'] = htmlspecialchars($row['id']);
-        $clist['num'] = htmlspecialchars($row['num']);
-        $clist['div1'] = htmlspecialchars($row['div1']);
-        $clist['div2'] = htmlspecialchars($row['div2']);
-        $clist['contact1'] = htmlspecialchars($row['contact1']);
-        $clist['contact2'] = htmlspecialchars($row['contact2']);
-        $clist['contact3'] = htmlspecialchars($row['contact3']);
-        $clist['email'] = htmlspecialchars($row['email']);
-        $clist['etc'] = htmlspecialchars($row['etc']);
-        $clist['name'] = htmlspecialchars($row['name']);
-        $clist['companyname'] = htmlspecialchars($row['companyname']);
-        $clist['cNumber1'] = htmlspecialchars($row['cNumber1']);
-        $clist['cNumber2'] = htmlspecialchars($row['cNumber2']);
-        $clist['cNumber3'] = htmlspecialchars($row['cNumber3']);
+<?php
+if(count($allRows)===0){
+  echo '<tbody><tr><td colspan="8">조회된 값이 없습니다. 세입자를 등록해주세요!</td></tr></tbody>';
+} else {
+  $j = count($allRows); //내림차순을 위해 만든 뱐수
+  for ($i=0; $i < count($allRows); $i++) {
+    ?>
+    <tr>
+      <td class="mobile"><input type="checkbox" value="<?=$allRows[$i]['id']?>"></td>
+      <td><?=$j?></td>
+      <td class="mobile"><?=$allRows[$i]['div1']?></td>
+      <td class='text-center'><a href="m_c_edit.php?id=<?=$allRows[$i]['id']?>" data-toggle="tooltip" data-placement="top" title="<?=$allRows[$i]['cName']?>">
+        <?=mb_substr($allRows[$i]['cName'],0,20)?></a>
+        <?php
+        $sql2 = "select count(*) from realContract where customer_id={$allRows[$i]['id']}";
+        // echo $sql2;
+        $result2 = mysqli_query($conn, $sql2);
+        $row2 = mysqli_fetch_array($result2);
 
-        $cNumber = $clist['cNumber1'].'-'.$clist['cNumber2'].'-'.$clist['cNumber3'];
-        $cContact = $clist['contact1'].'-'.$clist['contact2'].'-'.$clist['contact3'];
-
-        if($row['div3']==='주식회사'){
-          $cDiv3 = '(주)';
-        } elseif($row['div3']==='유한회사'){
-          $cDiv3 = '(유)';
-        } elseif($row['div3']==='합자회사'){
-          $cDiv3 = '(합)';
-        } elseif($row['div3']==='기타'){
-          $cDiv3 = '(기타)';
+        if((int)$row2[0]>0){
+          echo "<span class='badge badge-pill badge-warning'>".$row2[0]."</span>";
         }
+         ?>
+      </td>
+      <td><?=$allRows[$i]['cContact']?></td>
+      <td class="mobile"><?=mb_substr($allRows[$i]['email'],0,15)?></td>
+      <td class="mobile">
+        <label data-toggle="tooltip" data-placement="top" title="<?=$allRows[$i]['etc']?>">
+          <?=mb_substr($allRows[$i]['etc'],0,10)?>
+        </label>
+      </td>
+      <td class="mobile">
+        <?php
+            if($allRows[$i]['div1']==='세입자'){
+              echo "<a class='btn btn-info btn-sm' href='/service/contract/contract_add1.php?id=".$allRows[$i]['id']."' role='button'>방계약</a>";
+            }
 
-        if($clist['div2']==='개인사업자'){
-          $cName = $clist['name'].'('.$clist['companyname'].','.$cNumber.')';
-        } else if($clist['div2']==='법인사업자'){
-          $cName = $cDiv3.$clist['companyname'].'('.$clist['name'].','.$cNumber.')';
-        } else if($clist['div2']==='개인'){
-          $cName = $clist['name'];
-        }
+            if($allRows[$i]['div1']==='기타'){
+              echo "<a class='btn btn-info btn-sm' href='/service/contractetc/contractetc_add1.php?id=".$allRows[$i]['id']."' role='button'>기타계약</a>";
+            }
+         ?>
+      </td>
+    </tr>
+  <?php
+  $j -= 1;
+  }
+}
 
-        if($clist['div1']==='문의'){
-          $cName = 'ㅇㅇㅇ';
-        }
-        ?>
-      <tr>
-        <td class="mobile"><input type="checkbox" value="<?=$clist['id']?>"></td>
-        <td><?=$clist['num']?></td>
-        <td class="mobile"><?=$clist['div1']?></td>
-        <td class='text-center'><a href="m_c_edit.php?id=<?=$clist['id']?>" data-toggle="tooltip" data-placement="top" title="<?=$cName?>">
-          <?=mb_substr($cName,0,20)?></a>
-          <?php
-          $sql2 = "select count(*) from realContract where customer_id={$clist['id']}";
-          // echo $sql2;
-          $result2 = mysqli_query($conn, $sql2);
-          $row2 = mysqli_fetch_array($result2);
+?>
 
-          if((int)$row2[0]>0){
-            echo "<span class='badge badge-pill badge-warning'>".$row2[0]."</span>";
-          }
-           ?>
-        </td>
-        <td><?=$cContact?></td>
-        <td class="mobile"><?=mb_substr($clist['email'],0,15)?></td>
-        <td class="mobile">
-          <label data-toggle="tooltip" data-placement="top" title="<?=$clist['etc']?>">
-            <?=mb_substr($clist['etc'],0,10)?>
-          </label>
-        </td>
-        <td class="mobile">
-          <?php
-              if($clist['div1']==='세입자'){
-                echo "<a class='btn btn-info btn-sm' href='/service/contract/contract_add1.php?id=".$clist['id']."' role='button'>방계약</a>";
-              }
 
-              if($clist['div1']==='기타'){
-                echo "<a class='btn btn-info btn-sm' href='/service/contractetc/contractetc_add1.php?id=".$clist['id']."' role='button'>기타계약</a>";
-              }
-           ?>
-        </td>
-      </tr>
-  <?php } ?>
-    </tbody>
-  </table>
-
-  <nav aria-label="Page navigation example">
+  <!-- <nav aria-label="Page navigation example">
     <ul class="pagination justify-content-center">
       <li class="page-item">
         <a class="page-link" href="#" aria-label="Previous">
@@ -181,10 +167,29 @@ if($total_rows===0){ ?>
         </a>
       </li>
     </ul>
-  </nav>
-<?php }
-?>
+  </nav> -->
 
+<!-- <?php
+// echo $sql;
+  while($row = mysqli_fetch_array($result)){
+    $clist['id'] = htmlspecialchars($row['id']);
+    $clist['num'] = htmlspecialchars($row['num']);
+    $clist['div1'] = htmlspecialchars($row['div1']);
+    $clist['div2'] = htmlspecialchars($row['div2']);
+    $clist['contact1'] = htmlspecialchars($row['contact1']);
+    $clist['contact2'] = htmlspecialchars($row['contact2']);
+    $clist['contact3'] = htmlspecialchars($row['contact3']);
+    $clist['email'] = htmlspecialchars($row['email']);
+    $clist['etc'] = htmlspecialchars($row['etc']);
+    $clist['name'] = htmlspecialchars($row['name']);
+    $clist['companyname'] = htmlspecialchars($row['companyname']);
+    $clist['cNumber1'] = htmlspecialchars($row['cNumber1']);
+    $clist['cNumber2'] = htmlspecialchars($row['cNumber2']);
+    $clist['cNumber3'] = htmlspecialchars($row['cNumber3']);
+
+
+  }
+  ?> -->
 
 
 <script>

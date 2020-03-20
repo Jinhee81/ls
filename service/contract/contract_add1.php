@@ -185,7 +185,7 @@ foreach ($groupBuildingArray as $key => $value) {
                 </div>
                 <div class="form-group col-md-2">
                     <label>최초 계약일자</label>
-                    <input type="text" id="contractDate" class="form-control dateType" name="contractDate" placeholder="">
+                    <input type="text" id="contractDate" class="form-control dateType yyyymmdd" name="contractDate" placeholder="">
                 </div>
               </div>
         </div>
@@ -220,7 +220,7 @@ foreach ($groupBuildingArray as $key => $value) {
               </div>
               <div class="form-group col-md-2 mb-0">
                     <label><span id='star' style='color:#F7BE81;'>* </span>시작일자</label>
-                    <input type="text" id="startDate" class="form-control dateType" name="startDate" value="" placeholder="" required>
+                    <input type="text" id="startDate" class="form-control dateType yyyymmdd" name="startDate" value="" placeholder="" required>
               </div>
               <div class="form-group col-md-2 mb-0">
                     <label>종료일자</label>
@@ -249,7 +249,7 @@ foreach ($groupBuildingArray as $key => $value) {
                 </div>
                 <div class="form-group col-md-3 mb-0">
                     <label>입금일자</label>
-                    <input type="text" class="form-control dateType" name="depositInDate" id="depositInDate" value="">
+                    <input type="text" class="form-control dateType yyyymmdd" name="depositInDate" id="depositInDate" value="">
                 </div>
             </div>
         </div>
@@ -286,7 +286,25 @@ $(document).ready(function(){
   })
 
   $("input:text[numberOnly]").number(true);
-})
+
+  $('.yyyymmdd').keydown(function (event) {
+   var key = event.charCode || event.keyCode || 0;
+   $text = $(this);
+   if (key !== 8 && key !== 9) {
+       if ($text.val().length === 4) {
+           $text.val($text.val() + '-');
+       }
+       if ($text.val().length === 7) {
+           $text.val($text.val() + '-');
+       }
+   }
+
+   return (key == 8 || key == 9 || key == 46 || (key >= 48 && key <= 57) || (key >= 96 && key <= 105));
+  // Key 8번 백스페이스, Key 9번 탭, Key 46번 Delete 부터 0 ~ 9까지, Key 96 ~ 105까지 넘버패트
+  // 한마디로 JQuery 0 ~~~ 9 숫자 백스페이스, 탭, Delete 키 넘버패드외에는 입력못함
+  })
+
+})//document.ready function closing}
 
 $('#contractDate').on('change', function(){
   var readyStartDate = $('#contractDate').val();

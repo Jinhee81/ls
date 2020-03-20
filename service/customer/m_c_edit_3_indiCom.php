@@ -42,7 +42,7 @@
     <input type='text' name='div4' class='form-control' maxlength='9' value='<?=$row['div4']?>'>
   </div>
   <div class='form-group col-md-4'>
-    <label>업종</label>
+    <label>종목</label>
     <input type='text' name='div5' class='form-control' maxlength='14' value='<?=$row['div5']?>'>
   </div>
 </div>

@@ -18,18 +18,14 @@ $sql = "select
           customer.id, div1, qDate, div2, name, contact1, contact2, contact3,
           gender, customer.email, div3, div4, div5, companyname,
           cNumber1, cNumber2, cNumber3,
-          zipcode, add1, add2, add3, etc,
-          customer.created, customer.updated, createPerson,
-          (select damdangga_name from user where id=createPerson),
-          updatePerson,
-          (select damdangga_name from user where id=updatePerson)
+          zipcode, add1, add2, add3, etc,created, updated
       from customer
-        left join user
-      on customer.createPerson = user.id
-        where customer.id = {$filtered_id}";
+      where customer.id = {$filtered_id}";
+
+echo $sql;
 $result = mysqli_query($conn, $sql);
 $row = mysqli_fetch_array($result);
-// echo $sql;
+
 // print_r($row);
 $clist['id'] = htmlspecialchars($row['id']);
 $clist['num'] = htmlspecialchars($row['num']);

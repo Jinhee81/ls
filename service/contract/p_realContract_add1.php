@@ -17,7 +17,7 @@ $sql = "
     customer_id, building_id, group_in_building_id, r_g_in_building_id,
     payOrder, monthCount, startDate, endDate, contractDate,
     mAmount, mvAmount, mtAmount,
-    user_id, createTime, endDate2)
+    user_id, createTime, count2, endDate2)
   VALUES (
     {$customer_id},
     {$_POST['building_id']},
@@ -33,6 +33,7 @@ $sql = "
     '{$_POST['mtAmount']}',
     {$_SESSION['id']},
     now(),
+    {$_POST['monthCount']},
     '{$_POST['endDate']}'
   )
 ";

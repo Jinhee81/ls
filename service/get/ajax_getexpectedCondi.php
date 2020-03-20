@@ -53,7 +53,15 @@ $sql = "
       customer.contact2,
       customer.contact3,
       customer.div3,
+      customer.div4,
+      customer.div5,
       customer.companyname,
+      customer.cNumber1,
+      customer.cNumber2,
+      customer.cNumber3,
+      customer.add1,
+      customer.add2,
+      customer.add3,
       customer.email,
       idpaySchedule2,
       paySchedule2.monthCount,
@@ -67,7 +75,6 @@ $sql = "
       paySchedule2.taxSelect,
       paySchedule2.taxDate
   from
-      (select @num:=0)a,
       paySchedule2
   left join realContract
       on paySchedule2.realContract_id = realContract.id
@@ -115,6 +122,10 @@ for ($i=0; $i < count($allRows); $i++) {
   }
 
   $allRows[$i]['contact'] = $allRows[$i]['contact1'].'-'.$allRows[$i]['contact2'].'-'.$allRows[$i]['contact3'];
+
+  $allRows[$i]['companynumber'] = $allRows[$i]['cNumber1'].'-'.$allRows[$i]['cNumber2'].'-'.$allRows[$i]['cNumber3'];
+
+  $allRows[$i]['address'] = $allRows[$i]['add1'].'-'.$allRows[$i]['add2'].'-'.$allRows[$i]['add3'];
 
 } //for문closing
 

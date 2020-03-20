@@ -3,7 +3,7 @@ $sql = "select * from building where user_id = {$_SESSION['id']}";
 // echo $sql;
 $result = mysqli_query($conn, $sql);
 while($row = mysqli_fetch_array($result)){
-  $buildingArray[$row['id']] = [$row['bName'],$row['pay']];
+  $buildingArray[$row['id']] = [$row['bName'],$row['pay'],$row['popbill'],$row['companynumber']];
 }
 
 foreach ($buildingArray as $key => $value) { //key는 건물아이디, value는 건물이름
@@ -35,7 +35,7 @@ foreach ($groupBuildingArray as $key => $value) {
    var buildingArray = <?php echo json_encode($buildingArray); ?>;
    var groupBuildingArray = <?php echo json_encode($groupBuildingArray); ?>;
    var roomArray = <?php echo json_encode($roomArray); ?>;
-   // console.log(buildingArray);
-   // console.log(groupBuildingArray);
-   // console.log(roomArray);
+   console.log(buildingArray);
+   console.log(groupBuildingArray);
+   console.log(roomArray);
  </script>

@@ -79,10 +79,10 @@ while($row_sms = mysqli_fetch_array($result_sms)){
             </select><!--codi2-->
           </div>
           <div class="col-sm-1 pl-0 pr-0">
-            <input type="text" name="fromDate" value="" class="form-control form-control-sm text-center dateType" id=""><!--fromDate-->
+            <input type="text" name="fromDate" value="" class="form-control form-control-sm text-center dateType"><!--fromDate-->
           </div>
           <div class="col-sm-1 pl-0 pr-0">
-            <input type="text" name="toDate" value="" class="form-control form-control-sm text-center dateType" id=""><!--toDate-->
+            <input type="text" name="toDate" value="" class="form-control form-control-sm text-center dateType"><!--toDate-->
           </div>
           <div class="col-sm-1 pl-0 pr-0">
             <select class="form-control form-control-sm selectCall" id="building" name="building">
@@ -162,12 +162,12 @@ while($row_sms = mysqli_fetch_array($result_sms)){
         <div class="col">
           <div class="row justify-content-end mr-0">
             <div class="col col-md-3 pl-0 pr-1">
-              <input type="text" name="taxDate" value="" class="form-control form-control-sm dateType text-center">
+              <input type="text" name="taxDate" value="" class="form-control form-control-sm dateType text-center" placeholder="발행일자">
             </div>
             <div class="col col-md-3 pl-0 pr-1">
               <select class="form-control form-control-sm" name="taxSelect">
                 <option value="세금계산서">세금계산서</option>
-                <option value="현금영수증">현금영수증</option>
+                <!-- <option value="현금영수증">현금영수증</option> -->
               </select>
             </div>
             <div class="col col-md-2 pl-0 pr-1">
@@ -351,40 +351,83 @@ $('input[name=cText]').on('keyup', function(){
 })
 //---------조회버튼클릭평션 end and 증빙일자 펑션 시작--------------//
 
-var taxDate = $('input[name="taxDate"]').val();
-var taxSelect = $('select[name="taxSelect"]').val();
-
-$('input[name="taxDate"]').on('propertychange change keyup paste input', function(){
-  taxDate = $('input[name="taxDate"]').val();
-  console.log(taxDate);
-})
-
-$('select[name="taxSelect"]').on('propertychange change keyup', function(){
-  taxSelect = $('select[name="taxSelect"]').val();
-  console.log(taxSelect);
-})
+// var taxDate = $('input[name="taxDate"]').val();
+// var taxSelect = $('select[name="taxSelect"]').val();
+//
+// $('input[name="taxDate"]').on('propertychange change keyup paste input', function(){
+//   taxDate = $('input[name="taxDate"]').val();
+//   console.log(taxDate);
+// })
+//
+// $('select[name="taxSelect"]').on('propertychange change keyup', function(){
+//   taxSelect = $('select[name="taxSelect"]').val();
+//   console.log(taxSelect);
+// })
 
 $('#btnTaxDateInput').on('click', function(){
 
+  var taxDate = $('input[name="taxDate"]').val();
+  var taxSelect = $('select[name="taxSelect"]').val(); //세금계산서인지 현금영수증인지 구분
+  var taxDiv = 'accept'; //입금예정리스트여서 청구라는 뜻의 charge 사용, 입금완료리스트에서는 영수라는 뜻의 accept 사용 예정
+
+  var buildingId = $('#building :selected').val();
+  var buildingText = $('#building :selected').text();
+  var buildingPopbill = buildingArray[buildingId][2];
+  var buildingCompanynumber = buildingArray[buildingId][3];
+
+  // console.log(buildingId, buildingPopbill, buildingCompanynumber);
+
+  if(taxArray.length===0){
+    alert('세금계산서 발행할 것들을 먼저 체크박스로 선택해주세요.');
+    return false;
+  }
+
+
+  if(buildingPopbill === 'popbillno'){
+    alert(buildingText+' 물건은 팝빌 전자세금계산서 설정이 되어있지 않습니다. 전자세금계산서 설정을 확인해주세요 (환경설정->물건명클릭)');
+    return false;
+  }
+
+  if(buildingCompanynumber.length === 0){
+    alert(buildingText+'물건의 사업자번호등록이 되어있지 않습니다. 사업자번호가 등록되어야 합니다 (환경설정->물건명클릭)');
+    return false;
+  }
+
+  if(buildingCompanynumber.length != 12){
+    alert(buildingText+'물건의 사업자번호 형식이 올바르지 않습니다. 사업자번호를 확인하세요. (환경설정->물건명클릭)');
+    return false;
+  }
+
   if(taxDate.length===0){
-    alert('날짜가 입력되어야합니다.');
+    alert('세금계산서 발행일자가 입력되어야합니다.');
     return false;
   }
 
   if(taxArray.length >= 1) {
     for (var i in taxArray) {
-      if(taxArray[i][3]==='카드'){
-        alert("입금구분이 '카드'이면 세금계산서, 현금영수증 발행이 불가합니다.");
+      if(taxArray[i][14]['입금구분']==='카드'){
+        alert("입금구분이 '카드'이면 세금계산서 발행이 불가합니다.");
         return false;
       }
-    }
-  }
 
-  if(taxArray.length >= 1) {
-    for (var i in taxArray) {
-      if(taxArray[i][2]==='0'){
-        alert("세액이 '0'원이면 세금계산서, 현금영수증 발행이 불가합니다.");
-        return false;
+      if(taxArray[i][11]['세액']==='0'){
+            alert("세액이 '0'원이면 세금계산서 발행이 불가합니다.");
+            return false;
+      }
+
+      if(taxArray[i][15]['증빙일자']){
+            alert("이미 증빙일자가 존재하므로 세금계산서 발행이 불가합니다.");
+            return false;
+      }
+
+      if(taxArray[i][2]['사업자번호'].length != 12){
+            alert(taxArray[i][4]['성명']+"의 사업자번호가 비어있어 세금계산서 발행이 불가합니다.");
+            return false;
+      }
+
+      if(!taxArray[i][3]['사업자명']){
+            alert(taxArray[i][4]['성명']+"의 사업자명이 비어있어 세금계산서 발행이 불가합니다.");
+            return false;
       }
     }
   }
@@ -393,13 +436,18 @@ $('#btnTaxDateInput').on('click', function(){
   var aa = 'taxSave';
   var bb = 'p_payScheduleTaxInput.php';
 
-  goCategoryPage(aa, bb, taxArrayTo, taxDate, taxSelect);
+  goCategoryPage(aa, bb, buildingId, buildingText, buildingPopbill, buildingCompanynumber, taxArrayTo, taxDate, taxSelect, taxDiv);
 
-  function goCategoryPage(a,b,c,d,e){
+  function goCategoryPage(a,b,c,d,e,f,g,h,i,j){
       var frm = formCreate(a, 'post', b,'');
-      frm = formInput(frm, 'taxArray', c);
-      frm = formInput(frm, 'taxDate', d);
-      frm = formInput(frm, 'taxSelect', e);
+      frm = formInput(frm, 'buildingId', c);
+      frm = formInput(frm, 'buildingText', d);
+      frm = formInput(frm, 'buildingPopbill', e);
+      frm = formInput(frm, 'buildingCompanynumber', f);
+      frm = formInput(frm, 'taxArray', g);
+      frm = formInput(frm, 'taxDate', h);
+      frm = formInput(frm, 'taxSelect', i);
+      frm = formInput(frm, 'taxDiv', j);
       formSubmit(frm);
   }
 

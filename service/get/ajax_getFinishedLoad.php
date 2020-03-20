@@ -5,47 +5,26 @@ include "ajax_getFinishedCondi.php";
 
 ?>
 
-<?php if(count($allRows)===0){?>
-  <table class="table table-hover text-center mt-2 table-sm" id="checkboxTestTbl">
-    <thead>
-      <tr class="table-info">
-        <th scope="col"><input type="checkbox"></th>
-        <th scope="col">순번</th>
-        <!-- <th scope="col" class="mobile">청구번호</th> -->
-        <th scope="col">입금일</th>
-        <th scope="col" class="mobile">공급가액</th>
-        <!-- <th scope="col">청구번호</th> -->
-        <th scope="col" class="mobile">세액</th>
-        <th scope="col" class="">합계</th>
-        <th scope="col" class="mobile">입금구분</th>
-        <th scope="col">세입자</th>
-        <th scope="col" class="mobile">계약(상품)</th>
-        <th scope="col" class="mobile">증빙</th>
-      </tr>
-    </thead>
-  <?php
-    echo "<tr><td colspan='10'>조회값이 없습니다.</td></tr>";
-  } else {?>
-  <table class="table table-hover text-center mt-2 table-sm" id="checkboxTestTbl">
-    <thead>
-      <tr class="table-info">
-        <th scope="col"><input type="checkbox"></th>
-        <th scope="col">순번</th>
-        <!-- <th scope="col" class="mobile">청구번호</th> -->
-        <th scope="col">입금일</th>
-        <th scope="col" class="mobile">공급가액</th>
-        <!-- <th scope="col">청구번호</th> -->
-        <th scope="col" class="mobile">세액</th>
-        <th scope="col" class="">합계</th>
-        <th scope="col" class="mobile">입금구분</th>
-        <th scope="col">세입자</th>
-        <th scope="col" class="mobile">계약(상품)</th>
-        <th scope="col" class="mobile">증빙</th>
-      </tr>
-    </thead>
-    <tbody>
-
-    <?php
+<table class="table table-hover text-center mt-2 table-sm" id="checkboxTestTbl">
+  <thead>
+    <tr class="table-info">
+      <th scope="col"><input type="checkbox"></th>
+      <th scope="col">순번</th>
+      <!-- <th scope="col" class="mobile">청구번호</th> -->
+      <th scope="col">입금일</th>
+      <th scope="col" class="mobile">공급가액</th>
+      <!-- <th scope="col">청구번호</th> -->
+      <th scope="col" class="mobile">세액</th>
+      <th scope="col" class="">합계</th>
+      <th scope="col" class="mobile">입금구분</th>
+      <th scope="col">세입자</th>
+      <th scope="col" class="mobile">계약(상품)</th>
+      <th scope="col" class="mobile">증빙</th>
+    </tr>
+  </thead>
+<?php if(count($allRows)===0){
+  echo "<tr><td colspan='10'>조회값이 없습니다.</td></tr>";
+  } else {
     $j = count($allRows);
     for ($i=0; $i < count($allRows); $i++) {
       ?>
@@ -53,7 +32,14 @@ include "ajax_getFinishedCondi.php";
         <td><input type="checkbox" value="<?=$allRows[$i]['idpaySchedule2']?>"></td>
         <td><?=$j?></td><!--순번-->
         <!--<td class="mobile"><?=$allRows[$i]['idpaySchedule2']?></td>--><!--청구번호-->
-        <td><p style="color:#F7819F;" class="mb-0"><?=$allRows[$i]['executiveDate']?></p></td><!--입금일-->
+        <td>
+          <p style="color:#F7819F;" class="mb-0">
+            <?=$allRows[$i]['executiveDate']?>
+          </p>
+          <input type="hidden" name="pStartDate" value="<?=$allRows[$i]['pStartDate']?>">
+          <input type="hidden" name="pEndDate" value="<?=$allRows[$i]['pEndDate']?>">
+          <input type="hidden" name="monthCount" value="<?=$allRows[$i]['monthCount']?>">
+        </td><!--입금일-->
         <td class="mobile">
           <label class="numberComma mb-0">
             <?=$allRows[$i]['pAmount']?>
@@ -83,10 +69,16 @@ include "ajax_getFinishedCondi.php";
           <a href="/service/customer/m_c_edit.php?id=<?=$allRows[$i]['customer_id']?>" data-toggle="tooltip" data-placement="top" title="<?=$allRows[$i]['cname'].', '.$allRows[$i]['contact']?>">
             <?=mb_substr($allRows[$i]['cname'].', '.$allRows[$i]['contact'],0,5)?>
           </a>
-          <input type="hidden" name="name" value="<?=$allRows[$i]['cname']?>">
+          <input type="hidden" name="cname" value="<?=$allRows[$i]['cname']?>">
           <input type="hidden" name="contact" value="<?=$allRows[$i]['contact']?>">
           <input type="hidden" name="email" value="<?=$allRows[$i]['email']?>">
           <input type="hidden" name="customer_id" value="<?=$allRows[$i]['customer_id']?>">
+          <input type="hidden" name="name" value="<?=$allRows[$i]['name']?>">
+          <input type="hidden" name="companynumber" value="<?=$allRows[$i]['companynumber']?>">
+          <input type="hidden" name="companyname" value="<?=$allRows[$i]['companyname']?>">
+          <input type="hidden" name="address" value="<?=$allRows[$i]['address']?>">
+          <input type="hidden" name="div4" value="<?=$allRows[$i]['div4']?>">
+          <input type="hidden" name="div5" value="<?=$allRows[$i]['div5']?>">
         </td><!--세입자-->
         <td class="mobile">
           <?php if($allRows[$i]['roomdiv']==='방계약'){
@@ -302,7 +294,7 @@ $(":checkbox:first", table).click(function(){
   } else {
     smsReadyArray = [];
   }
-  console.log(smsReadyArray);
+  // console.log(smsReadyArray);
 })
 
 $(":checkbox:not(:first)",table).click(function(){
@@ -358,7 +350,7 @@ var smsReadyArrayEle = [];
       // console.log(smsReadyArray);
     }
 
-console.log(smsReadyArray);
+// console.log(smsReadyArray);
 })
 
 // console.log(smsReadyArray.length);
@@ -374,18 +366,44 @@ $(":checkbox:first", table).click(function(){
   if($(":checkbox:first", table).is(":checked")){
     for (var i = 1; i <= allCnt; i++) {
       var taxArrayEle = [];
-      var colOrder = Number(table.find("tr:eq("+i+")").find("td:eq(1)").text());
-      var colid = Number(table.find("tr:eq("+i+")").find("td:eq(0)").children('input').val());
-      var coltax = table.find("tr:eq("+i+")").find("td:eq(4)").children('label').text();
-      var colpay = table.find("tr:eq("+i+")").find("td:eq(6)").text().trim();
-      var coltaxdate = table.find("tr:eq("+i+")").find("td:eq(9)").text().trim();
-      taxArrayEle.push(colOrder, colid, coltax, colpay, coltaxdate)
+      var colOrder = Number(table.find("tr:eq("+i+")").find("td:eq(1)").text());//순번
+      var colid = Number(table.find("tr:eq("+i+")").find("td:eq(0)").children('input').val());//청구번호
+
+      Number(table.find("tr:eq("+i+")").find("td:eq(7)").children('input:eq(3)').val());//세입자번호
+      var companynumber = table.find("tr:eq("+i+")").find("td:eq(7)").children('input:eq(5)').val();//사업자번호
+      var companyname = table.find("tr:eq("+i+")").find("td:eq(7)").children('input:eq(6)').val();//사업자명
+      var name = table.find("tr:eq("+i+")").find("td:eq(7)").children('input:eq(4)').val();//성명
+      var address = table.find("tr:eq("+i+")").find("td:eq(7)").children('input:eq(7)').val();//주소
+      var div4 = table.find("tr:eq("+i+")").find("td:eq(7)").children('input:eq(8)').val();//업태
+      var div5 = table.find("tr:eq("+i+")").find("td:eq(7)").children('input:eq(9)').val();//종목
+      var contact = table.find("tr:eq("+i+")").find("td:eq(7)").children('input:eq(1)').val();//연락처
+      var email = table.find("tr:eq("+i+")").find("td:eq(7)").children('input:eq(2)').val();//이메일
+      var supplyamount = table.find("tr:eq("+i+")").find("td:eq(3)").children().text();//공급가액
+      var vatamount = table.find("tr:eq("+i+")").find("td:eq(4)").children().text();//세액
+      var totalamount = table.find("tr:eq("+i+")").find("td:eq(5)").children().children().text();//합계
+      var startdate = table.find("tr:eq("+i+")").find("td:eq(2)").children('input:eq(0)').val();//청구시작일
+      var enddate = table.find("tr:eq("+i+")").find("td:eq(2)").children('input:eq(1)').val();//청구종료일
+      var monthcount = table.find("tr:eq("+i+")").find("td:eq(2)").children('input:eq(2)').val();//청구개월
+      var contractDiv = table.find("tr:eq("+i+")").find("td:eq(8)").children('input:eq(0)').val();//계약구분,방계약인지기타계약인지
+
+      var comment;//비고
+
+      if(contractDiv==='방계약'){
+        comment = "기간 ("+startdate+"~"+enddate+", "+monthcount+"개월 이용료)";//비고
+      }
+
+      var acceptdiv = table.find("tr:eq("+i+")").find("td:eq(6)").text().trim();//입금구분
+      var evidencedate = table.find("tr:eq("+i+")").find("td:eq(9)").children('label').text();//증빙일자
+
+      taxArrayEle.push({'순번':colOrder}, {'청구번호':colid}, {'사업자번호':companynumber}, {'사업자명':companyname}, {'성명':name}, {'주소':address}, {'업태':div4}, {'종목':div5}, {'연락처':contact}, {'이메일':email}, {'공급가액':supplyamount}, {'세액':vatamount}, {'합계':totalamount}, {'비고':comment}, {'입금구분':acceptdiv}, {'증빙일자':evidencedate});
+
       taxArray.push(taxArrayEle);
+
     }
   } else {
     taxArray = [];
   }
-  // console.log(taxArray);
+  console.log(taxArray);
 })
 
 $(":checkbox:not(:first)",table).click(function(){
@@ -394,21 +412,71 @@ var taxArrayEle = [];
     if($(this).is(":checked")){
       var currow = $(this).closest('tr');
       var colOrder = Number(currow.find('td:eq(1)').text());
-      var colid = Number(currow.find("td:eq(0)").children('input').val());
-      var coltax = currow.find("td:eq(4)").children('label').text();
-      var colpay = currow.find("td:eq(6)").text().trim();
-      var coltaxdate = currow.find("td:eq(9)").text().trim();
-      taxArrayEle.push(colOrder, colid, coltax, colpay, coltaxdate);
+      var colid = Number(currow.find("td:eq(0)").children('input').val());//청구번호
+
+      Number(currow.find("td:eq(7)").children('input:eq(3)').val());//세입자번호
+      var companynumber = currow.find("td:eq(7)").children('input:eq(5)').val();//사업자번호
+      var companyname = currow.find("td:eq(7)").children('input:eq(6)').val();//사업자명
+      var name = currow.find("td:eq(7)").children('input:eq(4)').val();//성명
+      var address = currow.find("td:eq(7)").children('input:eq(7)').val();//주소
+      var div4 = currow.find("td:eq(7)").children('input:eq(8)').val();//업태
+      var div5 = currow.find("td:eq(7)").children('input:eq(9)').val();//종목
+      var contact = currow.find("td:eq(7)").children('input:eq(1)').val();//연락처
+      var email = currow.find("td:eq(7)").children('input:eq(2)').val();//이메일
+      var supplyamount = currow.find("td:eq(3)").children().text();//공급가액
+      var vatamount = currow.find("td:eq(4)").children().text();//세액
+      var totalamount = currow.find("td:eq(5)").children().children().text();//합계
+      var startdate = currow.find("td:eq(2)").children('input:eq(0)').val();//청구시작일
+      var enddate = currow.find("td:eq(2)").children('input:eq(1)').val();//청구종료일
+      var monthcount = currow.find("td:eq(2)").children('input:eq(2)').val();//청구개월
+      var contractDiv = currow.find("td:eq(8)").children('input:eq(0)').val();//계약구분,방계약인지기타계약인지
+
+      var comment;//비고
+
+      if(contractDiv==='방계약'){
+        comment = "기간 ("+startdate+"~"+enddate+", "+monthcount+"개월 이용료)";//비고
+      }
+
+      var acceptdiv = currow.find("td:eq(6)").text().trim();//입금구분
+      var evidencedate = currow.find("td:eq(9)").children('label').text();//증빙일자
+
+      taxArrayEle.push({'순번':colOrder}, {'청구번호':colid}, {'사업자번호':companynumber}, {'사업자명':companyname}, {'성명':name}, {'주소':address}, {'업태':div4}, {'종목':div5}, {'연락처':contact}, {'이메일':email}, {'공급가액':supplyamount}, {'세액':vatamount}, {'합계':totalamount}, {'비고':comment}, {'입금구분':acceptdiv}, {'증빙일자':evidencedate});
+
       taxArray.push(taxArrayEle);
+
     } else {
       var dropReady = [];
       var currow = $(this).closest('tr');
       var colOrder = Number(currow.find('td:eq(1)').text());
       var colid = Number(currow.find("td:eq(0)").children('input').val());
-      var coltax = currow.find("td:eq(4)").children('label').text();
-      var colpay = currow.find("td:eq(6)").text().trim();
-      var coltaxdate = currow.find("td:eq(9)").text().trim();
-      dropReady.push(colOrder, colid, coltax, colpay, coltaxdate);
+
+      Number(currow.find("td:eq(7)").children('input:eq(3)').val());//세입자번호
+      var companynumber = currow.find("td:eq(7)").children('input:eq(5)').val();//사업자번호
+      var companyname = currow.find("td:eq(7)").children('input:eq(6)').val();//사업자명
+      var name = currow.find("td:eq(7)").children('input:eq(4)').val();//성명
+      var address = currow.find("td:eq(7)").children('input:eq(7)').val();//주소
+      var div4 = currow.find("td:eq(7)").children('input:eq(8)').val();//업태
+      var div5 = currow.find("td:eq(7)").children('input:eq(9)').val();//종목
+      var contact = currow.find("td:eq(7)").children('input:eq(1)').val();//연락처
+      var email = currow.find("td:eq(7)").children('input:eq(2)').val();//이메일
+      var supplyamount = currow.find("td:eq(3)").children().text();//공급가액
+      var vatamount = currow.find("td:eq(4)").children().text();//세액
+      var totalamount = currow.find("td:eq(5)").children().children().text();//합계
+      var startdate = currow.find("td:eq(2)").children('input:eq(0)').val();//청구시작일
+      var enddate = currow.find("td:eq(2)").children('input:eq(1)').val();//청구종료일
+      var monthcount = currow.find("td:eq(2)").children('input:eq(2)').val();//청구개월
+      var contractDiv = currow.find("td:eq(8)").children('input:eq(0)').val();//계약구분,방계약인지기타계약인지
+
+      var comment;//비고
+
+      if(contractDiv==='방계약'){
+        comment = "기간 ("+startdate+"~"+enddate+", "+monthcount+"개월 이용료)";//비고
+      }
+
+      var acceptdiv = currow.find("td:eq(6)").text().trim();//입금구분
+      var evidencedate = currow.find("td:eq(9)").children('label').text();//증빙일자
+
+      dropReady.push({'순번':colOrder}, {'청구번호':colid}, {'사업자번호':companynumber}, {'사업자명':companyname}, {'성명':name}, {'주소':address}, {'업태':div4}, {'종목':div5}, {'연락처':contact}, {'이메일':email}, {'공급가액':supplyamount}, {'세액':vatamount}, {'합계':totalamount}, {'비고':comment}, {'입금구분':acceptdiv}, {'증빙일자':evidencedate});
 
       for (var i = 0; i < taxArray.length; i++) {
         var join1 = taxArray[i].join(',');
@@ -422,7 +490,7 @@ var taxArrayEle = [];
       taxArray.splice(index, 1);
 
     }
-// console.log(taxArray);
+console.log(taxArray);
 })
 
 </script>

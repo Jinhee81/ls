@@ -25,8 +25,7 @@ $result = mysqli_query($conn, $sql);
 if($result)
 {
   $sql5 = "UPDATE realContract SET
-             updateTime = now(),
-             updatePerson = {$_SESSION['id']}
+             updateTime = now()
            WHERE
              id = {$filtered_id}
           ";
@@ -34,7 +33,9 @@ if($result)
   $result5 = mysqli_query($conn, $sql5);
 
   if(!$result5){
-    echo "<script>alert('입금처리 과정에 문제가 생겼습니다. 관리자에게 문의하세요(2).');
+    echo "<script>
+            alert('입금처리 과정에 문제가 생겼습니다. 관리자에게 문의하세요(2).');
+            history.back();
           </script>";
     // echo "<script>alert('저장과정에 문제가 생겼습니다. 관리자에게 문의하세요(2).');
     //       </script>";
@@ -44,12 +45,14 @@ if($result)
 
   echo "<script>
           alert('입금처리하였습니다.');
-          location.href = 'getexpected1.php';
+          location.href = 'getexpected.php';
         </script>";
 }
 else
 {
-  echo "<script>alert('입금처리 과정에 문제가 생겼습니다. 관리자에게 문의하세요(1).');
+  echo "<script>
+          alert('입금처리 과정에 문제가 생겼습니다. 관리자에게 문의하세요(1).');
+          history.back();
         </script>";
   error_log(mysqli_error($conn));
   exit();

@@ -21,7 +21,7 @@
         <a class="nav-link" href="/service/contractetc/contractetc.php">기타계약</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="/service/get/getexpected1.php">입금예정</a>
+        <a class="nav-link" href="/service/get/getexpected.php">입금예정</a>
       </li>
       <li class="nav-item">
         <a class="nav-link" href="/service/get/getfinished.php">입금완료</a>

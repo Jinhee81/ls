@@ -222,7 +222,7 @@ $(document).ready(function(){
     })
 
     $.ajax({
-      url: 'ajax_getexpectedLoad1.php',
+      url: 'ajax_getexpectedLoad.php',
       method: 'post',
       data: $('form').serialize(),
       success: function(data){
@@ -244,7 +244,7 @@ $(document).ready(function(){
 
 $('select[name=periodDiv]').on('change', function(){
     $.ajax({
-      url: 'ajax_getexpectedLoad1.php',
+      url: 'ajax_getexpectedLoad.php',
       method: 'post',
       data: $('form').serialize(),
       success: function(data){
@@ -255,7 +255,7 @@ $('select[name=periodDiv]').on('change', function(){
 
 $('input[name=fromDate]').on('change', function(){
     $.ajax({
-      url: 'ajax_getexpectedLoad1.php',
+      url: 'ajax_getexpectedLoad.php',
       method: 'post',
       data: $('form').serialize(),
       success: function(data){
@@ -266,7 +266,7 @@ $('input[name=fromDate]').on('change', function(){
 
 $('input[name=toDate]').on('change', function(){
     $.ajax({
-      url: 'ajax_getexpectedLoad1.php',
+      url: 'ajax_getexpectedLoad.php',
       method: 'post',
       data: $('form').serialize(),
       success: function(data){
@@ -277,7 +277,7 @@ $('input[name=toDate]').on('change', function(){
 
 $('select[name=building]').on('change', function(){
     $.ajax({
-      url: 'ajax_getexpectedLoad1.php',
+      url: 'ajax_getexpectedLoad.php',
       method: 'post',
       data: $('form').serialize(),
       success: function(data){
@@ -288,7 +288,7 @@ $('select[name=building]').on('change', function(){
 
 $('select[name=group]').on('change', function(){
     $.ajax({
-      url: 'ajax_getexpectedLoad1.php',
+      url: 'ajax_getexpectedLoad.php',
       method: 'post',
       data: $('form').serialize(),
       success: function(data){
@@ -299,7 +299,7 @@ $('select[name=group]').on('change', function(){
 
 $('select[name=etcCondi]').on('change', function(){
     $.ajax({
-      url: 'ajax_getexpectedLoad1.php',
+      url: 'ajax_getexpectedLoad.php',
       method: 'post',
       data: $('form').serialize(),
       success: function(data){
@@ -310,7 +310,7 @@ $('select[name=etcCondi]').on('change', function(){
 
 $('input[name=cText]').on('keyup', function(){
     $.ajax({
-      url: 'ajax_getexpectedLoad1.php',
+      url: 'ajax_getexpectedLoad.php',
       method: 'post',
       data: $('form').serialize(),
       success: function(data){
@@ -322,18 +322,6 @@ $('input[name=cText]').on('keyup', function(){
 
 //---------조회버튼클릭평션 end and 증빙일자 펑션 시작--------------//
 
-
-
-
-// $('input[name="taxDate"]').on('propertychange change keyup paste input', function(){
-//   taxDate = $('input[name="taxDate"]').val();
-//   console.log(taxDate);
-// })
-//
-// $('select[name="taxSelect"]').on('propertychange change keyup', function(){
-//   taxSelect = $('select[name="taxSelect"]').val();
-//   console.log(taxSelect);
-// })
 
 $('#btnTaxDateInput').on('click', function(){
   var taxDate = $('input[name="taxDate"]').val();
@@ -359,7 +347,7 @@ $('#btnTaxDateInput').on('click', function(){
   }
 
   if(buildingCompanynumber.length === 0){
-    alert(buildingText+'물건의 사업자번호등록이 되어있지 않습니다. 사업자등록이 되어야 합니다 (환경설정->물건명클릭)');
+    alert(buildingText+'물건의 사업자번호등록이 되어있지 않습니다. 사업자번호가 등록되어야 합니다 (환경설정->물건명클릭)');
     return false;
   }
 
@@ -369,7 +357,7 @@ $('#btnTaxDateInput').on('click', function(){
   }
 
   if(taxDate.length===0){
-    alert('날짜가 입력되어야합니다.');
+    alert('세금계산서 발행일자가 입력되어야합니다.');
     return false;
   }
 

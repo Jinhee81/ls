@@ -112,8 +112,8 @@ include "ajax_getexpectedCondi.php";
         <td>
           <a href="/service/contract/contractEdit3.php?id=<?=$allRows[$i]['realContract_id']?>" style="color:
         #04B486;">
-            <label class="numberComma mb-0">
-              <?=$allRows[$i]['ptAmount']?>
+            <label class="numberComma mb-0" data-toggle="tooltip" data-placement="top" title="계약보기">
+              <u><?=$allRows[$i]['ptAmount']?></u>
             </label>
           </a>
         </td><!--합계-->

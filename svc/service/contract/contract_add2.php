@@ -461,4 +461,4 @@ $('#saveBtn').on('click', function(){
 
 </script>
 
-<?php include $_SERVER['DOCUMENT_ROOT']."/admin/view/service_footer.php";?>
+<?php include $_SERVER['DOCUMENT_ROOT']."/svc/view/service_footer.php";?>

@@ -29,8 +29,8 @@ $row = mysqli_fetch_array($result);
     <p class="lead"><?=$_SESSION['email']?>님은 현재 <?=$row['gradename']?>등급이며 <?=number_format($row['coin'])?>코인 보유중입니다.</p>
     <a class="btn btn-primary btn-sm" href="usecount.php" role="button">사용량/결제정보조회</a>
     <a class="btn btn-primary btn-sm" href="password_change.php" role="button">비밀번호변경</a>
-    <a class="btn btn-warning btn-sm" href="/main/payment.php" role="button">요금구매</a>
-    <a class="btn btn-warning btn-sm" href="/main/coinpay.php" role="button">코인구매</a>
+    <a class="btn btn-warning btn-sm" href="/svc/main/payment.php" role="button">요금구매</a>
+    <!-- <a class="btn btn-warning btn-sm" href="/svc/main/coinpay.php" role="button">코인구매</a> -->
  </div>
 </section>
 

@@ -43,6 +43,10 @@
 
     <form class="form-inline my-2 my-lg-0">
       <span class="navbar-text">
+        <a href="/svc/main/payment.php">
+        <i class="fas fa-won-sign"></i>&nbsp;요금안내</a>
+      </span>&nbsp;
+      <span class="navbar-text">
         <a href="/svc/service/setting/building.php">
         <i class="fas fa-cog"></i>&nbsp;환경설정</a>
       </span>&nbsp;

@@ -1,0 +1,9 @@
+<?
+$DB_HOST="localhost";
+$DB_USER="charm19";
+$DB_PWD="leaseman@@33";
+$DB_NAME="charm19";
+//$ROOT_DIR="/home/hosting_users/klisscokr/www";
+$ROOT_DIR=$_SERVER[DOCUMENT_ROOT];
+$FILE_DIR=$ROOT_DIR."/upload";
+?>

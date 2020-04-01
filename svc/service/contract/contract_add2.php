@@ -41,9 +41,9 @@ foreach ($groupBuildingArray as $key => $value) {
   }
 }
 
-// echo "building Array : "; print_r($buildingArray);
-// echo "group Array : "; print_r($groupBuildingArray);
-// echo "room Array : "; print_r($roomArray);
+echo "building Array : "; print_r($buildingArray);
+echo "group Array : "; print_r($groupBuildingArray);
+echo "room Array : "; print_r($roomArray);
 ?>
 <script type="text/javascript">
   var buildingArray = <?php echo json_encode($buildingArray); ?>;

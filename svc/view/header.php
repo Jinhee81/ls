@@ -8,9 +8,9 @@
       shrink-to-fit=no">
     <!-- <meta property="og:image" content="https://www.instagram.com/"> -->
     <meta content='website' property='og:type'>
-  	<meta content='http://charm3007.cafe24.com/leaseman/' property='og:url'>
-  	<meta content='유진희' property='og:title'>
-  	<meta content='회원가입웹사이트입니다' property='og:description'>
+  	<meta content='http://www.leaseman.co.kr/' property='og:url'>
+  	<meta content='리즈맨' property='og:title'>
+  	<meta content='임대관리시스템 리즈맨입니다' property='og:description'>
   	<meta content='http://charm3007.cafe24.com/PracticeIntroduce/img/ci.png' property='og:image'>
     <link rel="stylesheet" href="/admin/css/bootstrap.min.css">
     <link href="https://fonts.googleapis.com/css?family=Gothic+A1:700|Nanum+Gothic" rel="stylesheet">

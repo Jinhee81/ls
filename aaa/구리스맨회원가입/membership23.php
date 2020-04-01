@@ -73,8 +73,8 @@ echo G5_POSTCODE_JS;    //다음 주소 js
 									</tr>
 									<tr>
 										<th><span class="span_star">*</span>회원명</th>
-										<td>
-											<input type="text" name="user_name" id="user_name" place	="성명">
+										<td id="user_name_div">
+											<input type="text" name="user_name" placeholder="성명">
 										</td>
 									</tr>
 									<tr>
@@ -94,14 +94,12 @@ echo G5_POSTCODE_JS;    //다음 주소 js
 												<option value="<?=$lease_type_array[$i]?>"><?=$lease_type_array[$i]?></option>
 												<?}?>
 											</select>
-											<div name="lease_etc">
-
-								      </div>
+											<span name='leasespan'></span>
 										</td>
 									</tr>
 									<tr>
 										<th>가입경로</th>
-										<td>
+										<td name="registtd">
 											<select name="regist_channel" id="regist_channel" value="">
 												<?
 													for($i=0;$i<count($sign_up_array);$i++){
@@ -109,9 +107,7 @@ echo G5_POSTCODE_JS;    //다음 주소 js
 												<option value="<?=$sign_up_array[$i]?>"><?=$sign_up_array[$i]?></option>
 												<?}?>
 											</select>
-											<div name="regist_etc">
-
-								      </div>
+											<span name='registspan'></span>
 										</td>
 									</tr>
 								</thead>
@@ -163,6 +159,35 @@ echo G5_POSTCODE_JS;    //다음 주소 js
 		  }
 		});
 	}
+
+	$('#user_div').on('change', function(){
+		var user_div = $(this).val();
+
+		if(user_div==="개인"){
+			$('#user_name_div').html("<input type='text' name='user_name' placeholder='성명'>");
+		} else if(user_div==="사업자"){
+			$('#user_name_div').html("<input type='text' name='user_name' placeholder='사업자명'><input type='text' name='manager_name' placeholder='담당자명'>");
+		}
+	})
+
+	$('#lease_type').on('change', function(){
+		var lease_etc = "<input type='text' name='lease_etc' required>";
+		if($(this).val()==='기타'){
+			$('span[name=leasespan]').append(lease_etc);
+		} else {
+			$('span[name=leasespan]').empty();
+		}
+	})
+
+	$('#regist_channel').on('change', function(){
+		var regist_etc = "<input type='text' name='regist_etc' required>";
+		if($(this).val()==='기타'){
+			$('span[name=registspan]').append(regist_etc);
+		} else {
+			$('span[name=registspan]').empty();
+		}
+	})
+
 	$(function(){
 		$(".submit_btn").click(function(e){
 			e.preventDefault();
@@ -197,51 +222,8 @@ echo G5_POSTCODE_JS;    //다음 주소 js
 				$("#user_name").focus();
 				return false;
 			}
-			if($("#year").val() ==""){
-				alert("생년월일 년도를 입력해 주세요.");
-				$("#year").focus();
-				return false;
-			}
-			if($("#month").val() ==""){
-				alert("생년월일 월을 입력해 주세요.");
-				$("#month").focus();
-				return false;
-			}
-			if($("#day").val() ==""){
-				alert("생년월일 일을 입력해 주세요.");
-				$("#day").focus();
-				return false;
-			}
-			if($("#addr").val() ==""){
-				alert("주소를 입력해 주세요.");
-				$("#addr").focus();
-				return false;
-			}
-			if($("#addr2").val() ==""){
-				alert("상세주소를 입력해 주세요.");
-				$("#addr2").focus();
-				return false;
-			}
-			if($("#mobile1").val() ==""){
-				alert("휴대폰번호를 입력해 주세요.");
-				$("#mobile1").focus();
-				return false;
-			}
-			if($("#mobile2").val() ==""){
-				alert("휴대폰번호를 입력해 주세요.");
-				$("#mobile2").focus();
-				return false;
-			}
-			if($("#mobile3").val() ==""){
-				alert("휴대폰번호를 입력해 주세요.");
-				$("#mobile3").focus();
-				return false;
-			}
-			if($("#user_email").val() ==""){
-				alert("E-mail를 입력해 주세요.");
-				$("#user_email").focus();
-				return false;
-			}
+
+
 
 			$("#frm_from").attr("action",link);
 			$("#frm_from").submit();

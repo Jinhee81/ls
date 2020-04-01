@@ -3,7 +3,7 @@
 		<header id="header">
 				<div class="top_menu">
 					<div class="wrap_1000">
-						<ul>
+						<!-- <ul>
 							<?if(!$check_login){?>
 							<li><a href="../membership/login.php">로그인</a></li>
 							<li><a href="../membership/membership.php">회원가입</a></li>
@@ -12,6 +12,11 @@
 							<li><a href="../membership/re_member.php">정보수정</a></li>
 							<?}?>
 							<li><a href="https://blog.naver.com/leaseman_ad" target="_blank">블로그</a></li>
+							<li><a href="http://as82.kr/leaseman/" target="_blank">원격지원</a></li>
+						</ul> -->
+						<ul>
+							<li><a href="../svc/login.php">로그인</a></li>
+							<li><a href="../membership/membership.php">회원가입</a></li>
 							<li><a href="http://as82.kr/leaseman/" target="_blank">원격지원</a></li>
 						</ul>
 					</div>

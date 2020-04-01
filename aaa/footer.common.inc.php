@@ -17,7 +17,7 @@
 				<br />사업자등록번호: 745-06-00646
 				<span class="block"><span class="none">|</span>    통신판매업신고번호: 제2020-의정부신곡-0073호</span>
 			</address>
-			<p class="copy">COPYRIGHT ⓒ 2018 LEASEMANSOFT ALL RIGHT RESERVED.</p>
+			<p class="copy">ⓒ LEASEMANSOFT ALL RIGHTS RESERVED.</p>
 		</div>
 	</div>
 	<div class="quick_menu">

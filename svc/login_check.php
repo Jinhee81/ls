@@ -1,10 +1,10 @@
 <?php
 session_start();
 include "view/conn.php";
-include "password.php";
+// include "password.php";
 
 $email = $_POST['email'];
-$password = $_POST['password'];
+$password = md5($_POST['password']);
 
 $check = "SELECT * from user WHERE email = '{$email}' LIMIT 1";
 $result = mysqli_query($conn, $check);
@@ -16,12 +16,13 @@ if(!$row){
   history.back();
   </script>";
 } else {
-  if ( $email === $row['email'] && password_verify($password, $row['password'])){+
+  if ( $email === $row['email'] && $password === $row['password']){
   $_SESSION['is_login'] = true;
   $_SESSION['id'] = $row['id'];
   $_SESSION['email'] = $email;
   $_SESSION['user_div'] = $row['user_div'];
   $_SESSION['user_name'] = $row['user_name'];
+  $_SESSION['manager_name'] = $row['manager_name'];
   $_SESSION['cellphone'] = $row['cellphone'];
   $_SESSION['lease_type'] = $row['lease_type'];
   $_SESSION['created'] = $row['created'];

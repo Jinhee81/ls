@@ -1,7 +1,7 @@
 <body>
 
 <nav class="navbar navbar-expand-lg navbar-dark" style="background-color:#0B173B;">
-  <a class="navbar-brand" href="/main/main.php"><img src="/img/h1b.png" width="100" height="30" class="d-inline-block align-top" alt=""></a>
+  <a class="navbar-brand" href="/svc/main/main.php"><img src="/admin/img/h1b.png" width="100" height="30" class="d-inline-block align-top" alt=""></a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
@@ -43,16 +43,16 @@
 
     <form class="form-inline my-2 my-lg-0">
       <span class="navbar-text">
-        <a href="/svc/main/payment.php">
-        <i class="fas fa-won-sign"></i>&nbsp;요금안내</a>
-      </span>&nbsp;
-      <span class="navbar-text">
         <a href="/svc/service/setting/building.php">
         <i class="fas fa-cog"></i>&nbsp;환경설정</a>
       </span>&nbsp;
       <span class="navbar-text" data-toggle="tooltip" data-placement="bottom" title="<?=$_SESSION['gradename']?>">
         <a href="/svc/myinfo.php">
         <i class="fas fa-user"></i>&nbsp;나의정보</a>
+      </span>&nbsp;
+      <span class="navbar-text">
+        <a href="/svc/main/payment.php">
+        <i class="fas fa-won-sign"></i>&nbsp;요금안내</a>
       </span>&nbsp;&nbsp;
       <span class="navbar-text">
       &nbsp;<?=$_SESSION['email']?>님, 안녕하세요.

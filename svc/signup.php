@@ -1,6 +1,6 @@
 <!-- 고민하다가 회원가입시 휴대폰번호인증은 없애기로함, 이메일인증만 있으면 될것같음 -->
 <?php
-include $_SERVER['DOCUMENT_ROOT']."/view/header.php";
+include $_SERVER['DOCUMENT_ROOT']."/svc/view/header.php";
  ?>
  <div class="jumbotron">
    <h3 class="display-4">회원가입해주세요!</h3>
@@ -212,5 +212,5 @@ include $_SERVER['DOCUMENT_ROOT']."/view/header.php";
 </script>
 
 <?php
-include $_SERVER['DOCUMENT_ROOT']."/view/service_footer.php";
+include("./view/service_footer.php");
 ?>

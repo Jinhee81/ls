@@ -8,7 +8,7 @@ include $_SERVER['DOCUMENT_ROOT']."/svc/view/conn.php"; ?>
       <th>유형</th>
       <th>물건명</th>
       <th>수납방법</th>
-      <th>그룹명(방번호)</th>
+      <th>그룹명(관리호수)</th>
       <th>기타상품</th>
       <th class="mobile"></th>
     </tr>

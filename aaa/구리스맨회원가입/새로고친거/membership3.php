@@ -9,7 +9,7 @@
 	.hidden_class{display:none}
 </style>
 		<section id="container">
-			<div class="wrap_1000">	
+			<div class="wrap_1000">
 				<div class="membership">
 					<h2>회원가입</h2>
 					<ul class="tab_menu">
@@ -28,13 +28,13 @@
 					</ul>
 					<div class="membership3">
 						<img src="../img/sub/membership_img.png">
-						<h3>짝짝짝! 축하합니다!</h3>
-						<p>리스맨 임대관리프로그램에서 
-						<br />더욱 많은 정보 이용하시기 바랍니다.</p>
+						<h3>짝짝짝! 환영합니다!</h3>
+						<p>리스맨 임대관리프로그램에서
+						<br />새로운 임대관리를 경험해보세요!</p>
 						<div class="btn_box">
-							<b class="blue on_btn"><a href="http://sv.leaseman.co.kr/main/login.php" target="blank_">리스맨 프로그램 이용하기</a></b>
+							<b class="blue on_btn"><a href="../svc/login.php" target="blank_">리스맨 프로그램 이용하기</a></b>
 							<b class="on_btn"><a href="../main/main.php">홈으로</a></b>
-						</div>	
+						</div>
 					</div>
 				</div>
 			</div>

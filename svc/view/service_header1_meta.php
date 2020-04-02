@@ -1,5 +1,5 @@
 <!-- 위에 뭐가있었는데 삭제했음, 원래있던거는 예비파일에 둠 -->
-    <link rel="icon" type="image/x-icon" href="/admin/img/logo/letterL.png">
+    <link rel="icon" type="image/x-icon" href="inc/img/logo/letterL.png">
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1,
       shrink-to-fit=no">
@@ -16,14 +16,14 @@
 
 
     <!-- <script type="text/javascript" src="/js/dataTable.js"></script> -->
-    <link rel="stylesheet" href="/admin/css/bootstrap.min.css">
-    <link rel="stylesheet" href="/admin/css/jquery-ui.min.css">
-    <link rel="stylesheet" href="/admin/css/jquery-ui-timepicker-addon.css">
-    <link rel="stylesheet" href="/admin/css/custom2.css">
+    <link rel="stylesheet" href="/svc/inc/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/svc/inc/css/jquery-ui.min.css">
+    <link rel="stylesheet" href="/svc/inc/css/jquery-ui-timepicker-addon.css">
+    <link rel="stylesheet" href="svc/inc/css/custom2.css">
     <!-- <link rel="stylesheet" href="/css/dataTable.jquery.css">
     <link rel="stylesheet" href="/css/dataTable.responsive.css"> -->
 
-    <script type="text/javascript" src="/admin/js/jquery-3.3.1.min.js"></script>
+    <script type="text/javascript" src="/svc/inc/js/jquery-3.3.1.min.js"></script>
 
 
   </head>

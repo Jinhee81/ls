@@ -14,19 +14,10 @@ include $_SERVER['DOCUMENT_ROOT']."/svc/view/service_header2.php";
 include $_SERVER['DOCUMENT_ROOT']."/svc/view/conn.php";
 include $_SERVER['DOCUMENT_ROOT']."/svc/main/condition.php";
 ?>
-<style>
-        #checkboxTestTbl tr.selected{background-color: #A9D0F5;}
-        select .selectCall{background-color: #A9D0F5;}
-
-        @media (max-width: 990px) {
-        .mobile {
-          display: none;
-        }
-}
-</style>
+<link rel="stylesheet" href="/svc/inc/css/custom2.css">
 <section class="container">
-  <div class="jumbotron">
-    <h1 class="display-4">세입자리스트 화면입니다!</h1>
+  <div class="jumbotron pt-3 pb-3">
+    <h2 class="">세입자리스트입니다.</h2>
     <p class="lead">
       <!-- (1) 정확한 표현은 이해관계자리스트라고 보아도 무방합니다. 세입자(고객) 뿐만 아니라, 문의하는 사람 및 자주 거래하는 거래처도 저장할 수 있어요.<br> -->
     (1) 방계약이 발생하면 숫자가 표시됩니다. (2)'기타' 분류는 방계약 외의 일회성매출에 대한 고객을 분류할 수 있습니다.
@@ -107,7 +98,7 @@ $(document).ready(function(){
       })
 
       $.ajax({
-        url: 'ajax_customerLoad.php',
+        url: 'ajax_customerLoad0.php',
         method: 'post',
         data: $('form').serialize(),
         success: function(data){

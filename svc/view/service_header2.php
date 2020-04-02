@@ -1,7 +1,7 @@
 <body>
 
 <nav class="navbar navbar-expand-lg navbar-dark" style="background-color:#0B173B;">
-  <a class="navbar-brand" href="/svc/main/main.php"><img src="/admin/img/h1b.png" width="100" height="30" class="d-inline-block align-top" alt=""></a>
+  <a class="navbar-brand" href="/svc/main/main.php"><img src="/svc/inc/img/h1b.png" width="100" height="30" class="d-inline-block align-top" alt=""></a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>

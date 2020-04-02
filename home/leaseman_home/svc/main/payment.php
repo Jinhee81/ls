@@ -99,11 +99,11 @@ $mKey = array(
  <link href="http://www.leaseman.co.kr/svc/main/preference.css" rel="stylesheet" type="text/css"/>
 
  <style>
-     #inicisModalDiv {
+    #inicisModalDiv {
 
-opacity: 100;
+        opacity: 100;
 
-}
+    }
  </style>
  <!-- <script src="/preference/preference.js"></script> 비어있는 php -->
  <form method="post" name="fm_pay" id="SendPayForm_id" class="" accept-charset="utf-8">
@@ -127,7 +127,7 @@ opacity: 100;
        <input type="hidden" name="signature" id="signature" value="" > <!-- <?php echo $sign ?> -->
        <input type="hidden" name="returnUrl" value="<?php echo $siteDomain ?>/inistdpay_result.php" >
        <input type="hidden" name="mKey" id="mKey" value="" >
-       <input type="hidden" name="gopaymethod" id="gopaymethod" value="Card" >
+       <input type="hidden" name="gopaymethod" id="gopaymethod" value="">
        <input type="hidden" name="offerPeriod" id="offerPeriod" value="" >
        <input type="hidden" id="acceptmethod" name="acceptmethod" value="" >
        <input type="hidden" id="billPrint_msg" name="billPrint_msg" value="해당 결제는 매달 자동 결제됩니다." >
@@ -411,15 +411,15 @@ $('.monthonly').on('click', function(){
     var pay = confirm(month1later + '까지 1개월 이용 가능합니다. 결제 진행하시겠습니까?');
     var goodsName = grade_star;
     var merchantData = $('#merchantData').val();
-        console.log(merchantData);
+    var gopaymethod = $('#gopaymethod').val();
 
-if(!pay) return;
+    if(!pay) return;
 
     $.ajax({
         url     : "http://www.leaseman.co.kr/svc/main/stdpay3/INIStdPaySample/get_sign2.php",
         data    : "orderNumber="+orderNumber+"&timestamp="+timestamp+"&price="+amount,
         success : function(data) {
-            console.log(goodsName, data);
+            console.log(gopaymethod);
             merchantData += '&paydiv=' + paydiv + '&today='+today + '&month1later='+month1later +'&amount='+amount + '&gradename='+gradename;
 
             // merchantData = '&today='+today;
@@ -441,6 +441,9 @@ if(!pay) return;
             $("#month1later").val(month1later);
             $("#today").val(today);
             $("#buyername").val("<?=$_SESSION['user_name']?>");
+
+            $("#acceptmethod").val("hpp(1)");   // 결제수단 추가
+
             cardShow();
              paybtn();
 

@@ -9,14 +9,14 @@
     <!-- <meta property="og:image" content="https://www.instagram.com/"> -->
     <meta content='website' property='og:type'>
   	<meta content='http://www.leaseman.co.kr/' property='og:url'>
-  	<meta content='리즈맨' property='og:title'>
-  	<meta content='임대관리시스템 리즈맨입니다' property='og:description'>
+  	<meta content='리스맨' property='og:title'>
+  	<meta content='임대관리시스템 리스맨입니다' property='og:description'>
   	<meta content='http://charm3007.cafe24.com/PracticeIntroduce/img/ci.png' property='og:image'>
-    <link rel="stylesheet" href="/admin/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/svc/inc/css/bootstrap.min.css">
     <link href="https://fonts.googleapis.com/css?family=Gothic+A1:700|Nanum+Gothic" rel="stylesheet">
 
-    <link rel="stylesheet" href="/admin/css/custom.css">
-    <script type="text/javascript" src="/admin/js/jquery-3.3.1.min.js"></script>
+    <link rel="stylesheet" href="/svc/inc/css/custom.css">
+    <script type="text/javascript" src="/svc/inc/js/jquery-3.3.1.min.js"></script>
   </head>
   <body>
     <!-- <nav class="navbar bg-dark">

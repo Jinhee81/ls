@@ -197,9 +197,8 @@ $(document).ready(function(){
     changeMonth: true,
     changeYear: true,
     showButtonPanel: true,
-    currentText: '오늘' , // 오늘 날짜로 이동하는 버튼 패널
-    closeText: '닫기',  // 닫기 버튼 패널
-    dateFormat: "yy-mm-dd" // 텍스트 필드에 입력되는 날짜 형식.
+    currentText: '오늘', // 오늘 날짜로 이동하는 버튼 패널
+    closeText: '닫기'  // 닫기 버튼 패널
   })
 
   $(document).on('change', '.tbodycheckbox', function(){

@@ -1,6 +1,7 @@
 <!-- 메모입력하면 실행되는파일, 이거저장한다고 일부러 계약을 업데이트하지 않았다. 계약에 물려있는 업데이트가 많아서 이것까지하면 오히려 헷갈림 -->
 
 <?php
+header('Content-Type: text/html; charset=UTF-8');
 session_start();
 include $_SERVER['DOCUMENT_ROOT']."/svc/view/conn.php";
 

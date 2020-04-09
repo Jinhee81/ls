@@ -217,5 +217,5 @@ while($row2 = mysqli_fetch_array($result2)){
   }
 }
 
-print_r($allRows);
+// print_r($allRows);
  ?>

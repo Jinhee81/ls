@@ -1,5 +1,6 @@
 <!-- 이거는 고객등록하자마자 계약등록할 때 처리하는 프로세스파일 -->
 <?php
+header('Content-Type: text/html; charset=UTF-8');
 session_start();
 include $_SERVER['DOCUMENT_ROOT']."/svc/view/conn.php";
 
@@ -116,7 +117,7 @@ if($result_deposit===false){
 
 
 echo "<script>alert('저장되었습니다.');
-      location.href = 'contractEdit3.php?id=$id';
+      location.href = 'contractEdit.php?id=$id';
       </script>";
 
 // if ($_POST['endDate'] === $mEndDate){

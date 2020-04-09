@@ -1,6 +1,7 @@
 <!-- 청구설정버튼누르면 청구되는거, 계약스케줄에 청구번호추가되는거 -->
 
 <?php
+header('Content-Type: text/html; charset=UTF-8');
 session_start();
 include $_SERVER['DOCUMENT_ROOT']."/svc/view/conn.php";
 

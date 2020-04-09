@@ -1,4 +1,4 @@
-<script src="https://code.jquery.com/jquery-3.3.1.js"></script>
+<script src="/svc/inc/js/jquery-3.3.1.min.js"></script>
 <script src="/svc/inc/js/jquery-ui.min.js"></script><!-- datepicker에 필요한 js file -->
 <script src="/svc/inc/js/popper.min.js"></script><!--툴팁함수호출에필요함-->
 <script src="/svc/inc/js/bootstrap.min.js"></script><!--툴팁함수호출하면 예쁘게부트스트랩표시가 됨-->
@@ -8,3 +8,4 @@
 <script src="/svc/inc/js/etc/checkboxtable.js?<?=date('YmdHis')?>"></script><!-- 테이블에서 행 select class 추가할때 필요한 js file -->
 <script src="/svc/inc/js/etc/form.js?<?=date('YmdHis')?>"></script>
 <script src="/svc/inc/js/jquery.number.min.js"></script><!-- 숫자입력시 천단위 콤마에 필요한 js file -->
+<script src="/svc/inc/js/daumAddressAPI3.js?<?=date('YmdHis')?>"></script>

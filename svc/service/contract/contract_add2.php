@@ -12,191 +12,87 @@ include "building.php";
 // print_r($_SESSION);
 
 ?>
-<style>
-  .inputWithIcon input[type=search]{
-    padding-left: 40px;
-  }
-  .inputWithIcon {
-    position: relative;
-  }
-  .inputWithIcon i{
-    position: absolute;
-    left: 4px;
-    top: 4px;
-    padding: 9px 8px;
-    color: #aaa;
-    transition: .3s;
-  }
-  .inputWithIcon input[type=search]:focus+i{
-    color: dodgerBlue;
-  }
-  #customerList ul {
-    background-color: #eee;
-    cursor: pointer;
-  }
-  #customerList li {
-    padding: 12px;
-  }
-</style>
 <section class="container">
-  <div class="jumbotron">
-    <h1 class="display-4">방계약 등록 화면입니다!</h1>
+  <div class="jumbotron pt-3 pb-3">
+    <h2 class="">임대계약을 등록하세요.</h2>
     <!-- <p class="lead">고객이란 입주한 세입자 및 문의하는 문의고객, 거래처 등을 포함합니다. 고객등록이 되어야 임대계약 등록이 가능합니다!</p> -->
-    <small>(1)<span id='star' style='color:#F7BE81;'> * </span>표시는 필수 입력값입니다. (2)<b>[세입자정보]</b>에는 세입자만 등록 가능합니다. (거래처 및 문의고객은 검색결과가 없다고 표시되니 주의하세요!) <b>[세입자정보]</b>의 제일우측 숫자는 고객번호로써 시스템데이터임을 참고하여주세요. (3)<b>[기간정보]</b>의 기간(개월수)에는 최대 72개월(6년)까지 등록 가능합니다.</small>
+    <small>(1)<span id='star' style='color:#F7BE81;'> * </span>표시는 필수 입력값입니다. (2)<b>[입주자자정보]</b>에는 입주자만 등록 가능합니다. (거래처 및 문의고객은 검색결과가 없다고 표시되니 주의하세요!) <b>[입주자정보]</b>의 제일우측 숫자는 고객번호로써 시스템데이터임을 참고하여주세요. (3)<b>[기간정보]</b>의 기간(개월수)에는 최대 72개월(6년)까지 등록 가능합니다.</small>
     <hr class="my-4">
     <a class="btn btn-primary btn-sm" href="contractAll.php" role="button">일괄계약등록(1)</a>
     <a class="btn btn-primary btn-sm" href="contractAll2.php" role="button">일괄계약등록(2)</a>
     <!-- <a class="btn btn-primary btn-sm" href="contractCustomer.php" role="button">그룹별세입자등록</a>-->
     <a class="btn btn-primary btn-sm" href="contractCsv.php" role="button">계약csv등록</a>
-    <a class="btn btn-primary btn-sm" href="/svc/service/customer/m_c_add.php" role="button">세입자등록</a>
+    <a class="btn btn-primary btn-sm" href="/svc/service/customer/m_c_add.php" role="button">입주자등록</a>
   </div>
 </section>
 <section class="container">
   <form method="post" action="p_realContract_add2.php">
     <div class="form-row">
         <div class="form-group col-md-2">
-              <label><b>[세입자정보]</b></label>
+              <label><b>[입주자정보]</b></label>
         </div>
         <div class="form-group col-md-10 inputWithIcon">
               <input type="search" class="form-control" name="customer" id="customer" value="" required>
               <i class="fas fa-search fa-lg fa-fw" aria-hidden="true"></i>
               <div class="" id="customerList">
               </div>
-              <!-- <input type="hidden" name="customerId" id="customerId" value=""> 원래는 ajax로 별도로 고객번호를 가져오고싶었는데 방법을 몰라서 못한거고 별도로 가져올때 다시 수정할거2-->
-        </div>
-    </div>
-    <div class="form-row">
-        <div class="form-group col-md-2">
-            <label><b>[물건정보]</b></label>
-        </div>
-        <div class="form-group col-md-10" id="mulgunInfo">
-              <div class="form-row">
-                <div class="form-group col-md-2">
-                    <label>공실구분</label>
-                    <select id="select1" name="" class="form-control" onchange="">
-                      <option value="">전체</option>
-                      <option value="" selected>공실</option>
-                      <option value="">만실</option>
-                    </select>
-                </div>
-                <div class="form-group col-md-2"><!--물건목록-->
-                    <label>물건명</label>
-                    <select id="select2" name="building_id" class="form-control">
-                    </select>
-                </div>
-                <div class="form-group col-md-2"><!--그룹목록-->
-                    <label>그룹명</label>
-                    <select id="select3" name="group_id" class="form-control">
-                    </select>
-                </div>
-                <div class="form-group col-md-2"><!--관리번호목록-->
-                    <label>방번호</label>
-                    <select id="select4" name="room_id" class="form-control" onchange="">
-                    </select>
-                </div>
-                <div class="form-group col-md-2">
-                    <label>최초 계약일자</label>
-                    <input type="text" id="contractDate" class="form-control dateType yyyymmdd" name="contractDate" placeholder="">
-                </div>
-              </div>
+              <input type="hidden" name="customerId" id="customerId" value=""> <!--원래는 ajax로 별도로 고객번호를 가져오고싶었는데 방법을 몰라서 못한거고 별도로 가져올때 다시 수정할거2-->
         </div>
     </div>
 
-    <div class="form-row">
-        <div class="form-group col-md-2 mb-0">
-            <label><b>[월세정보]</b></label>
-        </div>
-        <div class="form-group col-md-10 mb-0">
-          <div class="form-row">
-              <div class="form-group col-md-2 mb-0">
-                    <label><span id='star' style='color:#F7BE81;'>* </span>공급가액</label>
-                    <input type="text" class="form-control text-right amountNumber" name="mAmount" value="0" numberOnly required>
-              </div>
-              <div class="form-group col-md-2 mb-0">
-                    <label>세액</label>
-                    <input type="text" class="form-control text-right amountNumber" name="mvAmount" value="0" numberOnly required>
-              </div>
-              <div class="form-group col-md-2 mb-0">
-                    <label>합계</label>
-                    <input type="text" class="form-control text-right amountNumber" name="mtAmount" placeholder="0" numberOnly readonly>
-              </div>
-              <div class="form-group col-md-1 mb-0"><!--선불,후불체크-->
-                    <label>수납</label>
-                    <select id="select5" name="payOrder" class="form-control">
-                    </select>
-              </div>
-              <div class="form-group col-md-1 mb-0">
-                    <label><span id='star' style='color:#F7BE81;'>* </span>기간</label>
-                    <input type="number" class="form-control" name="monthCount" placeholder="" min="1" max="72" required>
-              </div>
-              <div class="form-group col-md-2 mb-0">
-                    <label><span id='star' style='color:#F7BE81;'>* </span>시작일자</label>
-                    <input type="text" id="startDate" class="form-control dateType yyyymmdd" name="startDate" value="" placeholder="" required>
-              </div>
-              <div class="form-group col-md-2 mb-0">
-                    <label>종료일자</label>
-                    <input type="text" id="endDate" class="form-control" name="endDate" readonly>
-              </div>
-        </div>
-      </div>
-    </div>
-    <div class="form-row">
-        <div class="form-group col-md-2">
-        </div>
-        <div class="form-group col-md-10">
-            <small class="form-text text-muted">매월 받아야하는 임대료(월세)를 입력합니다.</small>
-        </div>
+    <?php include "contract_add_format.php"; ?>
+
+    <div class="allvals">
+
     </div>
 
-    <div class="form-row">
-        <div class="form-group col-md-2 mb-0">
-          <label><b>[보증금정보]</b></label>
-        </div>
-        <div class="form-group col-md-10 mb-0">
-            <div class="form-row">
-                <div class="form-group col-md-3 mb-0">
-                    <label>금액</label>
-                    <input type="text" class="form-control text-right amountNumber" name="depositInAmount" value="0" numberOnly>
-                </div>
-                <div class="form-group col-md-3 mb-0">
-                    <label>입금일자</label>
-                    <input type="text" class="form-control dateType yyyymmdd" name="depositInDate" id="depositInDate" value="" placeholder="">
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="form-row">
-        <div class="form-group col-md-2">
-        </div>
-        <div class="form-group col-md-10">
-            <small class="form-text text-muted">보증금을 받았다면, 보증금과 날짜를 입력하세요.</small>
-        </div>
-    </div>
-    <div class="">
-      <button type='submit' class='btn btn-primary' id='saveBtn'>저장</button>
-      <a href='contract.php'><button type='button' class='btn btn-secondary'>방계약리스트화면으로</button></a>
-    </div>
   </form>
 </section>
 
-<script src="/admin/js/jquery-ui.min.js"></script>
-<script src="/admin/js/datepicker-ko.js"></script>
+<?php include $_SERVER['DOCUMENT_ROOT']."/svc/view/service_footer.php"; ?>
+
+<script src="https://code.jquery.com/jquery-3.3.1.js"></script>
+<script src="/svc/inc/js/jquery.number.min.js"></script><
+<script src="/svc/inc/js/jquery-ui.min.js"></script>
+<script src="/svc/inc/js/popper.min.js"></script>
+<script src="/svc/inc/js/bootstrap.min.js"></script>
+<script src="/svc/inc/js/datepicker-ko.js"></script>
+
 <script>
+function customersearch(){
+  var query = $('#customer').val();
+  // console.log(query);
+  var customerlist;
+
+  if(query != ''){
+    customerlist = $.ajax({
+      url: 'ajax_customer_search.php',
+      method: 'post',
+      data: {query : query},
+      success: function(data){
+        $('#customerList').fadeIn();
+        $('#customerList').html(data);
+      }
+    })
+  }
+  return customerlist;
+}
+
+
 $(document).ready(function(){
+
   $('#customer').keyup(function(){
-    var query = $(this).val();
-    // console.log(query);
-    if(query != ''){
-      $.ajax({
-        url: 'p_customer_search.php',
-        method: 'post',
-        data: {query : query},
-        success: function(data){
-          $('#customerList').fadeIn();
-          $('#customerList').html(data);
-        }
-      })
-    }
+    customersearch();
+
+    // var query = $(this).val();
+    // $.ajax({
+    //       url: 'ajax_customer_search.php',
+    //       method: 'post',
+    //       data: {'query' : query},
+    //       success: function(data){
+    //         $('.allvals').html(data);
+    //       }
+    //     })
   })
 
   $('.dateType').datepicker({

@@ -7,5 +7,6 @@ $.datepicker.setDefaults({
       dayNamesShort: ['일', '월', '화', '수', '목', '금', '토'],
       dayNamesMin: ['일', '월', '화', '수', '목', '금', '토'],
       showMonthAfterYear: true,
-      yearSuffix: '년'
+      yearSuffix: '년',
+      dateFormat: "yy-mm-dd" // 텍스트 필드에 입력되는 날짜 형식.
   });

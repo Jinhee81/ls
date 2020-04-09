@@ -30,12 +30,3 @@ foreach ($groupBuildingArray as $key => $value) {
   }
 }
  ?>
-
- <script type="text/javascript">
-   var buildingArray = <?php echo json_encode($buildingArray); ?>;
-   var groupBuildingArray = <?php echo json_encode($groupBuildingArray); ?>;
-   var roomArray = <?php echo json_encode($roomArray); ?>;
-   console.log(buildingArray);
-   console.log(groupBuildingArray);
-   console.log(roomArray);
- </script>

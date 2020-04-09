@@ -1,4 +1,5 @@
 <?php
+header('Content-Type: text/html; charset=UTF-8');
 session_start();
 include $_SERVER['DOCUMENT_ROOT']."/svc/view/conn.php";
 
@@ -6,8 +7,14 @@ $filtered = array(
   'id' => mysqli_real_escape_string($conn, $_POST['id']),
   'name' => mysqli_real_escape_string($conn, $_POST['name']),
   'pay' => mysqli_real_escape_string($conn, $_POST['pay']),
-  'popbill' => mysqli_real_escape_string($conn, $_POST['popbill']),
-  'companynumber' => mysqli_real_escape_string($conn, $_POST['companynumber'])
+  'popbillid' => mysqli_real_escape_string($conn, $_POST['popbillid']),
+  'cNumber1' => mysqli_real_escape_string($conn, $_POST['cNumber1']),
+  'cNumber2' => mysqli_real_escape_string($conn, $_POST['cNumber2']),
+  'cNumber3' => mysqli_real_escape_string($conn, $_POST['cNumber3']),
+  'contact1' => mysqli_real_escape_string($conn, $_POST['contact1']),
+  'contact2' => mysqli_real_escape_string($conn, $_POST['contact2']),
+  'contact3' => mysqli_real_escape_string($conn, $_POST['contact3']),
+  'etc' => mysqli_real_escape_string($conn, $_POST['etc'])
 );
 
 $sql  = "
@@ -15,8 +22,14 @@ $sql  = "
     SET
       bName = '{$filtered['name']}',
       pay = '{$filtered['pay']}',
-      popbill = '{$filtered['popbill']}',
-      companynumber = '{$filtered['companynumber']}',
+      popbillid = '{$filtered['popbillid']}',
+      cnumber1 = '{$filtered['cNumber1']}',
+      cnumber2 = '{$filtered['cNumber2']}',
+      cnumber3 = '{$filtered['cNumber3']}',
+      contact1 = '{$filtered['contact1']}',
+      contact2 = '{$filtered['contact2']}',
+      contact3 = '{$filtered['contact3']}',
+      etc = '{$filtered['etc']}',
       updated = now()
     WHERE
       id = {$_POST['id']}

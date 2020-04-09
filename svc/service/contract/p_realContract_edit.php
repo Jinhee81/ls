@@ -1,5 +1,6 @@
 <!-- 이거는 계약수정할 때 처리하는 프로세스파일 -->
 <?php
+header('Content-Type: text/html; charset=UTF-8');
 session_start();
 include $_SERVER['DOCUMENT_ROOT']."/svc/view/conn.php";
 

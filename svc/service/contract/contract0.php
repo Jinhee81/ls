@@ -18,7 +18,7 @@ include "building.php";
 
 <section class="container">
   <div class="jumbotron pt-3 pb-3">
-    <h2 class="">임대계약 목록 이에요.</h2>
+    <h2 class="">임대계약 리스트 화면이에요.</h2>
     <p class="lead">
       (1) 상태(현재 - 현재 계약), (대기 - 대기중 계약), (종료 - 종료된 계약)로 구분합니다.<br>
       (2) 월이용료를 클릭하면 해당 계약의 상세페이지가 나옵니다.<br>
@@ -64,16 +64,16 @@ include "building.php";
             </select><!--codi5-->
           </div>
           <div class="col-sm-1 pl-0 pr-0">
-            <select class="form-control form-control-sm selectCall" name="building">
+            <select class="form-control form-control-sm selectCall" id="building" name="building">
             </select><!--building-->
           </div>
           <div class="col-sm-1 pl-0 pr-0">
-            <select class="form-control form-control-sm selectCall" name="group">
+            <select class="form-control form-control-sm selectCall" id="group" name="group">
               <option value="groupAll">그룹전체</option>
             </select><!--group-->
           </div>
           <div class="col-sm-1 pl-0 pr-0">
-            <select class="form-control form-control-sm selectCall"  name="etcCondi">
+            <select class="form-control form-control-sm selectCall" id="etcCondi" name="etcCondi">
               <option value="customer">성명/사업자명</option>
               <option value="contact">연락처</option>
               <option value="contractId">계약번호</option>
@@ -102,127 +102,51 @@ include "building.php";
           <button type="button" class="btn btn-warning" name="cAppend" data-toggle="modal" data-target="#nAddBtn">연장</button>
         </div>
     </div>
+
+    <div class="" id="allVals">
+    <!-- isright 6666? -->
+    </div>
 </section>
-
-<!-- 표내용 -->
-<section class="container">
-  <table class="table table-hover table-bordered table-sm text-center" id="checkboxTestTbl">
-    <thead>
-      <tr class="table-secondary">
-        <th scope="col" class="mobile"><input type="checkbox"></th>
-        <th scope="col">순번</th>
-        <th scope="col">상태</th>
-        <th scope="col">입주자</th>
-        <th scope="col">연락처</th>
-        <th scope="col" class="mobile">그룹명</th>
-        <th scope="col">방번호<i class="fas fa-sort"></i></th>
-        <th scope="col" class="mobile">시작일<i class="fas fa-sort"></i></th>
-        <th scope="col" class="mobile">종료일<i class="fas fa-sort"></i></th>
-        <th scope="col" class="mobile">기간<i class="fas fa-sort"></i></th>
-        <th scope="col">임대료<i class="fas fa-sort"></i></th>
-        <!-- <th scope="col" class="mobile">단계<i class="fas fa-sort"></i></th> -->
-        <th scope="col" class="mobile">
-          <span class="badge badge-light">파일</span>
-          <span class="badge badge-dark">메모</span>
-        </th>
-      </tr>
-    </thead>
-    <tbody id="allVals">
-
-    </tbody>
-  </table>
-</section>
-
-<?php include $_SERVER['DOCUMENT_ROOT']."/svc/view/service_footer.php"; ?>
 
 
 <script src="/svc/inc/js/jquery-3.3.1.min.js"></script>
+<script src="/svc/inc/js/jquery.number.min.js"></script><
 <script src="/svc/inc/js/jquery-ui.min.js"></script>
 <script src="/svc/inc/js/popper.min.js"></script>
 <script src="/svc/inc/js/bootstrap.min.js"></script>
 <script src="/svc/inc/js/datepicker-ko.js"></script>
 <script src="/svc/inc/js/etc/newdate8.js?<?=date('YmdHis')?>"></script>
-<script src="/svc/inc/js/etc/checkboxtable.js?<?=date('YmdHis')?>"></script>
-
-<script type="text/javascript">
-  var buildingArray = <?php echo json_encode($buildingArray); ?>;
-  var groupBuildingArray = <?php echo json_encode($groupBuildingArray); ?>;
-  var roomArray = <?php echo json_encode($roomArray); ?>;
-  console.log(buildingArray);
-  console.log(groupBuildingArray);
-  console.log(roomArray);
-</script>
-
-<script src="/svc/inc/js/etc/building.js?<?=date('YmdHis')?>"></script>
-
+<script src="/svc/inc/js/etc/checkboxtable.js?<?=date('YmdHis')?>"></script><
 
 <script>
 
-function maketable(){
-  var mtable = $.ajax({
-    url: 'ajax_realContractLoad.php',
-    method: 'post',
-    data: $('form').serialize(),
-    success: function(data){
-      data = JSON.parse(data);
-      datacount = data.length;
+var buildingoption, groupoption, buildingIdx, groupIdx;
 
-      var returns = '';
-      //
-      if(datacount===0){
-        returns ="<tr><td colspan='12'>조회값이 없어요. 조회조건을 다시 확인하거나 서둘러 입력해주세요!</td></tr>";
-      } else {
-        $.each(data, function(key, value){
-          returns += '<tr>';
-          returns += '<td><input type="checkbox" value="'+value.rid+'" class="tbodycheckbox"></td>';
-          returns += '<td>'+datacount+'</td>';
-
-          if(value.status2==='present'){
-            returns += '<td><div class="badge badge-info text-wrap" style="width: 3rem;">현재</div></td>';
-          } if(value.status2==='waiting'){
-            returns += '<td><div class="badge badge-warning text-wrap" style="width: 3rem;">대기</div></td>';
-          } if(value.status2==='the_end'){
-            returns += '<td><div class="badge badge-danger text-wrap" style="width: 3rem;">종료</div></td>';
-          }
-
-          returns += '<td><a href="/svc/service/customer/m_c_edit.php?id='+value.cid+'" data-toggle="tooltip" data-placement="top" title="'+value.ccnn+'">'+value.ccnn+'</a></td>';
-
-          returns += '<td>'+value.contact+'</td>';
-          returns += '<td>'+value.gName+'</td>';
-          returns += '<td>'+value.rName+'</td>';
-          returns += '<td>'+value.startDate+'</td>';
-          returns += '<td>'+value.endDate2+'</td>';
-          returns += '<td>'+value.count2+'</td>';
-          returns += '<td><a href="contractEdit.php?id='+value.rid+'" >'+value.mtAmount+'</a>';
-
-          if(value.step==='clear'){
-            returns += '<div class="badge badge-warning text-light" style="width: 1rem;">c</div></td>';
-          } else {
-            returns += '</td>';
-          }
-
-          returns += '<td>';
-
-          if(value.filecount > 0){
-            returns += '<a href="contractEdit.php?id='+value.rid+'" class="badge badge-light">'+value.filecount+'</a>';
-          }
-
-          if(value.memocount > 0){
-            returns += '<a href="contractEdit.php?id='+value.rid+'" class="badge badge-dark">'+value.memocount+'</a>';
-          }
-
-          returns += '</td>';
-          returns += '</tr>';
-
-          datacount -= 1;
-        })
-      }
-      $('#allVals').html(returns);
-    }
-  })
-
-  return mtable;
+for(var key in buildingArray){ //건물목록출력(비즈피스장암,비즈피스구로)
+  buildingoption = "<option value='"+key+"'>"+buildingArray[key][0]+"</option>";
+  $('#building').append(buildingoption);
 }
+buildingIdx = $('#building').val();
+
+for(var key2 in groupBuildingArray[buildingIdx]){ //그룹목록출력(상주,비상주)
+  groupoption = "<option value='"+key2+"'>"+groupBuildingArray[buildingIdx][key2]+"</option>";
+  // console.log(select3option);
+  $('#group').append(groupoption);
+}
+groupIdx = $('#group').val();
+
+$('#building').on('change', function(event){
+  buildingIdx = $('#building').val();
+  $('#group').empty();
+  $('#group').append('<option value="groupAll">그룹전체</option>');
+  for(var key2 in groupBuildingArray[buildingIdx]){ //그룹목록출력(상주,비상주)
+    groupoption = "<option value='"+key2+"'>"+groupBuildingArray[buildingIdx][key2]+"</option>";
+    // console.log(select3option);
+    $('#group').append(groupoption);
+  }
+  groupIdx = $('#group').val();
+})
+//------------------------------------------------건물,그룹출력 끝------//
 
 $(document).ready(function(){
 
@@ -230,47 +154,104 @@ $(document).ready(function(){
         $('[data-toggle="tooltip"]').tooltip()
     })
 
-    maketable();
-
+    $.ajax({
+      url: 'ajax_realContractLoad.php',
+      method: 'post',
+      data: $('form').serialize(),
+      success: function(data){
+        $('#allVals').html(data);
+      }
+    })
 
     $('.dateType').datepicker({
       changeMonth: true,
       changeYear: true,
       showButtonPanel: true,
-      currentText: '오늘', // 오늘 날짜로 이동하는 버튼 패널
-      closeText: '닫기'  // 닫기 버튼 패널
+      // showOn: "button",
+      buttonImage: "/img/calendar.svg",
+      buttonImageOnly: false
     })
 })
 //===========document.ready function end and the other load start!
 
 
 $('select[name=periodDiv]').on('change', function(){
-    maketable();
+    $.ajax({
+      url: 'ajax_realContractLoad.php',
+      method: 'post',
+      data: $('form').serialize(),
+      success: function(data){
+        $('#allVals').html(data);
+      }
+    })
 })
 
 $('input[name=fromDate]').on('change', function(){
-    maketable();
+    $.ajax({
+      url: 'ajax_realContractLoad.php',
+      method: 'post',
+      data: $('form').serialize(),
+      success: function(data){
+        $('#allVals').html(data);
+      }
+    })
 })
 
 $('input[name=toDate]').on('change', function(){
-    maketable();
+    $.ajax({
+      url: 'ajax_realContractLoad.php',
+      method: 'post',
+      data: $('form').serialize(),
+      success: function(data){
+        $('#allVals').html(data);
+      }
+    })
 })
 
 $('select[name=progress]').on('change', function(){
-    maketable();
+    $.ajax({
+      url: 'ajax_realContractLoad.php',
+      method: 'post',
+      data: $('form').serialize(),
+      success: function(data){
+        $('#allVals').html(data);
+      }
+    })
 })
 
 $('select[name=building]').on('change', function(){
-    maketable();
+    $.ajax({
+      url: 'ajax_realContractLoad.php',
+      method: 'post',
+      data: $('form').serialize(),
+      success: function(data){
+        $('#allVals').html(data);
+      }
+    })
 })
 
 $('select[name=group]').on('change', function(){
-    maketable();
+    $.ajax({
+      url: 'ajax_realContractLoad.php',
+      method: 'post',
+      data: $('form').serialize(),
+      success: function(data){
+        $('#allVals').html(data);
+      }
+    })
 })
 
 
 $('input[name=cText]').on('keyup', function(){
-    maketable();
+    $.ajax({
+      url: 'ajax_realContractLoad.php',
+      method: 'post',
+      data: $('form').serialize(),
+      success: function(data){
+        $('#allVals').html(data);
+      }
+    })
+
 })
 //---------조회버튼클릭평션 end and 삭제버툰 펑션 시작--------------//
 
@@ -339,5 +320,5 @@ $('#button6').click(function(){ //n개월추가 버튼, 모달클릭으로 바�
 }); //n개월추가
 
 </script>
-</body>
-</html>
+
+<?php include $_SERVER['DOCUMENT_ROOT']."/svc/view/service_footer.php";?>

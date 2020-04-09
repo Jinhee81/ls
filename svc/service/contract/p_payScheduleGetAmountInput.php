@@ -1,5 +1,6 @@
 <!-- 청구설정 모달안 입금완료버튼 누르면 실행되는거 -->
 <?php
+header('Content-Type: text/html; charset=UTF-8');
 session_start();
 include $_SERVER['DOCUMENT_ROOT']."/svc/view/conn.php";
 

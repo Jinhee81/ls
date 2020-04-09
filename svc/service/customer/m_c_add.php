@@ -164,15 +164,19 @@ include $_SERVER['DOCUMENT_ROOT']."/svc/view/conn.php";
 </section>
 
 <?php include $_SERVER['DOCUMENT_ROOT']."/svc/view/service_footer.php";?>
-<?php include $_SERVER['DOCUMENT_ROOT']."/svc/view/service_footer_script.php";?>
+
+<script src="/svc/inc/js/jquery-3.3.1.min.js"></script>
 <script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
 <script src="/svc/inc/js/daumAddressAPI3.js?<?=date('YmdHis')?>"></script>
 
 <script type="text/javascript">
   $(document).ready(function(){
-    $(function () {
-        $('[data-toggle="tooltip"]').tooltip();
-    })
+    
+    function maxlengthCheck(object){
+      if(object.value.length > object.maxLength){
+        object.value = object.value.slice(0, object.maxLength);
+      }
+    }//숫자 입력개수 제한하는 함수, 연락처1,2,3/사업자번호에 사용됨
   })
 </script>
 </body>

@@ -18,14 +18,14 @@ $row = mysqli_fetch_array($result);
 ?>
 
 <section class="container">
-  <div class="jumbotron">
-    <h1 class="display-4"> >> 관리물건 수정 화면입니다!</h1>
-    <p class="lead">
+  <div class="jumbotron pt-3 pb-3">
+    <h2 class=""> >> 관리물건 수정 화면입니다!</h2>
+    <!-- <p class="lead">
       (1) '명칭'은 평상시 부르는 이름으로 적어주세요. 예)도레미고시원, 성공빌딩<br>
       (2) '수금방법'은 임대료를 선불로 수납할 경우 선불 선택, 후불로 수납할경우 후불을 선택하세요.<br>
       (3) '형태' 변경을 원하는 경우 상단 <a href="/user/myinfo.php"><i class="fas fa-user"></i>&nbsp;나의정보</a>에서 임대유형을 수정하세요.<br>
       (4) <a href="https://www.popbill.com/Member/Form/Link" target="_blank">팝빌사이트</a>에 가입하고 사업자번호를 입력하면 전자세금계산서 연동 발행이 가능합니다.
-    </p>
+    </p> -->
     <!-- <hr class="my-4"> -->
     <!-- <small>(1) '명칭'은 평상시 부르는 이름으로 적어주세요. 예)도레미고시원, 성공빌딩 (2) '수금방법'은 임대료를 선불로 수납할 경우 선불 선택, 후불로 수납할경우 후불을 선택하세요.</small> -->
   </div>
@@ -37,39 +37,82 @@ $row = mysqli_fetch_array($result);
       <label for="staticEmail" class="col-sm-3 col-form-label">형태(IDX)</label>
       <div class="col-sm-9">
         <input type="text" class="form-control" name="name" value="<?=$_SESSION['lease_type'].'('.$row['id'].')'?>" disabled>
+        <small>상단 <a href="/user/myinfo.php"><i class="fas fa-user"></i>&nbsp;나의정보</a>에서 형태 수정 가능합니다.</small>
       </div>
     </div>
     <div class="form-group row">
       <label class="col-sm-3 col-form-label">명칭</label>
       <div class="col-sm-9">
         <input type="text" class="form-control" name="name" value="<?=$row['bName']?>" required="">
+        <!-- <br> -->
+        <small>평상시부르는 명칭을 적어주세요 (예, 도레미고시원, 성공빌딩 등)</small>
       </div>
     </div>
     <div class="form-group row">
       <label class="col-sm-3 col-form-label">수금방법</label>
       <div class="col-sm-9">
         <select name="pay" class="form-control">
-          <option value="선불"<?php if($row['pay']=="선불"){echo "selected";}?>>선불</option>
-          <option value="후불"<?php if($row['pay']=="후불"){echo "selected";}?>>후불</option>
+          <option value="선납"<?php if($row['pay']=="선납"){echo "selected";}?>>선납</option>
+          <option value="후납"<?php if($row['pay']=="후납"){echo "selected";}?>>후납</option>
         </select>
+        <!-- <br> -->
+        <small>임대료 받는 방식이에요. 선납 또는 후납을 선택합니다.</small>
       </div>
     </div>
+
     <div class="form-group row">
-      <label class="col-sm-3 col-form-label">팝빌가입</label>
+      <label class="col-sm-3 col-form-label">발송번호</label>
       <div class="col-sm-9">
-        <select class="form-control" name="popbill">
-          <option value="popbillyes"
-            <?php if($row['popbill']==='popbillyes'){echo "selected";}?>>가입</option>
-          <option value="popbillno"<?php if($row['popbill']==='popbillno'){echo "selected";}?>>미가입</option>
-        </select>
+        <div class='form-row'>
+          <div class='form group col-md-4'>
+            <input type='number' name='contact1' class='form-control' maxlength='3' value='010' required>
+          </div>
+          <div class='form group col-md-4'>
+            <input type='number' name='contact2' class='form-control' maxlength='4' required oninput='maxlengthCheck(this);'>
+          </div>
+          <div class='form group col-md-4'>
+            <input type='number' name='contact3' class='form-control' maxlength='4' required oninput='maxlengthCheck(this);'>
+          </div>
+        </div>
+        <!-- <br> -->
+        <small>문자메시지를 발송할때 보내는 번호에요. 주로 010으로 시작하는 번호를 기입하는게 좋은데, 031 또는 02로 시작하는 번호도 가능합니다.</small>
+      </div>
+    </div>
+
+    <div class="form-group row">
+      <label class="col-sm-3 col-form-label">팝빌아이디</label>
+      <div class="col-sm-9">
+        <input type="text" class="form-control" name="popbillid" value="<?=$row['popbillid']?>">
+        <!-- <br> -->
+        <small>전자세금계산서 발행을 원하면 팝빌사이트에 회원가입하고 아이디를 적어주세용.</small>
       </div>
     </div>
     <div class="form-group row">
       <label class="col-sm-3 col-form-label">사업자번호</label>
       <div class="col-sm-9">
-        <input type="text" class="form-control" name="companynumber" value="<?=$row['companynumber']?>">
+        <div class='form-row'>
+          <div class='form group col-md-4'>
+            <input type='number' name='cNumber1' class='form-control' maxlength='3' oninput='maxlengthCheck(this);'>
+          </div>
+          <div class='form group col-md-3'>
+            <input type='number' name='cNumber2' class='form-control' maxlength='2' oninput='maxlengthCheck(this);'>
+          </div>
+          <div class='form group col-md-5'>
+            <input type='number' name='cNumber3' class='form-control' maxlength='5' oninput='maxlengthCheck(this);'>
+          </div>
+        </div>
+        <!-- <br> -->
+        <small>매출 전자세금계산서 발행에 필요한 사업자번호에요.</small>
       </div>
     </div>
+
+    <div class="form-group row">
+      <label class="col-sm-3 col-form-label">특이사항</label>
+      <div class="col-sm-9">
+        <textarea name="etc" class="form-control" rows="3" cols="80"></textarea>
+      </div>
+    </div>
+
     <div class="">
       <p class="text-center text-muted">
         <small>등록일시[<?=$row['created']?>] 수정일시[<?=$row['updated']?>]</small>
@@ -83,27 +126,17 @@ $row = mysqli_fetch_array($result);
 </section>
 
 <?php include $_SERVER['DOCUMENT_ROOT']."/svc/view/service_footer.php";?>
-<?php include $_SERVER['DOCUMENT_ROOT']."/svc/view/service_footer_script.php"; ?>
+<script src="/svc/inc/js/jquery-3.3.1.min.js"></script>
 
 <script type="text/javascript">
-$(document).ready(function(){
-  $('input[name=companynumber]').keydown(function (event) {
-   var key = event.charCode || event.keyCode || 0;
-   $text = $(this);
-   if (key !== 8 && key !== 9) {
-       if ($text.val().length === 3) {
-           $text.val($text.val() + '-');
-       }
-       if ($text.val().length === 6) {
-           $text.val($text.val() + '-');
-       }
-   }
+  $(document).ready(function(){
 
-   return (key == 8 || key == 9 || key == 46 || (key >= 48 && key <= 57) || (key >= 96 && key <= 105));
-// Key 8번 백스페이스, Key 9번 탭, Key 46번 Delete 부터 0 ~ 9까지, Key 96 ~ 105까지 넘버패트
-// 한마디로 JQuery 0 ~~~ 9 숫자 백스페이스, 탭, Delete 키 넘버패드외에는 입력못함
-})
-})
+    function maxlengthCheck(object){
+      if(object.value.length > object.maxLength){
+        object.value = object.value.slice(0, object.maxLength);
+      }
+    }//숫자 입력개수 제한하는 함수, 연락처1,2,3/사업자번호에 사용됨
+  })
 </script>
 
 </body>

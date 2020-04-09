@@ -1,5 +1,6 @@
-<!-- 이파일은 세입자만 찾는 파일임(계약등록에서는 세입자만 찾아야하니깐) -->
+<!-- 이파일은 세입자만 찾는 파일임(계약등록에서는 세입자만 찾아야하니깐, 용어가 세입자에서 입주자로 뱌꼈음 -->
 <?php
+header('Content-Type: text/html; charset=UTF-8');
 session_start();
 include $_SERVER['DOCUMENT_ROOT']."/svc/view/conn.php";
 
@@ -14,7 +15,7 @@ if(isset($_POST['query'])){
     from customer
     where
       user_id={$_SESSION['id']} and
-      div1='세입자' and
+      div1='입주자' and
       (regexp_like(name, '{$_POST['query']}') or
        regexp_like(companyname, '{$_POST['query']}'))
       ";
@@ -60,7 +61,7 @@ if(isset($_POST['query'])){
         $output .= '<li>'.$cName.' | '.$cContact.' | '.$clist['id'].'</li>';
       }
     } else {
-      $output .= '<li>검색값이 없습니다.</li>';
+      $output .= '<li>검색값이 없네요. 다시 확인해보세요 ㅜㅜ</li>';
     }
   }
 

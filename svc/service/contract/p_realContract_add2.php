@@ -1,5 +1,6 @@
 <!-- 이건 계약리스트화면에서 계약등록누르는 화면을 처리하는 프로세스파일  -->
 <?php
+header('Content-Type: text/html; charset=UTF-8');
 session_start();
 include $_SERVER['DOCUMENT_ROOT']."/svc/view/conn.php";
 
@@ -116,7 +117,7 @@ $result_deposit = mysqli_query($conn, $sql_deposit);
 
 if($result_deposit===false){
   echo "<script>alert('보증금 저장과정에 문제가 생겼습니다. 관리자에게 문의하세요.');
-        location.href = 'contractEdit3.php?id=$id';
+        location.href = 'contractEdit.php?id=$id';
         </script>";
   // echo "<script>alert('보증금 저장과정에 문제가 생겼습니다. 관리자에게 문의하세요.');
   //       </script>";
@@ -125,7 +126,7 @@ if($result_deposit===false){
 }
 
 echo "<script>alert('저장되었습니다.');
-      location.href = 'contractEdit3.php?id=$id';
+      location.href = 'contractEdit.php?id=$id';
       </script>";
 
 // if ($_POST['endDate'] === $mEndDate){

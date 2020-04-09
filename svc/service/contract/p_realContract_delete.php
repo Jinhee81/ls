@@ -21,7 +21,7 @@ $result = mysqli_query($conn, $sql);
 if(!$result){
   echo "<script>
           alert('삭제과정에 문제가생겼습니다. 관리자에게 문의하세요(1).');
-          location.href = 'contractEdit3.php?id=$filtered_id';
+          location.href = 'contractEdit.php?id=$filtered_id';
         </script>";
 }
 
@@ -30,7 +30,7 @@ $result_p = mysqli_query($conn, $sql_p);
 if(!$result_p){
   echo "<script>
           alert('삭제과정에 문제가생겼습니다. 관리자에게 문의하세요(p).');
-          location.href = 'contractEdit3.php?id=$filtered_id';
+          location.href = 'contractEdit.php?id=$filtered_id';
         </script>";
 }
 
@@ -42,7 +42,7 @@ $result2 = mysqli_query($conn, $sql2);
 if(!$result2){
   echo "<script>
           alert('삭제과정에 문제가생겼습니다. 관리자에게 물어보세요(2).');
-          location.href = 'contractEdit3.php?id=$filtered_id';
+          location.href = 'contractEdit.php?id=$filtered_id';
         </script>";
 }
 
@@ -58,7 +58,7 @@ if($result && $result2){
   } else {
     echo "<script>
             alert('삭제과정에 문제가생겼습니다. 관리자에게 물어보세요(3).');
-            location.href = 'contractEdit3.php?id=$filtered_id';
+            location.href = 'contractEdit.php?id=$filtered_id';
           </script>";
   }
 }

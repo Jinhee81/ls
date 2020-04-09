@@ -41,7 +41,7 @@ for ($i=0; $i < count($a); $i++) {
 
     if($result5===false){
       echo "<script>alert('저장과정에 문제가 생겼습니다. 관리자에게 문의하세요.');
-            location.href = 'contractEdit3.php?id=$filtered_id';
+            location.href = 'contractEdit.php?id=$filtered_id';
             </script>";
       error_log(mysqli_error($conn));
       exit();
@@ -49,11 +49,11 @@ for ($i=0; $i < count($a); $i++) {
 
     echo "<script>
             alert('입금취소하였습니다.');
-            location.href = 'contractEdit3.php?id=$filtered_id';
+            location.href = 'contractEdit.php?id=$filtered_id';
           </script>";
   } else {
     echo "<script>alert('취소처리에 문제가 생겼습니다. 관리자에게 문의하세요.');
-          location.href = 'contractEdit3.php?id=$filtered_id';
+          location.href = 'contractEdit.php?id=$filtered_id';
           </script>";
     error_log(mysqli_error($conn));
   }

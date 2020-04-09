@@ -12,7 +12,7 @@
         <a class="nav-link" href="/svc/main/main.php">Home <span class="sr-only">(current)</span></a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="/svc/service/customer/customer.php">세입자</a>
+        <a class="nav-link" href="/svc/service/customer/customer.php">입주자</a>
       </li>
       <li class="nav-item">
         <a class="nav-link" href="/svc/service/contract/contract.php">임대계약</a>

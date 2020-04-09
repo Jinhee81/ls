@@ -101,7 +101,7 @@ if($result){
 
 
 echo "<script>alert('수정하였습니다.');
-      location.href = 'contractEdit3.php?id=$filtered_id';
+      location.href = 'contractEdit.php?id=$filtered_id';
       </script>";
 
  ?>

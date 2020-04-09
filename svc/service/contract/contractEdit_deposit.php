@@ -28,19 +28,29 @@
        </div> -->
   <table class="table table-sm table-hover text-center mt-3">
     <tr class="table-secondary">
-      <td>입금일</td>
-      <td>입금액</td>
-      <td>출금일</td>
-      <td>출금액</td>
-      <td>잔액</td>
-      <td>저장일시</td>
+      <td width="12%">입금일</td>
+      <td width="12%">입금액</td>
+      <td width="12%">출금일</td>
+      <td width="12%">출금액</td>
+      <td width="12%">잔액</td>
+      <td width="20%">저장일시</td>
     </tr>
     <tr>
-      <td><?=$row_deposit['inDate']?></td>
-      <td><?=$row_deposit['inMoney']?></td>
-      <td><?=$row_deposit['outDate']?></td>
-      <td><?=$row_deposit['outMoney']?></td>
-      <td><?=$row_deposit['remainMoney']?></td>
+      <td>
+        <input type="text" name="depositInDate" class="form-control form-control-sm dateType text-center" value="<?=$row_deposit['inDate']?>">
+      </td>
+      <td>
+        <input type="text" name="depositInAmount" class="form-control form-control-sm amountNumber text-center" value="<?=$row_deposit['inMoney']?>" numberOnly>
+      </td>
+      <td>
+        <input type="text" name="depositOutDate" class="form-control form-control-sm dateType text-center" value="<?=$row_deposit['outDate']?>">
+      </td>
+      <td>
+        <input type="text" name="depositOutAmount" class="form-control form-control-sm amountNumber text-center" value="<?=$row_deposit['outMoney']?>" numberOnly>
+      </td>
+      <td>
+        <input type="text" name="depositOutAmount" class="form-control form-control-sm amountNumber text-center" value="<?=$row_deposit['remainMoney']?>" numberOnly disabled>
+      </td>
       <td><?=$row_deposit['saved']?></td>
     </tr>
   </table>

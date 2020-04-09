@@ -7,7 +7,7 @@ if(!isset($_SESSION['is_login'])){
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
   <head>
-    <title>임대계약리스트</title>
+    <title>임대계약</title>
 <?php
 include $_SERVER['DOCUMENT_ROOT']."/svc/view/service_header1_meta.php";
 include $_SERVER['DOCUMENT_ROOT']."/svc/view/service_header2.php";
@@ -16,100 +16,102 @@ include $_SERVER['DOCUMENT_ROOT']."/svc/main/condition.php";
 include "building.php";
 ?>
 
+<!-- 제목 -->
 <section class="container">
   <div class="jumbotron pt-3 pb-3">
-    <h2 class="">임대계약 목록 이에요.</h2>
+    <h2 class="">계약목록이에요.(#201)</h2>
     <p class="lead">
-      (1) 상태(현재 - 현재 계약), (대기 - 대기중 계약), (종료 - 종료된 계약)로 구분합니다.<br>
-      (2) 월이용료를 클릭하면 해당 계약의 상세페이지가 나옵니다.<br>
-      (3) 단계는 (clear-계약을 입력하자마자), (청구- 언제돈입금예정인지 설정), 입금(이용료(임대료)가 입금되고있는 상태)로 구분됩니다.
+      (1) 상태(<span class="badge badge-info text-wrap" style="width: 3rem;">현재</span>, <span class="badge badge-warning text-wrap" style="width: 3rem;">대기</span>, <span class="badge badge-danger text-wrap" style="width: 3rem;">종료</span>)로 계약을 구분해요.<br>
+      (2) 임대료를 클릭하면 해당 계약의 상세페이지를 볼 수 있어요.<br>
+      <!-- (3) 임대료 옆에 <span class='badge badge-warning text-light' style='width: 1rem;'>c</span>표시된 것은 삭제 가능합니다. -->
     </p>
   </div>
 </section>
+
+
+<!-- 조회조건 -->
 <section class="container">
   <div class="p-3 mb-2 bg-light text-dark border border-info rounded">
-    <!-- <div class="row justify-content-md-center"> -->
-      <form>
-        <div class="form-group row justify-content-md-center">
-          <div class="col-sm-1 pl-0 pr-0">
-            <select class="form-control form-control-sm selectCall" id="dateDiv" name="dateDiv">
-              <option value="startDate">시작일자</option>
-              <option value="endDate">종료일자</option>
-              <option value="contractDate">계약일자</option>
-              <option value="registerDate">등록일자</option>
-            </select><!--codi1-->
-          </div>
-          <div class="col-sm-1 pl-0 pr-0">
-            <select class="form-control form-control-sm selectCall" id="periodDiv" name="periodDiv">
-              <option value="allDate">--</option>
-              <option value="nowMonth">당월</option>
-              <option value="pastMonth">전월</option>
-              <option value="nextMonth">익월</option>
-              <option value="1pastMonth">1개월전</option>
-              <option value="nowYear">당년</option>
-            </select><!--codi2-->
-          </div>
-          <div class="col-sm-1 pl-0 pr-0">
-            <input type="text" name="fromDate" value="" class="form-control form-control-sm text-center dateType"><!--codi3-->
-          </div>
-          <div class="col-sm-1 pl-0 pr-0">
-            <input type="text" name="toDate" value="" class="form-control form-control-sm text-center dateType"><!--codi4-->
-          </div>
-          <div class="col-sm-1 pl-0 pr-0">
-            <select class="form-control form-control-sm selectCall" id="progress" name="progress">
-              <option value="pAll">전체</option>
-              <option value="pIng" selected>현재</option>
-              <option value="pEnd">종료</option>
-              <option value="pWaiting">대기</option>
-            </select><!--codi5-->
-          </div>
-          <div class="col-sm-1 pl-0 pr-0">
-            <select class="form-control form-control-sm selectCall" name="building">
-            </select><!--building-->
-          </div>
-          <div class="col-sm-1 pl-0 pr-0">
-            <select class="form-control form-control-sm selectCall" name="group">
-              <option value="groupAll">그룹전체</option>
-            </select><!--group-->
-          </div>
-          <div class="col-sm-1 pl-0 pr-0">
-            <select class="form-control form-control-sm selectCall"  name="etcCondi">
-              <option value="customer">성명/사업자명</option>
-              <option value="contact">연락처</option>
-              <option value="contractId">계약번호</option>
-              <option value="roomId">방번호</option>
-            </select><!--codi8-->
-          </div>
-          <div class="col-sm-2 pl-0 pr-0">
-            <input type="text" name="cText" value="" class="form-control form-control-sm text-center"><!--codi9-->
-          </div>
-          <!-- <div class="col-sm-1 pl-0 pr-0">
-            <button type="button" name="btnLoad" class="btn btn-info btn-sm">조회</button>
-          </div> -->
-        </div>
-      </form>
-
-    <!-- </div> -->
-
-</div>
+    <form>
+      <div class="row justify-content-md-center">
+        <table>
+          <tr>
+            <td width="6%">
+              <select class="form-control form-control-sm selectCall" name="dateDiv">
+                <option value="startDate">시작일자</option>
+                <option value="endDate">종료일자</option>
+                <option value="contractDate">계약일자</option>
+                <option value="registerDate">등록일자</option>
+              </select><!--codi1-->
+            </td>
+            <td width="6%">
+              <select class="form-control form-control-sm selectCall" name="periodDiv">
+                <option value="allDate">--</option>
+                <option value="nowMonth">당월</option>
+                <option value="pastMonth">전월</option>
+                <option value="nextMonth">익월</option>
+                <option value="1pastMonth">1개월전</option>
+                <option value="nowYear">당년</option>
+              </select><!--codi2-->
+            </td>
+            <td width="8%">
+              <input type="text" name="fromDate" value="" class="form-control form-control-sm text-center dateType"><!--codi3-->
+            </td>
+            <td width="1%">~</td>
+            <td width="8%">
+              <input type="text" name="toDate" value="" class="form-control form-control-sm text-center dateType"><!--codi4-->
+            </td>
+            <td width="5%">
+              <select class="form-control form-control-sm selectCall" name="progress">
+                <option value="pAll">전체</option>
+                <option value="pIng" selected>현재</option>
+                <option value="pEnd">종료</option>
+                <option value="pWaiting">대기</option>
+              </select><!--codi5-->
+            </td>
+            <td width="6%">
+              <select class="form-control form-control-sm selectCall" name="building">
+              </select><!--building-->
+            </td>
+            <td width="6%">
+              <select class="form-control form-control-sm selectCall" name="group">
+                <option value="groupAll">그룹전체</option>
+              </select><!--group-->
+            </td>
+            <td width="8%">
+              <select class="form-control form-control-sm selectCall" name="etcCondi">
+                <option value="customer">성명/사업자명</option>
+                <option value="contact">연락처</option>
+                <option value="contractId">계약번호</option>
+                <option value="roomId">방번호</option>
+              </select><!--codi8-->
+            </td>
+            <td width="12%">
+              <input type="text" name="cText" value="" class="form-control form-control-sm text-center"><!--codi9-->
+            </td>
+          </tr>
+        </table>
+      </div>
+    </form>
+  </div>
 </section>
 
-<section class="container">
-    <div class="d-flex flex-row-reverse">
-        <div class="float-right">
-          <button type="button" class="btn btn-secondary" name="rowDeleteBtn" data-toggle="tooltip" data-placement="top" title="'c'표시된것만 삭제 가능합니다">삭제</button>
-          <a href="contract_add2.php"><button type="button" class="btn btn-primary" name="button">등록</button></a>
-          <button type="button" class="btn btn-warning" name="cAppend" data-toggle="modal" data-target="#nAddBtn">연장</button>
-        </div>
-    </div>
+<!-- 삭제,등록,엑셀저장부분 -->
+<section class="container mb-2">
+  <div class="row justify-content-end mr-0">
+    <a href="contract_add2.php" role="button" class="btn btn-sm btn-primary mr-1">신규등록</a>
+    <button type="button" class="btn btn-sm btn-danger mr-1" name="rowDeleteBtn" data-toggle="tooltip" data-placement="top" title="'c'표시된것만 삭제 가능합니다">선택삭제</button>
+    <button type="button" class="btn btn-info btn-sm" name="button" data-toggle="tooltip" data-placement="top" title="작업준비중입니다."><i class="far fa-file-excel"></i>엑셀저장</button>
+  </div>
 </section>
+
 
 <!-- 표내용 -->
 <section class="container">
   <table class="table table-hover table-bordered table-sm text-center" id="checkboxTestTbl">
     <thead>
       <tr class="table-secondary">
-        <th scope="col" class="mobile"><input type="checkbox"></th>
+        <th scope="col" class="mobile"><input type="checkbox" id="allselect"></th>
         <th scope="col">순번</th>
         <th scope="col">상태</th>
         <th scope="col">입주자</th>
@@ -143,6 +145,7 @@ include "building.php";
 <script src="/svc/inc/js/datepicker-ko.js"></script>
 <script src="/svc/inc/js/etc/newdate8.js?<?=date('YmdHis')?>"></script>
 <script src="/svc/inc/js/etc/checkboxtable.js?<?=date('YmdHis')?>"></script>
+<script src="/svc/inc/js/etc/form.js?<?=date('YmdHis')?>"></script>
 
 <script type="text/javascript">
   var buildingArray = <?php echo json_encode($buildingArray); ?>;
@@ -159,6 +162,11 @@ include "building.php";
 <script>
 
 function maketable(){
+
+  $(function () {
+      $('[data-toggle="tooltip"]').tooltip()
+  })
+
   var mtable = $.ajax({
     url: 'ajax_realContractLoad.php',
     method: 'post',
@@ -230,6 +238,9 @@ $(document).ready(function(){
         $('[data-toggle="tooltip"]').tooltip()
     })
 
+    var periodDiv = $('select[name=periodDiv]').val();
+    dateinput2(periodDiv);
+
     maketable();
 
 
@@ -240,11 +251,40 @@ $(document).ready(function(){
       currentText: '오늘', // 오늘 날짜로 이동하는 버튼 패널
       closeText: '닫기'  // 닫기 버튼 패널
     })
+
+    $(document).on('change', '.tbodycheckbox', function(){
+      var allCnt = $(".tbodycheckbox").length;
+      var checkedCnt = $(".tbodycheckbox").filter(":checked").length;
+
+      // console.log(allCnt, checkedCnt);
+
+      if($(this).is(":checked")){
+        $(this).prop('checked',true);
+        $(this).parent().parent().addClass("selected");
+      } else {
+        $(this).prop('checked',false);
+        $(this).parent().parent().removeClass("selected");
+      }
+
+      if( allCnt==checkedCnt ){
+        $("#allselect").prop("checked", true);
+      } else {
+        $("#allselect").prop("checked", false);
+      }
+    })
+
 })
 //===========document.ready function end and the other load start!
 
 
+$('select[name=dateDiv]').on('change', function(){
+    maketable();
+})
+
 $('select[name=periodDiv]').on('change', function(){
+    var periodDiv = $('select[name=periodDiv]').val();
+    // console.log(periodDiv);
+    dateinput2(periodDiv);
     maketable();
 })
 
@@ -272,9 +312,62 @@ $('select[name=group]').on('change', function(){
 $('input[name=cText]').on('keyup', function(){
     maketable();
 })
-//---------조회버튼클릭평션 end and 삭제버툰 펑션 시작--------------//
+//---------조회버튼클릭평션 end and contractArray 펑션 시작--------------//
+
+var contractArray = [];
+
+$(document).on('change', '#allselect', function(){
+
+    var allCnt = $(".tbodycheckbox", table).length;
+    contractArray = [];
+
+    if($("#allselect").is(":checked")){
+      for (var i = 1; i <= allCnt; i++) {
+        var contractArrayEle = [];
+        var colOrder = table.find("tr:eq("+i+")").find("td:eq(1)").text().trim();
+        var colid = table.find("tr:eq("+i+")").find("td:eq(0)").children('input').val();
+        var colStep = table.find("tr:eq("+i+")").find("td:eq(10)").children('div').text();
+        var colFile = table.find("tr:eq("+i+")").find("td:eq(11)").children('a:eq(0)').text();
+        var colMemo = table.find("tr:eq("+i+")").find("td:eq(11)").children('a:eq(1)').text();
+        contractArrayEle.push(colOrder, colid, $.trim(colStep), colFile, colMemo);
+        contractArray.push(contractArrayEle);
+      }
+    } else {
+      contractArray = [];
+    }
+  console.log(contractArray);
+})
+
+$(document).on('change', '.tbodycheckbox', function(){
+    var contractArrayEle = [];
+
+    if($(this).is(":checked")){
+      var currow = $(this).closest('tr');
+      var colOrder = Number(currow.find('td:eq(1)').text());
+      var colid = currow.find('td:eq(0)').children('input').val();
+      var colStep = currow.find('td:eq(10)').children('div').text();
+      var colFile = currow.find("td:eq(11)").children('a:eq(0)').text();
+      var colMemo = currow.find("td:eq(11)").children('a:eq(1)').text();
+      contractArrayEle.push(colOrder, colid, $.trim(colStep), colFile, colMemo);
+      contractArray.push(contractArrayEle);
+    } else {
+      var currow = $(this).closest('tr');
+      var colOrder = Number(currow.find('td:eq(1)').text());
+      var colid = currow.find('td:eq(0)').children('input').val();
+      var colStep = currow.find('td:eq(10)').children('div').text();
+      var colFile = currow.find("td:eq(11)").children('a:eq(0)').text();
+      var colMemo = currow.find("td:eq(11)").children('a:eq(1)').text();
+      var dropReady = contractArrayEle.push(colOrder, colid, $.trim(colStep), colFile, colMemo);
+      var index = contractArray.indexOf(dropReady);
+      contractArray.splice(index, 1);
+    }
+    console.log(contractArray);
+    // console.log(typeof(contractArray[3]));
+})
 
 
+
+//---------contractArray펑션 end 삭제버튼펑션 시작--------------//
 $('button[name="rowDeleteBtn"]').on('click', function(){
 // console.log(contractArray);
 for (var i = 0; i < contractArray.length; i++) {

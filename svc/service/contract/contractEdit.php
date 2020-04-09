@@ -13,14 +13,14 @@ if(!isset($_SESSION['is_login'])){
 include $_SERVER['DOCUMENT_ROOT']."/svc/view/service_header1_meta.php";
 include $_SERVER['DOCUMENT_ROOT']."/svc/view/service_header2.php";
 include $_SERVER['DOCUMENT_ROOT']."/svc/view/conn.php";
+include "building.php";
 include "contractEdit_condi.php";
 
  ?>
 
- <script src="/svc/inc/js/etc/uploadfile.js?<?=date('YmdHis')?>"></script>
- <link rel="stylesheet" href="/svc/inc/css/custom2.css">
-
-
+<div class="container jumbotron pt-3 pb-3 mb-2">
+  <h2 class="">계약상세내용입니다.(#202)</h2>
+</div>
 <div class="container">
   <?php include "contractEdit_button.php";?>
   <?php include "contractEdit_ci.php";?>
@@ -29,6 +29,7 @@ include "contractEdit_condi.php";
   include "contractEdit_cs_modal_nadd.php";//n개월추가모달
   include "contractEdit_cs_modal_regist.php";//청구설정모달
   ?>
+  <?php include "contractEdit_deposit.php";?>
   <?php include "contractEdit_file.php";?>
   <?php include "contractEdit_memo.php";?>
 </div>
@@ -39,14 +40,34 @@ include "contractEdit_condi.php";
    </div><!-- 최하단 계약정보작성자보여주기세션 -->
 
    <div class="d-flex justify-content-center mt-3">
-     <a class="btn btn-secondary mr-1" href="contract.php" role="button">계약리스트 화면으로</a>
+     <a class="btn btn-secondary mr-1" href="contract.php" role="button">계약목록 바로가기</a>
      <a class="btn btn-outline-secondary mr-1" href="contractAll.php" role="button">일괄계약등록</a>
      <a class="btn btn-outline-secondary mr-1" href="contract_add2.php" role="button">계약등록</a>
    </div><!-- 버튼모음 섹션 -->
  </div>
 
-<script src="/admin/js/jquery-ui.min.js"></script>
-<script src="/admin/js/datepicker-ko.js"></script>
+ <?php include $_SERVER['DOCUMENT_ROOT']."/svc/view/service_footer.php"; ?>
+
+
+ <script src="/svc/inc/js/jquery-3.3.1.min.js"></script>
+ <script src="/svc/inc/js/jquery-ui.min.js"></script>
+ <script src="/svc/inc/js/popper.min.js"></script>
+ <script src="/svc/inc/js/bootstrap.min.js"></script>
+ <script src="/svc/inc/js/datepicker-ko.js"></script>
+ <script src="/svc/inc/js/jquery.number.min.js"></script>
+ <script src="/svc/inc/js/etc/checkboxtable.js?<?=date('YmdHis')?>"></script>
+ <script src="/svc/inc/js/etc/form.js?<?=date('YmdHis')?>"></script>
+ <script src="/svc/inc/js/etc/uploadfile.js?<?=date('YmdHis')?>"></script>
+
+ <script type="text/javascript">
+   var buildingArray = <?php echo json_encode($buildingArray); ?>;
+   var groupBuildingArray = <?php echo json_encode($groupBuildingArray); ?>;
+   var roomArray = <?php echo json_encode($roomArray); ?>;
+   console.log(buildingArray);
+   console.log(groupBuildingArray);
+   console.log(roomArray);
+ </script>
+
 <script>
 
 $(document).ready(function(){
@@ -100,7 +121,7 @@ $(document).ready(function(){
   var allCnt = $(":checkbox:not(:first)", table).length;
 
   for (var i = 1; i <= allCnt; i++) {
-    var executiveDateIs = table.find("tr:eq("+i+")").children("td:eq(9)").children('p').text();
+    var executiveDateIs = table.find("tr:eq("+i+")").children("td:eq(9)").children('label').text();
     console.log(executiveDateIs);
     if(executiveDateIs){
       table.find("tr:eq("+i+")").css('display', 'none');
@@ -163,9 +184,8 @@ $(document).ready(function(){
     changeMonth: true,
     changeYear: true,
     showButtonPanel: true,
-    // showOn: "button",
-    buttonImage: "/img/calendar.svg",
-    buttonImageOnly: false
+    currentText: '오늘', // 오늘 날짜로 이동하는 버튼 패널
+    closeText: '닫기'  // 닫기 버튼 패널
   })
 
 }) //document.ready function closing}
@@ -365,7 +385,7 @@ $('#button3').click(function(){ //일괄입금버튼 클릭시
 
     // var csId = table.find("tr:eq("+expectedDayArray[i][0]+")").find('td:eq(0)').children('input').val(); 계약스케줄을 가져오려다가 안가져옴, 왜냐면 필요가없음
 
-    var psId = table.find("tr:eq("+expectedDayArray[i][0]+")").find('td:eq(8)').children('p').children('u').text();
+    var psId = table.find("tr:eq("+expectedDayArray[i][0]+")").find('td:eq(7)').children('label').children('u').text();
     // console.log(psId); //제이쿼리로 트림을 하니 더 이상해져서 안하기로함
 
     if(psId.trim()===""){ //trim()이거를 안넣으니 빈문자열로 인식이 안되어서 이거넣음
@@ -400,7 +420,7 @@ var contractScheduleArray = [];
 
 for (var i = 0; i < expectedDayArray.length; i++) {
 
-var psId = table.find("tr:eq("+expectedDayArray[i][0]+")").find('td:eq(8)').children('p').children('u').text();
+var psId = table.find("tr:eq("+expectedDayArray[i][0]+")").find('td:eq(7)').children('label').children('u').text();
 
 if(psId===""){ //trim()이거를 안넣으니 빈문자열로 인식이 안되어서 이거넣음
   alert('청구번호가 존재해야 일괄입금취소 처리가 가능합니다.');
@@ -777,16 +797,15 @@ $('#button8').on('click', function(){
   var allCnt = $(":checkbox:not(:first)", table).length;
 
   for (var i = 1; i <= allCnt; i++) {
-    var executiveDateIs = table.find("tr:eq("+i+")").find("td:eq(9)").children('p').text();
+    var executiveDateIs = table.find("tr:eq("+i+")").find("td:eq(9)").children('label').text();
     if(executiveDateIs){
       table.find("tr:eq("+i+")").css('display', '');
     }
   }
 })
 
-
-
 </script>
 
 
-<?php include $_SERVER['DOCUMENT_ROOT']."/svc/view/service_footer.php";?>
+</body>
+</script>

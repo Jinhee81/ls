@@ -14,7 +14,7 @@ include "building.php";
 ?>
 <section class="container">
   <div class="jumbotron pt-3 pb-3">
-    <h2 class="">임대계약을 등록하세요.</h2>
+    <h2 class="">임대계약을 등록하세요.(#204)</h2>
     <!-- <p class="lead">고객이란 입주한 세입자 및 문의하는 문의고객, 거래처 등을 포함합니다. 고객등록이 되어야 임대계약 등록이 가능합니다!</p> -->
     <small>(1)<span id='star' style='color:#F7BE81;'> * </span>표시는 필수 입력값입니다. (2)<b>[입주자자정보]</b>에는 입주자만 등록 가능합니다. (거래처 및 문의고객은 검색결과가 없다고 표시되니 주의하세요!) <b>[입주자정보]</b>의 제일우측 숫자는 고객번호로써 시스템데이터임을 참고하여주세요. (3)<b>[기간정보]</b>의 기간(개월수)에는 최대 72개월(6년)까지 등록 가능합니다.</small>
     <hr class="my-4">
@@ -51,12 +51,23 @@ include "building.php";
 
 <?php include $_SERVER['DOCUMENT_ROOT']."/svc/view/service_footer.php"; ?>
 
-<script src="https://code.jquery.com/jquery-3.3.1.js"></script>
-<script src="/svc/inc/js/jquery.number.min.js"></script><
+<script src="/svc/inc/js/jquery-3.3.1.min.js"></script>
+<script src="/svc/inc/js/jquery.number.min.js"></script>
 <script src="/svc/inc/js/jquery-ui.min.js"></script>
 <script src="/svc/inc/js/popper.min.js"></script>
 <script src="/svc/inc/js/bootstrap.min.js"></script>
 <script src="/svc/inc/js/datepicker-ko.js"></script>
+
+<script type="text/javascript">
+  var buildingArray = <?php echo json_encode($buildingArray); ?>;
+  var groupBuildingArray = <?php echo json_encode($groupBuildingArray); ?>;
+  var roomArray = <?php echo json_encode($roomArray); ?>;
+  console.log(buildingArray);
+  console.log(groupBuildingArray);
+  console.log(roomArray);
+</script>
+
+<script src="/svc/inc/js/etc/buildingoption.js?<?=date('YmdHis')?>"></script>
 
 <script>
 function customersearch(){
@@ -99,9 +110,8 @@ $(document).ready(function(){
     changeMonth: true,
     changeYear: true,
     showButtonPanel: true,
-    // showOn: "button",
-    buttonImage: "/img/calendar.svg",
-    buttonImageOnly: false
+    currentText: '오늘',
+    closeText: '닫기'
   })
 
   $('.amountNumber').on('click keyup', function(){
@@ -181,79 +191,6 @@ $('#contractDate').on('change', function(){
 }) //contractDate on change closing괄호, 최초계약일자=보증금입금일자
 
 
-
-
-var select2option, select3option, select4option, select5option, buildingIdx, groupIdx;
-var pay = ["선불", "후불"];
-
-for(var key in buildingArray){ //건물목록출력(비즈피스장암,비즈피스구로)
-  select2option = "<option value='"+key+"'>"+buildingArray[key][0]+"</option>";
-  $('#select2').append(select2option);
-}
-buildingIdx = $('#select2').val();
-
-// console.log(buildingArray[buildingIdx][1]);
-select5option = "<option value='"+buildingArray[buildingIdx][1]+"'>"+buildingArray[buildingIdx][1]+"</option>";
-$('#select5').append(select5option);
-
-for (var i in pay){
-  if(pay[i] != buildingArray[buildingIdx][1]){
-    select5option = "<option value='"+pay[i]+"'>"+pay[i]+"</option>";
-    $('#select5').append(select5option);
-  }
-}
-
-for(var key2 in groupBuildingArray[buildingIdx]){ //그룹목록출력(상주,비상주)
-  select3option = "<option value='"+key2+"'>"+groupBuildingArray[buildingIdx][key2]+"</option>";
-  // console.log(select3option);
-  $('#select3').append(select3option);
-}
-groupIdx = $('#select3').val();
-
-for(var key3 in roomArray[groupIdx]){
-  select4option = "<option value='"+key3+"'>"+roomArray[groupIdx][key3]+"</option>";
-  $('#select4').append(select4option);
-}
-roomIdx = $('#select4').val();
-
-$('#select2').on('change', function(event){
-  buildingIdx = $('#select2').val();
-  $('#select3').empty();
-  for(var key2 in groupBuildingArray[buildingIdx]){ //그룹목록출력(상주,비상주)
-    select3option = "<option value='"+key2+"'>"+groupBuildingArray[buildingIdx][key2]+"</option>";
-    // console.log(select3option);
-    $('#select3').append(select3option);
-  }
-  groupIdx = $('#select3').val();
-
-  $('#select4').empty();
-  for(var key3 in roomArray[groupIdx]){
-    select4option = "<option value='"+key3+"'>"+roomArray[groupIdx][key3]+"</option>";
-    $('#select4').append(select4option);
-  }
-
-  $('#select5').empty();
-  select5option = "<option value='"+buildingArray[buildingIdx][1]+"'>"+buildingArray[buildingIdx][1]+"</option>";
-  $('#select5').append(select5option);
-
-  for (var i in pay){
-    if(pay[i] != buildingArray[buildingIdx][1]){
-      select5option = "<option value='"+pay[i]+"'>"+pay[i]+"</option>";
-      $('#select5').append(select5option);
-    }
-  }
-})
-
-$('#select3').on('change', function(event){
-  groupIdx = $('#select3').val();
-  $('#select4').empty();
-  for(var key3 in roomArray[groupIdx]){
-    select4option = "<option value='"+key3+"'>"+roomArray[groupIdx][key3]+"</option>";
-    $('#select4').append(select4option);
-  }
-})
-
-// console.log(buildingIdx, groupIdx, roomIdx);
 
 function getEndDate(){
   var a = Number($("input[name='monthCount']").val());

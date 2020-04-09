@@ -55,8 +55,8 @@ $clist['add3'] = htmlspecialchars($row['add3']);
 
  ?>
 <section class="container">
-  <div class="jumbotron">
-    <h1 class="display-4">입주자 수정 화면입니다!</h1>
+  <div class="jumbotron pt-3 pb-3">
+    <h2 class="">입주자 수정 화면이에요.</h2>
     <!-- <p class="lead">고객이란 입주한 세입자 및 문의하는 문의고객, 거래처 등을 포함합니다. 고객등록이 되어야 임대계약 등록이 가능합니다!</p>
     <hr class="my-4">-->
     <!-- <small>(1) * 표시는 필수입력값입니다. (2) 구분(대)의 값이 '고객'이어야 임대계약 등록이 가능합니다. (3) '고객'이란 단어는 세입자 또는 입주자를 의미합니다.</small> isright 9999 -->

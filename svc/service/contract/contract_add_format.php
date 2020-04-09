@@ -106,5 +106,5 @@
 </div>
 <div class="">
   <button type='submit' class='btn btn-primary'>저장</button>
-  <a href='contract.php'><button type='button' class='btn btn-secondary'>임대계약리스트화면으로</button></a>
+  <a href='contract.php'><button type='button' class='btn btn-secondary'>계약목록 바로가기</button></a>
 </div>

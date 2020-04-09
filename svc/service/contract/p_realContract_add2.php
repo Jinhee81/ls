@@ -60,9 +60,9 @@ for ($i=1; $i <= (int)$_POST['monthCount']; $i++) {
     $contractRow[$i] = array();
     $mEndDate = date("Y-m-d", strtotime($mStartDate."+1 month"."-1 day"));
 
-    if($_POST['payOrder']==='선불'){
+    if($_POST['payOrder']==='선납'){
       $mExpectedDate = $mStartDate;
-    } else if($_POST['payOrder']==='후불'){
+    } else if($_POST['payOrder']==='후납'){
       $mExpectedDate = $mEndDate;
     }
 

@@ -79,7 +79,7 @@ include $_SERVER['DOCUMENT_ROOT']."/svc/main/condition.php";
                 <button type="button" class="btn btn-danger btn-sm btn-block" name="rowDeleteBtn">선택삭제</button>
               </td>
               <td width="7%">
-                <a href="#"><button type="button" class="btn btn-info btn-sm btn-block" name="button"><i class="far fa-file-excel"></i>엑셀저장</button></a>
+                <button type="button" class="btn btn-info btn-sm btn-block" name="button" data-toggle="tooltip" data-placement="top" title="작업준비중입니다."><i class="far fa-file-excel"></i>엑셀저장</button>
             </tr>
           </table>
         </div>
@@ -217,6 +217,8 @@ $(document).ready(function(){
 
     if( allCnt==checkedCnt ){
       $("#allselect").prop("checked", true);
+    } else {
+      $("#allselect").prop("checked", false);
     }
   });
 
@@ -227,7 +229,7 @@ $(document).ready(function(){
 
   $('select[name=periodDiv]').on('change', function(){
       var periodDiv = $('select[name=periodDiv]').val();
-      console.log(periodDiv);
+      // console.log(periodDiv);
       dateinput2(periodDiv);
       maketable();
   })
@@ -256,7 +258,7 @@ $(document).ready(function(){
   var customerArray = [];
 
   $(document).on('change', '#allselect', function(){
-    var table = $('#mydatatable');
+    // var table = $('#mydatatable');
     var allCnt = $(".tbodycheckbox").length;
     customerArray = [];
 
@@ -276,7 +278,7 @@ $(document).ready(function(){
   })
 
   $(document).on('change', '.tbodycheckbox', function(){
-    var table = $('#mydatatable');
+    // var table = $('#mydatatable');
     var customerArrayEle = [];
 
     if($(this).is(":checked")){

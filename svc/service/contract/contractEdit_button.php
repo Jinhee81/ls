@@ -1,6 +1,6 @@
-<div class="jumbotron mt-3 pt-3 pb-3 text-center border border-dark rounded">
-  <a class="btn btn-dark btn-sm mr-1" href="contract.php" role="button">계약리스트 화면으로</a>
-  <a class="btn btn-dark btn-sm mr-1" href="/service/account/deposit.php" role="button">보증금리스트 화면으로</a>
+<div class="jumbotron pt-3 pb-3 text-center border border-dark rounded">
+  <a class="btn btn-dark btn-sm mr-1" href="contract.php" role="button">계약목록 바로가기</a>
+  <a class="btn btn-dark btn-sm mr-1" href="/service/account/deposit.php" role="button">보증금목록 바로가기</a>
   <a href="contract_add1_edit.php?id=<?=$filtered_id?>">
     <button name="contractEdit" class="btn btn-dark btn-sm mr-1">계약수정</button>
   </a>

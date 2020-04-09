@@ -13,7 +13,8 @@ if(!isset($_SESSION['is_login'])){
 include $_SERVER['DOCUMENT_ROOT']."/svc/view/service_header1_meta.php";
 include $_SERVER['DOCUMENT_ROOT']."/svc/view/service_header2.php";
 include $_SERVER['DOCUMENT_ROOT']."/svc/view/conn.php";
-
+include $_SERVER['DOCUMENT_ROOT']."/svc/main/condition.php";
+include "building.php";
 // print_r($_SESSION);
 // print_r($_GET['id']);
 $filtered_id = mysqli_real_escape_string($conn, $_GET['id']);//고객아이디
@@ -66,50 +67,8 @@ if($clist['div2']==='개인사업자'){
 
 $output = $cName.' | '.$cContact.' | '.$clist['id'];
 
-$sql = "select * from building where user_id = {$_SESSION['id']}";
-// echo $sql;
-$result = mysqli_query($conn, $sql);
-while($row = mysqli_fetch_array($result)){
-  $buildingArray[$row['id']] = [$row['bName'],$row['pay']];
-}
-
-foreach ($buildingArray as $key => $value) { //key는 건물아이디, value는 건물이름
-  $sql2 = "select * from group_in_building where building_id={$key}"; //건물아이디로 그룹조회
-  // echo $sql2;
-  $result2 = mysqli_query($conn, $sql2);
-  $groupBuildingArray[$key] = array();
-  while($row2 = mysqli_fetch_array($result2)){
-    $groupBuildingArray[$key][$row2['id']]=$row2['gName'];//그룹아이디
-  }
-}
-
-foreach ($groupBuildingArray as $key => $value) {
-  $sql3 = "select id from group_in_building where building_id={$key}"; //건물아이디로 그룹조회 (건물아이디가 키값)
-  // echo $sql3;
-  $result3 = mysqli_query($conn, $sql3);
-  while($row3 = mysqli_fetch_array($result3)){
-    $sql4 = "select id, rName from r_g_in_building where group_in_building_id={$row3['id']}";
-    // echo $sql4;다시 그룹아이디로 방번호조회
-    $result4 = mysqli_query($conn, $sql4);
-    while($row4 = mysqli_fetch_array($result4)){
-      $roomArray[$row3['id']][$row4['id']]=$row4['rName'];
-    }
-  }
-}
-
-// echo "building Array : "; print_r($buildingArray);
-// echo "group Array : "; print_r($groupBuildingArray);
-// echo "room Array : "; print_r($roomArray);
 ?>
-<script type="text/javascript">
-  var buildingArray = <?php echo json_encode($buildingArray); ?>;
-  var groupBuildingArray = <?php echo json_encode($groupBuildingArray); ?>;
-  var roomArray = <?php echo json_encode($roomArray); ?>;
-  // console.log(buildingArray);
-  // console.log(groupBuildingArray);
-  // console.log(roomArray);
-</script>
-<style>
+<!-- <style>
   .inputWithIcon input[type=search]{
     padding-left: 40px;
   }
@@ -134,10 +93,10 @@ foreach ($groupBuildingArray as $key => $value) {
   #customerList li {
     padding: 12px;
   }
-</style>
+</style> -->
 <section class="container">
-  <div class="jumbotron">
-    <h1 class="display-4">임대계약 등록 화면입니다!</h1>
+  <div class="jumbotron pt-3 pb-3">
+    <h2 class="">임대계약 등록 화면입니다!</h1>
     <!-- <p class="lead">고객이란 입주한 세입자 및 문의하는 문의고객, 거래처 등을 포함합니다. 고객등록이 되어야 임대계약 등록이 가능합니다!</p> -->
     <small>(1)<span id='star' style='color:#F7BE81;'> * </span>표시는 필수 입력값입니다. (2)<b>[세입자정보]</b>에는 세입자만 등록 가능합니다. (거래처 및 문의고객은 검색결과가 없다고 표시되니 주의하세요!) <b>[세입자정보]</b>의 제일우측 숫자는 세입자번호로써 시스템데이터임을 참고하여주세요.(3)<b>[기간정보]</b>의 기간(개월수)에는 최대 72개월(6년)까지 등록 가능합니다.</small>
     <hr class="my-4">
@@ -268,17 +227,25 @@ foreach ($groupBuildingArray as $key => $value) {
   </form>
 </section>
 
-<script src="/admin/js/jquery-ui.min.js"></script>
-<script src="/admin/js/datepicker-ko.js"></script>
+<?php include $_SERVER['DOCUMENT_ROOT']."/svc/view/service_footer.php"; ?>
+
+<script src="https://code.jquery.com/jquery-3.3.1.js"></script>
+<script src="/svc/inc/js/jquery.number.min.js"></script><!-- 숫자입력시 천단위 콤마에 필요한 js file -->
+<script src="/svc/inc/js/jquery-ui.min.js"></script><!-- datepicker에 필요한 js file -->
+<script src="/svc/inc/js/popper.min.js"></script><!--툴팁함수호출에필요함-->
+<script src="/svc/inc/js/bootstrap.min.js"></script><!--툴팁함수호출하면 예쁘게부트스트랩표시가 됨-->
+<script src="/svc/inc/js/datepicker-ko.js"></script>
+
+
 <script>
 $(document).ready(function(){
   $('.dateType').datepicker({
     changeMonth: true,
     changeYear: true,
     showButtonPanel: true,
-    // showOn: "button",
-    buttonImage: "/img/calendar.svg",
-    buttonImageOnly: false
+    currentText: '오늘' , // 오늘 날짜로 이동하는 버튼 패널
+    closeText: '닫기',  // 닫기 버튼 패널
+    dateFormat: "yy-mm-dd" // 텍스트 필드에 입력되는 날짜 형식.
   })
 
   $('.amountNumber').on('click keyup', function(){
@@ -477,4 +444,5 @@ $("input[name='mvAmount']").on('keyup', function(){
 
 </script>
 
-<?php include $_SERVER['DOCUMENT_ROOT']."/svc/view/service_footer.php";?>
+</body>
+</html>

@@ -67,6 +67,10 @@ $row = mysqli_fetch_array($result);
   </form>
 </section>
 
+
+<?php include $_SERVER['DOCUMENT_ROOT']."/svc/view/service_footer.php";?>
+<?php include $_SERVER['DOCUMENT_ROOT']."/svc/view/service_footer_script.php"; ?>
+
 <script>
 var count;
 var startNumber;
@@ -140,4 +144,5 @@ function closePopup(){
 
 </script>
 
-<?php include $_SERVER['DOCUMENT_ROOT']."/svc/view/service_footer.php";?>
+</body>
+</html>

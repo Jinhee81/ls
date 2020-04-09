@@ -26,8 +26,8 @@ include "building.php";
 }
 </style>
 <section class="container">
-  <div class="jumbotron">
-    <h1 class="display-4">임대계약 리스트 화면입니다!(#201)</h1>
+  <div class="jumbotron pt-3 pb-3">
+    <h2 class="">임대계약 리스트 화면이에요.</h2>
     <p class="lead">
       (1) 상태(현재 - 현재 계약), (대기 - 대기중 계약), (종료 - 종료된 계약)로 구분합니다.<br>
       (2) 월이용료를 클릭하면 해당 계약의 상세페이지가 나옵니다.<br>

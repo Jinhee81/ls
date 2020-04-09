@@ -3,9 +3,9 @@ session_start();
 if(!isset($_SESSION['is_login'])){
   header('Location: /user/login.php');
 }
-include $_SERVER['DOCUMENT_ROOT']."/view/service_header1_meta.php";
-include $_SERVER['DOCUMENT_ROOT']."/view/service_header2.php";
-include $_SERVER['DOCUMENT_ROOT']."/view/conn.php";
+include $_SERVER['DOCUMENT_ROOT']."/svc/view/service_header1_meta.php";
+include $_SERVER['DOCUMENT_ROOT']."/svc/view/service_header2.php";
+include $_SERVER['DOCUMENT_ROOT']."/svc/view/conn.php";
 
 $filtered_id = mysqli_real_escape_string($conn, $_GET['id']);
 settype($filtered_id, 'integer');
@@ -82,6 +82,9 @@ $row = mysqli_fetch_array($result);
   </form>
 </section>
 
+<?php include $_SERVER['DOCUMENT_ROOT']."/svc/view/service_footer.php";?>
+<?php include $_SERVER['DOCUMENT_ROOT']."/svc/view/service_footer_script.php"; ?>
+
 <script type="text/javascript">
 $(document).ready(function(){
   $('input[name=companynumber]').keydown(function (event) {
@@ -102,4 +105,6 @@ $(document).ready(function(){
 })
 })
 </script>
-<?php include $_SERVER['DOCUMENT_ROOT']."/view/service_footer.php";?>
+
+</body>
+</html>

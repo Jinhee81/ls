@@ -32,7 +32,7 @@ include $_SERVER['DOCUMENT_ROOT']."/svc/view/conn.php";
       </div>
       <div class="col-sm-1 pl-0 pr-0" style="">
         <select name="div1" class="form-control">
-          <option value="세입자">세입자</option>
+          <option value="입주자">입주자</option>
           <option value="거래처">거래처</option>
           <option value="기타">기타</option>
         </select>
@@ -91,6 +91,9 @@ include $_SERVER['DOCUMENT_ROOT']."/svc/view/conn.php";
   </form>
 </section>
 
+<?php include $_SERVER['DOCUMENT_ROOT']."/svc/view/service_footer.php";?>
+<?php include $_SERVER['DOCUMENT_ROOT']."/svc/view/service_footer_script.php"; ?>
+
 <script type="text/javascript">
 $(document).ready(function () {
    $(function () {
@@ -141,4 +144,5 @@ $('div[name="rowDeleteBtn"]').on('click', function(){
 
 </script>
 
-<?php include $_SERVER['DOCUMENT_ROOT']."/svc/view/service_footer.php";?>
+</body>
+</html>

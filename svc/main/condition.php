@@ -1,14 +1,30 @@
+<!-- 건물뿐만아니라 방을 등록해야지 사용시작 가능함 -->
+
 <?php
 $sql = "select count(*) from building where user_id={$_SESSION['id']}";
 $result = mysqli_query($conn, $sql);
 $row = mysqli_fetch_array($result);
-$b_count = (int)$row['count(*)'];
 
-// var_dump($b_count);
-// var_dump($row['count(*)']);
-if($b_count == 0){
+if($row[0] == 0){
   echo "<meta http-equiv='refresh' content='0; url=/svc/service/setting/building.php'>";
+} else {
+  $sql2 = "select id from building where user_id = {$_SESSION['id']}";
+  // echo $sql;
+  $result2 = mysqli_query($conn, $sql2);
+  $row2 = mysqli_fetch_array($result2);
+
+  $sql3 = "select count(*) from group_in_building where building_id={$row2[0]}"; //건물아이디로 그룹조회
+  // echo $sql2;
+  $result3 = mysqli_query($conn, $sql3);
+  $row3 = mysqli_fetch_array($result3);
+
+  if($row3[0]==0){
+    echo "<meta http-equiv='refresh' content='0; url=/svc/service/setting/building.php'>";
+  }
 }
+
+
+
 
 // print_r($_SESSION);
 

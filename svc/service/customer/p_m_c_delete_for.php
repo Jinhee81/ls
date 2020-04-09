@@ -1,4 +1,5 @@
-<?php //고객생성 파일
+<?php
+header('Content-Type: text/html; charset=UTF-8');
 session_start();
 include $_SERVER['DOCUMENT_ROOT']."/svc/view/conn.php";
 

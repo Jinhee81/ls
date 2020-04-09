@@ -14,7 +14,7 @@ include $_SERVER['DOCUMENT_ROOT']."/svc/view/service_header2.php";
 include $_SERVER['DOCUMENT_ROOT']."/svc/view/conn.php";
 
 $sql = "select
-          email, user_div, user_name,
+          email, user_div, user_name, manager_name,
           cellphone, lease_type, created, updated, gradename, coin
         from user
         where id={$_SESSION['id']}";
@@ -60,6 +60,12 @@ $row = mysqli_fetch_array($result);
       </div>
     </div>
     <div class="form-group row">
+      <label for="" class="col-sm-3 col-form-label"><b>담당자명</b></label>
+      <div class="col-sm-9">
+        <input type="text" class="form-control" name="manager_name" value="<?=$row['manager_name']?>">
+      </div>
+    </div>
+    <div class="form-group row">
       <label for="" class="col-sm-3 col-form-label"><b>연락처</b></label>
       <div class="col-sm-9">
         <input type="text" class="form-control" name="cellphone" value="<?=$row['cellphone']?>">
@@ -80,18 +86,28 @@ $row = mysqli_fetch_array($result);
       </div>
     </div>
     <div class="form-group row">
-      <label for="" class="col-sm-3 col-form-label"><b>가입일시</b></label>
-      <label for="" class="col-sm-9 col-form-label"><?=$row['created']?></label>
+      <div class="col-sm-3">
+        <label><b>가입일시</b></label>
+      </div>
+      <div class="col-sm-9">
+        <input type="text" class="form-control" value="<?=$row['created']?>" disabled>
+      </div>
     </div>
     <div class="form-group row">
-      <label for="" class="col-sm-3 col-form-label"><b>수정일시</b></label>
-      <label for="" class="col-sm-9 col-form-label"><?=$row['updated']?></label>
+      <div class="col-sm-3">
+        <label><b>수정일시</b></label>
+      </div>
+      <div class="col-sm-9">
+        <input type="text" class="form-control" value="<?=$row['updated']?>" disabled>
+      </div>
     </div>
     <button type="submit" class="btn btn-sm btn-outline-info btn-block">수정하기</button>
   </form>
 </div>
 
 
-<?php
-include $_SERVER['DOCUMENT_ROOT']."/svc/view/service_footer.php";
-?>
+<?php include $_SERVER['DOCUMENT_ROOT']."/svc/view/service_footer.php";?>
+<?php include $_SERVER['DOCUMENT_ROOT']."/svc/view/service_footer_script.php"; ?>
+
+</body>
+</html>

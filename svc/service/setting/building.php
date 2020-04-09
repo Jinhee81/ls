@@ -47,3 +47,7 @@ include $_SERVER['DOCUMENT_ROOT']."/svc/view/conn.php";
 </section>
 
 <?php include $_SERVER['DOCUMENT_ROOT']."/svc/view/service_footer.php";?>
+<?php include $_SERVER['DOCUMENT_ROOT']."/svc/view/service_footer_script.php"; ?>
+
+</body>
+</html>

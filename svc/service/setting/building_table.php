@@ -60,7 +60,7 @@ include $_SERVER['DOCUMENT_ROOT']."/svc/view/conn.php"; ?>
           $result_count=mysqli_query($conn, $sql_count);
           $row_count=mysqli_fetch_array($result_count);
           ?>
-          <a href="b_group_room_edit3.php?id=<?=$row2['id']?>"
+          <a href="b_group_room_edit.php?id=<?=$row2['id']?>"
             class='badge badge-info'>
             <?=$row2['gName'],"(",$row_count[0],")"?>
           </a><!--건물내그룹뱃지-->

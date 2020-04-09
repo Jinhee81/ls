@@ -5,11 +5,29 @@ include $_SERVER['DOCUMENT_ROOT']."/svc/view/conn.php";
 
 // print_r($_POST);
 
+if($_POST['dateDiv']==='registerDate'){
+  $dateDiv = 'created';
+} elseif($_POST['dateDiv']==='updateDate'){
+  $dateDiv = 'updated';
+}
+
+$etcDate = "";
+
+if($_POST['fromDate'] && $_POST['toDate']){
+  $etcDate = " and (DATE($dateDiv) BETWEEN '{$_POST['fromDate']}' and '{$_POST['toDate']}')";
+} elseif($_POST['fromDate']){
+  $etcDate = " and (DATE($dateDiv) >= '{$_POST['fromDate']}')";
+} elseif($_POST['toDate']){
+  $etcDate = " and (DATE($dateDiv) <= '{$_POST['toDate']}')";
+}
+
 $sql = "select
+          @num := @num + 1 as num,
           id, div1, div2, name, div3, companyname, cNumber1, cNumber2, cNumber3, contact1, contact2, contact3, email, etc, created, updated
-        from customer
+        from (select @num :=0)a, customer
         where user_id={$_SESSION['id']}
-        order by created desc";
+              $etcDate
+        order by num desc";
 // echo $sql;
 
 $result = mysqli_query($conn, $sql);
@@ -27,7 +45,7 @@ for ($i=0; $i < count($allRows); $i++) {
    $row2 = mysqli_fetch_array($result2);
 
 
-   $allRows[$i]['contractCount'] = $row2[0];
+   $allRows[$i]['contractCount'] = (int)$row2[0];
 
   $allRows[$i]['cNumber'] = $allRows[$i]['cNumber1'].'-'.$allRows[$i]['cNumber2'].'-'.$allRows[$i]['cNumber3'];
 
@@ -77,6 +95,6 @@ for ($i=0; $i < count($allRows); $i++) {
 
 
 echo json_encode($allRows);
-
+//
 // print_r($allRows);
 ?>

@@ -1,13 +1,15 @@
 <?php //고객수정파일
+header('Content-Type: text/html; charset=UTF-8');
 session_start();
 include $_SERVER['DOCUMENT_ROOT']."/svc/view/conn.php";
 
 // print_r($_POST);
 // print_r($_SESSION);
 
+$filtered_id = mysqli_real_escape_string($conn, $_POST['id']);
+
+
 $fil = array(
-  'id' => mysqli_real_escape_string($conn, $_POST['id']),//고객아이디
-  'qDate' => mysqli_real_escape_string($conn, $_POST['qDate']),
   'name' => mysqli_real_escape_string($conn, $_POST['name']),
   'email' => mysqli_real_escape_string($conn, $_POST['email']),
   'etc' => mysqli_real_escape_string($conn, $_POST['etc']),
@@ -24,50 +26,26 @@ $fil = array(
   'add3' => mysqli_real_escape_string($conn, $_POST['add3'])
 );
 
-settype($fil['id'], 'integer');
+settype($filtered_id, 'integer');
 
 // print_r($fil);
 
-$addCheck1 = "
-  select count(*) from customer
-  where
-    user_id={$_SESSION['id']} and name = '{$fil['name']}' and
-    id <> {$fil['id']}
-    ";
-// echo $addCheck1;
-$result_addCheck1 = mysqli_query($conn, $addCheck1);
-$row_addCheck1 = mysqli_fetch_array($result_addCheck1);
-
-if((int)$row_addCheck1[0]>0){
-  echo "<script>alert('중복된 이름이 존재합니다. 중복된 이름은 저장이 안돼요.');
-        location.href = 'm_c_edit.php?id=".$fil['id']."';</script>";
-  exit();
+if($_POST['div3']){
+  $div2 = '법인사업자';
+} else {
+  if($fil['companyname']){
+    $div2 = '개인사업자';
+  } else {
+    $div2 = '개인';
+  }
 }
 
-$addCheck2 = "
-  select count(*) from customer
-  where
-    user_id={$_SESSION['id']} and
-    contact1 = '{$fil['contact1']}' and
-    contact2 = '{$fil['contact2']}' and
-    contact3 = '{$fil['contact3']}' and
-    id <> {$fil['id']}
-    ";
-// echo $addCheck2;
-$result_addCheck2 = mysqli_query($conn, $addCheck2);
-$row_addCheck2 = mysqli_fetch_array($result_addCheck2);
-
-if((int)$row_addCheck2[0]>0){
-  echo "<script>alert('중복된 연락처가 존재합니다. 중복된 연락처는 저장이 안돼요.');
-        location.href = 'm_c_edit.php?id=".$fil['id']."';</script>";
-  exit();
-}
 
 $sql = "
   UPDATE customer
   SET
     div1 = '{$_POST['div1']}',
-    qDate = '{$fil['qDate']}',
+    div2 = '{$div2}',
     name = '{$fil['name']}',
     contact1 = '{$fil['contact1']}',
     contact2 = '{$fil['contact2']}',
@@ -88,14 +66,15 @@ $sql = "
     etc = '{$fil['etc']}',
     updated = now(),
     updatePerson = {$_SESSION['id']}
-  WHERE id = {$fil['id']}
+  WHERE id = {$filtered_id}
 ";
 
-// echo $sql;
+echo $sql;
+
 $result = mysqli_query($conn, $sql);
 if($result){
   echo "<script>alert('수정하였습니다.');
-  location.href = 'm_c_edit.php?id=".$fil['id']."';
+  location.href = 'm_c_edit.php?id=$filtered_id';
   </script>";
 } else {
   echo "<script>alert('수정 과정에 문제가 생겼습니다. 관리자에게 문의하세요.');

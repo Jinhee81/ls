@@ -31,40 +31,45 @@ if(d.getMonth()===11){
 }
 
 
-var todayYearFirst = d.getFullYear() + '1-1';
+var todayYearFirst = d.getFullYear() + '-1-1';
 
-$('select[name="periodDiv"]').on('change', function(){
 
-    var periodVal = $(this).val();
-    // console.log(periodVal);
-    if(periodVal === 'allDate'){
-      $('input[name="fromDate"]').val("");
-      $('input[name="toDate"]').val("");
-    }
 
-    if(periodVal === 'nowMonth'){
-      $('input[name="fromDate"]').val(todayMonthFirst);
-      $('input[name="toDate"]').val(todayMonthLast);
-    }
+function dateinput2(x){ //from, to date 입력()
+  if(x === 'allDate'){
+    var fromdate = $('input[name="fromDate"]').val("");
+    var todate = $('input[name="toDate"]').val("");
+  }
 
-    if(periodVal === 'pastMonth'){ //기간이 전월일 때
-      $('input[name="fromDate"]').val(lastMonthFirst);
-      $('input[name="toDate"]').val(lastMonthLast);
-    }
+  if(x === 'nowMonth'){
+    var fromdate = $('input[name="fromDate"]').val(todayMonthFirst);
+    var todate = $('input[name="toDate"]').val(todayMonthLast);
+  }
 
-    if(periodVal === '1pastMonth'){ //기간이 1개월전일때
-      $('input[name="fromDate"]').val(last1monthdate);
-      $('input[name="toDate"]').val(today);
-    }
+  if(x === 'pastMonth'){ //기간이 전월일 때
+    var fromdate = $('input[name="fromDate"]').val(lastMonthFirst);
+    var todate = $('input[name="toDate"]').val(lastMonthLast);
+  }
 
-    if(periodVal === 'nextMonth'){ //기간이 익월일0
-      $('input[name="fromDate"]').val(nextMonthFirst);
-      $('input[name="toDate"]').val(nextMonthLast);
-    }
+  if(x === '1pastMonth'){ //기간이 1개월전일때
+    var fromdate = $('input[name="fromDate"]').val(last1monthdate);
+    var todate = $('input[name="toDate"]').val(today);
+  }
 
-    if(periodVal === 'nowYear'){
-      $('input[name="fromDate"]').val(todayYearFirst);
-      $('input[name="toDate"]').val(today);
-    }
+  if(x === 'nextMonth'){ //기간이 익월일 때
+    var fromdate = $('input[name="fromDate"]').val(nextMonthFirst);
+    var todate = $('input[name="toDate"]').val(nextMonthLast);
+  }
 
-}) ////select periodDiv function closing
+  if(x === 'nowYear'){
+    var fromdate = $('input[name="fromDate"]').val(todayYearFirst);
+    var todate = $('input[name="toDate"]').val(today);
+  }
+
+  if(x === 'today'){
+    $('input[name="fromDate"]').val(today);
+    $('input[name="toDate"]').val(today);
+  }
+
+  return fromdate, todate;
+}

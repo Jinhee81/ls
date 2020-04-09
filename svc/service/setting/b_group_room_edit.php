@@ -24,7 +24,7 @@ $sql = "
     WHERE group_in_building.id={$filtered_id}";
 $result = mysqli_query($conn, $sql);
 $row = mysqli_fetch_array($result);
-echo $sql;
+// echo $sql;
 // print_r($row);
 // print_r($_SESSION);
 ?>
@@ -81,7 +81,7 @@ echo $sql;
     for ($i=0; $i < sizeof($editRooms); $i++) {
       if(in_array($i, $startTrArray)){
         $table2 = $table2 ."<tr>
-          <td style='padding-right:0px;'><input id='siwon' class='form-control text-center' required='' type='text' name='rName".$i."' value='".$editRooms[$i]['rName']."' data-toggle='tooltip' data-placement='top' title='".$editRooms[$i]['id']."'></td><td style='padding-left:0px;'>
+          <td style='padding-right:0px;'><input id='siwon' class='form-control text-center' required='' type='text' name='rName".$i."' value='".$editRooms[$i]['rName']."'></td><td style='padding-left:0px;'>
           <button type='button' class='btn btn-default'
            style='padding-left: 0px;
            padding-top: 0px;
@@ -91,7 +91,7 @@ echo $sql;
           </td>";
       } else if(in_array($i, $closeTrArray)){
         $table2 = $table2 . "
-        <td style='padding-right:0px;'><input id='siwon' class='form-control text-center' required='' type='text' name='rName".$i."' value='". $editRooms[$i]['rName']."' data-toggle='tooltip' data-placement='top' title='".$editRooms[$i]['id']."'></td><td style='padding-left:0px;'>
+        <td style='padding-right:0px;'><input id='siwon' class='form-control text-center' required='' type='text' name='rName".$i."' value='". $editRooms[$i]['rName']."''></td><td style='padding-left:0px;'>
         <button type='button' class='btn btn-default'
          style='padding-left: 0px;
          padding-top: 0px;
@@ -101,7 +101,7 @@ echo $sql;
         </td></tr>";
       } else {
         $table2 = $table2 . "
-        <td style='padding-right:0px;'><input id='siwon' class='form-control text-center' required='' type='text' name='rName".$i."' value='". $editRooms[$i]['rName']."' data-toggle='tooltip' data-placement='top' title='".$editRooms[$i]['id']."'></td><td style='padding-left:0px;'>
+        <td style='padding-right:0px;'><input id='siwon' class='form-control text-center' required='' type='text' name='rName".$i."' value='". $editRooms[$i]['rName']."''></td><td style='padding-left:0px;'>
         <button type='button' class='btn btn-default'
          style='padding-left: 0px;
          padding-top: 0px;
@@ -129,6 +129,10 @@ echo $sql;
     </div>
   </form>
 </section>
+
+<?php include $_SERVER['DOCUMENT_ROOT']."/svc/view/service_footer.php";?>
+<?php include $_SERVER['DOCUMENT_ROOT']."/svc/view/service_footer_script.php"; ?>
+
 
 <script>
 
@@ -180,4 +184,5 @@ $('button[name=roomDelete]').on('click', function(){
 })
 </script>
 
-<?php include $_SERVER['DOCUMENT_ROOT']."/svc/view/service_footer.php";?>
+</body>
+</html>

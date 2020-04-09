@@ -1,9 +1,10 @@
 <?php
+header('Content-Type: text/html; charset=UTF-8');
 include $_SERVER['DOCUMENT_ROOT']."/svc/view/conn.php";
-include "password.php";
+// include "password.php";
 
 $password = $_POST['password'];
-$hash = password_hash($password, PASSWORD_DEFAULT);
+$hash = md5($password);
 
 // print_r($_POST);
 
@@ -51,7 +52,7 @@ if($_POST['user_div']==='개인'){
           'no',
           3000
       )";
-  // echo $sql;
+  echo $sql;
 } else {
   $sql  = "
       INSERT INTO user (
@@ -85,7 +86,7 @@ if($_POST['user_div']==='개인'){
           'no',
           3000
       )";
-  // echo $sql;
+  echo $sql;
 }
 
 $result = mysqli_query($conn, $sql);
@@ -104,7 +105,7 @@ if($result === false){
            values
            ({$id}, 'feefree', '{$currentDate}', '{$currentDate}', '{$month1later}', 1, 0, 1)
            ";
-  // echo $sql2;
+  echo $sql2;
 
   $result2 = mysqli_query($conn, $sql2);
 
@@ -113,7 +114,7 @@ if($result === false){
            values
            ({$id}, '{$currentDate}', '회원가입축하', 0, 3000)
            ";
-  // echo $sql3;
+  echo $sql3;
 
   $result3 = mysqli_query($conn, $sql3);
 

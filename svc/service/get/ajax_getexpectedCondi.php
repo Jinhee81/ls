@@ -1,5 +1,7 @@
 <?php
-
+header('Content-Type: text/html; charset=UTF-8');
+session_start();
+include $_SERVER['DOCUMENT_ROOT']."/svc/view/conn.php";
 // print_r($_POST);
 
 $currentDate = date('Y-m-d');
@@ -93,13 +95,13 @@ $sql = "
   order by
         pExpectedDate asc
   ";
-// echo $sql;
+echo $sql;
 
 $result = mysqli_query($conn, $sql);
 // $total_rows = mysqli_num_rows($result);
 $allRows = array();
 while($row = mysqli_fetch_array($result)){
-  $allRows[]=$row;
+  $allRows = $row;
 }
 
 for ($i=0; $i < count($allRows); $i++) {
@@ -113,19 +115,31 @@ for ($i=0; $i < count($allRows); $i++) {
     $allRows[$i]['cdiv3'] = '(기타)';
   }
 
+  $allRows[$i]['companynumber'] = $allRows[$i]['cNumber1'].'-'.$allRows[$i]['cNumber2'].'-'.$allRows[$i]['cNumber3'];
+
   if($allRows[$i]['div2']==='개인사업자'){
-    $allRows[$i]['cname'] = $allRows[$i]['name'].'('.$allRows[$i]['companyname'].')';
+    $allRows[$i]['cname'] = $allRows[$i]['name'].'('.$allRows[$i]['companyname'].','.$allRows[$i]['companynumber'].')';
   } else if($allRows[$i]['div2']==='법인사업자'){
-    $allRows[$i]['cname'] = $allRows[$i]['cdiv3'].$allRows[$i]['companyname'].'('.$allRows[$i]['name'].')';
+    $allRows[$i]['cname'] = $allRows[$i]['cdiv3'].$allRows[$i]['companyname'].'('.$allRows[$i]['name'].','.$allRows[$i]['companynumber'].')';
   } else if($allRows[$i]['div2']==='개인'){
     $allRows[$i]['cname'] = $allRows[$i]['name'];
   }
 
   $allRows[$i]['contact'] = $allRows[$i]['contact1'].'-'.$allRows[$i]['contact2'].'-'.$allRows[$i]['contact3'];
 
-  $allRows[$i]['companynumber'] = $allRows[$i]['cNumber1'].'-'.$allRows[$i]['cNumber2'].'-'.$allRows[$i]['cNumber3'];
+  $allRows[$i]['cnamecontact'] = $allRows[$i]['cname'].','.$allRows[$i]['contact']
+
+  $allRows[$i]['cnamecontactmb'] = mb_substr($allRows[$i]['cnamecontact'],0,10);
+
+
+
+
 
   $allRows[$i]['address'] = $allRows[$i]['add1'].'-'.$allRows[$i]['add2'].'-'.$allRows[$i]['add3'];
+
+  $allRows[$i]['pAmount'] = number_format($allRows[$i]['pAmount']);
+  $allRows[$i]['pvAmount'] = number_format($allRows[$i]['pvAmount']);
+  $allRows[$i]['ptAmount'] = number_format($allRows[$i]['ptAmount']);
 
 } //for문closing
 

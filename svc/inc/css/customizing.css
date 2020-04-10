@@ -60,3 +60,8 @@ select .selectCall{background-color: #A9D0F5;}
 #customerList li {
   padding: 12px;
 }
+
+.modalAsk {
+  color:#F7819F;
+  text-decoration: underline;
+}

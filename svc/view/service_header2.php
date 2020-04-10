@@ -21,10 +21,10 @@
         <a class="nav-link" href="/svc/service/contractetc/contractetc.php">기타계약</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="/svc/service/get/getexpected.php">입금예정</a>
+        <a class="nav-link" href="/svc/service/get/getexpected.php">납부예정</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="/svc/service/get/getfinished.php">입금완료</a>
+        <a class="nav-link" href="/svc/service/get/getfinished.php">납부완료</a>
       </li>
       <li class="nav-item dropdown">
         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">

@@ -1,5 +1,7 @@
 <?php
-
+header('Content-Type: text/html; charset=UTF-8');
+session_start();
+include $_SERVER['DOCUMENT_ROOT']."/svc/view/conn.php";
 // print_r($_POST);
 
 $currentDate = date('Y-m-d');
@@ -122,13 +124,15 @@ for ($i=0; $i < count($allRows); $i++) {
     $allRows[$i]['cname'] = $allRows[$i]['ccname'];
   }
 
+  $allRows[$i]['cnamemb'] = mb_substr($allRows[$i]['cname'],0,5,"utf-8");
+
   $allRows[$i]['contact'] = $allRows[$i]['contact1'].'-'.$allRows[$i]['contact2'].'-'.$allRows[$i]['contact3'];
 
   $allRows[$i]['cnamecontact'] = $allRows[$i]['cname'] .','. $allRows[$i]['contact'];
 
   $allRows[$i]['companynumber'] = $allRows[$i]['cNumber1'].'-'.$allRows[$i]['cNumber2'].'-'.$allRows[$i]['cNumber3'];
 
-  $allRows[$i]['address'] = $allRows[$i]['add1'].'-'.$allRows[$i]['add2'].'-'.$allRows[$i]['add3'];
+  $allRows[$i]['address'] = $allRows[$i]['add1'].', '.$allRows[$i]['add2'].' '.$allRows[$i]['add3'];
 
 
   if($allRows[$i]['delaycount'] < 0){
@@ -155,14 +159,6 @@ for ($i=0; $i < count($allRows); $i++) {
 } //for문closing
 
 // print_r($allRows);
-
-$amountTotalArray = [0,0,0];
-
-for ($i=0; $i < count($allRows); $i++) {
-  $amountTotalArray[0] += str_replace(",", "", $allRows[$i]['pAmount']);
-  $amountTotalArray[1] += str_replace(",", "", $allRows[$i]['pvAmount']);
-  $amountTotalArray[2] += str_replace(",", "", $allRows[$i]['ptAmount']);
-}
 
 echo json_encode($allRows);
 ?>

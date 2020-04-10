@@ -7,7 +7,7 @@ if(!isset($_SESSION['is_login'])){
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
   <head>
-    <title>입주자리스트</title>
+    <title>입주자</title>
 <?php
 include $_SERVER['DOCUMENT_ROOT']."/svc/view/service_header1_meta.php";
 include $_SERVER['DOCUMENT_ROOT']."/svc/view/service_header2.php";
@@ -18,7 +18,7 @@ include $_SERVER['DOCUMENT_ROOT']."/svc/main/condition.php";
 <section class="container">
   <div class="jumbotron pt-3 pb-3">
     <div class="row">
-      <h2 class="">입주자리스트입니다.</h2>
+      <h2 class="">입주자 목록이에요.(#101)</h2>
     </div>
     <p class="lead">
       <!-- (1) 정확한 표현은 이해관계자리스트라고 보아도 무방합니다. 세입자(고객) 뿐만 아니라, 문의하는 사람 및 자주 거래하는 거래처도 저장할 수 있어요.<br> -->

@@ -2,8 +2,19 @@
 $sql = "select * from building where user_id = {$_SESSION['id']}";
 // echo $sql;
 $result = mysqli_query($conn, $sql);
+$buildingArray = array();
 while($row = mysqli_fetch_array($result)){
-  $buildingArray[$row['id']] = [$row['bName'],$row['pay'],$row['popbill'],$row['companynumber']];
+  $buildingArray[$row['id']] =
+                array($row['bName'],
+                      $row['pay'],
+                      $row['popbillid'],
+                      $row['contact1'],
+                      $row['contact2'],
+                      $row['contact3'],
+                      $row['cnumber1'],
+                      $row['cnumber2'],
+                      $row['cnumber3']
+                    );
 }
 
 foreach ($buildingArray as $key => $value) { //key는 건물아이디, value는 건물이름
@@ -24,6 +35,7 @@ foreach ($groupBuildingArray as $key => $value) {
     $sql4 = "select id, rName from r_g_in_building where group_in_building_id={$row3['id']}";
     // echo $sql4;다시 그룹아이디로 방번호조회
     $result4 = mysqli_query($conn, $sql4);
+    $roomArray[$row3['id']] = array();
     while($row4 = mysqli_fetch_array($result4)){
       $roomArray[$row3['id']][$row4['id']]=$row4['rName'];
     }

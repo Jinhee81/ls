@@ -42,14 +42,3 @@
     </div>
   </div>
 </div>
-
-<script>
-
-$('#href_smsSetting').on('click', function(){
-  var moveCheck = confirm('문자상용구설정 화면으로 이동합니다. 이동하시겠습니까?');
-  if(moveCheck){
-    location.href='/service/sms/smsSetting.php';
-  }
-})
-
-</script>

@@ -248,8 +248,8 @@ $(document).ready(function(){
       changeMonth: true,
       changeYear: true,
       showButtonPanel: true,
-      currentText: '오늘', // 오늘 날짜로 이동하는 버튼 패널
-      closeText: '닫기'  // 닫기 버튼 패널
+      currentText: '오늘',
+      closeText: '닫기'
     })
 
     $(document).on('change', '.tbodycheckbox', function(){

@@ -28,15 +28,15 @@ while($row = mysqli_fetch_array($result)){
 // print_r($allRows);
 ?>
 
-<style media="screen">
+<!-- <style media="screen">
 .grey{
   color: #848484;
 }
-</style>
+</style> -->
 
 <section class="container">
-  <div class="jumbotron pt-4 pb-3">
-    <h1 class="display-4">문자상용구설정화면입니다!</h1>
+  <div class="jumbotron pt-3 pb-3">
+    <h2 class="">문자상용구설정화면이에요.(#601)</h2>
     <p class="lead">
 
     </p>
@@ -48,10 +48,10 @@ while($row = mysqli_fetch_array($result)){
       <div class="col col-sm-3">
         <select class="form-control" id="screenName">
             <option value="all">전체</option>
-            <option value="세입자화면">세입자화면</option>
-            <option value="방계약화면">방계약화면</option>
-            <option value="입금예정화면">입금예정화면</option>
-            <option value="입금완료화면">입금완료화면</option>
+            <option value="입주자화면">입주자화면</option>
+            <option value="임대계약화면">임대계약화면</option>
+            <option value="납부예정화면">납부예정화면</option>
+            <option value="납부완료화면">납부완료화면</option>
         </select>
       </div>
   </div>
@@ -59,6 +59,9 @@ while($row = mysqli_fetch_array($result)){
 
   </div>
 </section>
+
+<?php include $_SERVER['DOCUMENT_ROOT']."/svc/view/service_footer.php";?>
+<script src="/svc/inc/js/jquery-3.3.1.min.js"></script>
 
 <script>
 
@@ -90,4 +93,5 @@ while($row = mysqli_fetch_array($result)){
 
 
 
-<?php include $_SERVER['DOCUMENT_ROOT']."/svc/view/service_footer.php";?>
+</body>
+</html>

@@ -252,26 +252,6 @@ $(document).ready(function(){
       closeText: '닫기'
     })
 
-    $(document).on('change', '.tbodycheckbox', function(){
-      var allCnt = $(".tbodycheckbox").length;
-      var checkedCnt = $(".tbodycheckbox").filter(":checked").length;
-
-      // console.log(allCnt, checkedCnt);
-
-      if($(this).is(":checked")){
-        $(this).prop('checked',true);
-        $(this).parent().parent().addClass("selected");
-      } else {
-        $(this).prop('checked',false);
-        $(this).parent().parent().removeClass("selected");
-      }
-
-      if( allCnt==checkedCnt ){
-        $("#allselect").prop("checked", true);
-      } else {
-        $("#allselect").prop("checked", false);
-      }
-    })
 
 })
 //===========document.ready function end and the other load start!

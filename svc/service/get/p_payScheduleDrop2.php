@@ -1,4 +1,4 @@
-<!-- 모달안에서 1개 청구취소하는 파일 -->
+<!-- 모달안에서 1개 청구취소하는 파일인데, 납부예정목록의 청구모달에서 실행되는거, 그래서 완료되고 나서가 history.back() 이어야 함 -->
 <?php
 header('Content-Type: text/html; charset=UTF-8');
 session_start();

@@ -38,10 +38,10 @@ while($row = mysqli_fetch_array($result)){
     <td><?=$j?><input type="hidden" value="<?=$allRows[$i]['id']?>"></td>
     <td>
         <select class="form-control" name="screenName" disabled>
-            <option value="세입자화면"<?php if($allRows[$i]['screen']==='세입자화면'){echo "selected";}?>>세입자화면</option>
-            <option value="방계약화면"<?php if($allRows[$i]['screen']==='방계약화면'){echo "selected";}?>>방계약화면</option>
-            <option value="입금예정화면"<?php if($allRows[$i]['screen']==='입금예정화면'){echo "selected";}?>>입금예정화면</option>
-            <option value="입금완료화면"<?php if($allRows[$i]['screen']==='입금완료화면'){echo "selected";}?>>입금완료화면</option>
+            <option value="입주자화면"<?php if($allRows[$i]['screen']==='입주자화면'){echo "selected";}?>>입주자화면</option>
+            <option value="임대계약화면"<?php if($allRows[$i]['screen']==='임대계약화면'){echo "selected";}?>>임대계약화면</option>
+            <option value="납부예정화면"<?php if($allRows[$i]['screen']==='납부예정화면'){echo "selected";}?>>납부예정화면</option>
+            <option value="납부완료화면"<?php if($allRows[$i]['screen']==='납부완료화면'){echo "selected";}?>>납부완료화면</option>
         </select>
     </td>
     <td><?=$allRows[$i]['title']?>
@@ -76,12 +76,12 @@ while($row = mysqli_fetch_array($result)){
 </table>
 
 <script>
-var newTr2 = "<td colspan='5' style='padding-left:20px;'><p class='grey'>*상용구항목<br>세입자화면 : {세입자},{이메일}<br>방계약화면 : {세입자},{이메일},{계약일},{종료일}<br>입금예정화면 : {세입자},{이메일},{예정일},{합계},{시작일},{종료일},{개월수},{연체일수},{연체이자}<br>입금완료화면 : {세입자},{이메일},{입금일},{발행일},{공급가액},{세액},{합계}<br></p></td>";
+var newTr2 = "<td colspan='5' style='padding-left:20px;'><p class='grey'>*상용구항목<br>입주자화면 : {입주자},{이메일}<br>임대계약화면 : {입주자},{이메일},{계약일},{종료일}<br>납부예정화면 : {입주자},{이메일},{예정일},{합계},{시작일},{종료일},{개월수},{연체일수},{연체이자}<br>납부완료화면 : {입주자},{이메일},{입금일},{발행일},{공급가액},{세액},{합계}<br></p></td>";
 
 
 $('#addstring').on('click', function(){
     var td1 = "<td></td>";
-    var td2 = "<td><select name='screen' class='form-control'><option value='세입자화면'>세입자화면</option><option value='방계약화면'>방계약화면</option><option value='입금예정화면'>입금예정화면</option><option value='입금완료화면'>입금완료화면</option></select></td>";
+    var td2 = "<td><select name='screen' class='form-control'><option value='입주자화면'>입주자화면</option><option value='임대계약화면'>임대계약화면</option><option value='납부예정화면'>납부예정화면</option><option value='납부완료화면'>납부완료화면</option></select></td>";
     var td3 = "<td><input type='text' class='form-control' name='title' required></td>";
     var td4 = "<td><textarea name='description' cols='80' rows='8' class='form-control' required></textarea></td>";
     var td5 = "<td><button type='submit' name='stringSave' class='btn btn-primary btn-sm mr-1'>저장</button><button type='button' name='stringCancel' class='btn btn-danger btn-sm'>취소</button></td>";

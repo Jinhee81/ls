@@ -1,34 +1,5 @@
 <!-- cs는 charge Schedule (청구스케줄)의 약자 파일 -->
 <div class="p-3 mb-2 text-dark border border-info rounded">
-  <!-- <div class="d-flex justify-content-center bd-highlight mb-3"> -->
-  <!-- <div class="form-row">
-    <div class="form-group col-md-4">
-      <button type="button" id="button5" class="btn btn-outline-info btn-sm mobile">1개월 추가</button>
-      <button type="button" class="btn btn-outline-info btn-sm mobile" data-toggle="modal" data-target="#nAddBtn">n개월 추가</button>
-      <button type="button" id="button7" class="btn btn-outline-info btn-sm mobile">삭제</button>
-    </div>
-    <div class="form-group col-md-4">
-      <div class="form-row">
-        <div class="form-group col-md-4">
-          <input type="text" class="form-control form-control-sm dateType text-center" name="" value="" placeholder="입금예정일변경" id="groupExpecteDay" data-toggle="tooltip" data-placement="left" title="체크된것의 입금예정일을 변경합니다">
-        </div>
-        <div class="form-group col-md-4">
-          <select class="form-control form-control-sm" id="paykind">
-            <option value="계좌">계좌</option>
-            <option value="현금">현금</option>
-            <option value="카드">카드</option>
-          </select>
-        </div>
-      </div>
-    </div>
-    <div class="form-group col-md-4">
-      <button type="button" id="button1" class="btn btn-outline-info btn-sm" data-toggle="tooltip" data-placement="top" title="체크된것을 청구설정합니다">청구설정</button>
-      <button type="button" id="button2" class="btn btn-outline-info btn-sm" data-toggle="tooltip" data-placement="top" title="체크된것의 청구정보를 취소합니다">청구취소</button>
-      <button type="button" id="button3" class="btn btn-outline-info btn-sm mobile" data-toggle="tooltip" data-placement="top" title="체크된것들을 입금처리합니다(청구번호가있어야 입금처리 가능해요.)">일괄입금</button>
-      <button type="button" id="button4" class="btn btn-outline-info btn-sm mobile" data-toggle="tooltip" data-placement="top" title="체크된것의 입금내역을 취소합니다">일괄입금취소</button>
-      <button type="button" id="button8" class="btn btn-outline-danger btn-sm mobile">입금완료보이기</button>
-    </div>
-  </div>  -->
 
   <div class="form-row">
     <div class="form-group col-md-6">
@@ -52,8 +23,8 @@
       <div class="row justify-content-end mr-0">
         <button type="button" id="button1" class="btn btn-outline-info btn-sm mr-1" data-toggle="tooltip" data-placement="top" title="체크된것을 청구설정합니다">청구설정</button>
         <button type="button" id="button2" class="btn btn-outline-info btn-sm mr-1" data-toggle="tooltip" data-placement="top" title="체크된것의 청구정보를 취소합니다">청구취소</button>
-        <button type="button" id="button3" class="btn btn-outline-info btn-sm mobile mr-1" data-toggle="tooltip" data-placement="top" title="체크된것들을 입금처리합니다(청구번호가있어야 입금처리 가능해요.)">일괄입금</button>
-        <button type="button" id="button4" class="btn btn-outline-info btn-sm mobile mr-1" data-toggle="tooltip" data-placement="top" title="체크된것의 입금내역을 취소합니다">일괄입금취소</button>
+        <button type="button" id="button3" class="btn btn-outline-info btn-sm mobile mr-1" data-toggle="tooltip" data-placement="top" title="체크된것들을 입금처리합니다(청구번호가있어야 입금처리 가능해요.)">입금처리</button>
+        <button type="button" id="button4" class="btn btn-outline-info btn-sm mobile mr-1" data-toggle="tooltip" data-placement="top" title="체크된것의 입금내역을 취소합니다">입금취소</button>
         <button type="button" id="button8" class="btn btn-outline-danger btn-sm mobile">입금완료보이기</button>
       </div>
     </div>

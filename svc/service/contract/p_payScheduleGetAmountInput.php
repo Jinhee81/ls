@@ -35,7 +35,7 @@ if($result){
 
   if(!$result5){
     echo "<script>alert('입금처리 과정에 문제가 생겼습니다. 관리자에게 문의하세요(2).');
-          location.href = 'contractEdit.php?id=$filtered_id';
+          history.back();
           </script>";
     // echo "<script>alert('저장과정에 문제가 생겼습니다. 관리자에게 문의하세요(2).');
     //       </script>";
@@ -45,12 +45,12 @@ if($result){
 
   echo "<script>
           alert('입금처리하였습니다.');
-          location.href = 'contractEdit.php?id=$filtered_id';
+          history.back();
         </script>";
 }
 else {
   echo "<script>alert('입금처리 과정에 문제가 생겼습니다. 관리자에게 문의하세요(1).');
-        location.href = 'contractEdit.php?id=$filtered_id';
+        history.back();
         </script>";
   error_log(mysqli_error($conn));
   exit();

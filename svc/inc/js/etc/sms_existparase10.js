@@ -12,13 +12,13 @@ function sms_existparase(){
 
   var trAccu;
   for (var i = 0; i < smsReadyArray.length; i++) {
-      // smsDescription.replace(/{세입자}/gi,smsReadyArray[i][4]['세입자']);
-      var result = smsDescription.replace(/{세입자}|{이메일}|{입금일}|{발행일}|{공급가액}|{세액}|{합계}|{예정일}|{시작일}|{종료일}|{개월수}|{연체일수}|{연체이자}/g, function(v){
+      // smsDescription.replace(/{받는사람}/gi,smsReadyArray[i][4]['받는사람']);
+      var result = smsDescription.replace(/{받는사람}|{이메일}|{납부일}|{증빙일}|{공급가액}|{세액}|{합계}|{예정일}|{시작일}|{종료일}|{개월수}|{연체일수}|{연체이자}/g, function(v){
         switch (v) {
-          case "{세입자}":return smsReadyArray[i][4]['세입자'];
+          case "{받는사람}":return smsReadyArray[i][4]['받는사람'];
           case "{이메일}":return smsReadyArray[i][6]['이메일'];
-          case "{입금일}":return smsReadyArray[i][7]['입금일'];
-          case "{발행일}":return smsReadyArray[i][8]['발행일'];
+          case "{납부일}":return smsReadyArray[i][7]['납부일'];
+          case "{증빙일}":return smsReadyArray[i][8]['증빙일'];
           case "{공급가액}":return smsReadyArray[i][9]['공급가액'];
           case "{세액}":return smsReadyArray[i][10]['세액'];
           case "{합계}":return smsReadyArray[i][11]['합계'];
@@ -33,7 +33,7 @@ function sms_existparase(){
       // console.log(result);
 
 
-      var tr = "<tr><td><input type='checkbox' name='chk' value='"+smsReadyArray[i][12]['세입자id']+"'><input type='hidden' name='roomNumber' value='"+smsReadyArray[i][3]['방번호']+"'></td><td><textarea class='form-control textareaMany' rows='4' style='background-color: #FAFAFA;'>"+result+"</textarea></td><td style='line-height:15px;'><small><span>"+smsReadyArray[i][4]['세입자']+"</span><br><span class='phonenumber'>"+smsReadyArray[i][5]['연락처']+"</span><br><span class='getByte'></span> / 80 bytes <span class='bytediv'></span></small></td></tr>";
+      var tr = "<tr><td><input type='checkbox' name='chk' value='"+smsReadyArray[i][12]['받는사람id']+"'><input type='hidden' name='roomNumber' value='"+smsReadyArray[i][3]['방번호']+"'></td><td><textarea class='form-control textareaMany' rows='4' style='background-color: #FAFAFA;'>"+result+"</textarea></td><td style='line-height:15px;'><small><span>"+smsReadyArray[i][4]['받는사람']+"</span><br><span class='phonenumber'>"+smsReadyArray[i][5]['연락처']+"</span><br><span class='getByte'></span> / 80 bytes <span class='bytediv'></span></small></td></tr>";
       trAccu += tr;
   }//for end
 
@@ -163,8 +163,8 @@ function sms_existparase(){
     if($("#thead2 :checkbox").is(':checked')){
         for (var i = 0; i < allCnt; i++) {
           var sendedArray2ele = [];
-          var colcustomerId = $("#tbody2").find("tr:eq("+i+")").find("td:eq(0)").children('input').val();//세입자번호
-          var colcustomerName = $("#tbody2").find("tr:eq("+i+")").find("td:eq(2)").children().children("span:eq(0)").text();//세입자이름
+          var colcustomerId = $("#tbody2").find("tr:eq("+i+")").find("td:eq(0)").children('input').val();//받는사람번호
+          var colcustomerName = $("#tbody2").find("tr:eq("+i+")").find("td:eq(2)").children().children("span:eq(0)").text();//받는사람이름
           var coldescription = $("#tbody2").find("tr:eq("+i+")").find("td:eq(1)").children('textarea').text();//문자내용
           var colphone = $("#tbody2").find("tr:eq("+i+")").find("td:eq(2)").children().find('span:eq(1)').text();
           var colgetByte = $("#tbody2").find("tr:eq("+i+")").find("td:eq(2)").children().find('span:eq(2)').text();
@@ -182,8 +182,8 @@ function sms_existparase(){
 
         if(checkboxCheck===true){
           var sendedArray2ele = [];
-          var colcustomerId = $("#tbody2").find("tr:eq("+i+")").find("td:eq(0)").children('input').val();//세입자번호
-          var colcustomerName = $("#tbody2").find("tr:eq("+i+")").find("td:eq(2)").children().children("span:eq(0)").text();//세입자이름
+          var colcustomerId = $("#tbody2").find("tr:eq("+i+")").find("td:eq(0)").children('input').val();//받는사람번호
+          var colcustomerName = $("#tbody2").find("tr:eq("+i+")").find("td:eq(2)").children().children("span:eq(0)").text();//받는사람이름
           var coldescription = $("#tbody2").find("tr:eq("+i+")").find("td:eq(1)").children('textarea').text();
           // console.log(colptAmount);
           var colphone = $("#tbody2").find("tr:eq("+i+")").find("td:eq(2)").children().find('span:eq(1)').text();

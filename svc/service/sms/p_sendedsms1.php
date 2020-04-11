@@ -25,7 +25,7 @@ if($_POST['timeDiv']==='reservation'){
               ('{$_POST['smsDiv']}',
                '{$_POST['getByte']}',
                '{$_POST['smsTime']}',
-               '{$a[$i][4]->세입자}',
+               '{$a[$i][4]->입주자}',
                '{$a[$i][3]->방번호}',
                '{$a[$i][5]->연락처}',
                '{$_POST['textareaOnly']}',
@@ -53,7 +53,7 @@ if($_POST['timeDiv']==='reservation'){
             ('{$_POST['smsDiv']}',
              '{$_POST['getByte']}',
              now(),
-             '{$a[$i][4]->세입자}',
+             '{$a[$i][4]->입주자}',
              '{$a[$i][3]->방번호}',
              '{$a[$i][5]->연락처}',
              '{$_POST['textareaOnly']}',
@@ -76,8 +76,12 @@ if($_POST['timeDiv']==='reservation'){
 } //else end}
 
 echo "<script>alert('전송하였습니다.');
-         location.href='sent.php';
+        history.back();
       </script>";
+
+// echo "<script>alert('전송하였습니다.');
+//         location.href='sent.php';
+//       </script>";
 
 
 

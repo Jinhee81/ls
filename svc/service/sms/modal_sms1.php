@@ -29,7 +29,7 @@
                   <label class="col pr-0">발송번호</label>
                 </div>
                 <div class="col col-sm-8">
-                  <input type="text" class="form-control form-control-sm col" name="" value="<?=$_SESSION['cellphone']?>" disabled>
+                  <input type="text" class="form-control form-control-sm col" name="sendphonenumber" disabled>
                 </div>
               </div>
 

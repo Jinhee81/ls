@@ -30,7 +30,7 @@ $("#allselect").click(function(){
 
       // console.log(colOrder, colid, colgroup, colroom, colcustomerName, colcustomerContact, colexectutiveDate, coltaxDate, colamount1, colamount2,colamount3);
 
-      smsReadyArrayEle.push({'순번':colOrder}, {'청구번호':colid}, {'그룹':colgroup}, {'방번호':colroom}, {'세입자':colcustomerName}, {'연락처':colcustomerContact}, {'이메일':colcustomerEmail}, {'입금일':colexecutiveDate}, {'발행일':coltaxDate}, {'공급가액':colamount1}, {'세액':colamount2}, {'합계':colamount3}, {'세입자id':colcustomerId}, {'예정일':colexpectedDate}, {'시작일':colstartDate}, {'종료일':colendDate}, {'개월수':colmonthcount}, {'연체일수':coldelaydays}, {'연체이자':coldelayinterest});
+      smsReadyArrayEle.push({'순번':colOrder}, {'청구번호':colid}, {'그룹':colgroup}, {'방번호':colroom}, {'받는사람':colcustomerName}, {'연락처':colcustomerContact}, {'이메일':colcustomerEmail}, {'납부일':colexecutiveDate}, {'증빙일':coltaxDate}, {'공급가액':colamount1}, {'세액':colamount2}, {'합계':colamount3}, {'받는사람id':colcustomerId}, {'예정일':colexpectedDate}, {'시작일':colstartDate}, {'종료일':colendDate}, {'개월수':colmonthcount}, {'연체일수':coldelaydays}, {'연체이자':coldelayinterest});
       smsReadyArray.push(smsReadyArrayEle);
     }
   } else {
@@ -63,7 +63,7 @@ var smsReadyArrayEle = [];
       var colmonthcount = currow.find("td:eq(6)").text();
       var coldelaydays = currow.find("td:eq(12)").children('label:eq(0)').text();
       var coldelayinterest = currow.find("td:eq(12)").children('label:eq(1)').text();
-      smsReadyArrayEle.push({'순번':colOrder}, {'청구번호':colid}, {'그룹':colgroup}, {'방번호':colroom}, {'세입자':colcustomerName}, {'연락처':colcustomerContact}, {'이메일':colcustomerEmail}, {'입금일':colexecutiveDate}, {'발행일':coltaxDate}, {'공급가액':colamount1}, {'세액':colamount2}, {'합계':colamount3}, {'세입자id':colcustomerId}, {'예정일':colexpectedDate}, {'시작일':colstartDate}, {'종료일':colendDate}, {'개월수':colmonthcount}, {'연체일수':coldelaydays}, {'연체이자':coldelayinterest});
+      smsReadyArrayEle.push({'순번':colOrder}, {'청구번호':colid}, {'그룹':colgroup}, {'방번호':colroom}, {'받는사람':colcustomerName}, {'연락처':colcustomerContact}, {'이메일':colcustomerEmail}, {'납부일':colexecutiveDate}, {'증빙일':coltaxDate}, {'공급가액':colamount1}, {'세액':colamount2}, {'합계':colamount3}, {'받는사람id':colcustomerId}, {'예정일':colexpectedDate}, {'시작일':colstartDate}, {'종료일':colendDate}, {'개월수':colmonthcount}, {'연체일수':coldelaydays}, {'연체이자':coldelayinterest});
       smsReadyArray.push(smsReadyArrayEle);
       // console.log('smsReadyArray :',smsReadyArray);
     } else {
@@ -88,7 +88,7 @@ var smsReadyArrayEle = [];
       var colmonthcount = currow.find("td:eq(6)").text();
       var coldelaydays = currow.find("td:eq(12)").children('label:eq(0)').text();
       var coldelayinterest = currow.find("td:eq(12)").children('label:eq(1)').text();
-      dropReady.push({'순번':colOrder}, {'청구번호':colid}, {'그룹':colgroup}, {'방번호':colroom}, {'세입자':colcustomerName}, {'연락처':colcustomerContact}, {'이메일':colcustomerEmail}, {'입금일':colexecutiveDate}, {'발행일':coltaxDate}, {'공급가액':colamount1}, {'세액':colamount2}, {'합계':colamount3}, {'세입자id':colcustomerId}, {'예정일':colexpectedDate}, {'시작일':colstartDate}, {'종료일':colendDate}, {'개월수':colmonthcount}, {'연체일수':coldelaydays}, {'연체이자':coldelayinterest});
+      dropReady.push({'순번':colOrder}, {'청구번호':colid}, {'그룹':colgroup}, {'방번호':colroom}, {'받는사람':colcustomerName}, {'연락처':colcustomerContact}, {'이메일':colcustomerEmail}, {'납부일':colexecutiveDate}, {'증빙일':coltaxDate}, {'공급가액':colamount1}, {'세액':colamount2}, {'합계':colamount3}, {'받는사람id':colcustomerId}, {'예정일':colexpectedDate}, {'시작일':colstartDate}, {'종료일':colendDate}, {'개월수':colmonthcount}, {'연체일수':coldelaydays}, {'연체이자':coldelayinterest});
 
       for (var i = 0; i < smsReadyArray.length; i++) {
         var join1 = smsReadyArray[i].join(',');

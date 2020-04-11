@@ -160,7 +160,6 @@ include "building.php";
 
 
 <script>
-
 function maketable(){
 
   $(function () {

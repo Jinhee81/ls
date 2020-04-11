@@ -65,3 +65,9 @@ select .selectCall{background-color: #A9D0F5;}
   color:#F7819F;
   text-decoration: underline;
 }
+
+p .warningg {
+  color: #FA5858; /*빨강색, 근데 왜 적용안되지? ㅜㅜ */
+}
+
+/* html 색상 코드 : https://html-color-codes.info/Korean/ */

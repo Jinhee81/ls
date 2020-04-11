@@ -15,25 +15,9 @@ include $_SERVER['DOCUMENT_ROOT']."/svc/view/conn.php";
 include $_SERVER['DOCUMENT_ROOT']."/svc/service/contract/building.php"; //이거빼면큰일남, 조회안됨
  ?>
 
-<style>
-         #checkboxTestTbl tr.selected{background-color: #A9D0F5;}
-         #thead2 tr.selected{background-color: #A9D0F5;}
-         #tbody2 tr.selected{background-color: #A9D0F5;}
-         select .selectCall{background-color: #A9D0F5;}
-
-         .green{
-           color: #04B486;
-         }
-
-         @media (max-width: 990px) {
-         .mobile {
-           display: none;
-         }
- }
-</style>
 <section class="container">
-   <div class="jumbotron">
-     <h1 class="display-4"><span id="screenName">보낸문자리스트화면</span>입니다!(#601)</h1>
+   <div class="jumbotron pt-3 pb-3">
+     <h2 class="">보낸문자 목록이에요.(#602)</h2>
      <p class="lead">
 
      </p>
@@ -107,9 +91,13 @@ include $_SERVER['DOCUMENT_ROOT']."/svc/service/contract/building.php"; //이거
   </div>
 </section>
 
-<script src="/admin/js/jquery-ui.min.js"></script>
-<script src="/admin/js/datepicker-ko.js"></script>
-<script src="/admin/js/etc/newdate8.js"></script>
+<?php include $_SERVER['DOCUMENT_ROOT']."/svc/view/service_footer.php"; ?>
+
+<script src="/svc/inc/js/jquery-3.3.1.min.js"></script>
+<script src="/svc/inc/js/jquery-ui.min.js"></script>
+<script src="/svc/inc/js/datepicker-ko.js"></script>
+<script src="/svc/inc/js/etc/newdate8.js?<?=date('YmdHis')?>"></script>
+
 <script>
 $(document).ready(function(){
 
@@ -157,4 +145,5 @@ $('button[name="btnLoad"]').on('click', function(){
 //---------조회버튼클릭평션 end and 증빙일자 펑션 시작--------------//
 </script>
 
-<?php include $_SERVER['DOCUMENT_ROOT']."/svc/view/service_footer.php";?>
+</body>
+</html>

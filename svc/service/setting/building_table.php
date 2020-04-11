@@ -10,6 +10,7 @@ include $_SERVER['DOCUMENT_ROOT']."/svc/view/conn.php"; ?>
       <th>수납방법</th>
       <th>그룹명(관리호수)</th>
       <th>기타상품</th>
+      <th>특이사항</th>
       <th class="mobile"></th>
     </tr>
     <?php
@@ -18,7 +19,8 @@ include $_SERVER['DOCUMENT_ROOT']."/svc/view/conn.php"; ?>
       building.id,
       lease_type,
       bName,
-      pay
+      pay,
+      etc
      from
       (select @num :=0)a,
       building left join user on building.user_id = user.id
@@ -35,6 +37,7 @@ include $_SERVER['DOCUMENT_ROOT']."/svc/view/conn.php"; ?>
         'lease_type' => htmlspecialchars($row1['lease_type']),
         'bName' => htmlspecialchars($row1['bName']),
         'pay' => htmlspecialchars($row1['pay']),
+        'etc' => htmlspecialchars($row1['etc']),
         'user_name' => htmlspecialchars($row1['user_name']),
         'created' => htmlspecialchars($row1['created']),
         'updated' => htmlspecialchars($row1['updated'])
@@ -79,6 +82,11 @@ include $_SERVER['DOCUMENT_ROOT']."/svc/view/conn.php"; ?>
     <?php }?>
        <a class="btn btn-outline-warning btn-sm" href="b_good_add.php?id=<?=$escaped1['id']?>">추가하기</a>
      </td><!--기타계약상품추가 모달 호출버튼 -->
+     <td>
+       <label data-toggle="tooltip" data-placement="top" class="betc" title="<?=$escaped1['etc']?>">
+       <?=mb_substr($escaped1['etc'],0,7)?>
+     </label>
+     </td>
       <td class="mobile">
         <form class="" action="p_building_delete.php" method="post" onsubmit="if(!confirm('정말 삭제하겠습니까?')){return false;}">
           <input type="hidden" name="id" value="<?=$escaped1['id']?>">

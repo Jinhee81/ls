@@ -62,6 +62,7 @@ while($row = mysqli_fetch_array($result)){
 
 <?php include $_SERVER['DOCUMENT_ROOT']."/svc/view/service_footer.php";?>
 <script src="/svc/inc/js/jquery-3.3.1.min.js"></script>
+<script src="/svc/inc/js/etc/form.js?<?=date('YmdHis')?>"></script>
 
 <script>
 

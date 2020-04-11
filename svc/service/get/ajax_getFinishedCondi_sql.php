@@ -1,9 +1,5 @@
 <?php
 
-// print_r($_POST);
-
-// $currentDate = date('Y-m-d');이걸 왜 넣었을까? 필요가 없음
-
 if($_POST['dateDiv']==='executiveDate') $dateDiv = 'paySchedule2.executiveDate';
 else if($_POST['dateDiv']==='taxDate') $dateDiv = 'taxDate';
 
@@ -42,13 +38,16 @@ if($_POST['payKind']==='payall'){
 
 $etcCondi1 = "";//방계약에서만 사용하는 조건문
 $etcCondi2 = "";//기타계약에서만 사용하는 조건문, 둘다사용하는이유가 그래야지 union이안됨
+
 if($_POST['cText']){
   if($_POST['etcCondi']==='customer'){
     $etcCondi1 = " and (customer.name like '%".$_POST['cText']."%' or customer.companyname like '%".$_POST['cText']."%')";
     $etcCondi2 = " and (customer.name like '%".$_POST['cText']."%' or customer.companyname like '%".$_POST['cText']."%')";
   } elseif($_POST['etcCondi']==='contact'){
-    $etcCondi1 = " and (contact1 like '%".$_POST['cText']."%' or contact2 like '%".$_POST['cText']."%' or contact3 like '%".$_POST['cText']."%')";
-    $etcCondi2 = " and (contact1 like '%".$_POST['cText']."%' or contact2 like '%".$_POST['cText']."%' or contact3 like '%".$_POST['cText']."%')";
+    $etcCondi1 = " and (customer.contact1 like '%".$_POST['cText']."%' or customer.contact2 like '%".$_POST['cText']."%' or customer.contact3 like '%".$_POST['cText']."%')";
+
+    $etcCondi2 = " and (customer.contact1 like '%".$_POST['cText']."%' or customer.contact2 like '%".$_POST['cText']."%' or customer.contact3 like '%".$_POST['cText']."%')";
+
   } elseif($_POST['etcCondi']==='gName'){
     $etcCondi1 = " and group_in_building.gName like '%".$_POST['cText']."%'";
     $etcCondi2 = " and good_in_building.name like '%".$_POST['cText']."%'";
@@ -65,13 +64,13 @@ if($_POST['cText']){
 $sql = "
 (select
     @roomdiv as roomdiv,
-    paySchedule2.realContract_id,
-    realContract.building_id,
-    building.bName,
-    realContract.group_in_building_id,
-    group_in_building.gName,
-    realContract.r_g_in_building_id,
-    r_g_in_building.rName,
+    paySchedule2.realContract_id as rid,
+    realContract.building_id as rbid,
+    building.bName as buildingname,
+    realContract.group_in_building_id as gid,
+    group_in_building.gName as groupname,
+    realContract.r_g_in_building_id as roomid,
+    r_g_in_building.rName as roomname,
     realContract.customer_id,
     customer.div2,
     customer.name,
@@ -103,7 +102,7 @@ $sql = "
     paySchedule2.taxSelect,
     paySchedule2.taxDate
 from
-    (select @roomdiv:='방계약')a,
+    (select @roomdiv:='임대계약')a,
     paySchedule2
 join realContract
     on paySchedule2.realContract_id = realContract.id
@@ -122,13 +121,13 @@ where paySchedule2.user_id={$_SESSION['id']} and
 union
 (select
     @gooddiv as gooddiv,
-    paySchedule2.etcContract_id,
-    etcContract.building_id,
-    building.bName,
-    etcContract.good_in_building_id,
-    good_in_building.name,
-    etcContract.good_in_building_id,
-    good_in_building.name,
+    paySchedule2.etcContract_id as eid,
+    etcContract.building_id as ebid,
+    building.bName as buildingname,
+    etcContract.good_in_building_id as goodid,
+    good_in_building.name as goodname2,
+    etcContract.good_in_building_id as goodid,
+    good_in_building.name as goodname2,
     etcContract.customer_id,
     customer.div2,
     customer.name,
@@ -176,52 +175,8 @@ where paySchedule2.user_id={$_SESSION['id']} and
       $etcDate $taxCondi $payCondi $etcCondi2)
 order by roomdiv desc, executiveDate desc
 ";
+
+
 // echo $sql;
 
-$result = mysqli_query($conn, $sql);
-// $total_rows = mysqli_num_rows($result);
-$allRows = array();
-while($row = mysqli_fetch_array($result)){
-  $allRows[]=$row;
-}
-
-for ($i=0; $i < count($allRows); $i++) {
-  if($allRows[$i]['div3']==='주식회사'){
-    $allRows[$i]['cdiv3'] = '(주)';
-  } elseif($allRows[$i]['div3']==='유한회사'){
-    $allRows[$i]['cdiv3'] = '(유)';
-  } elseif($allRows[$i]['div3']==='합자회사'){
-    $allRows[$i]['cdiv3'] = '(합)';
-  } elseif($allRows[$i]['div3']==='기타'){
-    $allRows[$i]['cdiv3'] = '(기타)';
-  }
-
-  if($allRows[$i]['div2']==='개인사업자'){
-    $allRows[$i]['cname'] = $allRows[$i]['name'].'('.$allRows[$i]['companyname'].')';
-  } else if($allRows[$i]['div2']==='법인사업자'){
-    $allRows[$i]['cname'] = $allRows[$i]['cdiv3'].$allRows[$i]['companyname'].'('.$allRows[$i]['name'].')';
-  } else if($allRows[$i]['div2']==='개인'){
-    $allRows[$i]['cname'] = $allRows[$i]['name'];
-  }
-
-  $allRows[$i]['contact'] = $allRows[$i]['contact1'].'-'.$allRows[$i]['contact2'].'-'.$allRows[$i]['contact3'];
-
-  $allRows[$i]['companynumber'] = $allRows[$i]['cNumber1'].'-'.$allRows[$i]['cNumber2'].'-'.$allRows[$i]['cNumber3'];
-
-  $allRows[$i]['address'] = $allRows[$i]['add1'].'-'.$allRows[$i]['add2'].'-'.$allRows[$i]['add3'];
-
-} //for문closing
-
-// print_r($allRows);
-
-$amountTotalArray = [0,0,0];
-
-for ($i=0; $i < count($allRows); $i++) {
-  $amountTotalArray[0] += str_replace(",", "", $allRows[$i]['pAmount']);
-  $amountTotalArray[1] += str_replace(",", "", $allRows[$i]['pvAmount']);
-  $amountTotalArray[2] += str_replace(",", "", $allRows[$i]['ptAmount']);
-}
-
-
-// print_r($amountTotalArray);
 ?>

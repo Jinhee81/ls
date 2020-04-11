@@ -5,7 +5,7 @@
     <div class="modal-content">
 
       <div class="modal-header">
-        <h6 class="modal-title" id="exampleModalLabel">입금처리 - 청구번호 <span class='payid'></span></h6>
+        <h6 class="modal-title" id="exampleModalLabel">납부처리 - 청구번호 <span class='payid'></span></h6>
 
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
@@ -35,7 +35,7 @@
           </div>
           <div class="form-row">
             <div class="form-group col-md-4 mb-0">
-              <p class="text-left">입금구분</p>
+              <p class="text-left">구분</p>
             </div>
             <div class="form-group col-md-8 mb-0">
               <select class="form-control form-control-sm" id="payKind">
@@ -47,7 +47,7 @@
           </div>
           <div class="form-row">
             <div class="form-group col-md-4 mb-0">
-              <p class="text-left">입금일</p>
+              <p class="text-left">납부일</p>
             </div>
             <div class="form-group col-md-8 mb-0">
               <input type="text" class="form-control form-control-sm dateType" style="color:#F7819F;" name="modalexecutivedate" required>
@@ -55,7 +55,7 @@
           </div>
           <div class="form-row">
             <div class="form-group col-md-4 mb-0">
-              <p class="text-left">입금액</p>
+              <p class="text-left">납부액</p>
             </div>
             <div class="form-group col-md-6 mb-0">
               <input type="text" class="form-control form-control-sm amountNumber" style="color:#F7819F;" name="modalexecutiveamount" numberOnly required>
@@ -69,7 +69,7 @@
       <div class="modal-footer">
         <button type='button' class='btn btn-secondary btn-sm mr-0' data-dismiss='modal'>닫기</button>
         <button type='button' class='btn btn-warning btn-sm mr-0 getExecuteBack'>청구취소</button>
-        <button type='button' class='btn btn-primary btn-sm getExecute'>입금완료</button>
+        <button type='button' class='btn btn-primary btn-sm getExecute'>납부완료</button>
       </div>
     </div>
 

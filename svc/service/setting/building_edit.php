@@ -65,13 +65,13 @@ $row = mysqli_fetch_array($result);
       <div class="col-sm-9">
         <div class='form-row'>
           <div class='form group col-md-4'>
-            <input type='number' name='contact1' class='form-control' maxlength='3' value='010' required>
+            <input type='number' name='contact1' class='form-control' maxlength='3' value='<?=$row['contact1']?>' oninput='maxlengthCheck(this);'>
           </div>
           <div class='form group col-md-4'>
-            <input type='number' name='contact2' class='form-control' maxlength='4' required oninput='maxlengthCheck(this);'>
+            <input type='number' name='contact2' class='form-control' maxlength='4' value='<?=$row['contact2']?>' oninput='maxlengthCheck(this);'>
           </div>
           <div class='form group col-md-4'>
-            <input type='number' name='contact3' class='form-control' maxlength='4' required oninput='maxlengthCheck(this);'>
+            <input type='number' name='contact3' class='form-control' maxlength='4' value='<?=$row['contact3']?>' oninput='maxlengthCheck(this);'>
           </div>
         </div>
         <!-- <br> -->
@@ -92,13 +92,13 @@ $row = mysqli_fetch_array($result);
       <div class="col-sm-9">
         <div class='form-row'>
           <div class='form group col-md-4'>
-            <input type='number' name='cNumber1' class='form-control' maxlength='3' oninput='maxlengthCheck(this);'>
+            <input type='number' name='cNumber1' class='form-control' maxlength='3' value="<?=$row['cnumber1']?>" oninput='maxlengthCheck(this);'>
           </div>
           <div class='form group col-md-3'>
-            <input type='number' name='cNumber2' class='form-control' maxlength='2' oninput='maxlengthCheck(this);'>
+            <input type='number' name='cNumber2' class='form-control' maxlength='2' value="<?=$row['cnumber2']?>" oninput='maxlengthCheck(this);'>
           </div>
           <div class='form group col-md-5'>
-            <input type='number' name='cNumber3' class='form-control' maxlength='5' oninput='maxlengthCheck(this);'>
+            <input type='number' name='cNumber3' class='form-control' maxlength='5' value="<?=$row['cnumber3']?>" oninput='maxlengthCheck(this);'>
           </div>
         </div>
         <!-- <br> -->

@@ -57,7 +57,7 @@ include "ajax_smsCondi.php";
           <?=$allRows[$i]['roomNumber']?>
         </td><!--방번호-->
         <td class="mobile"><!--문자내용-->
-          <label data-toggle="modal" data-target=".bd-example-modal-sm" class="descriptions green">
+          <label data-toggle="modal" data-target="#descriptionModal" class="descriptions green">
             <!-- <label data-toggle="modal" data-target="#descriptionModal" data-placement="top" title="<?=$allRows[$i]['description']?>" class="descriptions"> -->
             <u>
               <?=mb_substr($allRows[$i]['description'], 0, 10)?>

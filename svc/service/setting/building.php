@@ -15,8 +15,8 @@ include $_SERVER['DOCUMENT_ROOT']."/svc/view/conn.php";
         }
 </style>
 <section class="container">
-  <div class="jumbotron">
-    <h1 class="display-4">임대관리의 필요사항을 설정하세요!</h1>
+  <div class="jumbotron pt-3 pb-3">
+    <h2 class="">임대관리의 필요사항을 설정하세요!</h2>
     <p class="lead">
     (1)'도레미고시원' 또는 '두드림센터' 등 평상시 관리하는 명칭을 적어주세요.<br>
     (2) 관리호수를 등록해야 리스맨 사용이 가능합니다. (관리호수란? '101호', '102호' 등의 명칭)<br>
@@ -47,7 +47,16 @@ include $_SERVER['DOCUMENT_ROOT']."/svc/view/conn.php";
 </section>
 
 <?php include $_SERVER['DOCUMENT_ROOT']."/svc/view/service_footer.php";?>
-<?php include $_SERVER['DOCUMENT_ROOT']."/svc/view/service_footer_script.php"; ?>
+
+<script src="/svc/inc/js/jquery-3.3.1.min.js"></script>
+<script src="/svc/inc/js/popper.min.js"></script>
+<script src="/svc/inc/js/bootstrap.min.js"></script>
+
+<script type="text/javascript">
+  $(document).ready(function(){
+    $('.betc').tooltip('show');
+  })
+</script>
 
 </body>
 </html>

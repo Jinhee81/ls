@@ -20,10 +20,11 @@ $sql_sms = "select
         from sms
         where
           user_id={$_SESSION['id']} and
-          screen='입금예정화면'";
+          screen='납부예정화면'";
 // echo $sql_sms;
 
 $result_sms = mysqli_query($conn, $sql_sms);
+$rowsms = array();
 while($row_sms = mysqli_fetch_array($result_sms)){
   $rowsms[] = $row_sms;
 }
@@ -35,8 +36,8 @@ while($row_sms = mysqli_fetch_array($result_sms)){
 <section class="container">
   <div class="jumbotron pt-3 pb-3">
     <h2 class="">납부예정 목록이에요.(#401)</h2>
-    <p class="lead">
-
+    <p class="warningg">
+      <i class="fas fa-exclamation-circle"></i> 문자메시지 발송후 반드시 보낸문자목록에서 확인하세요. 가끔 발송이 안되는 경우가 있어요(상대방 전화해지, 또는 해외 출국 등 사유)
     </p>
   </div>
 </section>
@@ -75,6 +76,7 @@ while($row_sms = mysqli_fetch_array($result_sms)){
             </td>
             <td width="7%">
               <select class="form-control form-control-sm selectCall" name="group">
+                <option value="groupAll">그룹전체</option>
               </select><!--그룹-->
             </td>
             <td width="7%">
@@ -98,26 +100,36 @@ while($row_sms = mysqli_fetch_array($result_sms)){
 <!-- 문자 및 세금계산서발행 섹션 -->
 <section class="container">
     <div class="row mobile">
-        <div class="col">
-          <div class="row">
-            <div class="col-sm-3 pr-0">
-              <select class="form-control form-control-sm" id="smsTitle" name="">
-                <option value="상용구없음">상용구없음</option>
-                <?php for ($i=0; $i < count($rowsms); $i++) {
-                  echo "<option value='".$rowsms[$i]['title']."'>".$rowsms[$i]['title']."</option>";
-                } ?>
-              </select>
-            </div>
-            <div class="col-sm-2 pl-1 pr-0">
-              <button class="btn btn-sm btn-block btn-outline-primary" id="smsBtn" data-toggle="modal" data-target="#smsModal1"><i class="far fa-envelope"></i> 보내기</button>
-            </div>
-            <div class="col-sm-3 pl-1">
-              <a href="/svc/service/sms/smsSetting.php">
-              <button class="btn btn-sm btn-block btn-dark" id="smsSettingBtn">상용구설정</button></a>
-            </div>
+        <div class="col col-md-7">
+          <div class="row ml-0">
+            <table>
+              <tr>
+                <td>
+                  <select class="form-control form-control-sm" id="smsTitle" name="">
+                    <option value="상용구없음">상용구없음</option>
+                    <?php for ($i=0; $i < count($rowsms); $i++) {
+                      echo "<option value='".$rowsms[$i]['title']."'>".$rowsms[$i]['title']."</option>";
+                    } ?>
+                  </select>
+                </td>
+                <td>
+                  <button class="btn btn-sm btn-block btn-outline-primary" id="smsBtn" data-toggle="modal" data-target="#smsModal1"><i class="far fa-envelope"></i> 보내기</button>
+                </td>
+                <td>
+                  <a href="/svc/service/sms/smsSetting.php" target="_blank">
+                  <button class="btn btn-sm btn-block btn-dark" id="smsSettingBtn"><i class="fas fa-angle-double-right"></i> 상용구설정</button></a>
+                </td>
+                <td>
+                  <a href="/svc/service/sms/sent.php" target="_blank">
+                  <button class="btn btn-sm btn-block btn-dark" id="smsSettingBtn"><i class="fas fa-angle-double-right"></i> 보낸문자목록</button></a>
+                </td>
+                <td><button class="btn btn-sm btn-block btn-danger" name="button1" data-toggle="tooltip" data-placement="top" title="작업중입니다^^;">청구취소</button></td>
+                <td><button class="btn btn-sm btn-block btn-warning" name="button2" data-toggle="tooltip" data-placement="top" title="작업중입니다^^;">납부처리</button></td>
+              </tr>
+            </table>
           </div>
         </div>
-        <div class="col">
+        <div class="col col-md-5">
           <div class="row justify-content-end">
             <div class="col col-md-3 pl-0 pr-1">
               <input type="text" name="taxDate" value="" class="form-control form-control-sm dateType text-center">
@@ -135,14 +147,11 @@ while($row_sms = mysqli_fetch_array($result_sms)){
         </div>
     </div>
 
-    <div class="row">
-      <div class="col col-md-6">
-        <label class="mb-0" style=""> 전체 : <span id="ptAmountTotalCount">0</span>건, 공 <span id="pAmountTotalAmount">0</span>원, 세 <span id="pvAmountTotalAmount">0</span>원, 합 <span id="ptAmountTotalAmount">0</span>원</label><br><!--글자 기본&-->
-        <label class="mb-0" style="color:#007bff;"> 체크 : <span id="ptAmountSelectCount">0</span>건, 공 <span id="pAmountSelectAmount">0</span>원, 세 <span id="pvAmountSelectAmount">0</span>원, 합 <span id="ptAmountSelectAmount">0</span>원</label><!--글자 파란색-->
-      </div>
-      <div class="col col-md-6">
-
-      </div>
+    <div class="row justify-content-end mr-0 mobile">
+        <label class="mb-0" style=""> 전체 : <span id="ptAmountTotalCount">0</span>건, 공 <span id="pAmountTotalAmount">0</span>원, 세 <span id="pvAmountTotalAmount">0</span>원, 합 <span id="ptAmountTotalAmount">0</span>원</label><!--글자 기본&-->
+    </div>
+    <div class="row justify-content-end mr-0 mobile">
+      <label class="mb-0" style="color:#007bff;"> 체크 : <span id="ptAmountSelectCount">0</span>건, 공 <span id="pAmountSelectAmount">0</span>원, 세 <span id="pvAmountSelectAmount">0</span>원, 합 <span id="ptAmountSelectAmount">0</span>원</label><!--글자 파란색-->
     </div>
 </section>
 
@@ -157,16 +166,13 @@ while($row_sms = mysqli_fetch_array($result_sms)){
         <th scope="col">방번호</th>
         <th scope="col">세입자</th>
         <th scope="col">연락처</th>
-        <!-- <th scope="col">청구번호</th> -->
         <th scope="col" class="mobile">개월</th>
         <th scope="col" class="mobile">시작일/종료일</th>
-        <!-- <th scope="col" class="mobile">종료일</th> -->
         <th scope="col">예정일</th>
         <th scope="col" class="mobile">공급가액/세액</th>
         <th scope="col">합계</th>
-        <th scope="col" class="mobile">입금구분</th>
+        <th scope="col" class="mobile">구분</th>
         <th scope="col" class="mobile">연체일수/이자</th>
-        <!-- <th scope="col" class="mobile">연체이자</th> -->
         <th scope="col" class="mobile">증빙</th>
       </tr>
     </thead>
@@ -176,6 +182,9 @@ while($row_sms = mysqli_fetch_array($result_sms)){
   </table>
 </section>
 
+<!-- sql 섹션 -->
+<section id="allVals2">
+</section>
 
 
 <?php
@@ -188,15 +197,15 @@ include $_SERVER['DOCUMENT_ROOT']."/svc/service/sms/modal_sms2.php";
 
 
 <script src="/svc/inc/js/jquery-3.3.1.min.js"></script>
-<script src="/svc/inc/js/jquery.number.min.js"></script>
+<script src="/svc/inc/js/popper.min.js"></script>
 <script src="/svc/inc/js/bootstrap.min.js"></script>
+<script src="/svc/inc/js/jquery.number.min.js"></script>
 <script src="/svc/inc/js/jquery-ui.min.js"></script>
 <script src="/svc/inc/js/datepicker-ko.js?<?=date('YmdHis')?>"></script>
 <script src="/svc/inc/js/jquery-ui-timepicker-addon.js"></script>
 <script src="/svc/inc/js/etc/newdate8.js?<?=date('YmdHis')?>"></script>
 <script src="/svc/inc/js/etc/sms_noneparase3.js?<?=date('YmdHis')?>"></script>
 <script src="/svc/inc/js/etc/sms_existparase10.js?<?=date('YmdHis')?>"></script>
-<script src="/svc/inc/js/etc/sms1.js?<?=date('YmdHis')?>"></script>
 <script src="/svc/inc/js/etc/checkboxtable.js?<?=date('YmdHis')?>"></script>
 <script src="/svc/inc/js/etc/form.js?<?=date('YmdHis')?>"></script>
 
@@ -204,20 +213,24 @@ include $_SERVER['DOCUMENT_ROOT']."/svc/service/sms/modal_sms2.php";
   var buildingArray = <?php echo json_encode($buildingArray); ?>;
   var groupBuildingArray = <?php echo json_encode($groupBuildingArray); ?>;
   var roomArray = <?php echo json_encode($roomArray); ?>;
+  var smsSettingArray = <?php echo json_encode($rowsms); ?>;
   console.log(buildingArray);
   console.log(groupBuildingArray);
   console.log(roomArray);
+
 </script>
 
 <script src="/svc/inc/js/etc/building.js?<?=date('YmdHis')?>"></script>
-<script type="text/javascript" src="jchecksum.js?<?=date('YmdHis')?>"></script>
-<script type="text/javascript" src="jsmsarray.js?<?=date('YmdHis')?>"></script>
+<script type="text/javascript" src="j_checksum.js?<?=date('YmdHis')?>"></script>
+<script type="text/javascript" src="j_sms_array.js?<?=date('YmdHis')?>"></script>
+<script type="text/javascript" src="j_taxarray.js?<?=date('YmdHis')?>"></script>
 
 <script>
+var taxDiv = 'charge'; //입금예정리스트여서 청구라는 뜻의 charge 사용, 입금완료리스트에서는 영수라는 뜻의 accept 사용 예정
 
 function maketable(){
   var mtable = $.ajax({
-    url: 'ajax_getexpectedCondi-1.php',
+    url: 'ajax_getexpectedCondi_value.php',
     method: 'post',
     data: $('form').serialize(),
     success: function(data){
@@ -236,9 +249,9 @@ function maketable(){
           returns += '<tr>';
           returns += '<td><input type="checkbox" value="'+value.idpaySchedule2+'" class="tbodycheckbox"></td>';
           returns += '<td>'+datacount+'</td>';
-          returns += '<td>'+value.gname+'</td>';
+          returns += '<td class="mobile">'+value.gname+'</td>';
           returns += '<td>'+value.roomname+'</td>';
-          returns += '<td><a href="/svc/service/customer/m_c_edit.php?id='+value.cid+'" data-toggle="tooltip" data-placement="top" title="'+value.cname+'">'+value.cnamemb+'</a>';
+          returns += '<td><a href="/svc/service/customer/m_c_edit.php?id='+value.cid+'" data-toggle="tooltip" data-placement="top" title="'+value.cname+'" class="cnameclass">'+value.cnamemb+'</a>';
           returns += '<input type="hidden" name="cname" value="'+value.cname+'">';
           returns += '<input type="hidden" name="contact" value="'+value.contact+'">';
           returns += '<input type="hidden" name="email" value="'+value.email+'">';
@@ -251,25 +264,25 @@ function maketable(){
           returns += '<input type="hidden" name="div5" value="'+value.div5+'">';
           returns += '</td>';
           returns += '<td>'+value.contact+'</td>';
-          returns += '<td>'+value.monthCount+'</td>';
-          returns += '<td><label class="mb-0">' + value.pStartDate+'</label><br>';
+          returns += '<td class="mobile">'+value.monthCount+'</td>';
+          returns += '<td class="mobile"><label class="mb-0">' + value.pStartDate+'</label><br>';
           returns += '<label class="mb-0">' + value.pEndDate+'</label></td>';
           returns += '<td><p class="modalAsk" data-toggle="modal" data-target="#pPay">'+value.pExpectedDate+'</p>';
           returns += '<input type="hidden" name="rid" value="'+value.rid+'">';
           returns += '<input type="hidden" name="payid" value="'+value.idpaySchedule2+'"></td>';
-          returns += '<td class="text-right pr-3"><label class="mb-0">'+value.pAmount+'</label><br>';
+          returns += '<td class="text-right pr-3 mobile"><label class="mb-0">'+value.pAmount+'</label><br>';
           returns += '<label class="mb-0">'+value.pvAmount+'</label></td>';
-          returns += '<td><a href="/svc/service/contract/contractEdit.php?id='+value.rid+'">'+value.ptAmount+'</a></td>';
-          returns += '<td>'+value.payKind+'</td>';//입금구분
-          returns += '<td><label class="mb-0">'+value.delaycount+'</label><br>';
+          returns += '<td><a href="/svc/service/contract/contractEdit.php?id='+value.rid+'" name="ptamount" data-toggle="tooltip" data-placement="top" title="계약상세보기">'+value.ptAmount+'</a></td>';
+          returns += '<td class="mobile">'+value.payKind+'</td>';//입금구분
+          returns += '<td class="mobile"><label class="mb-0">'+value.delaycount+'</label><br>';
           returns += '<label class="mb-0">' + value.delayinterest+'</label></td>';//연체일수,연체이자
 
           if(value.taxSelect==='세금계산서'){
-            returns += '<td><span class="badge badge-warning text-light" style="width: 1.5rem;">세</span>'+value.taxDate+'</td>';
+            returns += '<td class="mobile"><span class="badge badge-warning text-light" style="width: 1.5rem;">세</span>'+value.taxDate+'</td>';
           } else if(value.taxSelect==='현금영수증'){
-            returns += '<td><span class="badge badge-info text-light" style="width: 1.5rem;">현</span>'+value.taxDate+'</td>';
+            returns += '<td class="mobile"><span class="badge badge-info text-light" style="width: 1.5rem;">현</span>'+value.taxDate+'</td>';
           } else {
-            returns += '<td></td>';
+            returns += '<td class="mobile"></td>';
           }
 
           returns += '</tr>';
@@ -302,9 +315,24 @@ return mtable;
 
 
 $(document).ready(function(){
-    $(function () {
-        $('[data-toggle="tooltip"]').tooltip()
-    })
+
+  // $(document).on('blur', '.cnameclass', function(){
+  //   $(this).tooltip({
+  //     sanitizeFn: function (content) {
+  //     return DOMPurify.sanitize(content)
+  //     }
+  //   });
+  // })
+  //
+  // $(document).on('blur', 'a[name=ptamount]', function(){
+  //   $(this).tooltip('show');
+  // })
+
+  // $('#button1').tooltip('show');
+  // $('#button2').tooltip('show');
+
+    // $('a[name=cname]').tooltip('show');
+    // $('a[name=ptamount]').tooltip('show');
 
     var periodDiv = $('select[name=periodDiv]').val();
     dateinput2(periodDiv);
@@ -324,7 +352,7 @@ $(document).ready(function(){
     $('#href_smsSetting').on('click', function(){
       var moveCheck = confirm('문자상용구설정 화면으로 이동합니다. 이동하시겠습니까?');
       if(moveCheck){
-        location.href='/service/sms/smsSetting.php';
+        location.href='/svc/service/sms/smsSetting.php';
       }
     })
 
@@ -356,24 +384,24 @@ $(document).ready(function(){
       }
 
 
-      $('.getExecute').on('click', function(){ //입금완료버튼(모달안버튼) 클릭
+      $('.getExecute').on('click', function(){ //납부완료버튼(모달안버튼) 클릭
 
         var aa1 = 'payScheduleInput';
-        var bb1 = 'p_payScheduleGetAmountInput2.php';
+        var bb1 = '/svc/service/contract/p_payScheduleGetAmountInput.php';
 
 
-        var ppayKind = $('#payKind').val(); //입금구분
+        var ppayKind = $('#payKind').val(); //납부구분
 
-        var pgetDate = $('input[name=modalexecutivedate]').val(); //입금일
+        var pgetDate = $('input[name=modalexecutivedate]').val(); //납부일
 
-        var pgetAmount = $('input[name=modalexecutiveamount]').val(); //입금액
+        var pgetAmount = $('input[name=modalexecutiveamount]').val(); //납부액
 
         var pExpectedAmount = $('input[name=modalpayamount]').val(); //예정금액
 
         // console.log(pExpectedAmount);
 
         if(pgetAmount != pExpectedAmount){
-          alert('입금액과 예정금액은 같아야 합니다.');
+          alert('납부액과 예정금액은 같아야 합니다.');
           return false;
         }
 
@@ -432,6 +460,16 @@ $('input[name=toDate]').on('change', function(){
 })
 
 $('select[name=building]').on('change', function(){
+    var buildingkey = $('select[name=building]').val();
+    // console.log(buildingkey);
+
+    //문자발송에 필요한 번호
+    var sendphonenumber = buildingArray[buildingkey][3] + buildingArray[buildingkey][4] + buildingArray[buildingkey][5];
+
+
+    $('input[name=sendphonenumber]').val(sendphonenumber);
+
+    $('input[name=sendphonenumber]').val(sendphonenumber);
     maketable();
 })
 
@@ -441,110 +479,32 @@ $('select[name=group]').on('change', function(){
 
 $('select[name=etcCondi]').on('change', function(){
     maketable();
+
+    // $.ajax({
+    //     url: 'ajax_getexpectedCondi_sql2.php',
+    //     method: 'post',
+    //     data: $('form').serialize(),
+    //     success: function(data){
+    //       $('#allVals2').html(data);
+    //     }
+    // })
 })
 
 $('input[name=cText]').on('keyup', function(){
     maketable();
+
+    // $.ajax({
+    //     url: 'ajax_getexpectedCondi_sql2.php',
+    //     method: 'post',
+    //     data: $('form').serialize(),
+    //     success: function(data){
+    //       $('#allVals2').html(data);
+    //     }
+    // })
 })
+</script>
 
-//---------조회버튼클릭평션 end and 증빙일자 펑션 시작--------------//
-
-
-$('#btnTaxDateInput').on('click', function(){
-  var taxDate = $('input[name="taxDate"]').val();
-  var taxSelect = $('select[name="taxSelect"]').val(); //세금계산서인지 현금영수증인지 구분
-  var taxDiv = 'charge'; //입금예정리스트여서 청구라는 뜻의 charge 사용, 입금완료리스트에서는 영수라는 뜻의 accept 사용 예정
-
-  var buildingId = $('#building :selected').val();
-  var buildingText = $('#building :selected').text();
-  var buildingPopbill = buildingArray[buildingId][2];
-  var buildingCompanynumber = buildingArray[buildingId][3];
-
-  // console.log(buildingId, buildingPopbill, buildingCompanynumber);
-
-  if(taxArray.length===0){
-    alert('세금계산서 발행할 것들을 먼저 체크박스로 선택해주세요.');
-    return false;
-  }
-
-
-  if(buildingPopbill === 'popbillno'){
-    alert(buildingText+' 물건은 팝빌 전자세금계산서 설정이 되어있지 않습니다. 전자세금계산서 설정을 확인해주세요 (환경설정->물건명클릭)');
-    return false;
-  }
-
-  if(buildingCompanynumber.length === 0){
-    alert(buildingText+'물건의 사업자번호등록이 되어있지 않습니다. 사업자번호가 등록되어야 합니다 (환경설정->물건명클릭)');
-    return false;
-  }
-
-  if(buildingCompanynumber.length != 12){
-    alert(buildingText+'물건의 사업자번호 형식이 올바르지 않습니다. 사업자번호를 확인하세요. (환경설정->물건명클릭)');
-    return false;
-  }
-
-  if(taxDate.length===0){
-    alert('세금계산서 발행일자가 입력되어야합니다.');
-    return false;
-  }
-
-  if(taxArray.length >= 1) {
-    for (var i in taxArray) {
-      if(taxArray[i][14]['입금구분']==='카드'){
-        alert("입금구분이 '카드'이면 세금계산서 발행이 불가합니다.");
-        return false;
-      }
-
-      if(taxArray[i][11]['세액']==='0'){
-            alert("세액이 '0'원이면 세금계산서 발행이 불가합니다.");
-            return false;
-      }
-
-      if(taxArray[i][15]['증빙일자']){
-            alert("이미 증빙일자가 존재하므로 세금계산서 발행이 불가합니다.");
-            return false;
-      }
-
-      if(taxArray[i][2]['사업자번호'].length != 12){
-            alert(taxArray[i][4]['성명']+"의 사업자번호가 비어있어 세금계산서 발행이 불가합니다.");
-            return false;
-      }
-
-      if(!taxArray[i][3]['사업자명']){
-            alert(taxArray[i][4]['성명']+"의 사업자명이 비어있어 세금계산서 발행이 불가합니다.");
-            return false;
-      }
-    }
-  }
-
-  var taxArrayTo = JSON.stringify(taxArray);
-  var aa = 'taxSave';
-  var bb = 'p_payScheduleTaxInput.php';
-
-  goCategoryPage(aa, bb, buildingId, buildingText, buildingPopbill, buildingCompanynumber, taxArrayTo, taxDate, taxSelect, taxDiv);
-
-  function goCategoryPage(a,b,c,d,e,f,g,h,i,j){
-      var frm = formCreate(a, 'post', b,'');
-      frm = formInput(frm, 'buildingId', c);
-      frm = formInput(frm, 'buildingText', d);
-      frm = formInput(frm, 'buildingPopbill', e);
-      frm = formInput(frm, 'buildingCompanynumber', f);
-      frm = formInput(frm, 'taxArray', g);
-      frm = formInput(frm, 'taxDate', h);
-      frm = formInput(frm, 'taxSelect', i);
-      frm = formInput(frm, 'taxDiv', j);
-      formSubmit(frm);
-  }
-
-})
-
-//---------증빙일자펑션 end 문자보내기펑션시 시작--------------//
-
-//---------문자보내기펑션시 끝 & 체크박스클래스추가 시작 --------------//
-
-//---------체크박스클래스 끝--------------//
-
-
+<script type="text/javascript" src="js_sms_tax.js?<?=date('YmdHis')?>">
 </script>
 
 </body>

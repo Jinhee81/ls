@@ -43,17 +43,17 @@ if($_POST['cText']){
 
 $sql = "
   select
-      etcContract.id,
-      customer.id,
-      customer.name,
+      etcContract.id as eid,
+      customer.id as customerid,
+      customer.name as customername,
       customer.companyname,
       customer.div2,
       customer.div3,
       customer.contact1,
       customer.contact2,
       customer.contact3,
-      building.bName,
-      good_in_building.name,
+      building.bName as bname,
+      good_in_building.name as goodname,
       pAmount,
       pvAmount,
       ptAmount,

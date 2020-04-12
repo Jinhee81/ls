@@ -1,5 +1,6 @@
 <!-- 이파일은 세입자랑 기타고객까지도찾는 파일임(기타계약에서는 세입자말고 기타분류도 찾아야햐니깐) -->
 <?php
+header('Content-Type: text/html; charset=UTF-8');
 session_start();
 include $_SERVER['DOCUMENT_ROOT']."/svc/view/conn.php";
 
@@ -59,7 +60,7 @@ if(isset($_POST['query'])){
         $output .= '<li>'.$cName.' | '.$cContact.' | '.$clist['id'].'</li>';
       }
     } else {
-      $output .= '<li>검색값이 없습니다.</li>';
+      $output .= '<li>검색값이 없네요. 다시 확인해보세요 ㅜㅜ</li>';
     }
   }
 

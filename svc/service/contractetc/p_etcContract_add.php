@@ -1,43 +1,37 @@
 <?php
+header('Content-Type: text/html; charset=UTF-8');
 session_start();
 include $_SERVER['DOCUMENT_ROOT']."/svc/view/conn.php";
 
 // print_r($_POST);
-// print_r($_SESSION);
+print_r($_SESSION);
 
 $customer_id = substr($_POST['customer'],-9); //이거는 고객관련문자열에서 뒤9자리 고객번호만 가져오는 명령
+
 
 $sql = "
   INSERT INTO etcContract (
     customer_id, building_id, good_in_building_id,
-    startTime, endTime, payKind,
-    pAmount, pvAmount, ptAmount,
-    executiveDate, etc,
+    startTime, endTime, etc,
     createTime, createPerson, user_id)
   VALUES (
     {$customer_id},
-    {$_POST['building_id']},
-    {$_POST['good_in_building_id']},
+    {$_POST['building']},
+    {$_POST['good']},
     '{$_POST['startTime']}',
     '{$_POST['endTime']}',
-    '{$_POST['payKind']}',
-    '{$_POST['pAmount']}',
-    '{$_POST['pvAmount']}',
-    '{$_POST['ptAmount']}',
-    '{$_POST['executiveDate']}',
     '{$_POST['etc']}',
     now(),
-    {$_SESSION['id']},
+    '{$_SESSION['manager_name']}',
     {$_SESSION['id']}
-  )
-";
+  )";
 echo $sql;//기타계약테이블에 입력
 
 $result = mysqli_query($conn, $sql);
 
 if(!$result){
   echo "<script>alert('저장과정에 문제가 생겼습니다. 관리자에게 문의하세요.(1)');
-        location.href = 'contractetc_add1.php';
+        history.back();
         </script>";
   error_log(mysqli_error($conn));
   exit();
@@ -66,15 +60,34 @@ $sql2 = "
 
 $result2 = mysqli_query($conn, $sql2);
 
-if(!$result2){
+if($result2){
+  $payid = mysqli_insert_id($conn);
+
+  $sql3 = "update etcContract
+           set paySchedule2_id = {$payid}
+           where id = {$id}
+          ";
+  $result3 = mysqli_query($conn, $sql3);
+
+  if($result3){
+    echo "<script>alert('저장하였습니다.');
+          location.href='contractetc.php';
+          </script>";
+    exit();
+  } else {
+    echo "<script>alert('저장과정에 문제가 생겼습니다. 관리자에게 문의하세요.(2)');
+          history.back();
+          </script>";
+    error_log(mysqli_error($conn));
+    exit();
+  }
+} else {
   echo "<script>alert('저장과정에 문제가 생겼습니다. 관리자에게 문의하세요.(2)');
-        location.href = 'contractetc_add1.php';
+        history.back();
         </script>";
   error_log(mysqli_error($conn));
   exit();
 }
 
-echo "<script>alert('저장되었습니다.');
-      location.href = 'contractetc.php';
-      </script>";
+
  ?>

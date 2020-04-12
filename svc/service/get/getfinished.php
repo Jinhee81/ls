@@ -354,6 +354,10 @@ $(document).ready(function(){
 
   maketable();
 
+  $(function () {
+      $('[data-toggle="tooltip"]').tooltip()
+  })
+
   $('.dateType').datepicker({
     changeMonth: true,
     changeYear: true,

@@ -91,57 +91,24 @@ var taxArrayEle = [];
 
     } else {
 
-      var dropReady = [];
       var currow = $(this).closest('tr');
-      var colOrder = Number(currow.find('td:eq(1)').text());
-      var colid = Number(currow.find("td:eq(0)").children('input').val());
-
-      Number(currow.find("td:eq(7)").children('input:eq(3)').val());//세입자번호
-      var companynumber = currow.find("td:eq(7)").children('input:eq(5)').val();//사업자번호
-      var companyname = currow.find("td:eq(7)").children('input:eq(6)').val();//사업자명
-      var name = currow.find("td:eq(7)").children('input:eq(4)').val();//성명
-      var address = currow.find("td:eq(7)").children('input:eq(7)').val();//주소
-      var div4 = currow.find("td:eq(7)").children('input:eq(8)').val();//업태
-      var div5 = currow.find("td:eq(7)").children('input:eq(9)').val();//종목
-      var contact = currow.find("td:eq(8)").text();//연락처
-      var email = currow.find("td:eq(7)").children('input:eq(1)').val();//이메일
-      var supplyamount = currow.find("td:eq(3)").text();//공급가액
-      var vatamount = currow.find("td:eq(4)").text();//세액
-      var totalamount = currow.find("td:eq(5)").children().text();//합계
-      var executiveDate = currow.find("td:eq(2)").children('p').text();//납부일자
-
-      var startdate = currow.find("td:eq(2)").children('input:eq(0)').val();//청구시작일
-      var enddate = currow.find("td:eq(2)").children('input:eq(1)').val();//청구종료일
-      var monthcount = currow.find("td:eq(2)").children('input:eq(2)').val();//청구개월
-      var contractDiv = currow.find("td:eq(9)").children('input:eq(0)').val();//계약구분,방계약인지기타계약인지
-
-      var comment;//비고
-
-      if(contractDiv==='임대계약'){
-        comment = "기간 ("+startdate+"~"+enddate+", "+monthcount+"개월 이용료)";//비고
-      }
-
-      var acceptdiv = currow.find("td:eq(6)").text().trim();//입금구분
-      var evidencedate = currow.find("td:eq(10)").text();//증빙일자
-
-      dropReady.push({'순번':colOrder}, {'청구번호':colid}, {'사업자번호':companynumber}, {'사업자명':companyname}, {'성명':name}, {'주소':address}, {'업태':div4}, {'종목':div5}, {'연락처':contact}, {'이메일':email}, {'공급가액':supplyamount}, {'세액':vatamount}, {'합계':totalamount}, {'비고':comment}, {'입금구분':acceptdiv}, {'증빙일자':evidencedate});
-
-      console.log(dropReady);
+      var dropOrder = Number(currow.find('td:eq(1)').text());
 
       for (var i = 0; i < taxArray.length; i++) {
-        var join1 = taxArray[i].join(',');
-        var join2 = dropReady.join(',');
+        // var join1 = taxArray[i].join(',');
+        // var join2 = dropReady.join(',');
 
         // var join1 = taxArray[i][0]['순번'];
         // var join2 = dropReady['순번'];
 
-        if(join1===join2){
+        if(taxArray[i][0]['순번'] === dropOrder) {
           var index = i;
-          console.log(index);
         }
-        taxArray.splice(index, 1);
+
 
       }
+      console.log(index);
+      taxArray.splice(index, 1);
 
     } //if else closing}
     console.log(taxArray);

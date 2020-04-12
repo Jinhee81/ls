@@ -10,111 +10,14 @@ include $_SERVER['DOCUMENT_ROOT']."/svc/view/conn.php";
 include "good.php";
 
 $filtered_id = mysqli_real_escape_string($conn, $_GET['id']);//기타계약번호
-settype($filtered_id, 'integer');
 
-$sql = "
-    select
-      etcContract.id,
-      customer.id,
-      customer.name,
-      customer.companyname,
-      customer.div2,
-      customer.div3,
-      customer.contact1,
-      customer.contact2,
-      customer.contact3,
-      customer.etc,
-      building_id,
-      (select bName from building where id=building_id),
-      good_in_building_id,
-      (select name from good_in_building where
-      id=good_in_building_id),
-      startTime,
-      endTime,
-      payKind,
-      executiveDate,
-      pAmount,
-      pvAmount,
-      ptAmount,
-      etcContract.etc,
-      etcContract.createTime,
-      etcContract.createPerson,
-      (select damdangga_name from user where id=etcContract.createPerson),
-      etcContract.updateTime,
-      etcContract.updatePerson,
-      (select damdangga_name from user where id=etcContract.updatePerson),
-      etcContract.user_id
-    from etcContract
-    left join customer
-        on etcContract.customer_id = customer.id
-    where
-      etcContract.id = {$filtered_id} and
-      etcContract.user_id = {$_SESSION['id']}
-    ";
-
-// echo $sql;
-$result = mysqli_query($conn, $sql);
-$row = mysqli_fetch_array($result);
-// print_r($row);
-
-if ($result->num_rows === 0) {
-  echo "<script>
-          alert('세션에 포함된 계약이 아니어서 조회 불가합니다.');
-          location.href = 'contractetc.php';
-        </script>";
-  error_log(mysqli_error($conn));
-}
-
-$cContact = $row['contact1'].'-'.$row['contact2'].'-'.$row['contact3'];
-
-if($row['div3']==='주식회사'){
-  $cDiv3 = '(주)';
-} elseif($row['div3']==='유한회사'){
-  $cDiv3 = '(유)';
-} elseif($row['div3']==='합자회사'){
-  $cDiv3 = '(합)';
-} elseif($row['div3']==='기타'){
-  $cDiv3 = '(기타)';
-}
-
-if($row['div2']==='개인사업자'){
-  $cName = $row['name'].'('.$row['companyname'].')';
-} else if($row['div2']==='법인사업자'){
-  $cName = $cDiv3.$row['companyname'].'('.$row['name'].')';
-} else if($row['div2']==='개인'){
-  $cName = $row['name'];
-}
-
+include "contractetc_edit_condi.php";
 ?>
-<style>
-  .inputWithIcon input[type=search]{
-    padding-left: 40px;
-  }
-  .inputWithIcon {
-    position: relative;
-  }
-  .inputWithIcon i{
-    position: absolute;
-    left: 4px;
-    top: 4px;
-    padding: 9px 8px;
-    color: #aaa;
-    transition: .3s;
-  }
-  .inputWithIcon input[type=search]:focus+i{
-    color: dodgerBlue;
-  }
-  #customerList ul {
-    background-color: #eee;
-    cursor: pointer;
-  }
-  #customerList li {
-    padding: 12px;
-  }
-</style>
-<section class="container">
+
+<!-- 제목섹션 -->
+<section class="container pt-3 pb-3">
   <div class="jumbotron">
-    <h1 class="display-4">기타계약 수정 화면입니다!</h1>
+    <h2 class="display-4">기타계약 수정 화면입니다!</h2>
     <!-- <p class="lead">고객이란 입주한 세입자 및 문의하는 문의고객, 거래처 등을 포함합니다. 고객등록이 되어야 임대계약 등록이 가능합니다!</p> -->
     <!-- <small>(1)<span id='star' style='color:#F7BE81;'> * </span>표시는 필수 입력값입니다. (2)<b>[세입자정보]</b>에는 세입자만 등록 가능합니다. (거래처 및 문의고객은 검색결과가 없다고 표시되니 주의하세요!) <b>[세입자정보]</b>의 제일우측 숫자는 고객번호로써 시스템데이터임을 참고하여주세요. (3)<b>[기간정보]</b>의 기간(개월수)에는 최대 72개월(6년)까지 등록 가능합니다.</small> -->
     <hr class="my-4">
@@ -122,7 +25,9 @@ if($row['div2']==='개인사업자'){
     <a class="btn btn-primary btn-sm" href="/service/setting/building.php" role="button">상품추가</a> -->
   </div>
 </section>
-<section class="container">
+
+<!-- 입력폼 -->
+<section class="container" style="width:900px;">
   <form method="post" action="p_etcContract_edit.php">
     <div class="form-row">
         <div class="form-group col-md-2">
@@ -147,7 +52,7 @@ if($row['div2']==='개인사업자'){
               <div class="form-row">
                 <div class="form-group col-md-2"><!--물건목록-->
                     <label>물건명</label>
-                    <select id="select2" name="building_id" class="form-control">
+                    <select name="building" class="form-control">
                     <?php
                     $sql_building = "select id, bName from building where user_id={$_SESSION['id']}";
                     $result_building = mysqli_query($conn, $sql_building);
@@ -163,7 +68,7 @@ if($row['div2']==='개인사업자'){
                 </div>
                 <div class="form-group col-md-2"><!--상품목록-->
                     <label>상품명</label>
-                    <select id="select3" name="good_in_building_id" class="form-control">
+                    <select name="good" class="form-control">
                       <?php
                       $sql_group = "select id, name from good_in_building where building_id={$row['building_id']}";
                       $result_group = mysqli_query($conn, $sql_group);
@@ -258,22 +163,57 @@ if($row['div2']==='개인사업자'){
     </div>
   </form>
 </section>
+
+<?php include $_SERVER['DOCUMENT_ROOT']."/svc/view/service_footer.php";?>
+
+<script src="/svc/inc/js/jquery-3.3.1.min.js"></script>
+<script src="/svc/inc/js/jquery-ui.min.js"></script>
+<script src="/svc/inc/js/popper.min.js"></script>
+<script src="/svc/inc/js/bootstrap.min.js"></script>
+<script src="/svc/inc/js/datepicker-ko.js"></script>
+<script src="/svc/inc/js/jquery-ui-timepicker-addon.js"></script>
+<script src="/svc/inc/js/jquery.number.min.js"></script>
+
+<script type="text/javascript">
+  var buildingArray = <?php echo json_encode($buildingArray); ?>;
+  var goodBuildingArray = <?php echo json_encode($goodBuildingArray); ?>;
+  console.log(buildingArray);
+  console.log(goodBuildingArray);
+</script>
+
+
 <script>
 
-var select2option, select3option, buildingIdx, goodIdx;
+$(document).ready(function(){
 
-$('#select2').on('change', function(event){
-  buildingIdx = $('#select2').val();
-  $('#select3').empty();
-  for(var key2 in goodBuildingArray[buildingIdx]){ //상품목록출력(빔,회의실)
-    select3option = "<option value='"+key2+"'>"+goodBuildingArray[buildingIdx][key2]+"</option>";
-    // console.log(select3option);
-    $('#select3').append(select3option);
-  }
-  goodIdx = $('#select3').val();
-})
-// console.log(buildingIdx, goodIdx);
+  $('.timeType').datetimepicker({
+    dateFormat:'yy-m-d',
+    monthNamesShort:[ '1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월' ],
+    dayNamesMin:[ '일', '월', '화', '수', '목', '금', '토' ],
+    changeMonth:true,
+    changeYear:true,
+    showMonthAfterYear:true,
+    timeFormat: 'HH:mm:ss',
+    controlType: 'select',
+    oneLine: true
+  })
 
+  $('.dateType').datepicker({
+    changeMonth: true,
+    changeYear: true,
+    showButtonPanel: true,
+    currentText: '오늘',
+    closeText: '닫기'
+  })
+
+  $(".amountNumber").click(function(){
+    $(this).select();
+  });
+
+  $("input:text[numberOnly]").number(true);
+
+
+})//document.ready closing}
 
 $("input[name='pAmount']").on('keyup', function(){
   var amount1 = Number($(this).val());
@@ -299,4 +239,5 @@ $('#saveBtn').on('click', function(){
 
 </script>
 
-<?php include $_SERVER['DOCUMENT_ROOT']."/svc/view/service_footer.php";?>
+</body>
+</html>

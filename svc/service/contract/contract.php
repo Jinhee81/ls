@@ -111,19 +111,21 @@ include "building.php";
   <table class="table table-hover table-bordered table-sm text-center" id="checkboxTestTbl">
     <thead>
       <tr class="table-secondary">
-        <th scope="col" class="mobile"><input type="checkbox" id="allselect"></th>
-        <th scope="col">순번</th>
-        <th scope="col">상태</th>
-        <th scope="col">입주자</th>
-        <th scope="col">연락처</th>
-        <th scope="col" class="mobile">그룹명</th>
-        <th scope="col">방번호<i class="fas fa-sort"></i></th>
-        <th scope="col" class="mobile">시작일<i class="fas fa-sort"></i></th>
-        <th scope="col" class="mobile">종료일<i class="fas fa-sort"></i></th>
-        <th scope="col" class="mobile">기간<i class="fas fa-sort"></i></th>
-        <th scope="col">임대료<i class="fas fa-sort"></i></th>
+        <th class="mobile">
+          <input type="checkbox" id="allselect">
+        </th>
+        <th class="">순번</th>
+        <th class="">상태</th>
+        <th class="">입주자</th>
+        <th class="">연락처</th>
+        <th class="">그룹명</th>
+        <th class="">방번호</th>
+        <th class="">시작일</th>
+        <th class="">종료일</th>
+        <th class="">기간</th>
+        <th class="">임대료</th>
         <!-- <th scope="col" class="mobile">단계<i class="fas fa-sort"></i></th> -->
-        <th scope="col" class="mobile">
+        <th class="mobile">
           <span class="badge badge-light">파일</span>
           <span class="badge badge-dark">메모</span>
         </th>
@@ -162,9 +164,9 @@ include "building.php";
 <script>
 function maketable(){
 
-  $(function () {
-      $('[data-toggle="tooltip"]').tooltip()
-  })
+  // $(function () {
+  //     $('[data-toggle="tooltip"]').tooltip()
+  // })
 
   var mtable = $.ajax({
     url: 'ajax_realContractLoad.php',

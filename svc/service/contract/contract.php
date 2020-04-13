@@ -289,6 +289,10 @@ $('select[name=group]').on('change', function(){
     maketable();
 })
 
+$('select[name=etcCondi]').on('change', function(){
+    maketable();
+})
+
 
 $('input[name=cText]').on('keyup', function(){
     maketable();

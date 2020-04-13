@@ -62,7 +62,12 @@ select .selectCall{background-color: #A9D0F5;}
 }
 
 .modalAsk {
-  color:#F7819F;
+  color:#F7819F; /*글자 핑크색*/
+  text-decoration: underline;
+}
+
+.modalDescription {
+  color:#04B486; /*글자 녹색*/
   text-decoration: underline;
 }
 

@@ -7,7 +7,7 @@ $DateArray = array();
 
 for ($i=1; $i < 13; $i++) {
   $DateArrayEle = array();
-  $from = $_POST['year'] .'-'.$i.'-'.'01';
+  $from = $_POST['year'] .'-'.$i.'-'.'1';
   $toDate = date('t', strtotime($from));
   $to = $_POST['year'] .'-'.$i.'-'.$toDate;
   array_push($DateArrayEle, $from, $to);
@@ -23,11 +23,12 @@ $allRows = array();
 
 for ($i=0; $i < count($DateArray); $i++) {
 
-  $sql = "select getAmount from paySchedule2
+  $sql = "select ptAmount from paySchedule2
           where user_id={$_SESSION['id']} and
-                buidling_id={$_POST['buildingIdx']} and
-                DATE(executiveDate) BETWEEN '{$DateArray[$i][0]}' and '{$DateArray[$i][1]}')";
-  echo $sql;
+                building_id={$_POST['buildingIdx']} and
+                DATE(executiveDate) BETWEEN '{$DateArray[$i][0]}' and '{$DateArray[$i][1]}'
+          ";
+  // echo $sql;
 
   $result = mysqli_query($conn, $sql);
 
@@ -72,7 +73,8 @@ for ($i=0; $i < count($DateArray); $i++) {
   // echo $sql;//amount1 합계, amount2 공급가액, amount3 세엑
 
   $result = mysqli_query($conn, $sql);
-  // $total_rows = mysqli_num_rows($result);
+
+  $allRows2[$i] = array();
   while($row = mysqli_fetch_array($result)){
     $allRows2[$i][]=$row;
   }
@@ -90,16 +92,11 @@ for ($i=0; $i < count($allRows2); $i++) {
   }
 }
 
-// print_r($minusAmountArray);
+$output = array($plusAmountArray, $minusAmountArray);
 
-// $output = "<input type='hidden' name='plusAmountArray1' value=".json_encode($plusAmountArray).">";
-// $output .= "<input type='hidden' name='minusAmountArray1' value=".json_encode($minusAmountArray).">";
-//
-// echo $output;
-echo 111;
- ?>
+echo json_encode($output);
 
- <script>
- var plusAmountArray = <?php echo json_encode($plusAmountArray); ?>;
- var minusAmountArray = <?php echo json_encode($minusAmountArray); ?>;
- </script>
+// echo json_encode($plusAmountArray);
+// echo json_encode($minusAmountArray);
+
+?>

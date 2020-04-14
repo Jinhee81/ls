@@ -43,7 +43,7 @@ $id = mysqli_insert_id($conn); //방금넣은 계약번호아이디를 가져오
 $sql2 = "
   INSERT INTO paySchedule2 (
     pAmount, pvAmount, ptAmount,
-    payKind, executiveDate, getAmount,
+    payKind, executiveDate,
     etcContract_id, building_id, user_id)
   VALUES (
     '{$_POST['pAmount']}',
@@ -51,7 +51,6 @@ $sql2 = "
     '{$_POST['ptAmount']}',
     '{$_POST['payKind']}',
     '{$_POST['executiveDate']}',
-    '{$_POST['ptAmount']}',
     {$id},
     {$_POST['building']},
     {$_SESSION['id']}

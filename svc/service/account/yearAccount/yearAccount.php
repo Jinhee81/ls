@@ -61,7 +61,10 @@ include $_SERVER['DOCUMENT_ROOT']."/svc/service/account/yearAccount/monthlyValue
 
 <!--히든 섹션 시작-->
 <section class="container">
-  <div id="monthlyValue">
+  <div id="plus_part">
+
+  </div>
+  <div id="minus_part">
 
   </div>
 </section>
@@ -85,9 +88,9 @@ include $_SERVER['DOCUMENT_ROOT']."/svc/service/account/yearAccount/monthlyValue
   var buildingArray = <?php echo json_encode($buildingArray); ?>;
   var groupBuildingArray = <?php echo json_encode($groupBuildingArray); ?>;
   var roomArray = <?php echo json_encode($roomArray); ?>;
-  console.log(buildingArray);
-  console.log(groupBuildingArray);
-  console.log(roomArray);
+  // console.log(buildingArray);
+  // console.log(groupBuildingArray);
+  // console.log(roomArray);
 </script>
 
 <script src="/svc/inc/js/etc/building.js?<?=date('YmdHis')?>"></script>
@@ -99,42 +102,57 @@ include $_SERVER['DOCUMENT_ROOT']."/svc/service/account/yearAccount/monthlyValue
 var buildingIdx = $('select[name=building]').val();
 var year = $('select[name=year]').val();
 
-function barChartFn(){//bar function start
-  var ctxB = document.getElementById("barChart").getContext('2d');
-  var myBarChart = new Chart(ctxB, {
-    type: 'bar',
-    data: {
-        labels: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'],
-        datasets: [
-          {
-            label: '매출',
-            data: [plusAmountArray[0], plusAmountArray[1], plusAmountArray[2], plusAmountArray[3], plusAmountArray[4], plusAmountArray[5], plusAmountArray[6], plusAmountArray[7], plusAmountArray[8], plusAmountArray[9], plusAmountArray[10], plusAmountArray[11]],
-            backgroundColor: 'rgba(54, 162, 235, 0.2)',
-            borderColor: 'rgba(54, 162, 235, 1)',
-            borderWidth: 1
-          }, {
-              label: '매입',
-              data: [minusAmountArray[0], minusAmountArray[1], minusAmountArray[2], minusAmountArray[3], minusAmountArray[4], minusAmountArray[5], minusAmountArray[6], minusAmountArray[7], minusAmountArray[8], minusAmountArray[9], minusAmountArray[10], minusAmountArray[11]],
-              backgroundColor: 'rgba(255, 99, 132, 0.2)',
-              borderColor: 'rgba(255,99,132,1)',
-              borderWidth: 1
+// function maketable(){
+//   var monthlyData = $.ajax({
+//     url: 'ajax_monthlyValue.php',
+//     method: 'post',
+//     data: {buildingIdx:buildingIdx, year:year},
+//     success: function(data){
+//       data = JSON.parse(data);
+//       $('#plus_part').html(data[0]);
+//       $('#minus_part').html(data[1]);
+//       console.log(data);
+//     }
+//   })
+//
+//   return monthlyData;
+// }
 
-          }],
-    },
-    options: {
-        scales: {
-            yAxes: [{
-                ticks: {
-                    beginAtZero:true
-                }
-            }]
-        }
-    }
-  });
-
-  return myBarChart;
-}//bar function end
-
+// function barChartFn(){//bar function start
+//   var ctxB = document.getElementById("barChart").getContext('2d');
+//   var myBarChart = new Chart(ctxB, {
+//     type: 'bar',
+//     data: {
+//         labels: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'],
+//         datasets: [
+//           {
+//             label: '매출',
+//             data: [plusAmountArray[0], plusAmountArray[1], plusAmountArray[2], plusAmountArray[3], plusAmountArray[4], plusAmountArray[5], plusAmountArray[6], plusAmountArray[7], plusAmountArray[8], plusAmountArray[9], plusAmountArray[10], plusAmountArray[11]],
+//             backgroundColor: 'rgba(54, 162, 235, 0.2)',
+//             borderColor: 'rgba(54, 162, 235, 1)',
+//             borderWidth: 1
+//           }, {
+//               label: '매입',
+//               data: [data[1][0], data[1][1], data[1][2], data[1][3], data[1][4], data[1][5], data[1][6], data[1][7], data[1][8], data[1][9], data[1][10], data[1][11]],
+//               backgroundColor: 'rgba(255, 99, 132, 0.2)',
+//               borderColor: 'rgba(255,99,132,1)',
+//               borderWidth: 1
+//
+//           }],
+//     },
+//     options: {
+//         scales: {
+//             yAxes: [{
+//                 ticks: {
+//                     beginAtZero:true
+//                 }
+//             }]
+//         }
+//     }
+//   });
+//
+//   return myBarChart;
+// }//bar function end
 
 function maketable(){
   var monthlyData = $.ajax({
@@ -142,39 +160,74 @@ function maketable(){
     method: 'post',
     data: {buildingIdx:buildingIdx, year:year},
     success: function(data){
-      $('#monthlyValue').html(data);
+      data = JSON.parse(data);
+      $('#plus_part').html(data[0]);
+      $('#minus_part').html(data[1]);
+
+      function barChartFn(){//bar function start
+        var ctxB = document.getElementById("barChart").getContext('2d');
+        var myBarChart = new Chart(ctxB, {
+          type: 'bar',
+          data: {
+              labels: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'],
+              datasets: [
+                {
+                  label: '매출',
+                  data: [data[0][0], data[0][1], data[0][2], data[0][3], data[0][4], data[0][5], data[0][6], data[0][7], data[0][8], data[0][9], data[0][10], data[0][11]],
+                  backgroundColor: 'rgba(54, 162, 235, 0.2)',
+                  borderColor: 'rgba(54, 162, 235, 1)',
+                  borderWidth: 1
+                }, {
+                    label: '매입',
+                    data: [data[1][0], data[1][1], data[1][2], data[1][3], data[1][4], data[1][5], data[1][6], data[1][7], data[1][8], data[1][9], data[1][10], data[1][11]],
+                    backgroundColor: 'rgba(255, 99, 132, 0.2)',
+                    borderColor: 'rgba(255,99,132,1)',
+                    borderWidth: 1
+
+                }],
+          },
+          options: {
+              scales: {
+                  yAxes: [{
+                      ticks: {
+                          beginAtZero:true
+                      }
+                  }]
+              }
+          }
+        });
+
+        return myBarChart;
+      }//bar function end
     }
   })
 
   return monthlyData;
 }
 
+
+
+
 $(document).ready(function(){
   maketable();
+
 })
 
 
 
 $('select[name=building]').on('change', function(){
   var buildingIdx = $('select[name=building]').val();
-  var year = $('select[name=year]').val();
 
   maketable();
 
-  console.log('change buildingIdx');
-
-  barChartFn();
 
 })
 
 $('select[name=year]').on('change', function(){
-  var buildingIdx = $('select[name=building]').val();
   var year = $('select[name=year]').val();
 
   maketable();
 
-  console.log('change year5');
-  barChartFn();
 
 })
 

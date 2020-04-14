@@ -44,7 +44,7 @@ $sql2 = "
   INSERT INTO paySchedule2 (
     pAmount, pvAmount, ptAmount,
     payKind, executiveDate, getAmount,
-    etcContract_id, user_id)
+    etcContract_id, building_id, user_id)
   VALUES (
     '{$_POST['pAmount']}',
     '{$_POST['pvAmount']}',
@@ -53,6 +53,7 @@ $sql2 = "
     '{$_POST['executiveDate']}',
     '{$_POST['ptAmount']}',
     {$id},
+    {$_POST['building']},
     {$_SESSION['id']}
   )
 ";

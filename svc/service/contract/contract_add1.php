@@ -94,6 +94,8 @@ $output = $cName.' | '.$cContact.' | '.$clist['id'];
   </form>
 </section>
 
+<?php include $_SERVER['DOCUMENT_ROOT']."/svc/view/service_footer.php"; ?>
+
 <script src="/svc/inc/js/jquery-3.3.1.min.js"></script>
 <script src="/svc/inc/js/jquery.number.min.js"></script>
 <script src="/svc/inc/js/jquery-ui.min.js"></script>

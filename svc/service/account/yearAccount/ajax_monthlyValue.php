@@ -1,4 +1,5 @@
 <?php
+header('Content-Type: text/html; charset=UTF-8');
 session_start();
 include $_SERVER['DOCUMENT_ROOT']."/svc/view/conn.php";
 
@@ -16,43 +17,29 @@ for ($i=1; $i < 13; $i++) {
 
 
 // print_r($DateArray);
-
-
 // print_r($buildingIdx);
 
 $allRows = array();
 
 for ($i=0; $i < count($DateArray); $i++) {
-  $sql = "(select paySchedule2.ptAmount
-          from paySchedule2
-          join realContract
-              on paySchedule2.realContract_id = realContract.id
-          join building
-              on realContract.building_id = building.id
-          where paySchedule2.user_id = {$_SESSION['id']} and
-                realContract.building_id = {$_POST['buildingIdx']} and
-                DATE(paySchedule2.executiveDate) BETWEEN '{$DateArray[$i][0]}' and '{$DateArray[$i][1]}')
-          union
-          (select
-                paySchedule2.ptAmount
-          from
-                paySchedule2
-          join etcContract
-              on paySchedule2.etcContract_id = etcContract.id
-          join building
-              on etcContract.building_id = building.id
-          where paySchedule2.user_id = {$_SESSION['id']} and
-                etcContract.building_id = {$_POST['buildingIdx']} and
-                DATE(paySchedule2.executiveDate) BETWEEN '{$DateArray[$i][0]}' and '{$DateArray[$i][1]}')
-          ";
-  // echo $sql;
+
+  $sql = "select getAmount from paySchedule2
+          where user_id={$_SESSION['id']} and
+                buidling_id={$_POST['buildingIdx']} and
+                DATE(executiveDate) BETWEEN '{$DateArray[$i][0]}' and '{$DateArray[$i][1]}')";
+  echo $sql;
 
   $result = mysqli_query($conn, $sql);
-  // $total_rows = mysqli_num_rows($result);
 
-  while($row = mysqli_fetch_array($result)){
-    $allRows[$i][]=$row;
+  if($result){
+    $allRows[$i] = array();
+    while($row = mysqli_fetch_array($result)){
+      $allRows[$i][]=$row;
+    }
+  } else {
+    echo "검색값이 없습니다.";
   }
+
 }
 
 // print_r($allRows); echo 111;

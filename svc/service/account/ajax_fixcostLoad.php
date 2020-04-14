@@ -20,7 +20,7 @@ $sql = "
         join building
           on fixcost.building_id = building.id
         where fixcost.user_id={$_SESSION['id']}
-              and building_id = {$_POST['select1']}
+              and building_id = {$_POST['building']}
        ";
 // echo $sql;
 

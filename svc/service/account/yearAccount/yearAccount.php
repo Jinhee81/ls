@@ -17,20 +17,10 @@ include $_SERVER['DOCUMENT_ROOT']."/svc/service/contract/building.php";
 include $_SERVER['DOCUMENT_ROOT']."/svc/service/account/flexCost/yearMonth.php";
 include $_SERVER['DOCUMENT_ROOT']."/svc/service/account/yearAccount/monthlyValue.php";
 ?>
-<style>
-        #modalTable tr.selected{background-color: #A9D0F5;}
-        #checkboxTestTbl tr.selected{background-color: #A9D0F5;}
-        select .selectCall{background-color: #A9D0F5;}
 
-        @media (max-width: 990px) {
-        .mobile {
-          display: none;
-        }
-}
-</style>
 <section class="container">
-  <div class="jumbotron">
-    <h1 class="display-4">연도별 회계조회 화면입니다!</h1>
+  <div class="jumbotron pt-3 pb-3">
+    <h2 class="">연도별 회계조회 화면입니다!</h2>
     <p class="lead">
       <!-- (1) 상태(진행 - 현재 계약 진행 중), (대기 - 곧 계약시작임), (종료 - 종료된 계약)로 구분합니다.<br>
       (2) 월이용료를 클릭하면 해당 계약의 상세페이지가 나옵니다.<br>
@@ -67,35 +57,47 @@ include $_SERVER['DOCUMENT_ROOT']."/svc/service/account/yearAccount/monthlyValue
         </div>
       </form>
   </div>
-</section><!--조회조건 섹션 end-->
+</section>
 
-<section class="container"><!--히든 섹션 시작-->
+<!--히든 섹션 시작-->
+<section class="container">
   <div id="monthlyValue">
 
   </div>
-</section><!--차트 섹션 끝-->
+</section>
 
-<section class="container"><!--차트 섹션 시작-->
+<!--차트 섹션 시작-->
+<section class="container">
   <div class="">
     <canvas id="barChart"></canvas>
   </div>
 </section><!--차트 섹션 끝-->
 
+<?php include $_SERVER['DOCUMENT_ROOT']."/svc/view/service_footer.php"; ?>
 
-<script src="/js/mdb.min.js"></script><!--차트만들때 필요함-->
+<script src="/svc/inc/js/jquery-3.3.1.min.js"></script>
+<script src="/svc/inc/js/jquery-ui.min.js"></script>
+<script src="/svc/inc/js/bootstrap.min.js"></script>
+<script src="/svc/inc/js/datepicker-ko.js"></script>
+<script src="/svc/inc/js/mdb.min.js"></script><!--차트만들때 필요함-->
+
+<script type="text/javascript">
+  var buildingArray = <?php echo json_encode($buildingArray); ?>;
+  var groupBuildingArray = <?php echo json_encode($groupBuildingArray); ?>;
+  var roomArray = <?php echo json_encode($roomArray); ?>;
+  console.log(buildingArray);
+  console.log(groupBuildingArray);
+  console.log(roomArray);
+</script>
+
+<script src="/svc/inc/js/etc/building.js?<?=date('YmdHis')?>"></script>
+
+<script src="/svc/inc/js/etc/form.js?<?=date('YmdHis')?>"></script>
+
 <script>
-var select1option;
 
-for(var key in buildingArray){ //건물목록출력(비즈피스장암,비즈피스구로)
-  select1option = "<option value='"+key+"'>"+buildingArray[key][0]+"</option>";
-  $('select[name=building]').append(select1option);//문서위건물목록
-}
-//---- ^ 건물출력 ^------//
-
-
-//---- ^ buildingIdx 전역변수 선언 ^------//
-
-
+var buildingIdx = $('select[name=building]').val();
+var year = $('select[name=year]').val();
 
 function barChartFn(){//bar function start
   var ctxB = document.getElementById("barChart").getContext('2d');
@@ -129,18 +131,13 @@ function barChartFn(){//bar function start
         }
     }
   });
+
+  return myBarChart;
 }//bar function end
 
-barChartFn();
 
-
-
-
-$('select[name=building]').on('change', function(){
-  var buildingIdx = $('select[name=building]').val();
-  var year = $('select[name=year]').val();
-
-  $.ajax({
+function maketable(){
+  var monthlyData = $.ajax({
     url: 'ajax_monthlyValue.php',
     method: 'post',
     data: {buildingIdx:buildingIdx, year:year},
@@ -148,6 +145,21 @@ $('select[name=building]').on('change', function(){
       $('#monthlyValue').html(data);
     }
   })
+
+  return monthlyData;
+}
+
+$(document).ready(function(){
+  maketable();
+})
+
+
+
+$('select[name=building]').on('change', function(){
+  var buildingIdx = $('select[name=building]').val();
+  var year = $('select[name=year]').val();
+
+  maketable();
 
   console.log('change buildingIdx');
 
@@ -159,18 +171,7 @@ $('select[name=year]').on('change', function(){
   var buildingIdx = $('select[name=building]').val();
   var year = $('select[name=year]').val();
 
-  var plusAmountArray = <?php echo json_encode($plusAmountArray); ?>;
-  var minusAmountArray = <?php echo json_encode($minusAmountArray); ?>;
-
-
-  $.ajax({
-    url: 'ajax_monthlyValue.php',
-    method: 'post',
-    data: {buildingIdx:buildingIdx, year:year},
-    success: function(data){
-      $('#monthlyValue').html(data);
-    }
-  })
+  maketable();
 
   console.log('change year5');
   barChartFn();
@@ -183,4 +184,5 @@ $('select[name=year]').on('change', function(){
 </script>
 
 
-<?php include $_SERVER['DOCUMENT_ROOT']."/svc/view/service_footer.php";?>
+</body>
+</html>

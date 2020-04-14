@@ -10,26 +10,15 @@ if(!isset($_SESSION['is_login'])){
   <head>
     <title>지출입력</title>
 <?php
-include $_SERVER['DOCUMENT_ROOT']."/view/service_header1_meta.php";
-include $_SERVER['DOCUMENT_ROOT']."/view/service_header2.php";
-include $_SERVER['DOCUMENT_ROOT']."/view/conn.php";
-include $_SERVER['DOCUMENT_ROOT']."/service/contract/building.php";
-include $_SERVER['DOCUMENT_ROOT']."/service/account/flexCost/yearMonth.php";
+include $_SERVER['DOCUMENT_ROOT']."/svc/view/service_header1_meta.php";
+include $_SERVER['DOCUMENT_ROOT']."/svc/view/service_header2.php";
+include $_SERVER['DOCUMENT_ROOT']."/svc/view/conn.php";
+include $_SERVER['DOCUMENT_ROOT']."/svc/service/contract/building.php";
+include "yearMonth.php";
 ?>
-<style>
-        #modalTable tr.selected{background-color: #A9D0F5;}
-        #checkboxTestTbl tr.selected{background-color: #A9D0F5;}
-        select .selectCall{background-color: #A9D0F5;}
-
-        @media (max-width: 990px) {
-        .mobile {
-          display: none;
-        }
-}
-</style>
 <section class="container">
-  <div class="jumbotron">
-    <h1 class="display-4">지출입력 화면입니다![편집용]</h1>
+  <div class="jumbotron pt-3 pb-3">
+    <h2 class="">지출입력 화면입니다![편집용]</h2>
     <p class="lead">
       <!-- (1) 상태(진행 - 현재 계약 진행 중), (대기 - 곧 계약시작임), (종료 - 종료된 계약)로 구분합니다.<br>
       (2) 월이용료를 클릭하면 해당 계약의 상세페이지가 나옵니다.<br>
@@ -229,18 +218,26 @@ include $_SERVER['DOCUMENT_ROOT']."/service/account/flexCost/yearMonth.php";
 <!-- Modal 변동비 넣기 End-->
 
 
-<script src="/js/jquery-ui.min.js"></script>
-<script src="/js/datepicker-ko.js"></script>
+<?php include $_SERVER['DOCUMENT_ROOT']."/svc/view/service_footer.php"; ?>
+
+<script src="/svc/inc/js/jquery-3.3.1.min.js"></script>
+<script src="/svc/inc/js/jquery-ui.min.js"></script>
+<script src="/svc/inc/js/jquery.number.min.js"></script>
+<script src="/svc/inc/js/bootstrap.min.js"></script>
+<script src="/svc/inc/js/datepicker-ko.js"></script>
+<script type="text/javascript">
+  var buildingArray = <?php echo json_encode($buildingArray); ?>;
+  var groupBuildingArray = <?php echo json_encode($groupBuildingArray); ?>;
+  var roomArray = <?php echo json_encode($roomArray); ?>;
+  console.log(buildingArray);
+  console.log(groupBuildingArray);
+  console.log(roomArray);
+</script>
+
+
+<script src="/svc/inc/js/etc/form.js?<?=date('YmdHis')?>"></script>
 
 <script>
-// var select1option;
-//
-// for(var key in buildingArray){ //건물목록출력(비즈피스장암,비즈피스구로)
-//   select1option = "<option value='"+key+"'>"+buildingArray[key][0]+"</option>";
-//   $('select[name=building]').append(select1option);//문서위건물목록
-//   // $('#select2').append(select1option);//변동비등록모달의 건물목록
-// }
-//---- ^ 여기서는 이거가 있으면 안된다.건물출력 ^------//
 
 var buildingIdx = $('select[name=building]').val();
 var building = $('select[name=building] option:selected').text();
@@ -583,4 +580,5 @@ $('#btnDeleteAll').on('click', function(){
 
 </script>
 
-<?php include $_SERVER['DOCUMENT_ROOT']."/view/service_footer.php";?>
+</body>
+</html>

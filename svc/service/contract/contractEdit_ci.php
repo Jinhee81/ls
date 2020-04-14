@@ -16,6 +16,7 @@
       <div class="form-group col-md-3">
         <label class="mb-0">물건정보</label><br>
         <input type="text" class="form-control form-control-sm" value="<?=$row['bname'].','.$row['gname'].','.$row['rname']?>" disabled>
+        <input type="hidden" name="building" value="<?=$row['building_id']?>">
       </div>
       <div class="form-group col-md-4">
         <label class="mb-0">기간정보

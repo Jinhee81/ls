@@ -308,11 +308,8 @@ $('#button1').click(function(){ //청구설정버튼 클릭시
 
   var paySchedule11 = JSON.stringify(paySchedule);
 
-  var aa = 'payScheduleAdd';
-  var bb = 'p_payScheduleAdd.php';
-  var cc = 'scheduleArray';
-  var dd = 'contractId';
   var contractId = '<?=$filtered_id?>';
+  var buildingId = $('input[name=building]').val();
 
   if(expectedDayArray.length === 0){
     alert('한개 이상을 선택해야 청구가 됩니다.');
@@ -320,12 +317,13 @@ $('#button1').click(function(){ //청구설정버튼 클릭시
 
   } else if (expectedDayArray.length <= 72) {
 
-    goCategoryPage(aa, bb, cc, paySchedule11, dd, contractId);
+    goCategoryPage(paySchedule11, contractId, buildingId);
 
-    function goCategoryPage(a, b, c, d, e, f){
-      var frm = formCreate(a, 'post', b,'');
-      frm = formInput(frm, c, d);
-      frm = formInput(frm, e, f);
+    function goCategoryPage(a, b, c){
+      var frm = formCreate('payScheduleAdd', 'post', 'p_payScheduleAdd.php','');
+      frm = formInput(frm, 'scheduleArray', a);
+      frm = formInput(frm, 'contractId', b);
+      frm = formInput(frm, 'buildingId', c);
       formSubmit(frm);
     }
 

@@ -15,24 +15,10 @@ include $_SERVER['DOCUMENT_ROOT']."/svc/view/conn.php";
 include $_SERVER['DOCUMENT_ROOT']."/svc/main/condition.php";
 include $_SERVER['DOCUMENT_ROOT']."/svc/service/contract/building.php";
 ?>
-<style>
-        #checkboxTestTbl tr.selected{background-color: #A9D0F5;}
-        select .selectCall{background-color: #A9D0F5;}
 
-        .grey{
-          color: #848484;
-        }
-
-        @media (max-width: 990px) {
-        .mobile {
-          display: none;
-        }
-
-}
-</style>
 <section class="container">
-  <div class="jumbotron">
-    <h1 class="display-4">고정비관리 화면입니다!</h1>
+  <div class="jumbotron pt-3 pb-3">
+    <h2 class="">고정비를 관리하세요.</h2>
     <p class="lead">
       <!-- (1) 상태(진행 - 현재 계약 진행 중), (대기 - 곧 계약시작임), (종료 - 종료된 계약)로 구분합니다.<br>
       (2) 월이용료를 클릭하면 해당 계약의 상세페이지가 나옵니다.<br>
@@ -40,12 +26,13 @@ include $_SERVER['DOCUMENT_ROOT']."/svc/service/contract/building.php";
     </p>
   </div>
 </section>
+
 <section class="container" style="max-width:1000px;">
   <div class="p-3 mb-2 bg-light text-dark border border-info rounded">
       <form name="building">
         <div class="form-group row justify-content-md-center">
             <div class="col-sm-2 pl-0 pr-1">
-              <select class="form-control form-control-sm selectCall" id="select1" name="select1">
+              <select class="form-control form-control-sm selectCall" name="building">
               </select><!---->
             </div>
             <div class="col-sm-2 pl-0 pr-0">
@@ -136,6 +123,26 @@ include $_SERVER['DOCUMENT_ROOT']."/svc/service/contract/building.php";
 
 <!-- <script src="/js/etc/date.js"></script> -->
 
+<?php include $_SERVER['DOCUMENT_ROOT']."/svc/view/service_footer.php"; ?>
+
+<script src="/svc/inc/js/jquery-3.3.1.min.js"></script>
+<script src="/svc/inc/js/jquery.number.min.js"></script>
+<script src="/svc/inc/js/jquery-ui.min.js"></script>
+<script src="/svc/inc/js/bootstrap.min.js"></script>
+<script src="/svc/inc/js/datepicker-ko.js"></script>
+
+<script type="text/javascript">
+  var buildingArray = <?php echo json_encode($buildingArray); ?>;
+  var groupBuildingArray = <?php echo json_encode($groupBuildingArray); ?>;
+  var roomArray = <?php echo json_encode($roomArray); ?>;
+  console.log(buildingArray);
+  console.log(groupBuildingArray);
+  console.log(roomArray);
+</script>
+
+<script src="/svc/inc/js/etc/building.js?<?=date('YmdHis')?>"></script>
+
+
 <script>
 
 $(document).ready(function(){
@@ -162,19 +169,6 @@ $('#select1').on('change', function(){
   })
 })
 
-var select1option, select2option, buildingIdx, groupIdx;
-
-for(var key in buildingArray){ //건물목록출력(비즈피스장암,비즈피스구로)
-  select1option = "<option value='"+key+"'>"+buildingArray[key][0]+"</option>";
-  $('#select1').append(select1option);
-}
-buildingIdx = $('#select1').val();
-
-for(var key in buildingArray){ //건물목록출력(비즈피스장암,비즈피스구로)
-  select2option = "<option value='"+key+"'>"+buildingArray[key][0]+"</option>";
-  $('#select2').append(select2option);
-}
-buildingIdx2 = $('#select2').val();
 
 $("input:text[numberOnly]").on('click', function(){
   $(this).select();
@@ -225,4 +219,6 @@ $(':input:radio[id=inlineRadio2]').on('click', function(){
 
 </script>
 
-<?php include $_SERVER['DOCUMENT_ROOT']."/svc/view/service_footer.php";?>
+
+</body>
+</html>

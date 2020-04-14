@@ -16,20 +16,10 @@ include $_SERVER['DOCUMENT_ROOT']."/svc/main/condition.php";
 include $_SERVER['DOCUMENT_ROOT']."/svc/service/contract/building.php";
 include $_SERVER['DOCUMENT_ROOT']."/svc/service/account/flexCost/yearMonth.php";
 ?>
-<style>
-        #modalTable tr.selected{background-color: #A9D0F5;}
-        #checkboxTestTbl tr.selected{background-color: #A9D0F5;}
-        select .selectCall{background-color: #A9D0F5;}
 
-        @media (max-width: 990px) {
-        .mobile {
-          display: none;
-        }
-}
-</style>
 <section class="container">
-  <div class="jumbotron">
-    <h1 class="display-4">월별회계조회 화면입니다!</h1>
+  <div class="jumbotron pt-3 pb-3">
+    <h2 class="">월별회계조회 화면입니다!</h2>
     <p class="lead">
       <!-- (1) 상태(진행 - 현재 계약 진행 중), (대기 - 곧 계약시작임), (종료 - 종료된 계약)로 구분합니다.<br>
       (2) 월이용료를 클릭하면 해당 계약의 상세페이지가 나옵니다.<br>
@@ -83,6 +73,8 @@ include $_SERVER['DOCUMENT_ROOT']."/svc/service/account/flexCost/yearMonth.php";
       </form>
   </div>
 </section><!--조회조건 섹션 end-->
+
+
 <section class="container">
   <div class="row">
     <div class="col">
@@ -133,6 +125,8 @@ include $_SERVER['DOCUMENT_ROOT']."/svc/service/account/flexCost/yearMonth.php";
         </tbody>
       </table>
     </div>
+
+
     <div class="col">
       <!-- <h3 style="background-color:#;" class="pt-2 pb-2 pl-1"># 매입액</h3> -->
       <h3 class="text-center" id="href_cost" style="color:#819FF7;"># <u>매입액 전체</u></h3>
@@ -207,14 +201,30 @@ include $_SERVER['DOCUMENT_ROOT']."/svc/service/account/flexCost/yearMonth.php";
   </div>
 </section>
 
-<script>
-var select1option;
+<?php include $_SERVER['DOCUMENT_ROOT']."/svc/view/service_footer.php"; ?>
 
-for(var key in buildingArray){ //건물목록출력(비즈피스장암,비즈피스구로)
-  select1option = "<option value='"+key+"'>"+buildingArray[key][0]+"</option>";
-  $('select[name=building]').append(select1option);//문서위건물목록
-}
-//---- ^ 건물출력 ^------//
+
+<script src="/svc/inc/js/jquery-3.3.1.min.js"></script>
+<script src="/svc/inc/js/jquery.number.min.js"></script>
+<script src="/svc/inc/js/jquery-ui.min.js"></script>
+<script src="/svc/inc/js/popper.min.js"></script>
+<script src="/svc/inc/js/bootstrap.min.js"></script>
+<script src="/svc/inc/js/datepicker-ko.js"></script>
+
+<script type="text/javascript">
+  var buildingArray = <?php echo json_encode($buildingArray); ?>;
+  var groupBuildingArray = <?php echo json_encode($groupBuildingArray); ?>;
+  var roomArray = <?php echo json_encode($roomArray); ?>;
+  console.log(buildingArray);
+  console.log(groupBuildingArray);
+  console.log(roomArray);
+</script>
+<script src="/svc/inc/js/etc/building.js?<?=date('YmdHis')?>"></script>
+
+<script src="/svc/inc/js/etc/form.js?<?=date('YmdHis')?>"></script>
+
+<script>
+
 
 var buildingIdx = $('select[name=building]').val();
 var building = $('select[name=building] :selected').text();

@@ -97,7 +97,7 @@ for ($i=0; $i < count($payExecutiveRow); $i++) {
   $sql = "
         INSERT INTO paySchedule2 (
           csIdArray, orderArray, pStartDate, pEndDate, pAmount,
-          pvAmount, ptAmount, pExpectedDate, paykind, getAmount, realContract_id, user_id, monthCount)
+          pvAmount, ptAmount, pExpectedDate, paykind, getAmount, realContract_id, building_id, user_id, monthCount)
         VALUES (
           '{$payExecutiveRow[$i][0]}',
           '{$payExecutiveRow[$i][1]}',
@@ -110,6 +110,7 @@ for ($i=0; $i < count($payExecutiveRow); $i++) {
           '{$payExecutiveRow[$i][8]}',
           0,
           {$filtered_id},
+          {$_POST['buildingId']},
           {$_SESSION['id']},
           {$payExecutiveRow[$i][9]}
         )

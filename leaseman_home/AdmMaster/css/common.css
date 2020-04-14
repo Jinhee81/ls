@@ -1,0 +1,99 @@
+@charset "utf-8";
+/*나눔고딕웹폰트로드(폰트 사용할곳에font-family:'Nanum Gothic', '나눔고딕', '굴림', 'Gulim', 'sans-serif', 'Tahoma';추가)*/
+@import url(http://fonts.googleapis.com/earlyaccess/nanumgothic.css);
+/*나눔바른고딕웹폰트로드(폰트 사용할곳에font-family:'NanumBarunGothic';추가)*/
+@import url("../font/NanumBarunGothic.css");
+/*코펍바탕체 font-family: 'KoPub Batang', 'Nanum Gothic', '나눔고딕', '굴림', 'Gulim', 'sans-serif', 'Tahoma';*/ 
+/* @import url(http://fonts.googleapis.com/earlyaccess/kopubbatang.css); */
+/*노토산스 웹폰트로드(폰트 사용할곳에font-family:'Noto Sans Korean';추가)*/
+/* @import url("../font/notosans.css"); */
+/* Myriad_Pro 웹폰트로드 */
+/* @import url("../font/Myriad_Pro.css"); */
+@import url(//cdn.jsdelivr.net/nanumsquare/1.0/nanumsquare-base64.css);
+@import url("font-awesome.min.css");
+
+/* CSS Document */
+*{font-family: "Nanum Gothic",'돋움','dotum',tahoma,'NanumBarunGothic',"Noto Sans KR",'NanumSquare','MalgunGothic','Verdana','Arial','Helvetica','sans-serif';padding:0;margin:0;}
+html,body{width:100%;height:100%;}
+/* html{overflow-y:scroll;} */
+body,p,h1,h2,h3,h4,h5,h6,ul,ol,li,dl,dt,dd,table,th,tr,td,thead,tbody,form,fieldset,legend,input,textarea,button{margin:0;padding:0;}
+ul,ol,li,dl,dt,dd {list-style:none;}
+i,em,address{font-style:normal;}
+label,button{cursor:pointer;}
+button{border:none;background: none;}
+hr,legend {display:none;}
+img,fieldset,iframe{border:none;}
+img{vertical-align:top; max-width: 100%;}
+textarea{font-family:"Nanum Gothic",'돋움','dotum',tahoma,'MalgunGothic','Verdana','Arial','Helvetica','sans-serif';}
+caption {display:none;}
+input,select,button{vertical-align:middle;box-sizing:border-box;}
+table{border:none; border-collapse:collapse; padding:0; border-spacing:0; word-break:break-all;}
+a:link,a:visited,a:active,a:focus{text-decoration:none;}
+a:hover{text-decoration:none;}
+input[type=text]::-ms-clear{display:none;}/*익스플로어에서 인풋타입 텍스트에 텍스트 입력시 오른쪽에 X버튼이 생기는것을 없애준다.*/
+input[type=text],
+input[type=email],
+input[type=password]{padding:0 5px;box-sizing:border-box;}
+
+/*////추가////*/
+
+/*셀렉트*/
+select.style_sel{vertical-align:middle; border:1px solid #d9d9d9; background:#fff url('/img/main/select_arrow.png') right 10px top 12px no-repeat; font-weight:bold; font-size:14px; color:#333; padding-left:10px; box-sizing:border-box; height:30px; -moz-appearance:none; -webkit-appearance:none; appearance:none;}
+select.style_sel::-ms-expand{display:none;}
+/*체크박스*/
+input[type=checkbox].style_chk{width:1px; height:1px; overflow:hidden; margin:-1px; clip:rect(0,0,0,0); border:0; padding:0; position:absolute;}
+input[type=checkbox].style_chk + label{background:url('/img/main/table_chk_off.jpg') center center no-repeat; display:inline-block; width:13px; height:13px; box-sizing:border-box; cursor:pointer; -webkit-user-select:none; -moz-user-select:none; -ms-user-select:none;}
+input[type=checkbox].style_chk:checked + label{background:url('/img/main/table_chk_on.jpg') center center no-repeat;}
+/*인풋텍스트*/
+input.style_input{background:url('/img/main/calendar_ig.png') right 5px center no-repeat; padding-left:10px; box-sizing:border-box; border:1px solid #d9d9d9; font-size:13px; color:#333; font-weight:bold; }
+/*라디오*/
+input[type="radio"].style_ra{position:absolute; width:1px; height:1px; overflow:hidden; margin:-1px; clip:rect(0,0,0,0); border:0; padding:0;}
+input[type="radio"].style_ra + label{position:relative; font-size:12px; color:#333; font-family:"dotum"; padding-left:24px; display:inline-block; vertical-align:middle; height:16px; line-height:16px; -webkit-user-select:none; -moz-user-select:none; -ms-user-select:none; cursor:pointer;}
+input[type="radio"].style_ra + label:before{content:""; display:block; position:absolute; left:0; top:0; background:url('/img/main/radio_off.png') left top no-repeat; width:16px; height:16px;}
+input[type="radio"].style_ra:checked + label:before{background:url('/img/main/radio_on.png') left top no-repeat;}
+
+/* float */
+
+.clearfix{*zoom: 1;}
+.clearfix:after{content:'';display:block;clear:both;}
+
+/* Common */
+
+.blind,legend{display:block;overflow:hidden;position:absolute;top:-1000em;left:0}
+.skip a{display:block;position:absolute;left:0;top:-9999em;width:100%;background-color:#272727;color:#aaa;font: bold 12px/3.4 arial,sans-serif;text-align:center;z-index: 99999;}
+.skip a:hover,.skip a:active,.skip a:focus{top:0}
+.ta_left{text-align:left;}
+.ta_right{text-align:right;}
+.ta_center{text-align:center;}
+
+
+/*loader*/
+#loader{background: #f5f5f5; position: fixed; width: 100%; height: 100%; top: 0; z-index: 999999;}
+@-webkit-keyframes rotate {from {-webkit-transform: rotate(0deg);} to {-webkit-transform: rotate(360deg);}}
+img.loading {-webkit-animation-name: rotate; -webkit-animation-duration: 1s; -webkit-animation-iteration-count: infinite; -webkit-animation-timing-function: linear; position: absolute; top: 50%; left: 50%; width: 140px; height: 140px; margin-left: -70px; margin-top: -70px;}
+
+*{-webkit-text-size-adjust:none}
+
+/*기본*/
+#wrap{width:100%; margin: 0 auto;}
+#header{position:relative;}
+#container{position:relative;}
+#footer{position:relative;}
+
+
+/*페이징*/
+.board_num_list{width:100%;text-align:center;margin:40px 0;}
+.board_num_list a{display:inline-block;height:30px;line-height:30px;margin:0 2px;font-size:22px;text-align:center;font-family: 'Noto Sans Korean';}
+.board_num_list a:hover{text-decoration:none;}
+.board_num_list a.num{position:relative;width:30px;font-weight:500;}
+.board_num_list a.num:hover, .board_num_list a.on{background:#5f5f5f;color:#fff;}
+.board_num_list a.prev_all{vertical-align:top;overflow:hidden;line-height:9999px;width:30px;height:30px;background:  url('../img/common/b_prev_all.png') center center no-repeat;margin:0 4px}
+.board_num_list a.prev{vertical-align:top;overflow:hidden;line-height:9999px;width:30px;height:30px;background:  url('../img/common/b_prev.png') center center no-repeat;margin:0 4px;}
+.board_num_list a.next_all{vertical-align:top;overflow:hidden;line-height:9999px;width:30px;height:30px;background:  url('../img/common/b_next_all.png') center center no-repeat;margin:0 4px}
+.board_num_list a.next{vertical-align:top;overflow:hidden;line-height:9999px;width:30px;height:30px;background:  url('../img/common/b_next.png') center center no-repeat;margin:0 4px;}
+.board_num_list a.prev_all:hover,.board_num_list a.prev:hover,.board_num_list a.next:hover,.board_num_list a.next_all:hover{}
+
+.search-box {position:relative;text-align:left;margin-bottom:20px;}
+.search-box select{height:30px;}
+.search-box .search-txt{height:30px;}
+.search-box .btn-search{display:inline-block;width:54px;height:30px;background-color:#848484;text-align:center;font-size:13px;color:#fff;    margin-left: -5px;}

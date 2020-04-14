@@ -1,0 +1,63 @@
+@import url('https://fonts.googleapis.com/css?family=Gothic+A1:700|Nanum+Gothic');
+
+#topMenu li.nav-item{
+  color: #007bff;
+  font-size: 12px;
+  padding-top: 4px;
+  padding-bottom: 4px;
+}
+#topMenu a.nav-link{
+  padding-top: 0px;
+  padding-bottom: 0px;
+}
+#myinfo div.form-group {
+  margin-bottom: 10px;
+}
+#myinfo label{
+  font-weight: bold;
+}
+#signup_form label{
+  font-weight: bold;
+}
+#middleMenu div.container-fluid{
+  background-color: navy;
+}
+#middleMenu .row .col-lg-1{
+  padding-top: 5px;
+  padding-bottom: 10px;
+}
+a .bin{
+  color: grey;
+}
+#modal_group_add_form .form-group .row{
+  padding-left: 15px;
+  padding-right: 15px;
+}
+#showRoom_table .td {
+  border: solid 1px grey;
+  text-align: center;
+  height: 10px;;
+}
+span#clear.fa.fa-times-circle {
+  cursor: pointer;
+  margin: auto -23px;
+  color: red;
+}
+button#rDelete.btn.btn-default{
+  padding-left: 0px;
+  padding-top: 0px;
+  border-top-width: 0px;
+  border-left-width: 0px;
+}
+
+#popup{
+  background-color: grey;
+}
+
+/* #checkboxTestTbl tr.selected{background-color: #A9D0F5;}
+select .selectCall{background-color: #A9D0F5;}
+
+@media (max-width: 990px) {
+.mobile {
+  display: none;
+} */

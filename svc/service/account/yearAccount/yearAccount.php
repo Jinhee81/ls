@@ -164,6 +164,8 @@ function maketable(){
       $('#plus_part').html(data[0]);
       $('#minus_part').html(data[1]);
 
+      console.log(data);
+
       function barChartFn(){//bar function start
         var ctxB = document.getElementById("barChart").getContext('2d');
         var myBarChart = new Chart(ctxB, {

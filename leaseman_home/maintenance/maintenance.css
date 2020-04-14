@@ -1,0 +1,133 @@
+@charset "utf-8";
+
+
+/* svg 한국지도*/
+
+
+.korea-map {padding: 0 60px;}
+.korea-map path {stroke-opacity: 0;}
+.korea-map svg {height: 450px;}
+
+/*
+#서울 path {fill:#00FF03;}
+#인천 path {fill:#14C14E}
+#경기 path {fill:#129425}
+#강원 path {fill:#034C0B}
+#충북 path {fill:#34BD48}
+#충남 path {fill:#70D87F}
+#경북 path {fill:#127926}
+#대전 path {fill:#0D9E29}
+#대구 path {fill:#2CEF76}
+#울산 path {fill:#18B772}
+#경남 path {fill:#34DD46}
+#부산 path {fill:#0F920A}
+#전북 path {fill:#0B9633}
+#광주 path {fill:#239842}
+#전남 path {fill:#64C365}
+*/
+
+#세종특별자치시 path {fill:#386F46}
+#제주특별자치도 path {fill:#386F46}
+#서울 path {fill:#ddd;}
+#인천 path {fill:#ddd;}
+#경기 path {fill:#ddd;}
+#강원 path {fill:#ddd;}
+#충북 path {fill:#ddd;}
+#충남 path {fill:#ddd;}
+#경북 path {fill:#ddd;}
+#대전 path {fill:#ddd;}
+#대구 path {fill:#ddd;}
+#울산 path {fill:#ddd;}
+#경남 path {fill:#ddd;}
+#부산 path {fill:#ddd;}
+#전북 path {fill:#ddd;}
+#광주 path {fill:#ddd;}
+#전남 path {fill:#ddd;}
+#세종특별자치시 path {fill:#ddd;}
+#제주특별자치도 path {fill:#ddd;}
+
+.korea-map svg g:hover path {fill:#1875bd!important;cursor:pointer}
+.tooltip-box {display: none;position: absolute;z-index: 1000;color: #333;font-size: 16px;font-weight: bold;border: 2px solid #000;padding: 3px 5px;background:#fff;border-radius:3px ;}
+
+.store_search .store_search_box{display:table;margin:60px 0;background-color:#fbfbfb;}
+.store_search .store_search_box:after{content:"";display:block;clear:both;}
+.store_search .store_search_box h3{position:relative;padding-left:0;font-weight:bold;font-size:18px;color:#666;margin-bottom:16px;}
+/* .store_search .store_search_box h3:after{position:absolute;left:0;top:50%;width:3px;height:3px;margin-top:-2px;background-color:#333;content:"";display:block;} */
+.store_search .store_search_box .ss_left_box{display:table-cell;width:50%;}
+.store_search .store_search_box .ss_right_box{display:table-cell;width:50%;box-sizing:border-box;padding:0 32px;vertical-align:middle;}
+.store_search_box .korea-map{padding:50px 0;background-color:#fbfbfb;text-align:center;}
+.store_search_box .box_section{padding:30px 0;border-top:1px solid #ddd;}
+.store_search_box .box_section:first-child{border-top:0;}
+.store_search_box .box_section input[type="text"]{height:30px;width:320px;margin-right:7px;}
+.store_search_box .box_section select{height:30px;margin-right:7px;}
+.store_search_box .box_section select.sel01{width: 130px;}
+.store_search_box .box_section select.sel02{width: 180px;}
+.store_search_box .box_section .txt01{font-size:16px;color:#333;margin-bottom:22px;}
+.store_search_box .box_section .btn_wrap .btn_st03{margin-bottom:16px;}
+.store_search_box .box_section .btn_wrap .btn_st04{cursor:context-menu;margin-left:10px;}
+.store_search_box .box_section .btn_wrap .btn_st04.btn01{margin-left:0;}
+.store_search_box .box_section .icons span{display:inline-block;margin-right:18px;vertical-align:middle;font-size:16px;color:#333;}
+.store_search_box .box_section .icons span img{vertical-align:middle;}
+.store_search .btn_more{position:relative;display:inline-block;width:77px;height:24px;vertical-align:middle;background:#f1f1f1;border:1px solid #ccc;font-size:14px;color:#666;}
+.store_search_box  .txt01{font-size:12px;color:#666;}
+.store_search .ta_list {/* table-layout: fixed; */}
+/* .store_search .ta_list colgroup col.num{width:11%;}
+.store_search .ta_list colgroup col.phone{width:26%;}
+.store_search .ta_list colgroup col.subject{width:26%;}
+.store_search .ta_list colgroup col.icons{width:26%;}
+.store_search .ta_list colgroup col.view_more{width:11%;} */
+.store_search .ta_list tbody td{text-align:center;}
+.store_search .ta_list tbody td.subject{text-align:left;}
+.store .board_view .ta_view{table-layout:fixed;}
+.store .board_view .ta_view tbody td{padding:40px 0 0 0;text-align:center;border-bottom:1px solid #dcdcdc;}
+
+.traffic_info .ti_section{padding:40px;border-top:1px solid #dcdcdc;text-align:left;}
+.traffic_info .ti_section h3{font-size:24px;color:#333;margin-bottom:16px;}
+.traffic_info .ti_section .stop span{display:inline-block;font-size:18px;color:#333;margin-right:30px;font-weight:700;}
+.traffic_info .ti_section .stop img{vertical-align:middle;}
+.traffic_info .ti_section .bus > li{margin-bottom:20px;}
+.traffic_info .ti_section .bus > li:last-child{margin-bottom:0;}
+.traffic_info .ti_section .bus > li > p{font-size:18px;color:#333;margin-bottom:11px;}
+.traffic_info .ti_section .bus > li .bus_num li{padding:3px 0;font-size:14px;color:#333;}
+.traffic_info .ti_section .bus li .bus_icon{display:inline-block;width:30px;height:16px;line-height:16px;text-align:center;font-size:13px;color:#fff;vertical-align:middle;margin-right:11px;}
+.traffic_info .ti_section .bus li .bus_icon.color01{background-color:#2489ca;}
+.traffic_info .ti_section .bus li .bus_icon.color02{background-color:#7e9e27;}
+.traffic_info .ti_section .bus li .bus_icon.color03{background-color:#63cbff;}
+
+.sc_top{padding:60px 0 0 0;}
+.sc_tit{text-align:center;font-size:18px;font-family:'Nanum Square';margin-bottom:40px;color:#222;}
+.map_view{width:100%;/*border:1px solid #ccc;*/margin:40px 0;}
+.cont_img{padding:60px 0;text-align:center;}
+.board_view .ta_view .colw01{width:140px;}
+.board_view .ta_view .colw02{width:auto;}
+/* tablet */
+@media screen and (max-width: 1200px){
+	.store_search .store_search_box .ss_left_box{width:38%;}
+	.store_search .store_search_box .ss_right_box{width:60%;}
+}
+
+/* tablet */
+@media screen and (max-width: 960px){
+	.store_search .store_search_box{width:100%;display:block;}
+	.store_search .store_search_box .ss_left_box{display:block;width:100%;float:none;margin-bottom:50px;}
+	.store_search .store_search_box .ss_right_box{display:block;width:100%;float:none;padding:0 10px;}
+}
+
+/* moblie */
+@media screen and (max-width: 768px){
+	.store_search .store_search_box .ss_left_box{margin-bottom:0;}
+	.store_search .store_search_box h3{font-size:18px;margin-bottom:8px;}
+	.store_search_box .box_section input[type="text"]{width:75%;margin-right:0;}
+	.store_search_box .box_section select{margin-right:0;}
+	.store_search_box .box_section select.sel01{width:32%;}
+	.store_search_box .box_section select.sel02{width:42%;}
+	.store_search_box .btn_st03{width:65px;}
+	.store_search .btn_more{width:41px;height:19px;background-size:16px;font-size:11px;}
+	.btn_st03.arrow{width:auto;}
+	.store_search_box .box_section .btn_wrap .btn_st03{}
+	.store_search_box .box_section .btn_wrap .btn_st04{margin-left:0;margin-top:5px;}
+	.store_search_box .box_section .icons span{margin:5px;font-size:12px;}
+	.store_search_box .box_section .icons span:first-child{margin-left:0;}
+	.store_search_box .box_section .icons span:last-child{margin-right:0;}
+}
+

@@ -1,0 +1,23 @@
+.ga_search_box{padding:15px 40px;background-color:#fafafa;border:4px solid #e1e1e1;margin-bottom:40px;}
+.ga_search_box table{width:100%;margin-bottom:15px;}
+.ga_search_box table th{width:105px;text-align:left;font-size:16px;color:#333;padding:15px 0;}
+.ga_search_box table td{padding:15px 0;}
+.ga_search_box table td input[type="text"]{width:70%;height:30px;}
+.ga_search_box table td.checkbox_list label{display:inline-block;line-height:20px;margin-right:16px;font-size:14px;}
+.ga_search_box table td.checkbox_list label span{margin-right:3px;margin-top:-2px;}
+.ga_search_box .btn_wrap{text-align:center;border-top:1px solid #ddd;padding-top:15px;}
+.ga_search_box .btn_wrap .btn_st03{width:auto;padding:0 20px;}
+
+
+/* tablet */
+@media screen and (max-width: 960px){
+	
+}
+
+/* moblie */
+@media screen and (max-width: 768px){
+	.ga_search_box{padding:20px 10px;}
+	.ga_search_box table th{padding:8px 0;width:53px;font-size:14px;vertical-align:top;line-height:30px;}
+	.ga_search_box table td{padding:8px 0;}
+	.ga_search_box table td.checkbox_list label{font-size:12px;margin:4px 0;margin-right:8px;}
+}

@@ -1,4 +1,5 @@
 <?php
+header('Content-Type: text/html; charset=UTF-8');
 session_start();
 include $_SERVER['DOCUMENT_ROOT']."/svc/view/conn.php";
 
@@ -74,7 +75,7 @@ if((int)$row5[0] >= 1){
 
 echo
 "<script>
-alert('추가하였습니다.');
+alert('저장하였습니다.');
 location.href='building.php';
 </script>";
 

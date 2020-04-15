@@ -53,13 +53,13 @@ include $_SERVER['DOCUMENT_ROOT']."/svc/view/conn.php";
           <p class="mb-1"><span id='star' style='color:#F7BE81;'>* </span>연락처</p>
           <div class='form-row'>
             <div class='form group col-md-4'>
-              <input type='number' name='contact1' id='contact1' class='form-control' maxlength='3' value='010' required>
+              <input type='number' name='contact1' id='contact1' class='form-control maxlengthCheck' maxlength='3' value='010' required>
             </div>
             <div class='form group col-md-4'>
-              <input type='number' name='contact2' id='contact2' class='form-control' maxlength='4' required oninput='maxlengthCheck(this);'>
+              <input type='number' name='contact2' id='contact2' class='form-control maxlengthCheck' maxlength='4' required>
             </div>
             <div class='form group col-md-4'>
-              <input type='number' name='contact3' id='contact3' class='form-control' maxlength='4' required oninput='maxlengthCheck(this);'>
+              <input type='number' name='contact3' id='contact3' class='form-control maxlengthCheck' maxlength='4' required>
             </div>
           </div>
         </div>
@@ -93,13 +93,13 @@ include $_SERVER['DOCUMENT_ROOT']."/svc/view/conn.php";
           <p class="mb-1">사업자번호</p>
           <div class='form-row'>
             <div class='form group col-md-4'>
-              <input type='number' name='cNumber1' class='form-control' maxlength='3' oninput='maxlengthCheck(this);'>
+              <input type='number' name='cNumber1' class='form-control maxlengthCheck' maxlength='3'>
             </div>
             <div class='form group col-md-3'>
-              <input type='number' name='cNumber2' class='form-control' maxlength='2' oninput='maxlengthCheck(this);'>
+              <input type='number' name='cNumber2' class='form-control maxlengthCheck' maxlength='2'>
             </div>
             <div class='form group col-md-5'>
-              <input type='number' name='cNumber3' class='form-control' maxlength='5' oninput='maxlengthCheck(this);'>
+              <input type='number' name='cNumber3' class='form-control maxlengthCheck' maxlength='5'>
             </div>
           </div>
         </div>
@@ -166,18 +166,31 @@ include $_SERVER['DOCUMENT_ROOT']."/svc/view/conn.php";
 <?php include $_SERVER['DOCUMENT_ROOT']."/svc/view/service_footer.php";?>
 
 <script src="/svc/inc/js/jquery-3.3.1.min.js"></script>
-<script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
+<script src="/svc/inc/js/postcode.v2.js"></script>
 <script src="/svc/inc/js/daumAddressAPI3.js?<?=date('YmdHis')?>"></script>
 
 <script type="text/javascript">
   $(document).ready(function(){
-    
-    function maxlengthCheck(object){
+
+    // function maxlengthCheck(object){
+    //   if(object.value.length > object.maxLength){
+    //     object.value = object.value.slice(0, object.maxLength);
+    //   }
+    // }//숫자 입력개수 제한하는 함수, 연락처1,2,3/사업자번호에 사용됨
+    //
+    // $('.maxlengthCheck').on('keyup', maxlengthCheck(this));
+
+    $('.maxlengthCheck').keydown(function (object) {
       if(object.value.length > object.maxLength){
         object.value = object.value.slice(0, object.maxLength);
       }
-    }//숫자 입력개수 제한하는 함수, 연락처1,2,3/사업자번호에 사용됨
-  })
+    })
+
+
+  })//document.reay closing}
+
+
+
 </script>
 </body>
 </html>

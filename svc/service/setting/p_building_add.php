@@ -1,4 +1,5 @@
 <?php //빌딩만드는 파일
+header('Content-Type: text/html; charset=UTF-8');
 session_start();
 include $_SERVER['DOCUMENT_ROOT']."/svc/view/conn.php";
 
@@ -21,13 +22,11 @@ if ($r_count === 0) {
           bName,
           pay,
           user_id,
-          popbill,
           created
       ) VALUES (
           '{$filtered['name']}',
           '{$_POST['pay']}',
           {$_SESSION['id']},
-          'popbillno',
           now()
       )";
 } else {

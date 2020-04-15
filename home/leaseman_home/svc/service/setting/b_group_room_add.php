@@ -1,14 +1,14 @@
 <?php
 session_start();
 if(!isset($_SESSION['is_login'])){
-  header('Location: /user/login.php');
+  header('Location: /svc/login.php');
 }
-include $_SERVER['DOCUMENT_ROOT']."/view/service_header1_meta.php";
-include $_SERVER['DOCUMENT_ROOT']."/view/service_header2.php";
-include $_SERVER['DOCUMENT_ROOT']."/view/conn.php";
+include $_SERVER['DOCUMENT_ROOT']."/svc/view/service_header1_meta.php";
+include $_SERVER['DOCUMENT_ROOT']."/svc/view/service_header2.php";
+include $_SERVER['DOCUMENT_ROOT']."/svc/view/conn.php";
 
 $filtered_id = mysqli_real_escape_string($conn, $_GET['id']);//빌딩아이디
-settype($filtered_id, 'integer');
+// settype($filtered_id, 'integer') 이걸하니 앞에 0이 다 없어지는구나,,,,;
 $sql = "select * from building where id={$filtered_id}";
 $result = mysqli_query($conn, $sql);
 $row = mysqli_fetch_array($result);
@@ -38,7 +38,7 @@ $row = mysqli_fetch_array($result);
       </tr>
       <tr>
         <td scope="col col-md-4">그룹명</td>
-        <td scope="col col-md-8"><input class="form-control text-center" type="text" name="gName" required=""></td>
+        <td scope="col col-md-8"><input class="form-control text-center" type="text" name="gName" value="기본" required=""></td>
       </tr>
       <tr>
         <td scope="col col-md-4">관리개수(숫자)</td>
@@ -66,6 +66,10 @@ $row = mysqli_fetch_array($result);
 
   </form>
 </section>
+
+
+<?php include $_SERVER['DOCUMENT_ROOT']."/svc/view/service_footer.php";?>
+<?php include $_SERVER['DOCUMENT_ROOT']."/svc/view/service_footer_script.php"; ?>
 
 <script>
 var count;
@@ -118,7 +122,7 @@ function button_room_make(){ //방들을 만드는 함수, 생성하기버튼 �
      table = table + "<td>"+ "<input type='text' name='rName" + i + "' class='form-control text-center' value ='" + rooms[i] + "' required></td>";
    }
   }
-  table = table + "</table><div class='mt-7'><button type='submit' class='btn btn-primary mr-1'>저장</button><a class='btn btn-secondary' href='building.php' role='button'>취소/돌아가기</a></div>";
+  table = table + "</table><div class='mt-7'><button type='submit' class='btn btn-primary mr-1'>추가</button><a class='btn btn-secondary' href='building.php' role='button'>취소/돌아가기</a></div>";
 
   $tweet.append(table);
 
@@ -140,4 +144,5 @@ function closePopup(){
 
 </script>
 
-<?php include $_SERVER['DOCUMENT_ROOT']."/view/service_footer.php";?>
+</body>
+</html>

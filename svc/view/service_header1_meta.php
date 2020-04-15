@@ -1,4 +1,3 @@
-<!-- 위에 뭐가있었는데 삭제했음, 원래있던거는 예비파일에 둠 -->
     <link rel="icon" type="image/x-icon" href="/svc/inc/img/logo/letterL.png">
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1,

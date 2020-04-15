@@ -30,7 +30,7 @@
           <a class="btn btn-sm btn-outline-success btn-block" href="#" role="button">비밀번호찾기</a>
         </div>
         <div class="form-group col-md-4">
-          <a class="btn btn-sm btn-outline-success btn-block" href="signup.php" role="button">회원가입하기</a>
+          <a class="btn btn-sm btn-outline-success btn-block" href="/membership/membership.php" role="button">회원가입하기</a>
         </div>
       </div>
     </div>

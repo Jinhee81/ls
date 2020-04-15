@@ -1,5 +1,3 @@
-<!-- 이건 푸터 콘텐트 -->
-
     <hr>
     <footer class="text-center bg-light text-black pt-3">
       <div class="footer-1 pb-3">

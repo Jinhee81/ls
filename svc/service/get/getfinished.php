@@ -33,6 +33,19 @@ while($row_sms = mysqli_fetch_array($result_sms)){
 // print_r($rowsms);
 ?>
 
+<style>
+
+ /* 세금계산서 iframe 크기 조절  */
+.popup_iframe{position:fixed;left:0;right:0;top:0;bottom:0;z-index:9999;width:100%;height:100%;display:none;}
+
+#wrap {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+}
+
+</style>
+
 <!-- 제목섹션 -->
 <section class="container">
   <div class="jumbotron pt-3 pb-3">

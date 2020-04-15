@@ -172,7 +172,7 @@ $payAmount = array(
 $currentDate = date('Y-m-d');
 $weekDate = date("Ymd", strtotime("+1 week")); // 일주일 후
 // echo ($weekDate);
-// exit;            
+// exit;
 $currentDateDate = new DateTime($currentDate);
 $startDateDate = new DateTime($_SESSION['created']);
 
@@ -366,6 +366,10 @@ $year1later = date('Y-m-d', strtotime($currentDate.'+1 year -1 days'));
   </p>
 </section>
 
+<?php include $_SERVER['DOCUMENT_ROOT']."/svc/view/service_footer.php";?>
+
+<script src="/svc/inc/js/jquery-3.3.1.min.js"></script>
+
 <script>
 
 //숫자에 콤마 넣음
@@ -547,5 +551,5 @@ $('.monthly').on('click', function(){
 
 
 </script>
-
-<?php include $_SERVER['DOCUMENT_ROOT']."/svc/view/service_footer.php";?>
+</body>
+<html>

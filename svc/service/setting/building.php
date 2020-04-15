@@ -7,13 +7,7 @@ include $_SERVER['DOCUMENT_ROOT']."/svc/view/service_header1_meta.php";
 include $_SERVER['DOCUMENT_ROOT']."/svc/view/service_header2.php";
 include $_SERVER['DOCUMENT_ROOT']."/svc/view/conn.php";
 ?>
-<style>
-        @media (max-width: 990px) {
-        .mobile {
-          display: none;
-          }
-        }
-</style>
+
 <section class="container">
   <div class="jumbotron pt-3 pb-3">
     <h2 class="">임대관리의 필요사항을 설정하세요!</h2>
@@ -38,7 +32,7 @@ include $_SERVER['DOCUMENT_ROOT']."/svc/view/conn.php";
     $b_count = (int)$row['count(*)'];
     // 건물($b_count)이 한개라도 있으면 건물테이블 보여지는거
     if($b_count < 1) {
-      echo "";
+      echo "등록된 물건이 없습니다. 물건을 등록해주세요!";
     } else {
       include "building_table.php";
     }?>

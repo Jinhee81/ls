@@ -30,6 +30,19 @@ $('#smsBtn').on('click', function(){
 
 }) //smsBtn function closing
 
+function taxInfo(idx,mun) {
+
+    var tmps = "<iframe name='ifm_pops_21' id='ifm_pops_21' class='popup_iframe'   scrolling='no' src=''></iframe>";
+	$("body").append(tmps);
+	//alert( "/inc/tax_invoice2.php?chkId="+chkId+"&callnum="+subIdx );
+
+	$("#ifm_pops_21").attr("src","/svc/service/get/tax_invoice.php?building_idx="+$('#building').val()+"&mun="+mun+"&id="+idx);
+	$('#ifm_pops_21').show();
+	$('.pops_wrap, .pops_21').show();
+
+}
+
+
 
 $('#btnTaxDateInput').on('click', function(){
   var taxDate = $('input[name="taxDate"]').val();
@@ -42,6 +55,8 @@ $('#btnTaxDateInput').on('click', function(){
   var buildingText = $('select[name=building] option:selected').text();
   var buildingPopbillid = buildingArray[buildingkey][2];
   var buildingCompanynumber = buildingArray[buildingkey][6]+buildingArray[buildingkey][7] + buildingArray[buildingkey][8];
+
+  // alert(buildingCompanynumber);
 
 
   if(taxArray.length===0){

@@ -45,7 +45,7 @@ for ($i=0; $i < count($DateArray); $i++) {
 
 // print_r($allRows); echo 111;
 
-$plusAmountArray = [0,0,0,0,0,0,0,0,0,0,0,0];
+$plusAmountArray = array(0,0,0,0,0,0,0,0,0,0,0,0);
 
 for ($i=0; $i < count($allRows); $i++) {
 
@@ -82,7 +82,7 @@ for ($i=0; $i < count($DateArray); $i++) {
 
 // print_r($allRows2);
 
-$minusAmountArray = [0,0,0,0,0,0,0,0,0,0,0,0];
+$minusAmountArray = array(0,0,0,0,0,0,0,0,0,0,0,0);
 
 for ($i=0; $i < count($allRows2); $i++) {
 

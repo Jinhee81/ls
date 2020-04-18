@@ -1,5 +1,4 @@
 <?php
-session_start();
 include $_SERVER['DOCUMENT_ROOT']."/svc/view/conn.php";
 
 $buildingIdx = array();
@@ -57,6 +56,7 @@ for ($i=0; $i < count($DateArray); $i++) {
   $result = mysqli_query($conn, $sql);
   // $total_rows = mysqli_num_rows($result);
 
+  $allRows[$i] = array();
   while($row = mysqli_fetch_array($result)){
     $allRows[$i][]=$row;
   }
@@ -64,7 +64,8 @@ for ($i=0; $i < count($DateArray); $i++) {
 
 // print_r($allRows); echo 111;
 
-$plusAmountArray = [0,0,0,0,0,0,0,0,0,0,0,0];
+$plusAmountArray = array(0,0,0,0,0,0,0,0,0,0,0,0);
+
 
 for ($i=0; $i < count($allRows); $i++) {
 
@@ -93,6 +94,8 @@ for ($i=0; $i < count($DateArray); $i++) {
 
   $result = mysqli_query($conn, $sql);
   // $total_rows = mysqli_num_rows($result);
+
+  $allRows2[$i] = array();
   while($row = mysqli_fetch_array($result)){
     $allRows2[$i][]=$row;
   }
@@ -100,7 +103,7 @@ for ($i=0; $i < count($DateArray); $i++) {
 
 // print_r($allRows2);
 
-$minusAmountArray = [0,0,0,0,0,0,0,0,0,0,0,0];
+$minusAmountArray = array(0,0,0,0,0,0,0,0,0,0,0,0);
 
 for ($i=0; $i < count($allRows2); $i++) {
 
@@ -113,8 +116,3 @@ for ($i=0; $i < count($allRows2); $i++) {
 // print_r($minusAmountArray);
 
  ?>
-
-<script>
-var plusAmountArray = <?php echo json_encode($plusAmountArray); ?>;
-var minusAmountArray = <?php echo json_encode($minusAmountArray); ?>;
-</script>

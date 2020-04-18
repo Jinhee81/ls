@@ -33,7 +33,7 @@ for ($i=0; $i < count($a); $i++) {
   }
 }//이작업을해야지 계약스케줄의 행별로 바뀐금액이 저장이 된다
 //
-$expectedDateArray = []; //입금예정일만 모인 배열을 만듦
+$expectedDateArray = array(); //입금예정일만 모인 배열을 만듦
 for ($i=0; $i < count($a); $i++) {
   array_push($expectedDateArray, $a[$i][7]);
 }
@@ -46,9 +46,9 @@ $expectedDateArray2= array_keys(array_count_values($expectedDateArray)); //입�
 //
 //
 for ($i=0; $i < count($expectedDateArray2); $i++) {
-  $contractScheduleIdArray = [];
-  $orderedArray = [];
-  $startDate = [];
+  $contractScheduleIdArray = array();
+  $orderedArray = array();
+  $startDate = array();
   $pAmountAccumulate = 0;
   $pvAmountAccumulate = 0;
   $ptAmountAccumulate = 0;
@@ -115,7 +115,7 @@ for ($i=0; $i < count($payExecutiveRow); $i++) {
           {$payExecutiveRow[$i][9]}
         )
       ";
-  // echo $sql;
+  echo $sql;
   $result = mysqli_query($conn, $sql);
   if($result === true){
     $paySid = mysqli_insert_id($conn); //방금넣은 계약번호아이디를 가져오는거

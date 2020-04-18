@@ -9,4 +9,4 @@
 <script src="/svc/inc/js/etc/form.js?<?=date('YmdHis')?>"></script>
 <script src="/svc/inc/js/jquery.number.min.js"></script><!-- 숫자입력시 천단위 콤마에 필요한 js file -->
 <script src="/svc/inc/js/daumAddressAPI3.js?<?=date('YmdHis')?>"></script>
-<script src="/svc/icn/js/mdb.min.js"></script><!--차트만들때 필요함-->
+<script src="/svc/inc/js/mdb.min.js"></script><!--차트만들때 필요함-->

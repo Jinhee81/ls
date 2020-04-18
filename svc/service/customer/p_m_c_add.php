@@ -3,8 +3,8 @@ header('Content-Type: text/html; charset=UTF-8');
 session_start();
 include $_SERVER['DOCUMENT_ROOT']."/svc/view/conn.php";
 
-print_r($_POST);
-print_r($_SESSION);
+// print_r($_POST);
+// print_r($_SESSION);
 
 $fil = array(
   'name' => mysqli_real_escape_string($conn, $_POST['name']),
@@ -35,7 +35,7 @@ $row_addCheck1 = mysqli_fetch_array($result_addCheck1);
 
 if((int)$row_addCheck1[0]>0){
   echo "<script>alert('중복된 이름이 존재합니다. 중복된 이름은 저장이 안돼요.');
-        location.href = 'm_c_add.php';</script>";
+        history.back();</script>";
   exit();
 }
 
@@ -53,7 +53,7 @@ $row_addCheck2 = mysqli_fetch_array($result_addCheck2);
 
 if((int)$row_addCheck2[0]>0){
   echo "<script>alert('중복된 연락처가 존재합니다. 중복된 연락처는 저장이 안돼요.');
-        location.href = 'm_c_add.php';</script>";
+        history.back();</script>";
   exit();
 }
 
@@ -78,7 +78,7 @@ $sql = "
     )
 ";
 
-echo $sql;
+// echo $sql;
 $result = mysqli_query($conn, $sql);
 if($result){
   echo "<script>alert('저장되었습니다.');
@@ -86,7 +86,7 @@ if($result){
   </script>";
 } else {
   echo "<script>alert('저장과정에 문제가 생겼습니다. 관리자에게 문의하세요.');
-  location.href = 'customer.php';
+  history.back();
   </script>";
   error_log(mysqli_error($conn));
 }

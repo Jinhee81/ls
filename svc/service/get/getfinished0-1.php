@@ -1,3 +1,4 @@
+<!-- 이건예비파일, sql문이 있어서 이게 노출되면 안됌 -->
 <?php
 ini_set('display_errors', 1);
 ini_set('error_reporting', E_ALL);
@@ -266,11 +267,12 @@ var taxDiv = 'accept'; //입금예정리스트여서 청구라는 뜻의 charge 
 
 function maketable(){
   var mtable = $.ajax({
-    url: 'ajax_getFinishedCondi_value.php',
+    url: 'ajax_getFinishedCondi_value0.php',
     method: 'post',
     data: $('form').serialize(),
     success: function(data){
       data = JSON.parse(data);
+      console.log(data);
       datacount = data.length;
 
       var returns = '';
@@ -296,9 +298,9 @@ function maketable(){
           returns += '<td class="text-right pr-3 mobile">'+value.pAmount+'</td>';
           returns += '<td class="text-right pr-3 mobile">'+value.pvAmount+'</td>';
 
-          if(value.roomdiv==='임대계약'){
+          if(value.roomdiv==='room'){
             returns += '<td class="text-right pr-3"><a class="" href="/svc/service/contract/contractEdit.php?id='+value.rid+'">'+value.ptAmount+'</a></td>';
-          } else if(value.roomdiv==='기타계약'){
+          } else if(value.roomdiv==='good'){
             returns += '<td class="text-right pr-3"><a class="" href="/svc/service/contractetc/contractetc_Edit.php?id='+value.eid+'">'+value.ptAmount+'</a></td>';
           }
 
@@ -320,9 +322,9 @@ function maketable(){
 
           returns += '<td class="">'+value.contact+'</td>';
 
-          if(value.roomdiv==='임대계약'){
+          if(value.roomdiv==='room'){
             returns += '<td class="">'+value.roomdiv+'('+value.groupname+','+value.roomname+')'+'<input type="hidden" name="roomdiv" value="'+value.roomdiv+'"><input type="hidden" name="groupname" value="'+value.groupname+'"><input type="hidden" name="roomname" value="'+value.roomname+'"></td>';
-          } else if(value.roomdiv==='기타계약'){
+          } else if(value.roomdiv==='good'){
             returns += '<td class="">'+value.roomdiv+'('+value.goodname2+')'+'<input type="hidden" name="roomdiv" value="'+value.roomdiv+'"><input type="hidden" name="groupname" value="'+value.goodname2+'"><input type="hidden" name="roomname" value=""></td>';
           }
 
@@ -364,7 +366,7 @@ return mtable;
 
 function makesql(){
   var sql = $.ajax({
-    url: 'ajax_getFinishedCondi_sql2.php',
+    url: 'ajax_getFinishedCondi_sql20.php',
     method: 'post',
     data: $('form').serialize(),
     success: function(data){
@@ -387,7 +389,7 @@ $(document).ready(function(){
   var periodDiv = $('select[name=periodDiv]').val();
   dateinput2(periodDiv);
 
-  // maketable();
+  maketable();
   makesql();
 
   $(function () {
@@ -424,21 +426,21 @@ $('select[name=periodDiv]').on('change', function(){
   // console.log(periodDiv);
   dateinput2(periodDiv);
   // maketable();
-  // makesql();
+  makesql();
 })
 
 $('input[name=fromDate]').on('change', function(){
-    // maketable();
+    // // maketable();
     makesql();
 })
 
 $('input[name=toDate]').on('change', function(){
-    // maketable();
+    // // maketable();
     makesql();
 })
 
 $('select[name=building]').on('change', function(){
-    // maketable();
+    // // maketable();
     makesql();
 })
 

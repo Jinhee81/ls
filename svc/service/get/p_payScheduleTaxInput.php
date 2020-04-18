@@ -25,7 +25,9 @@ $row2 = mysqli_fetch_array($result2);
 
 $sql3 = "SELECT a.user_id,
 a.bName,
-replace(a.companynumber,'-','') AS cnum,
+a.cnumber1,
+a.cnumber2,
+a.cnumber3,
 b.email,
 b.user_name,
 b.cellphone,

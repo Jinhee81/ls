@@ -77,9 +77,10 @@ if($row['div2']==='개인사업자'){
   $cName = $row['name'];
 }
 
+$original_period = array($row['monthCount'],  $row['startDate'], $row['endDate']);
 
-$original_period = [$row['monthCount'], $row['startDate'], $row['endDate']];
-$edited_period = [$row['count2'], $row['startDate'], $row['endDate2']];
+$edited_period = array($row['count2'], $row['startDate'], $row['endDate2']);
+
 
 // print_r($edited_period);
 // print_r($original_period);
@@ -191,31 +192,41 @@ $result2 = mysqli_query($conn, $sql2);
 $allRows = array();
 while($row2 = mysqli_fetch_array($result2)){
   $allRows[] = $row2;
-
-  if($allRows[$i]['payId']){
-
-    for ($i=0; $i < count($allRows); $i++) {
-      $sql3 = "
-              Select
-                  pExpectedDate,
-                  ptAmount,
-                  payKind,
-                  executiveDate,
-                  getAmount
-              from paySchedule2
-              where
-                  idpaySchedule2={$allRows[$i]['payId']}";
-      // echo $sql3;
-      $result3 = mysqli_query($conn, $sql3);
-
-      $allRows[$i]['paySchedule2'] = array();
-      while($row3 = mysqli_fetch_array($result3)){
-        $allRows[$i]['paySchedule2'] = $row3;
-      }
-
-    }
-  }
 }
 
+// echo print_r($allRows);
+
+
+
+for ($i=0; $i < count($allRows); $i++) {
+
+  if($allRows[$i]['payId']){
+    $sql3 = "
+            Select
+                pExpectedDate,
+                ptAmount,
+                payKind,
+                executiveDate,
+                getAmount,
+                TIMESTAMPDIFF(day, pExpectedDate, curdate()) as delaycount
+            from paySchedule2
+            where
+                idpaySchedule2={$allRows[$i]['payId']}";
+    echo $sql3;
+    $result3 = mysqli_query($conn, $sql3);
+
+    $allRows[$i]['paySchedule2'] = array();
+    while($row3 = mysqli_fetch_array($result3)){
+      $allRows[$i]['paySchedule2'] = $row3;
+    }
+    print_r($allRows[$i]['paySchedule2']); echo '111';
+  }
+
+}//for closing}
+
+// echo '------------';
 // print_r($allRows);
+
+
+
  ?>

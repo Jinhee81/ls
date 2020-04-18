@@ -46,11 +46,11 @@ include $_SERVER['DOCUMENT_ROOT']."/svc/main/condition.php";
                 </select>
               </td>
               <td width="10%">
-                <input type="text" name="fromDate" value="" class="form-control form-control-sm text-center dateType">
+                <input type="text" name="fromDate" value="" class="form-control form-control-sm text-center dateType yyyymmdd">
               </td>
               <td width="1%">~</td>
               <td width="10%">
-                <input type="text" name="toDate" value="" class="form-control form-control-sm text-center dateType">
+                <input type="text" name="toDate" value="" class="form-control form-control-sm text-center dateType yyyymmdd">
               </td>
               <td width="8%">
                 <select name="customerDiv" class="form-control form-control-sm selectCall">
@@ -199,6 +199,23 @@ $(document).ready(function(){
     showButtonPanel: true,
     currentText: '오늘', // 오늘 날짜로 이동하는 버튼 패널
     closeText: '닫기'  // 닫기 버튼 패널
+  })
+
+  $('.yyyymmdd').keydown(function (event) {
+   var key = event.charCode || event.keyCode || 0;
+   $text = $(this);
+   if (key !== 8 && key !== 9) {
+       if ($text.val().length === 4) {
+           $text.val($text.val() + '-');
+       }
+       if ($text.val().length === 7) {
+           $text.val($text.val() + '-');
+       }
+   }
+
+   return (key == 8 || key == 9 || key == 46 || (key >= 48 && key <= 57) || (key >= 96 && key <= 105));
+  // Key 8번 백스페이스, Key 9번 탭, Key 46번 Delete 부터 0 ~ 9까지, Key 96 ~ 105까지 넘버패트
+  // 한마디로 JQuery 0 ~~~ 9 숫자 백스페이스, 탭, Delete 키 넘버패드외에는 입력못함
   })
 
   $('select[name=dateDiv]').on('change', function(){

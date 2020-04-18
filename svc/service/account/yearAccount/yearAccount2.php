@@ -125,27 +125,19 @@ $('#minus_part').text(minusAmountArray);
 </script> -->
 
 <script>
-var plusAmountArray = [];
-var minusAmountArray = [];
 
-function maketable(){
-
+function barChartFn(){//bar function start
+  var plusAmountArray = [];
+  var minusAmountArray = [];
   var buildingIdx = $('select[name=building]').val();
   var year = $('select[name=year]').val();
 
-  plusAmountArray = [];
-  minusAmountArray = [];
-
-  var monthlyData = $.ajax({
+  $.ajax({
     url: 'ajax_monthlyValue.php',
     method: 'post',
     data: {buildingIdx:buildingIdx, year:year},
     success: function(data){
       data = JSON.parse(data);
-
-      plusAmountArray = [];
-      minusAmountArray = [];
-
       for (var i = 0; i < data[0].length; i++) {
         plusAmountArray.push(data[0][i]);
       }
@@ -153,24 +145,11 @@ function maketable(){
       for (var i = 0; i < data[1].length; i++) {
         minusAmountArray.push(data[1][i]);
       }
-
-      var basicvalue = [0,1,2,3,4,5];
-
       $('#plus_part2').html(plusAmountArray.toString());
       $('#minus_part2').html(minusAmountArray.toString());
-      $('#basic').html(basicvalue.toString());
-      // console.log(data);
+      console.log(plusAmountArray);
     }
-  })
-  return monthlyData, plusAmountArray, minusAmountArray;
-  console.log(monthlyData, plusAmountArray, minusAmountArray);
-}
-
-function barChartFn(){//bar function start
-  var plusAmountArray = [];
-  var minusAmountArray = [];
-
-  maketable();
+  });
 
   console.log(plusAmountArray);
   console.log(plusAmountArray[3]);

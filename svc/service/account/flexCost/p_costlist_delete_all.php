@@ -1,7 +1,7 @@
 <!-- 지출입력화면에서 고정비를 추가하는 프로세스파일 -->
 <?php
 session_start();
-
+header('Content-Type: text/html; charset=UTF-8');
 include $_SERVER['DOCUMENT_ROOT']."/svc/view/conn.php";
 
 // print_r($_POST);

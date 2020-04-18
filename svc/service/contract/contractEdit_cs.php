@@ -106,6 +106,7 @@
           </td><!-- 청구번호 -->
           <td>
             <?php
+            // 수납구분 당분간 주석처리
             if($allRows[$i]['payId'] && $allRows[$i]['payIdOrder']==='0'){
 
               $executiveDate = new DateTime($allRows[$i]['paySchedule2']['executiveDate']);
@@ -113,27 +114,13 @@
               $currentDateDate = new DateTime($currentDate);
 
               if($allRows[$i]['paySchedule2']['executiveDate']) {
-                  $notGetDayCount = date_diff($executiveDate, $expectedDate);
-                  // $notGetDayCount = ($executiveDate - $expectedDate);
-                  // var_dump($notGetDayCount->invert);
-                  if(($notGetDayCount->invert) === 1) {
-                    echo "<label class='text-center green'>완납(연체)</label>";
-                  } else {
-                    echo "<label class='text-center green'>완납</label>";
-                  }
+                echo "<label class='text-center green'>완납</label>";
               } else {
-                // $notGetDayCount = ($currentDateDate - $expectedDate);
-                $notGetDayCount = date_diff($currentDateDate, $expectedDate);
-                // var_dump($notGetDayCount->invert);
-                if(($notGetDayCount->invert) === 1) {
-                  echo "<label class='text-center pink'>미납</label>";
-                } else {
-                  echo "<label class='text-center sky'>입금대기</label>";
-                }
+                echo "<label class='text-center sky'>입금대기</label>";
               }
             }
             ?>
-          </td><!-- 수납구분 -->
+          </td><!-- 수납구분-->
           <td>
             <?php
             if($allRows[$i]['payId']){
@@ -147,9 +134,9 @@
                 echo "<label class='text-center numberComma font-weight-light green'>".$allRows[$i]['paySchedule2']['getAmount']."</label>";
               } else {
                 if($row3['pExpectedDate'] >= $currentDate){
-                  echo "<label class='text-center numberComma font-weight-light sky'>"."&#40;".$allRows[$i]['ptAmount'].")"."</label>";
+                  echo "<label class='text-center numberComma font-weight-light sky'>"."&#40;".$allRows[$i]['paySchedule2']['ptAmount'].")"."</label>";
                 } else {
-                  echo "<label class='text-center numberComma font-weight-light pink'>"."&#40;".$allRows[$i]['ptAmount'].")"."</label>";
+                  echo "<label class='text-center numberComma font-weight-light pink'>"."&#40;".$allRows[$i]['paySchedule2']['ptAmount'].")"."</label>";
                 }
               }
             }
@@ -162,15 +149,13 @@
                 if($allRows[$i]['paySchedule2']['executiveDate'] <= $allRows[$i]['paySchedule2']['pExpectedDate']) {
                   echo "<label class='text-center font-weight-light green mb-0'>0</label><br>";
                 } else {
-                  $notGetDayCount = date_diff($executiveDate, $expectedDate);
-                  echo "<label class='text-center numberComma font-weight-light green mb-0'>";echo $notGetDayCount->days."</label><br>";
+                  echo "<label class='text-center numberComma font-weight-light green mb-0'>";echo $allRows[$i]['paySchedule2']['delaycount']."</label><br>";
                 }
               } else {
                 if($allRows[$i]['paySchedule2']['pExpectedDate'] >= $currentDate) {
                   echo "<label class='text-center font-weight-light sky mb-0'>0</label><br>";
                 } else {
-                  $notGetDayCount = date_diff($currentDateDate, $expectedDate);
-                  echo "<label class='text-center numberComma font-weight-light pink mb-0'>";echo $notGetDayCount->days."</label><br>";
+                  echo "<label class='text-center numberComma font-weight-light pink mb-0'>";echo $allRows[$i]['paySchedule2']['delaycount']."</label><br>";
                 }
               }
             }
@@ -181,14 +166,14 @@
                 if($allRows[$i]['paySchedule2']['executiveDate'] <= $allRows[$i]['paySchedule2']['pExpectedDate']) {
                   echo "<label class='text-center font-weight-light green mb-0'>0</label>";
                 } else {
-                  $notGetDayCountAmount = $allRows[$i]['paySchedule2']['ptAmount'] * ($notGetDayCount->days / 365) * 0.27;
+                  $notGetDayCountAmount = $allRows[$i]['paySchedule2']['ptAmount'] * ($allRows[$i]['paySchedule2']['delaycount'] / 365) * 0.27;
                   echo "<label class='text-center numberComma font-weight-light green mb-0'>".(int)$notGetDayCountAmount."</label>";
                 }
               } else {
                 if($allRows[$i]['paySchedule2']['pExpectedDate'] >= $currentDate) {
                   echo "<label class='text-center font-weight-light sky mb-0'>0</label>";
                 } else {
-                  $notGetDayCountAmount = $allRows[$i]['paySchedule2']['ptAmount'] * ($notGetDayCount->days / 365) * 0.27;
+                  $notGetDayCountAmount = $allRows[$i]['paySchedule2']['ptAmount'] * ($allRows[$i]['paySchedule2']['delaycount'] / 365) * 0.27;
                   echo "<label class='text-center numberComma font-weight-light pink mb-0'>".(int)$notGetDayCountAmount."</label>";
                 }
               }

@@ -1,8 +1,17 @@
 <?php
 session_start();
+ini_set('display_errors', 1);
+ini_set('error_reporting', E_ALL);
+
 if(!isset($_SESSION['is_login'])){
   header('Location: /svc/login.php');
 }
+?>
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <title>그룹/관리번호 수정</title>
+<?php
 include $_SERVER['DOCUMENT_ROOT']."/svc/view/service_header1_meta.php";
 include $_SERVER['DOCUMENT_ROOT']."/svc/view/service_header2.php";
 include $_SERVER['DOCUMENT_ROOT']."/svc/view/conn.php";
@@ -22,15 +31,15 @@ $sql = "
     LEFT JOIN building
       ON group_in_building.building_id = building.id
     WHERE group_in_building.id={$filtered_id}";
-// $result = mysqli_query($conn, $sql);
-// $row = mysqli_fetch_array($result);
+$result = mysqli_query($conn, $sql);
+$row = mysqli_fetch_array($result);
 echo $sql;
 // print_r($row);
 // print_r($_SESSION);
 
-error_reporting(E_ALL);
-
-ini_set("display_errors", 1);
+// error_reporting(E_ALL);
+//
+// ini_set("display_errors", 1);
 
 ?>
 
@@ -68,23 +77,27 @@ ini_set("display_errors", 1);
     </table>
     <?php
     $sql7 = "select * from r_g_in_building where group_in_building_id = {$row['id']}";
-    // echo $sql7;
+    echo $sql7;
+
+    $result7 = mysqli_query($conn, $sql7);
 
     $editRooms = array();
-    $result7 = mysqli_query($conn, $sql7);
     while($row7 = mysqli_fetch_array($result7)){
       $editRooms[] = $row7;
       // array_push($editRooms, $row7['id'], $row7['rName']);
     }
     // print_r($editRooms);
     $table2 = "<table class='table table-borderless table-sm text-center' id='roomList'";
-    $startTrArray=[0,3,6,9,12,15,18,21,24,27,30,33,36,39,42,45,48, 51,54,57,60,63,66,69,72,75,78,81,84,87,90,93,96,99];
-    $closeTrArray= [2,5,8,11,14,17,20,23,26,29,32,35,38,41,44,47,50, 53,56,59,62,65,68,71,74,77,80,83,86,89,92,95,98];
+
+    $startTrArray = array(0,3,6,9,12,15,18,21,24,27,30,33,36,39,42,45,48, 51,54,57,60,63,66,69,72,75,78,81,84,87,90,93,96,99);
+
+    $closeTrArray = array(2,5,8,11,14,17,20,23,26,29,32,35,38,41,44,47,50, 53,56,59,62,65,68,71,74,77,80,83,86,89,92,95,98);
+
     // $rDeleteKeyFront = "<td class='deleteTimesTd'><button type='submit' class='deleteTimesButton btn btn-default' formaction='p_room_delete.php';'><input type='hidden' name='rName";
     // $rDeleteKeyMiddle = "' value='";
     // $rDeleteKeyEnd = "'></td><i class='fa fa-times-circle'></i></button></td>";
 
-    for ($i=0; $i < sizeof($editRooms); $i++) {
+    for ($i=0; $i < count($editRooms); $i++) {
       if(in_array($i, $startTrArray)){
         $table2 = $table2 ."<tr>
           <td style='padding-right:0px;'><input id='siwon' class='form-control text-center' required='' type='text' name='rName".$i."' value='".$editRooms[$i]['rName']."'></td><td style='padding-left:0px;'>
@@ -137,8 +150,10 @@ ini_set("display_errors", 1);
 </section>
 
 <?php include $_SERVER['DOCUMENT_ROOT']."/svc/view/service_footer.php";?>
-<?php include $_SERVER['DOCUMENT_ROOT']."/svc/view/service_footer_script.php"; ?>
-
+<script src="/svc/inc/js/jquery-3.3.1.min.js"></script>
+<script src="/svc/inc/js/popper.min.js"></script>
+<script src="/svc/inc/js/bootstrap.min.js"></script>
+<script src="/svc/inc/js/etc/form.js?<?=date('YmdHis')?>"></script>
 
 <script>
 

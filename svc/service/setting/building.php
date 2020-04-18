@@ -18,6 +18,7 @@ include $_SERVER['DOCUMENT_ROOT']."/svc/view/conn.php";
     </p>
     <hr class="my-4">
     <p>리스맨 회원가입후 30일동안 무료이용 가능합니다. 30일 이후 요금은 <a href="../../main/payment.php" class="badge badge-warning">요금안내</a> 페이지를 참조하세요.</p>
+    <p><?=$_SESSION['email']?>님은 현재 <?=$row['gradename']?>등급이며 <?=number_format($row['coin'])?>코인 보유중입니다.</p>
     <a class="btn btn-primary btn-lg mr-1" href="building_add.php" role="button">물건등록</a>
     <!-- <a class="btn btn-outline-primary btn-lg" href="account.php" role="button">계정추가</a> -->
   </div>

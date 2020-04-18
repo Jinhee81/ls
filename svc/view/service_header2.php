@@ -31,12 +31,12 @@
           회계관리
         </a>
         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-          <a class="dropdown-item" href="/svc/service/account/fixcost.php">고정비설정</a>
+          <a class="dropdown-item" href="/svc/service/account/fixcost/fixcost.php">고정비설정</a>
           <a class="dropdown-item" href="/svc/service/account/flexCost/flexCost.php">지출입력</a>
           <div class="dropdown-divider"></div>
           <a class="dropdown-item" href="/svc/service/account/monthAccount/monthAccount.php">월별회계조회</a>
           <a class="dropdown-item" href="/svc/service/account/yearAccount/yearAccount.php">연도별회계조회</a>
-          <a class="dropdown-item" href="/svc/service/account/deposit.php">보증금조회</a>
+          <a class="dropdown-item" href="/svc/service/account/deposit/deposit.php">보증금조회</a>
         </div>
       </li>
     </ul>

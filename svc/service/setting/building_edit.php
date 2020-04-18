@@ -84,7 +84,7 @@ $row = mysqli_fetch_array($result);
       <div class="col-sm-9">
         <input type="text" class="form-control" name="popbillid" value="<?=$row['popbillid']?>">
         <!-- <br> -->
-        <small>전자세금계산서 발행을 원하면 팝빌사이트에 회원가입하고 아이디를 적어주세용.</small>
+        <small>전자세금계산서 발행을 원하면 <a href="https://www.popbill.com/Member/Form/Link" target="_blank">팝빌사이트</a>에 회원가입하고 아이디를 적어주세용.</small>
       </div>
     </div>
     <div class="form-group row">

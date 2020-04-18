@@ -46,7 +46,7 @@ echo G5_POSTCODE_JS;    //다음 주소 js
 									<tr>
 										<th>이메일</th>
 										<td>
-											<input type="email" name="email1" class="onlyeng" required>
+											<input type="email" name="email1" class="onlyeng" placeholder="@포함, 사용하는 이메일 적어주세요" required>
 											<button type="button" id="check_email">중복체크</button>
 											<input type=hidden id="chk_email2" name="chk_email2" value="0">
 						          <!-- hidden 이건 중복체크했는지 안했는지 판단하는 bool변수 -->
@@ -83,10 +83,9 @@ echo G5_POSTCODE_JS;    //다음 주소 js
 									<tr>
 										<th>연락처</th>
 										<td>
-											<input type="text" name="cellphone" required><button type="button">인증하기</button>
-											<span>'-'를 제외하고 입력해주세요.</span>
-										</td>
-									</tr>
+											<input type="text" name="cellphone" id="phone" required placeholder="'-' 제외, 숫자만 입력합니다" value=""><input type="hidden" name="phoneAuth" value="no"><button type="button" onclick="phone_check();" id="phoneBtn">인증하기</button><h1 id="check"></h1><div id="ViewTimer"></div>
+                                        </td>
+                                    </tr>
 									<tr>
 										<th>임대유형</th>
 										<td>
@@ -135,6 +134,78 @@ echo G5_POSTCODE_JS;    //다음 주소 js
 </body>
 </html>
 <script>
+var SetTime = 999999999999;		// 최초 설정 시간(기본 : 초)
+
+function msg_time() {	// 1초씩 카운트
+
+    m = Math.floor(SetTime / 60) + "분 " + (SetTime % 60) + "초";	// 남은 시간 계산
+
+    var msg = "현재 남은 시간은 <font color='red'>" + m + "</font> 입니다.";
+
+    document.all.ViewTimer.innerHTML = msg;		// div 영역에 보여줌
+
+    SetTime--;					// 1초씩 감소
+
+    if (SetTime < 0) {			// 시간이 종료 되었으면..
+
+        alert("인증시간이 만료되었습니다.");
+        $('#sms').hide();
+        $('#smsBtn').hide();
+        $('#ViewTimer').hide();
+        SetTime = 999999999999;
+    }
+
+}
+
+window.onload = function TimerStart(){ tid=setInterval('msg_time()',1000) };
+
+$(function(){
+    $('#ViewTimer').hide();
+})
+function phone_check(){
+    if($('#phone').val().length <1){
+        alert('휴대폰번호를 다시 확인해주세요');
+        return false;
+    }else{
+        var rand = generateRandom(100000, 999999);
+        var phone = $('#phone').val();
+        $('#ViewTimer').show();
+        alert($('#phone').val() + '번호로 인증번호를 발송했습니다.');
+        phone = phone.replace(/-/gi,'');
+        SetTime = 180;
+        $('#check').html(
+            '<input type="text" name="sms" id="sms" placeholder="인증번호" required>' +
+            '<button type="button" onclick="sms_check('+rand+');" name="sms_auth" id="smsBtn"">번호확인</button>'
+        );
+        $.ajax({
+        url: 'smscheck.php',
+        method: 'post',
+        data: {phone:phone, rand:rand},
+        success: function(data){
+
+        }
+        })
+    }
+}
+var generateRandom = function (min, max) {
+  var ranNum = Math.floor(Math.random()*(max-min+1)) + min;
+  return ranNum;
+}
+function sms_check(rand){
+    if($('#sms').val()==rand){
+				$('input[name=phoneAuth]').val('yes');
+        alert('인증완료 되었습니다.');
+        $('#phone').prop('readonly','true');
+        $('#phoneBtn').hide();
+        $('#sms').prop('disabled','true');
+        $('#smsBtn').hide();
+        $('#ViewTimer').hide();
+        clearInterval(tid);
+    }else{
+        alert('인증번호를 다시 확인해 주세요.');
+    }
+}
+
 	$('#check_email').on('click', function(){
 		var email = $('input[name=email1]').val().trim();
 
@@ -147,7 +218,7 @@ echo G5_POSTCODE_JS;    //다음 주소 js
 	})
 
 	$('input[name=password]').on('click', function(){
-		if($('chk_email2')=="0"){
+		if($('#chk_email2').val()=="0"){
 			alert("이메일중복체크를 하세요");
       return false;
 		}
@@ -203,6 +274,13 @@ echo G5_POSTCODE_JS;    //다음 주소 js
 
 	$(function(){
 		$(".submit_btn").click(function(e){
+
+			var checkphone = $('input[name=phoneAuth]').val();
+
+			if(checkphone==='no'){
+				alert('연락처 인증하기를 진행해야 회원가입이 가능합니다.');
+				return false;
+			}
 			e.preventDefault();
 			var link =$(this).attr("href");
 

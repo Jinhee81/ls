@@ -217,7 +217,7 @@ while($row_sms = mysqli_fetch_array($result_sms)){
 </section>
 
 <!-- sql 섹션 -->
-<section id="allVals2" class="container">
+<section id="allVals2">
 </section>
 
 
@@ -362,33 +362,12 @@ return mtable;
 
 }//function maketable closing}
 
-function makesql(){
-  var sql = $.ajax({
-    url: 'ajax_getFinishedCondi_sql2.php',
-    method: 'post',
-    data: $('form').serialize(),
-    success: function(data){
-      $('#allVals2').text(data);
-      console.log('minsun');
-    },
-    error:function(request,status,error){
-        alert("code = "+ request.status + " message = " + request.responseText + " error = " + error); // 실패 시 처리
-       },
-     complete : function(data) {
-                 console.log('siwon');
-        }
-  });
-
-  return sql;
-}//f }
-
 
 $(document).ready(function(){
   var periodDiv = $('select[name=periodDiv]').val();
   dateinput2(periodDiv);
 
-  // maketable();
-  makesql();
+  maketable();
 
   $(function () {
       $('[data-toggle="tooltip"]').tooltip()
@@ -406,8 +385,7 @@ $(document).ready(function(){
 })//---------document.ready function end & 각종 조회 펑션 시작--------------//
 
 $('select[name=dateDiv]').on('change', function(){
-    // maketable();
-    makesql();
+    maketable();
 
     // $.ajax({
     //     url: 'ajax_getfinishedCondi_sql2.php',
@@ -423,38 +401,31 @@ $('select[name=periodDiv]').on('change', function(){
   var periodDiv = $('select[name=periodDiv]').val();
   // console.log(periodDiv);
   dateinput2(periodDiv);
-  // maketable();
-  // makesql();
+  maketable();
 })
 
 $('input[name=fromDate]').on('change', function(){
-    // maketable();
-    makesql();
+    maketable();
 })
 
 $('input[name=toDate]').on('change', function(){
-    // maketable();
-    makesql();
+    maketable();
 })
 
 $('select[name=building]').on('change', function(){
-    // maketable();
-    makesql();
+    maketable();
 })
 
 $('select[name=taxDiv]').on('change', function(){
-    // maketable();
-    makesql();
+    maketable();
 })
 
 $('select[name=payKind]').on('change', function(){
-    // maketable();
-    makesql();
+    maketable();
 })
 
 $('select[name=etcCondi]').on('change', function(){
-    // maketable();
-    makesql();
+    maketable();
 
     // $.ajax({
     //     url: 'ajax_getfinishedCondi_sql2.php',
@@ -467,8 +438,7 @@ $('select[name=etcCondi]').on('change', function(){
 })
 
 $('input[name=cText]').on('keyup', function(){
-    // maketable();
-    makesql();
+    maketable();
 
     // $.ajax({
     //     url: 'ajax_getfinishedCondi_sql2.php',

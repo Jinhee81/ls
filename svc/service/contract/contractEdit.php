@@ -1,5 +1,7 @@
 <!-- 입금완료인거는 처음부터 숨기기처리하게 할것, 예전거는 예비파일 contractEdit30으로 저장되었7 -->
 <?php
+ini_set('display_errors', 1);
+ini_set('error_reporting', E_ALL);
 session_start();
 if(!isset($_SESSION['is_login'])){
   header('Location: /svc/login.php');
@@ -717,8 +719,8 @@ $("button[name='depositSaveBtn']").on('click', function(){
 
 $("button[name='contractDelete']").on('click', function(){
   var contractId = '<?=$filtered_id?>';
-  var memocount = '<?=$row_memoC[0]?>';
-  var filecount = '<?=$row_file_c[0]?>';
+  var memocount = '<?=count($memoRows)?>';
+  var filecount = '<?=count($fileRows)?>';
 
   if(Number(memocount)>0){
     alert('메모를 삭제해야 계약삭제 가능합니다.');

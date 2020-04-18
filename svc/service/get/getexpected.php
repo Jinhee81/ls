@@ -77,11 +77,11 @@ while($row_sms = mysqli_fetch_array($result_sms)){
               </select><!--시간구분-->
             </td>
             <td width="8%">
-              <input type="text" name="fromDate" value="" class="form-control form-control-sm text-center dateType"><!--codi3-->
+              <input type="text" name="fromDate" value="" class="form-control form-control-sm text-center dateType yyyymmdd"><!--codi3-->
             </td>
             <td width="1%">~</td>
             <td width="8%">
-              <input type="text" name="toDate" value="" class="form-control form-control-sm text-center dateType"><!--codi4-->
+              <input type="text" name="toDate" value="" class="form-control form-control-sm text-center dateType yyyymmdd"><!--codi4-->
             </td>
             <td width="7%">
               <select class="form-control form-control-sm selectCall" name="building">
@@ -177,7 +177,7 @@ while($row_sms = mysqli_fetch_array($result_sms)){
         <th scope="col">순번</th>
         <th scope="col" class="mobile">그룹명</th>
         <th scope="col">방번호</th>
-        <th scope="col">세입자</th>
+        <th scope="col">입주자</th>
         <th scope="col">연락처</th>
         <th scope="col" class="mobile">개월</th>
         <th scope="col" class="mobile">시작일/종료일</th>
@@ -206,7 +206,7 @@ include $_SERVER['DOCUMENT_ROOT']."/svc/service/sms/modal_sms1.php";
 include $_SERVER['DOCUMENT_ROOT']."/svc/service/sms/modal_sms2.php";
  ?>
 
- <?php include $_SERVER['DOCUMENT_ROOT']."/svc/view/service_footer.php"; ?>
+<?php include $_SERVER['DOCUMENT_ROOT']."/svc/view/service_footer.php"; ?>
 
 
 <script src="/svc/inc/js/jquery-3.3.1.min.js"></script>
@@ -361,6 +361,23 @@ $(document).ready(function(){
     })
 
     $(".numberComma").number(true);
+
+    $('.yyyymmdd').keydown(function (event) {
+     var key = event.charCode || event.keyCode || 0;
+     $text = $(this);
+     if (key !== 8 && key !== 9) {
+         if ($text.val().length === 4) {
+             $text.val($text.val() + '-');
+         }
+         if ($text.val().length === 7) {
+             $text.val($text.val() + '-');
+         }
+     }
+
+     return (key == 8 || key == 9 || key == 46 || (key >= 48 && key <= 57) || (key >= 96 && key <= 105));
+    // Key 8번 백스페이스, Key 9번 탭, Key 46번 Delete 부터 0 ~ 9까지, Key 96 ~ 105까지 넘버패트
+    // 한마디로 JQuery 0 ~~~ 9 숫자 백스페이스, 탭, Delete 키 넘버패드외에는 입력못함
+    })
 
     $('#href_smsSetting').on('click', function(){
       var moveCheck = confirm('문자상용구설정 화면으로 이동합니다. 이동하시겠습니까?');

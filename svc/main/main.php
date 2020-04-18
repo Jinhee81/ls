@@ -110,3 +110,8 @@ include "m_schedule.php";
 </section>
 
 <?php include $_SERVER['DOCUMENT_ROOT']."/svc/view/service_footer.php";?>
+
+<script src="/svc/inc/js/jquery-3.3.1.min.js"></script>
+<script src="/svc/inc/js/bootstrap.min.js"></script>
+</body>
+</html>

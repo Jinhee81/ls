@@ -63,8 +63,8 @@ if($_POST['cText']){
 }
 
 
-$sql1 = "
-select
+$sql = "
+(select
     @roomdiv as roomdiv,
     paySchedule2.realContract_id as rid,
     realContract.building_id as rbid,
@@ -102,8 +102,7 @@ select
     paySchedule2.executiveDate,
     paySchedule2.getAmount,
     paySchedule2.taxSelect,
-    paySchedule2.taxDate,
-    paySchedule2.building_id
+    paySchedule2.taxDate
 from
     (select @roomdiv:='room')a,
     paySchedule2
@@ -112,17 +111,17 @@ join realContract
 join customer
     on realContract.customer_id = customer.id
 join building
-    on paySchedule2.building_id = building.id
+    on realContract.building_id = building.id
 join group_in_building
     on realContract.group_in_building_id = group_in_building.id
 join r_g_in_building
     on realContract.r_g_in_building_id = r_g_in_building.id
 where paySchedule2.user_id={$_SESSION['id']} and
-      paySchedule2.building_id = {$_POST['building']} and
+      realContract.building_id = {$_POST['building']} and
       paySchedule2.executiveDate is not null
-      $etcDate $taxCondi $payCondi $etcCondi1";
-
-$sql2 = "select
+      $etcDate $taxCondi $payCondi $etcCondi1)
+union
+(select
     @gooddiv as gooddiv,
     paySchedule2.etcContract_id as eid,
     etcContract.building_id as ebid,
@@ -160,8 +159,7 @@ $sql2 = "select
     paySchedule2.executiveDate,
     paySchedule2.getAmount,
     paySchedule2.taxSelect,
-    paySchedule2.taxDate,
-    paySchedule2.building_id
+    paySchedule2.taxDate
 from
     (select @gooddiv:='good')a,
     paySchedule2
@@ -170,13 +168,14 @@ join etcContract
 join customer
     on etcContract.customer_id = customer.id
 join building
-    on paySchedule2.building_id = building.id
+    on etcContract.building_id = building.id
 join good_in_building
     on etcContract.good_in_building_id = good_in_building.id
 where paySchedule2.user_id={$_SESSION['id']} and
-      paySchedule2.building_id = {$_POST['building']} and
+      etcContract.building_id = {$_POST['building']} and
       paySchedule2.executiveDate is not null
-      $etcDate $taxCondi $payCondi $etcCondi2
+      $etcDate $taxCondi $payCondi $etcCondi2)
+order by roomdiv desc, executiveDate desc
 ";
 
 

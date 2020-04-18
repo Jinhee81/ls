@@ -63,8 +63,8 @@ if($_POST['cText']){
 }
 
 
-$sql1 = "
-select
+$sql = "
+(select
     @roomdiv as roomdiv,
     paySchedule2.realContract_id as rid,
     realContract.building_id as rbid,
@@ -120,9 +120,9 @@ join r_g_in_building
 where paySchedule2.user_id={$_SESSION['id']} and
       paySchedule2.building_id = {$_POST['building']} and
       paySchedule2.executiveDate is not null
-      $etcDate $taxCondi $payCondi $etcCondi1";
-
-$sql2 = "select
+      $etcDate $taxCondi $payCondi $etcCondi1)
+union
+(select
     @gooddiv as gooddiv,
     paySchedule2.etcContract_id as eid,
     etcContract.building_id as ebid,
@@ -176,7 +176,8 @@ join good_in_building
 where paySchedule2.user_id={$_SESSION['id']} and
       paySchedule2.building_id = {$_POST['building']} and
       paySchedule2.executiveDate is not null
-      $etcDate $taxCondi $payCondi $etcCondi2
+      $etcDate $taxCondi $payCondi $etcCondi2)
+order by roomdiv desc, executiveDate desc
 ";
 
 

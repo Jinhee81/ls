@@ -148,45 +148,42 @@ function barChartFn(){//bar function start
       $('#plus_part2').html(plusAmountArray.toString());
       $('#minus_part2').html(minusAmountArray.toString());
       console.log(plusAmountArray);
-    }
-  });
 
-  console.log(plusAmountArray);
-  console.log(plusAmountArray[3]);
+      var ctxB = document.getElementById("barChart").getContext('2d');
+      var myBarChart = new Chart(ctxB, {
+        type: 'bar',
+        data: {
+            labels: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'],
+            datasets: [
+              {
+                label: '매출',
+                data: [plusAmountArray[0], plusAmountArray[1], plusAmountArray[2], plusAmountArray[3], plusAmountArray[4], plusAmountArray[5], plusAmountArray[6], plusAmountArray[7], plusAmountArray[8], plusAmountArray[9], plusAmountArray[10], plusAmountArray[11]],
+                backgroundColor: 'rgba(54, 162, 235, 0.2)',
+                borderColor: 'rgba(54, 162, 235, 1)',
+                borderWidth: 1
+              }, {
+                  label: '매입',
+                  data: [minusAmountArray[0], minusAmountArray[1], minusAmountArray[2], minusAmountArray[3], minusAmountArray[4], minusAmountArray[5], minusAmountArray[6], minusAmountArray[7], minusAmountArray[8], minusAmountArray[9], minusAmountArray[10], minusAmountArray[11]],
+                  backgroundColor: 'rgba(255, 99, 132, 0.2)',
+                  borderColor: 'rgba(255,99,132,1)',
+                  borderWidth: 1
 
-  var ctxB = document.getElementById("barChart").getContext('2d');
-  var myBarChart = new Chart(ctxB, {
-    type: 'bar',
-    data: {
-        labels: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'],
-        datasets: [
-          {
-            label: '매출',
-            data: [plusAmountArray[0], plusAmountArray[1], plusAmountArray[2], plusAmountArray[3], plusAmountArray[4], plusAmountArray[5], plusAmountArray[6], plusAmountArray[7], plusAmountArray[8], plusAmountArray[9], plusAmountArray[10], plusAmountArray[11]],
-            backgroundColor: 'rgba(54, 162, 235, 0.2)',
-            borderColor: 'rgba(54, 162, 235, 1)',
-            borderWidth: 1
-          }, {
-              label: '매입',
-              data: [minusAmountArray[0], minusAmountArray[1], minusAmountArray[2], minusAmountArray[3], minusAmountArray[4], minusAmountArray[5], minusAmountArray[6], minusAmountArray[7], minusAmountArray[8], minusAmountArray[9], minusAmountArray[10], minusAmountArray[11]],
-              backgroundColor: 'rgba(255, 99, 132, 0.2)',
-              borderColor: 'rgba(255,99,132,1)',
-              borderWidth: 1
-
-          }],
-    },
-    options: {
-        scales: {
-            yAxes: [{
-                ticks: {
-                    beginAtZero:true
-                }
-            }]
+              }],
+        },
+        options: {
+            scales: {
+                yAxes: [{
+                    ticks: {
+                        beginAtZero:true
+                    }
+                }]
+            }
         }
+      });
+
+      return myBarChart;
     }
   });
-
-  return myBarChart;
 }//bar function end
 
 

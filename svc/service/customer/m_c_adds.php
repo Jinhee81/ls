@@ -92,7 +92,14 @@ include $_SERVER['DOCUMENT_ROOT']."/svc/view/conn.php";
 </section>
 
 <?php include $_SERVER['DOCUMENT_ROOT']."/svc/view/service_footer.php";?>
-<?php include $_SERVER['DOCUMENT_ROOT']."/svc/view/service_footer_script.php"; ?>
+
+<script src="/svc/inc/js/jquery-3.3.1.min.js"></script>
+<script src="/svc/inc/js/jquery-ui.min.js"></script>
+<script src="/svc/inc/js/popper.min.js"></script>
+<script src="/svc/inc/js/bootstrap.min.js"></script>
+<script src="/svc/inc/js/datepicker-ko.js"></script>
+<script src="/svc/inc/js/etc/form.js?<?=date('YmdHis')?>"></script>
+<script src="/svc/inc/js/jquery.number.min.js"></script>
 
 <script type="text/javascript">
 $(document).ready(function () {

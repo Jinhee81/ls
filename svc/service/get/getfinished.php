@@ -82,11 +82,11 @@ while($row_sms = mysqli_fetch_array($result_sms)){
               </select>
             </td><!--당월,전월 등-->
             <td width="6%" class="">
-              <input type="text" name="fromDate" value="" class="form-control form-control-sm text-center dateType">
+              <input type="text" name="fromDate" value="" class="form-control form-control-sm text-center dateType yyyymmdd">
             </td><!--fromdate-->
             <td width="1%" class="">~</td><!-- ~ -->
             <td width="6%" class="">
-              <input type="text" name="toDate" value="" class="form-control form-control-sm text-center dateType">
+              <input type="text" name="toDate" value="" class="form-control form-control-sm text-center dateType yyyymmdd">
             </td><!--todate-->
             <td width="6%" class="mobile">
               <select class="form-control form-control-sm selectCall" name="building">
@@ -271,6 +271,7 @@ function maketable(){
     data: $('form').serialize(),
     success: function(data){
       data = JSON.parse(data);
+      console.log(data);
       datacount = data.length;
 
       var returns = '';
@@ -296,9 +297,9 @@ function maketable(){
           returns += '<td class="text-right pr-3 mobile">'+value.pAmount+'</td>';
           returns += '<td class="text-right pr-3 mobile">'+value.pvAmount+'</td>';
 
-          if(value.roomdiv==='임대계약'){
+          if(value.roomdiv==='room'){
             returns += '<td class="text-right pr-3"><a class="" href="/svc/service/contract/contractEdit.php?id='+value.rid+'">'+value.ptAmount+'</a></td>';
-          } else if(value.roomdiv==='기타계약'){
+          } else if(value.roomdiv==='good'){
             returns += '<td class="text-right pr-3"><a class="" href="/svc/service/contractetc/contractetc_Edit.php?id='+value.eid+'">'+value.ptAmount+'</a></td>';
           }
 
@@ -320,10 +321,10 @@ function maketable(){
 
           returns += '<td class="">'+value.contact+'</td>';
 
-          if(value.roomdiv==='임대계약'){
-            returns += '<td class="">'+value.roomdiv+'('+value.groupname+','+value.roomname+')'+'<input type="hidden" name="roomdiv" value="'+value.roomdiv+'"><input type="hidden" name="groupname" value="'+value.groupname+'"><input type="hidden" name="roomname" value="'+value.roomname+'"></td>';
-          } else if(value.roomdiv==='기타계약'){
-            returns += '<td class="">'+value.roomdiv+'('+value.goodname2+')'+'<input type="hidden" name="roomdiv" value="'+value.roomdiv+'"><input type="hidden" name="groupname" value="'+value.goodname2+'"><input type="hidden" name="roomname" value=""></td>';
+          if(value.roomdiv==='room'){
+            returns += '<td class="">'+'임대계약'+'('+value.groupname+','+value.roomname+')'+'<input type="hidden" name="roomdiv" value="'+value.roomdiv+'"><input type="hidden" name="groupname" value="'+value.groupname+'"><input type="hidden" name="roomname" value="'+value.roomname+'"></td>';
+          } else if(value.roomdiv==='good'){
+            returns += '<td class="">'+'기타계약'+'('+value.goodname2+')'+'<input type="hidden" name="roomdiv" value="'+value.roomdiv+'"><input type="hidden" name="groupname" value="'+value.goodname2+'"><input type="hidden" name="roomname" value=""></td>';
           }
 
           if(value.taxSelect==='세금계산서'){
@@ -362,33 +363,12 @@ return mtable;
 
 }//function maketable closing}
 
-function makesql(){
-  var sql = $.ajax({
-    url: 'ajax_getFinishedCondi_sql2.php',
-    method: 'post',
-    data: $('form').serialize(),
-    success: function(data){
-      $('#allVals2').text(data);
-      console.log('minsun');
-    },
-    error:function(request,status,error){
-        alert("code = "+ request.status + " message = " + request.responseText + " error = " + error); // 실패 시 처리
-       },
-     complete : function(data) {
-                 console.log('siwon');
-        }
-  });
-
-  return sql;
-}//f }
-
 
 $(document).ready(function(){
   var periodDiv = $('select[name=periodDiv]').val();
   dateinput2(periodDiv);
 
-  // maketable();
-  makesql();
+  maketable();
 
   $(function () {
       $('[data-toggle="tooltip"]').tooltip()
@@ -402,82 +382,63 @@ $(document).ready(function(){
     closeText: '닫기'
   })
 
+  $('.yyyymmdd').keydown(function (event) {
+   var key = event.charCode || event.keyCode || 0;
+   $text = $(this);
+   if (key !== 8 && key !== 9) {
+       if ($text.val().length === 4) {
+           $text.val($text.val() + '-');
+       }
+       if ($text.val().length === 7) {
+           $text.val($text.val() + '-');
+       }
+   }
+
+   return (key == 8 || key == 9 || key == 46 || (key >= 48 && key <= 57) || (key >= 96 && key <= 105));
+  // Key 8번 백스페이스, Key 9번 탭, Key 46번 Delete 부터 0 ~ 9까지, Key 96 ~ 105까지 넘버패트
+  // 한마디로 JQuery 0 ~~~ 9 숫자 백스페이스, 탭, Delete 키 넘버패드외에는 입력못함
+  })
+
 
 })//---------document.ready function end & 각종 조회 펑션 시작--------------//
 
 $('select[name=dateDiv]').on('change', function(){
-    // maketable();
-    makesql();
-
-    // $.ajax({
-    //     url: 'ajax_getfinishedCondi_sql2.php',
-    //     method: 'post',
-    //     data: $('form').serialize(),
-    //     success: function(data){
-    //       $('#allVals2').html(data);
-    //     }
-    // })
+    maketable();
 })
 
 $('select[name=periodDiv]').on('change', function(){
   var periodDiv = $('select[name=periodDiv]').val();
   // console.log(periodDiv);
   dateinput2(periodDiv);
-  // maketable();
-  // makesql();
+  maketable();
 })
 
 $('input[name=fromDate]').on('change', function(){
-    // maketable();
-    makesql();
+    maketable();
 })
 
 $('input[name=toDate]').on('change', function(){
-    // maketable();
-    makesql();
+    maketable();
 })
 
 $('select[name=building]').on('change', function(){
-    // maketable();
-    makesql();
+    maketable();
 })
 
 $('select[name=taxDiv]').on('change', function(){
-    // maketable();
-    makesql();
+    maketable();
 })
 
 $('select[name=payKind]').on('change', function(){
-    // maketable();
-    makesql();
+    maketable();
 })
 
 $('select[name=etcCondi]').on('change', function(){
-    // maketable();
-    makesql();
-
-    // $.ajax({
-    //     url: 'ajax_getfinishedCondi_sql2.php',
-    //     method: 'post',
-    //     data: $('form').serialize(),
-    //     success: function(data){
-    //       $('#allVals2').html(data);
-    //     }
-    // })
+    maketable();
 })
 
 $('input[name=cText]').on('keyup', function(){
-    // maketable();
-    makesql();
-
-    // $.ajax({
-    //     url: 'ajax_getfinishedCondi_sql2.php',
-    //     method: 'post',
-    //     data: $('form').serialize(),
-    //     success: function(data){
-    //       $('#allVals2').html(data);
-    //     }
-    // })
+    maketable();
 })
 
 

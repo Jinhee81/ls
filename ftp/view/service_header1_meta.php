@@ -6,6 +6,8 @@
     <!-- 부트스트랩 css -->
     <link rel="stylesheet" href="/svc/inc/css/bootstrap.min.css">
 
+    <link rel="stylesheet" href="/admin/css/pops.css">
+
 
     <!-- 달력 css -->
     <link rel="stylesheet" href="/svc/inc/css/jquery-ui.min.css">
@@ -15,8 +17,4 @@
 
     <!-- 커스텀 css -->
     <link rel="stylesheet" href="/svc/inc/css/customizing.css?<?=date('YmdHis')?>">
-
-    <!-- fullCalendar css -->
-    <link rel="stylesheet" href="/svc/inc/css/fullcalendar.css?<?=date('YmdHis')?>">
-    <link rel="stylesheet" href="/svc/inc/css/fullcalendar.min.css?<?=date('YmdHis')?>">
   </head>

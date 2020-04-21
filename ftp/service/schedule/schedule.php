@@ -1,8 +1,8 @@
 <?php
 session_start();
 if(!isset($_SESSION['is_login'])){
-  header('Location: /svc/login.php');
-}
+    header('Location: /svc/login.php');
+  }
 ?>
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
@@ -13,7 +13,16 @@ include $_SERVER['DOCUMENT_ROOT']."/svc/view/service_header1_meta.php";
 include $_SERVER['DOCUMENT_ROOT']."/svc/view/service_header2.php";
 include $_SERVER['DOCUMENT_ROOT']."/svc/view/conn.php";
 ?>
+<style>
+        #checkboxTestTbl tr.selected{background-color: #A9D0F5;}
+        select .selectCall{background-color: #A9D0F5;}
 
+        @media (max-width: 990px) {
+        .mobile {
+          display: none;
+        }
+}
+</style>
 <section class="container">
   <div class="jumbotron pt-3 pb-3">
     <h3 class="">일정관리 화면입니다!</h3>
@@ -28,7 +37,7 @@ include $_SERVER['DOCUMENT_ROOT']."/svc/view/conn.php";
   <div id="calendar">
 
   </div>
-  <div class="container">
+  <div class="">
     <!-- <?php echo phpinfo(); ?> -->
   </div>
 </section>
@@ -36,17 +45,17 @@ include $_SERVER['DOCUMENT_ROOT']."/svc/view/conn.php";
 <?php include $_SERVER['DOCUMENT_ROOT']."/svc/view/service_footer.php";?>
 
 <script src="/svc/inc/js/jquery-3.3.1.min.js"></script>
-<script src="/svc/inc/js/moment.min.js"></script>
 <script src="/svc/inc/js/fullcalendar.min.js"></script>
 <script src="/svc/inc/js/popper.min.js"></script>
 <script src="/svc/inc/js/bootstrap.min.js"></script>
 
 <script type="text/javascript">
+
 $(document).ready(function(){
   var calendar = $('#calendar').fullCalendar({
     editable:true,
     header:{
-      left:'prevYear,prev,next,nextYear today',
+      left:'prev,next today',
       center:'title',
       right:'month,agendaWeek,agendaDay'
     },
@@ -63,11 +72,8 @@ $(document).ready(function(){
       today: "오늘",
       month: "월별",
       week: "주별",
-      day: "일별",
-      list:"목록"
+      day: "일별"
     },
-    minTime: "07:00:00",
-    maxTime: "20:00:00",
     events: 'load.php',
     selectable: true,
     selectHelper: true,
@@ -76,13 +82,19 @@ $(document).ready(function(){
       var title = prompt('이벤트를 입력하세요.');
       if(title)
       {
-        var start = $.fullCalendar.formatDate(start, "Y-MM-DD HH:mm:ss");
-        var end = $.fullCalendar.formatDate(end, "Y-MM-DD HH:mm:ss");
+        var start = $.fullCalendar.formatDate(start, "YYYY-MM-DD 12:00:00");
+        var end = $.fullCalendar.formatDate(end, "YYYY-MM-DD 13:00:00");
+
+
+        var ed = new Date(end);
+        ed.setDate(ed.getDate() - 1);
+        strEnd = [ed.getFullYear(), ed.getMonth() + 1, ed.getDate()].join("-") + " 13:00:00";
+
 
         $.ajax({
           url: 'insert.php',
           type: 'POST',
-          data: {title:title, start:start, end:end},
+          data: {title:title, start:start, end:strEnd},
           success: function(){
             calendar.fullCalendar('refetchEvents');
             alert('추가했습니다.');
@@ -145,6 +157,7 @@ $(document).ready(function(){
 
   });
 })
+
 </script>
 
 </body>

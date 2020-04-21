@@ -18,7 +18,7 @@ include $_SERVER['DOCUMENT_ROOT']."/svc/main/condition.php";
 <section class="container">
   <div class="jumbotron pt-3 pb-3 mb-2">
     <div class="row">
-      <h3 class="">입주자 목록이에요.(#101)</h3>
+      <h2 class="">입주자 목록이에요.(#101)</h2>
     </div>
     <p class="lead">
       <!-- (1) 정확한 표현은 이해관계자리스트라고 보아도 무방합니다. 세입자(고객) 뿐만 아니라, 문의하는 사람 및 자주 거래하는 거래처도 저장할 수 있어요.<br> -->
@@ -84,7 +84,7 @@ include $_SERVER['DOCUMENT_ROOT']."/svc/main/condition.php";
 <!-- 삭제,등록,엑셀저장부분 -->
 <section class="container mb-2">
   <div class="row justify-content-end mr-0">
-    <a href="m_c_add.php" role="button" class="btn btn-primary btn-sm mr-1" name="button">신규등록</a>
+    <a href="m_c_add.php"><button type="button" class="btn btn-primary btn-sm mr-1" name="button">신규등록</button></a>
     <button type="button" class="btn btn-danger btn-sm mr-1" name="rowDeleteBtn">선택삭제</button>
     <button type="button" class="btn btn-info btn-sm" name="button" data-toggle="tooltip" data-placement="top" title="작업준비중입니다."><i class="far fa-file-excel"></i>엑셀저장</button>
   </div>
@@ -152,9 +152,9 @@ function maketable(){
           returns += '<td>'+value.div1+'</td>';
 
           if(value.contractCount >= 1){
-            returns += '<td><a href="m_c_edit.php?id='+value.id+'" data-toggle="tooltip" data-placement="top" title="'+value.cName+'">'+value.cNamemb+'</a><span class="badge badge-pill badge-warning">'+value.contractCount+'</span></td>';
+            returns += '<td><a href="m_c_edit?id='+value.id+'" data-toggle="tooltip" data-placement="top" title="'+value.cName+'">'+value.cNamemb+'</a><span class="badge badge-pill badge-warning">'+value.contractCount+'</span></td>';
           } else {
-            returns += '<td><a href="m_c_edit.php?id='+value.id+'" data-toggle="tooltip" data-placement="top" title="'+value.cName+'">'+value.cNamemb+'</a></td>';
+            returns += '<td><a href="m_c_edit?id='+value.id+'" data-toggle="tooltip" data-placement="top" title="'+value.cName+'">'+value.cNamemb+'</a></td>';
           }
 
           returns += '<td>'+value.cContact+'</td>';

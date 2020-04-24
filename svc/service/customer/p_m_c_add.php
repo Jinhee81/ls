@@ -27,7 +27,9 @@ $fil = array(
 $addCheck1 = "
   select count(*) from customer
   where
-    user_id={$_SESSION['id']} and name = '{$fil['name']}'
+    user_id={$_SESSION['id']}
+    and name = '{$fil['name']}'
+    and building_id = {$_POST['building']}
     ";
 // echo $addCheck1;
 $result_addCheck1 = mysqli_query($conn, $addCheck1);
@@ -45,7 +47,8 @@ $addCheck2 = "
     user_id={$_SESSION['id']} and
     contact1 = '{$fil['contact1']}' and
     contact2 = '{$fil['contact2']}' and
-    contact3 = '{$fil['contact3']}'
+    contact3 = '{$fil['contact3']}' and
+    building_id = {$_POST['building']}
     ";
 // echo $addCheck2;
 $result_addCheck2 = mysqli_query($conn, $addCheck2);
@@ -57,24 +60,14 @@ if((int)$row_addCheck2[0]>0){
   exit();
 }
 
-if($_POST['div3']){
-  $div2 = '법인사업자';
-} else {
-  if($fil['companyname']){
-    $div2 = '개인사업자';
-  } else {
-    $div2 = '개인';
-  }
-}
-
 
 $sql = "
   INSERT INTO customer (
     div1, div2, name, contact1, contact2, contact3,
-    gender, email, div3, div4, div5, companyname, cNumber1, cNumber2, cNumber3, zipcode, add1, add2, add3, etc, created, createPerson, user_id
+    gender, email, div3, div4, div5, companyname, cNumber1, cNumber2, cNumber3, zipcode, add1, add2, add3, etc, created, createPerson, user_id, building_id
     ) VALUES (
-    '{$_POST['div1']}', '{$div2}', '{$fil['name']}', '{$fil['contact1']}', '{$fil['contact2']}', '{$fil['contact3']}', '{$_POST['gender']}', '{$fil['email']}', '{$_POST['div3']}', '{$_POST['div4']}', '{$_POST['div5']}', '{$fil['companyname']}',
-    '{$fil['cNumber1']}', '{$fil['cNumber2']}','{$fil['cNumber3']}', '{$_POST['zipcode']}', '{$fil['add1']}','{$fil['add2']}', '{$fil['add3']}', '{$fil['etc']}', now(), '{$_SESSION['manager_name']}', {$_SESSION['id']}
+    '{$_POST['div1']}', '{$_POST['div2']}', '{$fil['name']}', '{$fil['contact1']}', '{$fil['contact2']}', '{$fil['contact3']}', '{$_POST['gender']}', '{$fil['email']}', '{$_POST['div3']}', '{$_POST['div4']}', '{$_POST['div5']}', '{$fil['companyname']}',
+    '{$fil['cNumber1']}', '{$fil['cNumber2']}','{$fil['cNumber3']}', '{$_POST['zipcode']}', '{$fil['add1']}','{$fil['add2']}', '{$fil['add3']}', '{$fil['etc']}', now(), '{$_SESSION['manager_name']}', {$_SESSION['id']}, {$_POST['building']}
     )
 ";
 

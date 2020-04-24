@@ -24,7 +24,7 @@ $row2 = mysqli_fetch_array($result2);
 if($row1['ordered'] != $row2['count']){
   echo "<script>
     alert('마지막 방부터 순차적으로 삭제 가능합니다.');
-    location.href='b_group_room_edit3.php?id=$filtered_gId';
+    history.back();
     </script>";
   exit();
 }
@@ -55,18 +55,18 @@ if($result){
   if($result_set) {
     echo "<script>
     alert('삭제하였습니다.');
-    location.href='b_group_room_edit3.php?id=$filtered_gId';
+    history.back();
     </script>";
   } else {
     echo "<script>
     alert('오류가발생했습니다.관리자에게 문의하세요(1)');
-    location.href='b_group_room_edit3.php?id=$filtered_gId';
+    history.back();
     </script>";
   }
 } else {
   echo "<script>
   alert('오류가발생했습니다.관리자에게 문의하세요(2)');
-  location.href='b_group_room_edit3.php?id=$filtered_gId';
+  history.back();
   </script>";
 }
 

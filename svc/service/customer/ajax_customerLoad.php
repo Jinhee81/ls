@@ -24,7 +24,7 @@ if($_POST['fromDate'] && $_POST['toDate']){
 $sql = "select
           id, div1, div2, name, div3, companyname, cNumber1, cNumber2, cNumber3, contact1, contact2, contact3, email, etc, created, updated
         from customer
-        where user_id={$_SESSION['id']}
+        where user_id={$_SESSION['id']} and building_id={$_POST['building']}
               $etcDate
         order by created desc";
 // echo $sql

@@ -22,25 +22,39 @@ settype($filtered_id, 'integer');
 
 $sql_c = "
           select
-              id, name, div2, div3, companyname, contact1, contact2, contact3,
-              cNumber1, cNumber2, cNumber3
+              customer.id as cid,
+              customer.name,
+              customer.div2,
+              customer.div3,
+              customer.companyname as comname,
+              customer.contact1 as c1,
+              customer.contact2 as c2,
+              customer.contact3 as c3,
+              customer.cNumber1 as companyn1,
+              customer.cNumber2 as companyn2,
+              customer.cNumber3 as companyn3,
+              building.id as bid,
+              building.bName,
+              building.pay
             from customer
-            where id={$filtered_id}
+            left join building
+                on customer.building_id = building.id
+            where customer.id={$filtered_id}
     ";
-// echo $sql_c;
+echo $sql_c;
 $result_c = mysqli_query($conn, $sql_c);
 $row_c = mysqli_fetch_array($result_c);
 
-$clist['id'] = htmlspecialchars($row_c['id']);
+$clist['id'] = htmlspecialchars($row_c['cid']);
 $clist['div2'] = htmlspecialchars($row_c['div2']);
-$clist['contact1'] = htmlspecialchars($row_c['contact1']);
-$clist['contact2'] = htmlspecialchars($row_c['contact2']);
-$clist['contact3'] = htmlspecialchars($row_c['contact3']);
+$clist['contact1'] = htmlspecialchars($row_c['c1']);
+$clist['contact2'] = htmlspecialchars($row_c['c2']);
+$clist['contact3'] = htmlspecialchars($row_c['c3']);
 $clist['name'] = htmlspecialchars($row_c['name']);
-$clist['companyname'] = htmlspecialchars($row_c['companyname']);
-$clist['cNumber1'] = htmlspecialchars($row_c['cNumber1']);
-$clist['cNumber2'] = htmlspecialchars($row_c['cNumber2']);
-$clist['cNumber3'] = htmlspecialchars($row_c['cNumber3']);
+$clist['companyname'] = htmlspecialchars($row_c['comname']);
+$clist['cNumber1'] = htmlspecialchars($row_c['companyn1']);
+$clist['cNumber2'] = htmlspecialchars($row_c['companyn2']);
+$clist['cNumber3'] = htmlspecialchars($row_c['companyn3']);
 
 // print_r($clist);
 
@@ -65,7 +79,7 @@ if($clist['div2']==='개인사업자'){
   $cName = $clist['name'];
 }
 
-$output = $cName.' | '.$cContact.' | '.$clist['id'];
+$output = $cName.' | '.$cContact;
 
 ?>
 
@@ -77,20 +91,129 @@ $output = $cName.' | '.$cContact.' | '.$clist['id'];
   </div>
 </section>
 <section class="container">
-  <form method="post" action="p_realContract_add1.php">
+  <form method="post" action="p_realContract_add.php">
     <div class="form-row">
         <div class="form-group col-md-2">
               <label><b>[입주자정보]</b></label>
         </div>
         <div class="form-group col-md-10 inputWithIcon">
               <input type="text" class="form-control" name="customer" id="customer" value="<?=$output?>" disabled>
-              <input type="hidden" name="customer" value="<?=$clist['id']?>">
+              <input type="hidden" name="customerId" value="<?=$clist['id']?>">
+        </div>
+    </div>
+    <div class="form-row">
+        <div class="form-group col-md-2">
+            <label><b>[물건정보]</b></label>
+        </div>
+        <div class="form-group col-md-10" id="mulgunInfo">
+              <div class="form-row">
+                <!-- <div class="form-group col-md-2">
+                    <label>공실구분</label>
+                    <select id="select1" name="" class="form-control" onchange="">
+                      <option value="">전체</option>
+                      <option value="" selected>공실</option>
+                      <option value="">만실</option>
+                    </select>
+                </div> -->
+                <div class="form-group col-md-2"><!--물건목록-->
+                    <label>물건명</label>
+                    <select name="building" class="form-control">
+                      <option value="<?=$row_c['bid']?>"><?=$row_c['bName']?></option>
+                    </select>
+                </div>
+                <div class="form-group col-md-2"><!--그룹목록-->
+                    <label>그룹명</label>
+                    <select name="group" class="form-control">
+                    </select>
+                </div>
+                <div class="form-group col-md-2"><!--관리번호목록-->
+                    <label>관리번호</label>
+                    <select name="room" class="form-control">
+                    </select>
+                </div>
+                <div class="form-group col-md-2">
+                    <label>최초 계약일자</label>
+                    <input type="text" id="contractDate" class="form-control dateType yyyymmdd" name="contractDate" placeholder="">
+                </div>
+              </div>
         </div>
     </div>
 
-    <?php include "contract_add_format.php"; ?>
-
-
+    <div class="form-row">
+        <div class="form-group col-md-2 mb-0">
+            <label><b>[임대료정보]</b></label>
+        </div>
+        <div class="form-group col-md-10 mb-0">
+          <div class="form-row">
+              <div class="form-group col-md-2 mb-0">
+                    <label><span id='star' style='color:#F7BE81;'>* </span>공급가액</label>
+                    <input type="text" class="form-control text-right amountNumber" name="mAmount" value="0" numberOnly required>
+              </div>
+              <div class="form-group col-md-2 mb-0">
+                    <label>세액</label>
+                    <input type="text" class="form-control text-right amountNumber" name="mvAmount" value="0" numberOnly required>
+              </div>
+              <div class="form-group col-md-2 mb-0">
+                    <label>합계</label>
+                    <input type="text" class="form-control text-right amountNumber" name="mtAmount" placeholder="0" numberOnly readonly>
+              </div>
+              <div class="form-group col-md-1 mb-0"><!--선불,후불체크-->
+                    <label>수납</label>
+                    <select name="payOrder" class="form-control">
+                      <option value="선납"<?php if($row_c['pay']=='선납')echo "selected"; ?>>선납</option>
+                      <option value="후납"<?php if($row_c['pay']=='후납')echo "selected"; ?>>후납</option>
+                    </select>
+              </div>
+              <div class="form-group col-md-1 mb-0">
+                    <label><span id='star' style='color:#F7BE81;'>* </span>기간</label>
+                    <input type="number" class="form-control" name="monthCount" placeholder="" min="1" max="72" required>
+              </div>
+              <div class="form-group col-md-2 mb-0">
+                    <label><span id='star' style='color:#F7BE81;'>* </span>시작일자</label>
+                    <input type="text" id="startDate" class="form-control dateType yyyymmdd" name="startDate" value="" placeholder="" required>
+              </div>
+              <div class="form-group col-md-2 mb-0">
+                    <label>종료일자</label>
+                    <input type="text" id="endDate" class="form-control" name="endDate" placeholder="" readonly>
+              </div>
+        </div>
+      </div>
+    </div>
+    <div class="form-row">
+        <div class="form-group col-md-2">
+        </div>
+        <div class="form-group col-md-10">
+            <small class="form-text text-muted">매월 받아야하는 임대료(월세)를 입력합니다.</small>
+        </div>
+    </div>
+    <div class="form-row">
+        <div class="form-group col-md-2 mb-0">
+          <label><b>[보증금정보]</b></label>
+        </div>
+        <div class="form-group col-md-10 mb-0">
+            <div class="form-row">
+                <div class="form-group col-md-3 mb-0">
+                    <label>금액</label>
+                    <input type="text" class="form-control text-right amountNumber" name="depositInAmount" value="0" placeholder="0" numberOnly>
+                </div>
+                <div class="form-group col-md-3 mb-0">
+                    <label>입금일자</label>
+                    <input type="text" class="form-control dateType yyyymmdd" name="depositInDate" id="depositInDate" value="">
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="form-row">
+        <div class="form-group col-md-2">
+        </div>
+        <div class="form-group col-md-10">
+            <small class="form-text text-muted">보증금을 받았다면, 보증금과 날짜를 입력하세요.</small>
+        </div>
+    </div>
+    <div class="">
+      <button type='submit' class='btn btn-primary'>저장</button>
+      <a href='contract.php'><button type='button' class='btn btn-secondary'><i class="fas fa-angle-double-right"></i> 계약목록</button></a>
+    </div>
   </form>
 </section>
 
@@ -110,9 +233,43 @@ $output = $cName.' | '.$cContact.' | '.$clist['id'];
   console.log(buildingArray);
   console.log(groupBuildingArray);
   console.log(roomArray);
+
+  //이거는 계약등록하는 화면에서 필요한 js파일, 헷깔리지 말것 (building.js랑 비슷한데 내용이 더 많음)
+
+  var groupoption, roomoption, buildingIdx, groupIdx;
+
+  buildingIdx = $('select[name=building]').val();
+
+  // console.log(buildingArray[buildingIdx][1]);
+
+
+  for(var key2 in groupBuildingArray[buildingIdx]){ //그룹목록출력(상주,비상주)
+    groupoption = "<option value='"+key2+"'>"+groupBuildingArray[buildingIdx][key2]+"</option>";
+    // console.log(groupoption);
+    $('select[name=group]').append(groupoption);
+  }
+  groupIdx = $('select[name=group]').val();
+
+  for(var key3 in roomArray[groupIdx]){
+    roomoption = "<option value='"+key3+"'>"+roomArray[groupIdx][key3]+"</option>";
+    $('select[name=room]').append(roomoption);
+  }
+  roomIdx = $('select[name=room]').val();
+
+
+  $('select[name=group]').on('change', function(event){
+    groupIdx = $('select[name=group]').val();
+    $('select[name=room]').empty();
+    for(var key3 in roomArray[groupIdx]){
+      roomoption = "<option value='"+key3+"'>"+roomArray[groupIdx][key3]+"</option>";
+      $('select[name=room]').append(roomoption);
+    }
+  })
+
+  // console.log(buildingIdx, groupIdx, roomIdx);
+
 </script>
 
-<script src="/svc/inc/js/etc/buildingoption.js?<?=date('YmdHis')?>"></script>
 
 <script>
 $(document).ready(function(){

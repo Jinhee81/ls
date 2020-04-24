@@ -5,47 +5,88 @@ include $_SERVER['DOCUMENT_ROOT']."/svc/view/conn.php";
 
 // print_r($_POST);
 
-$filtered = array(
-  'id' => mysqli_real_escape_string($conn, $_POST['id']) //그룹아이디
-);
-settype($filtered['id'], 'integer');
-//
-$sql_count = "select count(*) from r_g_in_building where group_in_building_id={$filtered['id']}";
+$a = json_decode($_POST['roomArray']);
+
+// print_r($a);
+
+$sql_count = "select count(*) from r_g_in_building where group_in_building_id={$_POST['groupId']}";
 $result_count = mysqli_query($conn, $sql_count);
 $row = mysqli_fetch_array($result_count);
 // print_r($row); //당방그룹의 방개수를 파악한다.
 
-$r_order = $row[0]+1;
-print_r($r_order);
+$changecount = $row[0]+(int)$_POST['count'];
 
-if($row[0] >= 100){
-  echo "<script>alert('관리번호는 100개를 초과할 수 없습니다.');
-  location.href='modal_b_group_edit3.php?id=".$filtered['id'].";
-  </script>";
-} else {
-  $sql = "INSERT INTO r_g_in_building
-    (ordered, rName, group_in_building_id)
-    VALUES (
-    {$r_order},
-    '',
-    {$filtered['id']}
-    )
-  ";
-  // echo $sql;
-  $result = mysqli_query($conn, $sql); //빈값이있는 방을 생성한다
-
-  $sql_update = "
-      UPDATE group_in_building
-      SET
-        count = {$r_order},
-        updated = NOW()
-      WHERE
-        id = {$filtered['id']}
-      ";
-  echo $sql_update;
-  $result_update = mysqli_query($conn, $sql_update); //방갯수를 변경시킨다.
-  echo "<script>alert('추가하였습니다.');
-  location.href='b_group_room_edit3.php?id=".$filtered['id']."';
-  </script>";
+if($changecount > 100){
+  echo "<script>
+            alert('관리번호는 100개를 초과할 수 없습니다.');
+            history.back();
+        </script>";
+  exit();
 }
+
+$order = $row[0] + 1;
+for ($i=0; $i < count($a); $i++) {
+
+  $sql_check = "select count(*) from r_g_in_building
+                where group_in_building_id = {$_POST['groupId']}
+                      and rName = '{$a[$i]}'";
+  $result_check = mysqli_query($conn, $sql_check);
+
+  if(!$result_check){
+    echo "<script>
+            alert('저장과정에 문제가 생겼습니다. 관리자에게 문의하세요(1).');
+            history.back();
+         </script>";
+    exit();
+  } else {
+    $row_check = mysqli_fetch_array($result_check);
+
+    // echo 'solmi';
+
+    if((int)$row_check[0] >= 1){
+      echo "<script>
+              alert('"+$_POST['groupName']+"그룹명의 "+$a[$i]+" 관리번호는 이미 존재하여 저장 안되요. 다시 확인하고 입력해주세요.');
+              history.back();
+           </script>";
+      exit();
+    } else {
+      $sql = "INSERT INTO r_g_in_building
+        (ordered, rName, group_in_building_id)
+        VALUES (
+        {$order},
+        '{$a[$i]}',
+        {$_POST['groupId']}
+        )
+      ";
+      // echo $sql;
+      $result = mysqli_query($conn, $sql);
+      if(!$result){
+        echo "<script>
+                alert('저장과정에 문제가 생겼습니다. 관리자에게 문의하세요(2).');
+                history.back();
+             </script>";
+        exit();
+      }
+      $order += 1;
+    } //result }
+  } //result check }
+}//for }
+
+
+$sql_update = "
+  UPDATE group_in_building
+  SET
+    count = {$changecount},
+    updated = NOW()
+  WHERE
+    id = {$_POST['groupId']}
+  ";
+// echo $sql_update;
+$result_update = mysqli_query($conn, $sql_update); //방갯수를 변경시킨다.
+
+echo "<script>
+        alert('추가하였습니다.');
+        history.back();
+      </script>";
+
 ?>

@@ -7,39 +7,53 @@ if(!isset($_SESSION['is_login'])){
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
   <head>
-    <title>세입자등록</title>
+    <title>관계자등록</title>
 <?php
 include $_SERVER['DOCUMENT_ROOT']."/svc/view/service_header1_meta.php";
 include $_SERVER['DOCUMENT_ROOT']."/svc/view/service_header2.php";
 include $_SERVER['DOCUMENT_ROOT']."/svc/view/conn.php";
+include $_SERVER['DOCUMENT_ROOT']."/svc/service/contract/building.php";
 ?>
 
 
 <section class="container">
-  <div class="jumbotron">
-    <h1 class="display-4">입주자 등록 화면입니다!</h1>
+  <div class="jumbotron pt-3 pb-3">
+    <h3 class="">관계자 등록 화면입니다!</h3>
     <p class="lead">
-      (1)입주한 사람(또는 법인) 뿐만아니라 거래처를 등록할 수 있습니다.<br>
-      (2)<a href="m_c_adds.php" target="_blank">'일괄등록'</a>화면에서 여러명의 입주자를 등록하세요.
+      (1)입주한 사람(또는 법인) 뿐만아니라 거래처 또는 기타분류를 등록할 수 있습니다.<br>
+      (2)'구분1'이 '입주자'이면 임대계약이 가능하며, '기타'이면 기타계약이 가능합니다.<br>
+      (3)<a href="m_c_adds.php" target="_blank">'일괄등록'</a>화면에서 여러명의 관계자를 등록하세요.
     </p>
-    <small>(1)<span id='star' style='color:#F7BE81;'>* </span>표시는 반드시 입력해야 합니다.(2) 구분(대)의 값이 '입주자'이어야 임대계약 등록이 가능합니다. (3)'일괄등록','csv등록'은 데스크탑 디스플레이에서 사용가능 </small>
+    <small>(1)<span id='star' style='color:#F7BE81;'>* </span>표시는 반드시 입력해야 합니다.(2)'일괄등록','csv등록'은 데스크탑 디스플레이에서 사용가능합니다. </small>
     <hr class="my-4">
     <a class="btn btn-primary btn-sm mobile" href="m_c_adds.php" role="button">일괄등록</a>
     <a class="btn btn-primary btn-sm mobile" href="m_c_add_csv1.php" role="button">csv등록</a>
     <button type="button" class="btn btn-primary btn-sm mobile" href="#" data-toggle="tooltip" data-placement="top" title="곧 구현할예정입니다">문의고객등록</button>
   </div>
 </section>
+
 <section class="container" style="max-width:700px;">
   <form method="post" action ="p_m_c_add.php">
     <div class="form-row" id="section1">
       <div class="form-group col-md-3">
-        <p>구분</p>
-      </div>
-      <div class="form-group col-md-4">
+        <p class="mb-1"><span id='star' style='color:#F7BE81;'>* </span>구분1</p>
         <select name="div1" class="form-control">
           <option value="입주자">입주자</option>
           <option value="거래처">거래처</option>
           <option value="기타">기타</option>
+        </select>
+      </div>
+      <div class="form-group col-md-3">
+        <p class="mb-1"><span id='star' style='color:#F7BE81;'>* </span>구분2</p>
+        <select name="div2" class="form-control">
+          <option value="개인">개인</option>
+          <option value="개인사업자">개인사업자</option>
+          <option value="법인사업자">법인사업자</option>
+        </select>
+      </div>
+      <div class="form-group col-md-3">
+        <p class="mb-1"><span id='star' style='color:#F7BE81;'>* </span>물건</p>
+        <select name="building" class="form-control">
         </select>
       </div>
     </div>
@@ -158,7 +172,7 @@ include $_SERVER['DOCUMENT_ROOT']."/svc/view/conn.php";
 
     <div class="row justify-content-md-center">
       <button type='submit' class='btn btn-primary mr-1'>저장</button>
-      <a href='customer.php'><button type='button' class='btn btn-secondary'>입주자리스트화면으로</button></a>
+      <a href='customer.php'><button type='button' class='btn btn-secondary'><i class="fas fa-angle-double-right"></i> 관계자목록</button></a>
     </div>
   </form>
 </section>
@@ -168,6 +182,16 @@ include $_SERVER['DOCUMENT_ROOT']."/svc/view/conn.php";
 <script src="/svc/inc/js/jquery-3.3.1.min.js"></script>
 <script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <script src="/svc/inc/js/daumAddressAPI3.js?<?=date('YmdHis')?>"></script>
+
+<script type="text/javascript">
+  var buildingArray = <?php echo json_encode($buildingArray); ?>;
+  // console.log(buildingArray);
+  var select2option;
+  for(var key in buildingArray){ //건물목록출력(비즈피스장암,비즈피스구로)
+    select2option = "<option value='"+key+"'>"+buildingArray[key][0]+"</option>";
+    $('select[name=building]').append(select2option);
+  }
+</script>
 
 <script type="text/javascript">
   $(document).ready(function(){

@@ -12,6 +12,9 @@ if(!isset($_SESSION['is_login'])){
 include $_SERVER['DOCUMENT_ROOT']."/svc/view/service_header1_meta.php";
 include $_SERVER['DOCUMENT_ROOT']."/svc/view/service_header2.php";
 include $_SERVER['DOCUMENT_ROOT']."/svc/view/conn.php";
+include $_SERVER['DOCUMENT_ROOT']."/svc/service/contract/building.php";
+
+// print_r($buildingArray);
 ?>
 
 
@@ -24,7 +27,7 @@ $sql = "select
           customer.id, div1, qDate, div2, name, contact1, contact2, contact3,
           gender, customer.email, div3, div4, div5, companyname,
           cNumber1, cNumber2, cNumber3,
-          zipcode, add1, add2, add3, etc, created, updated
+          zipcode, add1, add2, add3, etc, created, updated, building_id
       from customer
       where customer.id = {$filtered_id}";
 
@@ -52,7 +55,6 @@ $clist['add1'] = htmlspecialchars($row['add1']);
 $clist['add2'] = htmlspecialchars($row['add2']);
 $clist['add3'] = htmlspecialchars($row['add3']);
 
-
  ?>
 <section class="container">
   <div class="jumbotron pt-3 pb-3">
@@ -66,13 +68,34 @@ $clist['add3'] = htmlspecialchars($row['add3']);
   <form method="post" action ="p_m_c_edit.php">
     <div class="form-row">
       <div class="form-group col-md-3">
-        <p>구분</p>
-      </div>
-      <div class="form-group col-md-4">
+        <p class="mb-1"><span id='star' style='color:#F7BE81;'>* </span>구분1</p>
         <select name="div1" class="form-control">
           <option value="입주자" <?php if($clist['div1']==='입주자'){echo "selected";}?>>입주자</option>
           <option value="거래처" <?php if($clist['div1']==='거래처'){echo "selected";}?>>거래처</option>
           <option value="기타" <?php if($clist['div1']==='기타'){echo "selected";}?>>기타</option>
+        </select>
+      </div>
+      <div class="form-group col-md-3">
+        <p class="mb-1"><span id='star' style='color:#F7BE81;'>* </span>구분2</p>
+        <select name="div2" class="form-control">
+          <option value="개인" <?php if($clist['div2']==='개인'){echo "selected";}?>>개인</option>
+          <option value="개인사업자" <?php if($clist['div2']==='개인사업자'){echo "selected";}?>>개인사업자</option>
+          <option value="법인사업자" <?php if($clist['div2']==='법인사업자'){echo "selected";}?>>법인사업자</option>
+        </select>
+      </div>
+      <div class="form-group col-md-3">
+        <p class="mb-1"><span id='star' style='color:#F7BE81;'>* </span>물건</p>
+        <select name="building" class="form-control">
+        <?php
+
+        foreach ($buildingArray as $key => $value) {
+          if($row['building_id']==$key){
+            echo "<option value='$key' selected>".$buildingArray[$key][0]."</option>";
+          } else {
+            echo "<option value='$key'>".$buildingArray[$key][0]."</option>";
+          }
+        }
+         ?>
         </select>
       </div>
     </div>
@@ -199,19 +222,23 @@ $clist['add3'] = htmlspecialchars($row['add3']);
 
 
     <div class="row justify-content-md-center">
+      <button type='button' class='btn btn-danger mr-1' name='btnDelete'>삭제하기</button>
       <button type='submit' class='btn btn-primary mr-1'>수정하기</button>
-      <a href='customer.php'><button type='button' class='btn btn-secondary'>입주자리스트화면으로</button></a>
+      <a href='customer.php'><button type='button' class='btn btn-secondary'><i class="fas fa-angle-double-right"></i> 입주자목록</button></a>
     </div>
   </form>
 </section>
 
 <?php include $_SERVER['DOCUMENT_ROOT']."/svc/view/service_footer.php";?>
+
+
 <script src="/svc/inc/js/jquery-3.3.1.min.js"></script>
 <script src="/svc/inc/js/jquery-ui.min.js"></script>
 <script src="/svc/inc/js/popper.min.js"></script>
 <script src="/svc/inc/js/bootstrap.min.js"></script>
 <script src="/svc/inc/js/datepicker-ko.js"></script>
 <script src="/svc/inc/js/jquery.number.min.js"></script>
+<script src="/svc/inc/js/etc/form.js?<?=date('YmdHis')?>"></script>
 
 
 <script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
@@ -221,6 +248,19 @@ $clist['add3'] = htmlspecialchars($row['add3']);
   $(document).ready(function(){
     $(function () {
         $('[data-toggle="tooltip"]').tooltip();
+    })
+
+    $('button[name=btnDelete]').on('click', function(){
+      var cid = <?=$filtered_id?>;
+
+      goCategoryPage('customerDelete', 'p_m_c_delete.php', cid);
+
+      function goCategoryPage(a, b, c){
+        var frm = formCreate(a, 'post', b,'');
+        frm = formInput(frm, 'cid', c);
+        formSubmit(frm);
+      }
+
     })
   })
 </script>

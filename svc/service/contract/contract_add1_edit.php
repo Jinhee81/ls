@@ -283,10 +283,12 @@ while($row_room = mysqli_fetch_array($result_room)){?>
 
     <div class="">
       <button type='submit' id="submitbtn" class='btn btn-primary'>수정</button>
-      <a href='contract.php'><button type='button' class='btn btn-secondary'>방계약리스트화면으로</button></a>
+      <a href='contract.php'><button type='button' class='btn btn-secondary'><i class="fas fa-angle-double-right"></i>임대계약목록</button></a>
     </div>
   </form>
 </section>
+
+<?php include $_SERVER['DOCUMENT_ROOT']."/svc/view/service_footer.php";?>
 
 <script src="/admin/js/jquery-ui.min.js"></script>
 <script src="/admin/js/datepicker-ko.js"></script>
@@ -445,4 +447,5 @@ $('.dateType').datepicker({
 
 </script>
 
-<?php include $_SERVER['DOCUMENT_ROOT']."/svc/view/service_footer.php";?>
+</body>
+</html>

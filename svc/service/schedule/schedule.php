@@ -9,7 +9,7 @@ if(!isset($_SESSION['is_login'])){
   <head>
     <title>일정관리</title>
 <?php
-include $_SERVER['DOCUMENT_ROOT']."/svc/view/service_header1_meta.php";
+include $_SERVER['DOCUMENT_ROOT']."/svc/view/service_header1_metac.php";
 include $_SERVER['DOCUMENT_ROOT']."/svc/view/service_header2.php";
 include $_SERVER['DOCUMENT_ROOT']."/svc/view/conn.php";
 ?>
@@ -38,6 +38,8 @@ include $_SERVER['DOCUMENT_ROOT']."/svc/view/conn.php";
 <script src="/svc/inc/js/jquery-3.3.1.min.js"></script>
 <script src="/svc/inc/js/moment.min.js"></script>
 <script src="/svc/inc/js/fullcalendar.min.js"></script>
+<!-- <script src="/svc/inc/js/fullcalendar.core.main.min.js"></script> -->
+<!-- <script src="/svc/inc/js/fullcalendar.list.main.min.js"></script> -->
 <script src="/svc/inc/js/popper.min.js"></script>
 <script src="/svc/inc/js/bootstrap.min.js"></script>
 
@@ -48,7 +50,7 @@ $(document).ready(function(){
     header:{
       left:'prevYear,prev,next,nextYear today',
       center:'title',
-      right:'month,agendaWeek,agendaDay'
+      right:'month,agendaWeek,agendaDay,list'
     },
     // titleFormat: {
     //   month: "yyyy년 mmmm",
@@ -66,8 +68,8 @@ $(document).ready(function(){
       day: "일별",
       list:"목록"
     },
-    minTime: "07:00:00",
-    maxTime: "20:00:00",
+    minTime: "09:00:00",
+    maxTime: "18:00:00",
     events: 'load.php',
     selectable: true,
     selectHelper: true,
@@ -144,6 +146,12 @@ $(document).ready(function(){
     }
 
   });
+
+// var calendar = new fullCalendar.Calendar(calendarEl, {
+//   plugins: ['list'],
+//   defaultView: 'listWeek'
+// })
+
 })
 </script>
 

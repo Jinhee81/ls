@@ -6,7 +6,7 @@ include $_SERVER['DOCUMENT_ROOT']."/svc/view/conn.php";
 // print_r($_POST);
 // echo 'solme';
 $filtered = array(
-  'id' => mysqli_real_escape_string($conn, $_POST['id'])//그룹아이디
+  'id' => mysqli_real_escape_string($conn, $_POST['groupId'])//그룹아이디
 );
 
 $sql  = "
@@ -40,13 +40,13 @@ if($result === false){
     } else {
       echo "<script>
           alert('삭제되지 않았습니다. 관리자에게 문의하세요.');
-          location.href='building.php';
+          history.back();
          </script>";
     }
   } else {
       echo "<script>
           alert('계약이 생성되어있어 삭제할 수 없습니다');
-          location.href='building.php';
+          history.back();
          </script>";
   }
 } else {

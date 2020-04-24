@@ -7,18 +7,19 @@ if(!isset($_SESSION['is_login'])){
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
   <head>
-    <title>입주자</title>
+    <title>관계자</title>
 <?php
 include $_SERVER['DOCUMENT_ROOT']."/svc/view/service_header1_meta.php";
 include $_SERVER['DOCUMENT_ROOT']."/svc/view/service_header2.php";
 include $_SERVER['DOCUMENT_ROOT']."/svc/view/conn.php";
 include $_SERVER['DOCUMENT_ROOT']."/svc/main/condition.php";
+include $_SERVER['DOCUMENT_ROOT']."/svc/service/contract/building.php";
 ?>
 
 <section class="container">
   <div class="jumbotron pt-3 pb-3 mb-2">
     <div class="row">
-      <h3 class="">입주자 목록이에요.(#101)</h3>
+      <h3 class="">관계자 목록이에요.(#101)</h3>
     </div>
     <p class="lead">
       <!-- (1) 정확한 표현은 이해관계자리스트라고 보아도 무방합니다. 세입자(고객) 뿐만 아니라, 문의하는 사람 및 자주 거래하는 거래처도 저장할 수 있어요.<br> -->
@@ -51,6 +52,10 @@ include $_SERVER['DOCUMENT_ROOT']."/svc/main/condition.php";
               <td width="1%">~</td>
               <td width="10%">
                 <input type="text" name="toDate" value="" class="form-control form-control-sm text-center dateType yyyymmdd">
+              </td>
+              <td width="8%">
+                <select name="building" class="form-control form-control-sm selectCall">
+                </select>
               </td>
               <td width="8%">
                 <select name="customerDiv" class="form-control form-control-sm selectCall">
@@ -128,6 +133,16 @@ include $_SERVER['DOCUMENT_ROOT']."/svc/main/condition.php";
 <script src="/svc/inc/js/etc/checkboxtable.js?<?=date('YmdHis')?>"></script>
 <script src="/svc/inc/js/etc/form.js?<?=date('YmdHis')?>"></script>
 
+<script type="text/javascript">
+  var buildingArray = <?php echo json_encode($buildingArray); ?>;
+  console.log(buildingArray);
+
+  var buildingoption;
+  for(var key in buildingArray){ //건물목록출력(비즈피스장암,비즈피스구로)
+    buildingoption = "<option value='"+key+"'>"+buildingArray[key][0]+"</option>";
+    $('select[name=building]').append(buildingoption);
+  }
+</script>
 
 <script>
 
@@ -235,6 +250,10 @@ $(document).ready(function(){
   })
 
   $('input[name=toDate]').on('change', function(){
+      maketable();
+  })
+
+  $('select[name=building]').on('change', function(){
       maketable();
   })
 

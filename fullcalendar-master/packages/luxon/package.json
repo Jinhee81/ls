@@ -1,0 +1,19 @@
+{
+  "private": true,
+  "name": "@fullcalendar/luxon",
+  "version": "5.0.0-beta.2",
+  "title": "FullCalendar Luxon Plugin",
+  "description": "A connector to the Luxon date library",
+  "docs": "https://fullcalendar.io/docs/luxon-plugin",
+  "dependencies": {
+    "tslib": "^1.9.3"
+  },
+  "peerDependencies": {
+    "@fullcalendar/core": "5.0.0-beta.2",
+    "luxon": "^1.12.1"
+  },
+  "devDependencies": {
+    "@fullcalendar/core": "5.0.0-beta.2",
+    "luxon": "^1.12.1"
+  }
+}

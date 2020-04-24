@@ -13,8 +13,8 @@
 	<div class="footer_body">
 		<div class="footer_address">
 			<address>
-				리스맨소프트  <span>|</span>의정부시 동일로 119-1, 2층 A22호  <span>|</span>    대표 유진희   <span class="block"><span class="none">|</span>   고객센터: 031-879-8003    <span>|</span>   E-Mail: info@leaseman.co.kr</span>
-				<br />사업자등록번호: 745-06-00646
+				리스맨소프트  <span>|</span>경기도 의정부시 동일로 119-1  <span>|</span>    대표 유진희   <span class="block"><span class="none">|</span>   고객센터: 031-879-8003    <span>|</span>   E-Mail: info@leaseman.co.kr</span>
+				<br />사업자등록번호: 745-06-01064
 				<span class="block"><span class="none">|</span>    통신판매업신고번호: 제2020-의정부신곡-0073호</span>
 			</address>
 			<p class="copy">ⓒ LEASEMANSOFT ALL RIGHTS RESERVED.</p>

@@ -26,7 +26,7 @@ include "building.php";
   </div>
 </section>
 <section class="container">
-  <form method="post" action="p_realContract_add2.php">
+  <form method="post" action="p_realContract_add.php">
     <div class="form-row">
         <div class="form-group col-md-2">
               <label><b>[입주자정보]</b></label>
@@ -40,12 +40,117 @@ include "building.php";
         </div>
     </div>
 
-    <?php include "contract_add_format.php"; ?>
-
-    <div class="allvals">
-
+    <div class="form-row">
+        <div class="form-group col-md-2">
+            <label><b>[물건정보]</b></label>
+        </div>
+        <div class="form-group col-md-10" id="mulgunInfo">
+              <div class="form-row">
+                <!-- <div class="form-group col-md-2">
+                    <label>공실구분</label>
+                    <select id="select1" name="" class="form-control" onchange="">
+                      <option value="">전체</option>
+                      <option value="" selected>공실</option>
+                      <option value="">만실</option>
+                    </select>
+                </div> -->
+                <div class="form-group col-md-2"><!--물건목록-->
+                    <label>물건명</label>
+                    <select name="building" class="form-control">
+                      <option value="<?=$row_c['bid']?>"><?=$row_c['bName']?></option>
+                    </select>
+                </div>
+                <div class="form-group col-md-2"><!--그룹목록-->
+                    <label>그룹명</label>
+                    <select name="group" class="form-control">
+                    </select>
+                </div>
+                <div class="form-group col-md-2"><!--관리번호목록-->
+                    <label>관리번호</label>
+                    <select name="room" class="form-control">
+                    </select>
+                </div>
+                <div class="form-group col-md-2">
+                    <label>최초 계약일자</label>
+                    <input type="text" id="contractDate" class="form-control dateType yyyymmdd" name="contractDate" placeholder="">
+                </div>
+              </div>
+        </div>
     </div>
 
+    <div class="form-row">
+        <div class="form-group col-md-2 mb-0">
+            <label><b>[임대료정보]</b></label>
+        </div>
+        <div class="form-group col-md-10 mb-0">
+          <div class="form-row">
+              <div class="form-group col-md-2 mb-0">
+                    <label><span id='star' style='color:#F7BE81;'>* </span>공급가액</label>
+                    <input type="text" class="form-control text-right amountNumber" name="mAmount" value="0" numberOnly required>
+              </div>
+              <div class="form-group col-md-2 mb-0">
+                    <label>세액</label>
+                    <input type="text" class="form-control text-right amountNumber" name="mvAmount" value="0" numberOnly required>
+              </div>
+              <div class="form-group col-md-2 mb-0">
+                    <label>합계</label>
+                    <input type="text" class="form-control text-right amountNumber" name="mtAmount" placeholder="0" numberOnly readonly>
+              </div>
+              <div class="form-group col-md-1 mb-0"><!--선불,후불체크-->
+                    <label>수납</label>
+                    <select name="payOrder" class="form-control">
+                    </select>
+              </div>
+              <div class="form-group col-md-1 mb-0">
+                    <label><span id='star' style='color:#F7BE81;'>* </span>기간</label>
+                    <input type="number" class="form-control" name="monthCount" placeholder="" min="1" max="72" required>
+              </div>
+              <div class="form-group col-md-2 mb-0">
+                    <label><span id='star' style='color:#F7BE81;'>* </span>시작일자</label>
+                    <input type="text" id="startDate" class="form-control dateType yyyymmdd" name="startDate" value="" placeholder="" required>
+              </div>
+              <div class="form-group col-md-2 mb-0">
+                    <label>종료일자</label>
+                    <input type="text" id="endDate" class="form-control" name="endDate" placeholder="" readonly>
+              </div>
+        </div>
+      </div>
+    </div>
+    <div class="form-row">
+        <div class="form-group col-md-2">
+        </div>
+        <div class="form-group col-md-10">
+            <small class="form-text text-muted">매월 받아야하는 임대료(월세)를 입력합니다.</small>
+        </div>
+    </div>
+    <div class="form-row">
+        <div class="form-group col-md-2 mb-0">
+          <label><b>[보증금정보]</b></label>
+        </div>
+        <div class="form-group col-md-10 mb-0">
+            <div class="form-row">
+                <div class="form-group col-md-3 mb-0">
+                    <label>금액</label>
+                    <input type="text" class="form-control text-right amountNumber" name="depositInAmount" value="0" placeholder="0" numberOnly>
+                </div>
+                <div class="form-group col-md-3 mb-0">
+                    <label>입금일자</label>
+                    <input type="text" class="form-control dateType yyyymmdd" name="depositInDate" id="depositInDate" value="">
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="form-row">
+        <div class="form-group col-md-2">
+        </div>
+        <div class="form-group col-md-10">
+            <small class="form-text text-muted">보증금을 받았다면, 보증금과 날짜를 입력하세요.</small>
+        </div>
+    </div>
+    <div class="">
+      <button type='submit' class='btn btn-primary'>저장</button>
+      <a href='contract.php'><button type='button' class='btn btn-secondary'><i class="fas fa-angle-double-right"></i> 계약목록</button></a>
+    </div>
   </form>
 </section>
 
@@ -67,9 +172,11 @@ include "building.php";
   console.log(roomArray);
 </script>
 
-<script src="/svc/inc/js/etc/buildingoption.js?<?=date('YmdHis')?>"></script>
+<!-- <script src="/svc/inc/js/etc/buildingoption.js?<?=date('YmdHis')?>"></script> -->
 
 <script>
+var customerId, buildingId, buidlingName;
+
 function customersearch(){
   var query = $('#customer').val();
   // console.log(query);
@@ -81,8 +188,28 @@ function customersearch(){
       method: 'post',
       data: {query : query},
       success: function(data){
+        data = JSON.parse(data);
+        datacount = data.length;
+
+        var returns = '';
+        var buildingoption = '';
+        //
+        if(datacount===0){
+          returns ="<ul><li>조회값이 없어요. 조회조건을 다시 확인하거나 서둘러 입력해주세요.</li></ul>";
+        } else {
+          returns += '<ul class="list-unstyled">';
+          $.each(data, function(key, value){
+            returns += '<li>'+value.ccnn;
+            returns += '<input type="hidden" name="customerId" value="'+value.cid+'">';
+            returns += '<input type="hidden" name="buildingId" value="'+value.bid+'">';
+            returns += '<input type="hidden" name="buildingName" value="'+value.bName+'">';
+            returns += '<input type="hidden" name="buildingPay" value="'+value.pay+'"></li>';
+          })
+          returns += '</ul>';
+        }
+
         $('#customerList').fadeIn();
-        $('#customerList').html(data);
+        $('#customerList').html(returns);
       }
     })
   }
@@ -139,9 +266,42 @@ $(document).ready(function(){
 
 })//document.ready function closing}
 
-$(document).on('click', 'li', function(){
+$(document).on('click', 'ul', function(){
   $('#customer').val($(this).text());
   $('#customerList').fadeOut();
+  // var customerId = $(this).attr('customerId');
+  var a = $(this);
+  var customerId = a.children().children('input[name=customerId]').val();
+  var buildingIdx = a.children().children('input[name=buildingId]').val();
+  var buildingName = a.children().children('input[name=buildingName]').val();
+  var buildingPay = a.children().children('input[name=buildingPay]').val();
+
+  $('#customerId').val(customerId);
+  $('select[name=building]').html('<option value="'+buildingIdx+'">'+buildingName+'</option>');
+  $('select[name=payOrder]').html('<option value="'+buildingPay+'">'+buildingPay+'</option>');
+
+  for(var key2 in groupBuildingArray[buildingIdx]){ //그룹목록출력(상주,비상주)
+    groupoption = "<option value='"+key2+"'>"+groupBuildingArray[buildingIdx][key2]+"</option>";
+    // console.log(groupoption);
+    $('select[name=group]').append(groupoption);
+  }
+  groupIdx = $('select[name=group]').val();
+
+  for(var key3 in roomArray[groupIdx]){
+    roomoption = "<option value='"+key3+"'>"+roomArray[groupIdx][key3]+"</option>";
+    $('select[name=room]').append(roomoption);
+  }
+
+})//ul click }
+
+$('select[name=group]').on('change', function(){
+  $('select[name=room]').empty();
+  groupIdx = $('select[name=group]').val();
+
+  for(var key3 in roomArray[groupIdx]){
+    roomoption = "<option value='"+key3+"'>"+roomArray[groupIdx][key3]+"</option>";
+    $('select[name=room]').append(roomoption);
+  }
 })
 
 $('#contractDate').on('change', function(){

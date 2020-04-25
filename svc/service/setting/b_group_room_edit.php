@@ -1,7 +1,7 @@
 <?php
 session_start();
-ini_set('display_errors', 1);
-ini_set('error_reporting', E_ALL);
+// ini_set('display_errors', 1);
+// ini_set('error_reporting', E_ALL);
 
 if(!isset($_SESSION['is_login'])){
   header('Location: /svc/login.php');
@@ -33,7 +33,7 @@ $sql = "
     WHERE group_in_building.id={$filtered_id}";
 $result = mysqli_query($conn, $sql);
 $row = mysqli_fetch_array($result);
-echo $sql;
+// echo $sql;
 // print_r($row);
 // print_r($_SESSION);
 
@@ -44,13 +44,11 @@ echo $sql;
 ?>
 
 <section class="container">
-  <div class="jumbotron">
-    <h1 class="display-4"> >> 그룹 및 관리번호 수정 화면입니다!</h1>
+  <div class="jumbotron pt-3 pb-3">
+    <h3 class="">>> 그룹 및 관리번호 수정 화면입니다!</h3>
     <hr class="my-4">
-    <p class="lead">관리번호 추가하기는 1개씩 가능합니다. 만약 다량으로 추가를 윈하는 경우는 그룹삭제 후 다시 그룹 생성해주세요.<br>
-    <!-- (2) 관리개수에는 1~100사이 숫자를 입력해주세요.<br> -->
-    <!-- (3) 관리번호가 만약 꽃잎반, 열매반 등 한글 이름인 경우(숫자 호수가 아닌경우) 시작번호 값을 비운채 생성하기 버튼을 눌러주세요.-->
-    </p>
+    <!-- <p class="lead">관리번호 추가하기는 1개씩 가능합니다. 만약 다량으로 추가를 윈하는 경우는 그룹삭제 후 다시 그룹 생성해주세요.<br>
+    </p> -->
     <!-- <hr class="my-4">
     <small>(1) '명칭'은 평상시 부르는 이름으로 적어주세요. 예)도레미고시원, 성공빌딩 (2) '수금방법'은 임대료를 선불로 수납할 경우 선불 선택, 후불로 수납할경우 후불을 선택하세요.</small> -->
   </div>
@@ -77,7 +75,7 @@ echo $sql;
     </table>
     <?php
     $sql7 = "select * from r_g_in_building where group_in_building_id = {$row['id']}";
-    echo $sql7;
+    // echo $sql7;
 
     $result7 = mysqli_query($conn, $sql7);
 
@@ -100,7 +98,7 @@ echo $sql;
     for ($i=0; $i < count($editRooms); $i++) {
       if(in_array($i, $startTrArray)){
         $table2 = $table2 ."<tr>
-          <td style='padding-right:0px;'><input class='form-control text-center' required='' type='text' name='rName".$i."' value='".$editRooms[$i]['rName']."'><input type='hidden' name='roomId' value='".$editRooms[$i]['id']."'><input type='hidden' name='ordered' value='".$editRooms[$i]['ordered']."'></td><td style='padding-left:0px;'>
+          <td style='padding-right:0px;'><input class='form-control text-center roomname' required='' type='text' name='rName".$i."' value='".$editRooms[$i]['rName']."'><input type='hidden' name='roomId' value='".$editRooms[$i]['id']."'><input type='hidden' name='ordered' value='".$editRooms[$i]['ordered']."'></td><td style='padding-left:0px;'>
           <button type='button' class='btn btn-default'
            style='padding-left: 0px;
            padding-top: 0px;
@@ -110,7 +108,7 @@ echo $sql;
           </td>";
       } else if(in_array($i, $closeTrArray)){
         $table2 = $table2 . "
-        <td style='padding-right:0px;'><input class='form-control text-center' required='' type='text' name='rName".$i."' value='". $editRooms[$i]['rName']."''><input type='hidden' name='roomId' value='".$editRooms[$i]['id']."'><input type='hidden' name='ordered' value='".$editRooms[$i]['ordered']."'></td><td style='padding-left:0px;'>
+        <td style='padding-right:0px;'><input class='form-control text-center roomname' required='' type='text' name='rName".$i."' value='". $editRooms[$i]['rName']."''><input type='hidden' name='roomId' value='".$editRooms[$i]['id']."'><input type='hidden' name='ordered' value='".$editRooms[$i]['ordered']."'></td><td style='padding-left:0px;'>
         <button type='button' class='btn btn-default'
          style='padding-left: 0px;
          padding-top: 0px;
@@ -120,7 +118,7 @@ echo $sql;
         </td></tr>";
       } else {
         $table2 = $table2 . "
-        <td style='padding-right:0px;'><input class='form-control text-center' required='' type='text' name='rName".$i."' value='". $editRooms[$i]['rName']."''><input type='hidden' name='roomId' value='".$editRooms[$i]['id']."'><input type='hidden' name='ordered' value='".$editRooms[$i]['ordered']."'></td><td style='padding-left:0px;'>
+        <td style='padding-right:0px;'><input class='form-control text-center roomname' required='' type='text' name='rName".$i."' value='". $editRooms[$i]['rName']."''><input type='hidden' name='roomId' value='".$editRooms[$i]['id']."'><input type='hidden' name='ordered' value='".$editRooms[$i]['ordered']."'></td><td style='padding-left:0px;'>
         <button type='button' class='btn btn-default'
          style='padding-left: 0px;
          padding-top: 0px;
@@ -135,7 +133,7 @@ echo $sql;
     $table2 = $table2."<td id='roomDiv'>
     <button type='button' class='btn btn-outline-warning btn-sm' data-toggle='modal' data-target='#roomAdd'>관리번호 추가</button><td></table>";
 
-    $table2 = $table2."<div class='mt-7'><a class='btn btn-secondary' href='building.php' role='button'>이전화면으로</a><a class='btn btn-warning ml-1' role='button' name='btnGroupDelete'>그룹 삭제하기</a><button type='submit' class='btn btn-primary ml-1'>수정하기</button></div>";
+    $table2 = $table2."<div class='mt-7'><a class='btn btn-secondary' href='building.php' role='button'>이전화면으로</a><a class='btn btn-warning ml-1' role='button' name='btnGroupDelete'>그룹 삭제하기</a><button type='button' class='btn btn-primary ml-1' name='btnGroupEdit'>수정하기</button></div>";
     ?>
     <div>
       <?php echo $table2;?>
@@ -165,6 +163,28 @@ $(function () {
 // $('button[name=roomDelete]').on('click', function(){
 //   var a = $(this);
 // })
+
+$('button[name=btnGroupEdit]').on('click', function(){
+  var roomArray = [];
+  var roomcount = $('.roomname').length;
+
+  for (var i = 0; i < roomcount; i++) {
+    var a = $('.roomname:eq('+i+')').val();
+    roomArray.push(a);
+  }
+
+  for (var i = 0; i < roomArray.length; i++) {
+    for (var j = i+1; j < roomArray.length; j++) {
+      if(roomArray[i]===roomArray[j]){
+        alert(roomArray[i]+' 가 중복되어 수정불가합니다. 다시 확인해주세요.');
+        return false;
+      }
+    }
+  }
+
+  $('form').submit();
+
+})
 
 $('a[name=btnGroupDelete]').on('click', function(){
   if(confirm('정말 삭제하시겠습니까?')){
@@ -203,17 +223,6 @@ $('button[name=roomDelete]').on('click', function(){
     formSubmit(frm);
   }
 })
-
-
-var aa1='groupDelete';
-var bb1='p_group_delete.php';
-var cc1='id';
-var dd1='<?=$filtered_id?>';
-
-var aa2='roomAdd';
-var bb2='p_room_append.php';
-var cc2='id';
-var dd2='<?=$filtered_id?>';
 
 $('input[name=mcount]').on('click', function(){
   $(this).select();
@@ -262,39 +271,33 @@ $('button[name=btnroomAdd]').on('click', function(){ //모달안의 생성버튼
      table = table + "<td>"+ "<input type='text' name='rName" + i + "' class='form-control text-center' value ='" + rooms[i] + "' required></td>";
    }
   }
-  table = table + "</table><div class='mt-7'><button type='submit' class='btn btn-primary mr-1'>추가</button><a class='btn btn-secondary' href='b_group_room_edit.php?id=<?=$filtered_id?>' role='button'>취소/돌아가기</a></div>";
+  table = table + "</table><div class='mt-7'><button type='button' class='btn btn-primary mr-1' id='mroomAdd'>추가</button><a class='btn btn-secondary' href='b_group_room_edit.php?id=<?=$filtered_id?>' role='button'>취소/돌아가기</a></div>";
 
   $tweet.append(table);
 
-  $('#below_rooms').html($tweet);
+  $('#mbelow_rooms').html($tweet);
 
-  rooms = JSON.stringify(rooms);
+  $('button[id=mroomAdd]').on('click', function(){
+    rooms = JSON.stringify(rooms);
 
-  goCategoryPage(groupId, count, rooms, groupName)
+    goCategoryPage(groupId, count, rooms, groupName)
+    function goCategoryPage(a,b,c,d){
+      var frm = formCreate('roomAdd', 'post', 'p_room_append.php','');
+      frm = formInput(frm, 'groupId', a);
+      frm = formInput(frm, 'groupName', d);
+      frm = formInput(frm, 'count', b);
+      frm = formInput(frm, 'roomArray', c);
+      formSubmit(frm);
+    }
 
-  function goCategoryPage(a,b,c,d){
+  })//모달안에서 추가하기 버튼 누를때, 생성이랑 헷갈리지 말것
 
-    var frm = formCreate('roomAdd', 'post', 'p_room_append.php','');
-    frm = formInput(frm, 'groupId', a);
-    frm = formInput(frm, 'groupName', d);
-    frm = formInput(frm, 'count', b);
-    frm = formInput(frm, 'roomArray', c);
-    formSubmit(frm);
+  $('button[name=mbtnCansel]').on('click', function(){
+    rooms = [];
+    $('#mbelow_rooms').empty();
+  })
 
-  }
-
-
-
-})
-
-$('button[name=btnCansel]').on('click', function(){
-  rooms = [];
-  $('#below_rooms').empty();
-})
-
-
-
-
+})//모달안의 생성버튼 누를 때}
 
 </script>
 

@@ -224,7 +224,8 @@ $clist['add3'] = htmlspecialchars($row['add3']);
     <div class="row justify-content-md-center">
       <button type='button' class='btn btn-danger mr-1' name='btnDelete'>삭제하기</button>
       <button type='submit' class='btn btn-primary mr-1'>수정하기</button>
-      <a href='customer.php'><button type='button' class='btn btn-secondary'><i class="fas fa-angle-double-right"></i> 입주자목록</button></a>
+      <a href='customer.php'><button type='button' class='btn btn-secondary mr-1'><i class="fas fa-angle-double-right"></i> 입주자목록</button></a>
+      <a href="/svc/service/contract/contract_add1.php?id=<?=$filtered_id?>"><button type='button' class='btn btn-secondary mr-1'><i class="fas fa-angle-double-right"></i> 신규계약</button></a>
     </div>
   </form>
 </section>

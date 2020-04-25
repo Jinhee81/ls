@@ -17,8 +17,8 @@ $sql = "
           customer.contact2,
           customer.contact3,
           customer.etc,
-          building_id,
-          (select bName from building where id=building_id) as bname,
+          realContract.building_id,
+          (select bName from building where id=realContract.building_id) as bname,
           group_in_building_id,
           (select gName from group_in_building where id=group_in_building_id) as gname,
           r_g_in_building_id,
@@ -212,14 +212,14 @@ for ($i=0; $i < count($allRows); $i++) {
             from paySchedule2
             where
                 idpaySchedule2={$allRows[$i]['payId']}";
-    echo $sql3;
+    // echo $sql3;
     $result3 = mysqli_query($conn, $sql3);
 
     $allRows[$i]['paySchedule2'] = array();
     while($row3 = mysqli_fetch_array($result3)){
       $allRows[$i]['paySchedule2'] = $row3;
     }
-    print_r($allRows[$i]['paySchedule2']); echo '111';
+    // print_r($allRows[$i]['paySchedule2']); echo '111';
   }
 
 }//for closing}

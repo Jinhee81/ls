@@ -42,10 +42,15 @@ for ($i=0; $i < count($a); $i++) {
     $row_check = mysqli_fetch_array($result_check);
 
     // echo 'solmi';
+    //
+    // print_r((int)$row_check[0]);
+    // print_r($_POST['groupName']);
+    // print_r($a[$i]);
 
     if((int)$row_check[0] >= 1){
+
       echo "<script>
-              alert('"+$_POST['groupName']+"그룹명의 "+$a[$i]+" 관리번호는 이미 존재하여 저장 안되요. 다시 확인하고 입력해주세요.');
+              alert('".$_POST['groupName']." 그룹명의 ".$a[$i]." 관리번호는 이미 존재하기때문에 추가 안되요. 다시 확인하고 입력해주세요.');
               history.back();
            </script>";
       exit();

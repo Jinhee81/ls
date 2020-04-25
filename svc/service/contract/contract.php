@@ -36,7 +36,7 @@ include "building.php";
       <div class="row justify-content-md-center">
         <table>
           <tr>
-            <td width="6%">
+            <td width="6%" class="mobile">
               <select class="form-control form-control-sm selectCall" name="dateDiv">
                 <option value="startDate">시작일자</option>
                 <option value="endDate">종료일자</option>
@@ -44,7 +44,7 @@ include "building.php";
                 <option value="registerDate">등록일자</option>
               </select><!--codi1-->
             </td>
-            <td width="6%">
+            <td width="6%" class="mobile">
               <select class="form-control form-control-sm selectCall" name="periodDiv">
                 <option value="allDate">--</option>
                 <option value="nowMonth">당월</option>
@@ -54,14 +54,14 @@ include "building.php";
                 <option value="nowYear">당년</option>
               </select><!--codi2-->
             </td>
-            <td width="8%">
+            <td width="8%" class="mobile">
               <input type="text" name="fromDate" value="" class="form-control form-control-sm text-center dateType yyyymmdd"><!--codi3-->
             </td>
-            <td width="1%">~</td>
-            <td width="8%">
+            <td width="1%" class="mobile">~</td>
+            <td width="8%" class="mobile">
               <input type="text" name="toDate" value="" class="form-control form-control-sm text-center dateType yyyymmdd"><!--codi4-->
             </td>
-            <td width="5%">
+            <td width="5%" class="mobile">
               <select class="form-control form-control-sm selectCall" name="progress">
                 <option value="pAll">전체</option>
                 <option value="pIng" selected>현재</option>
@@ -69,16 +69,16 @@ include "building.php";
                 <option value="pWaiting">대기</option>
               </select><!--codi5-->
             </td>
-            <td width="6%">
+            <td width="6%" class="">
               <select class="form-control form-control-sm selectCall" name="building">
               </select><!--building-->
             </td>
-            <td width="6%">
+            <td width="6%" class="mobile">
               <select class="form-control form-control-sm selectCall" name="group">
                 <option value="groupAll">그룹전체</option>
               </select><!--group-->
             </td>
-            <td width="8%">
+            <td width="8%" class="">
               <select class="form-control form-control-sm selectCall" name="etcCondi">
                 <option value="customer">성명/사업자명</option>
                 <option value="contact">연락처</option>
@@ -86,7 +86,7 @@ include "building.php";
                 <option value="roomId">방번호</option>
               </select><!--codi8-->
             </td>
-            <td width="12%">
+            <td width="12%" class="">
               <input type="text" name="cText" value="" class="form-control form-control-sm text-center"><!--codi9-->
             </td>
           </tr>
@@ -118,11 +118,11 @@ include "building.php";
         <th class="">상태</th>
         <th class="">입주자</th>
         <th class="">연락처</th>
-        <th class="">그룹명</th>
+        <th class="mobile">그룹명</th>
         <th class="">방번호</th>
-        <th class="">시작일</th>
-        <th class="">종료일</th>
-        <th class="">기간</th>
+        <th class="mobile">시작일</th>
+        <th class="mobile">종료일</th>
+        <th class="mobile">기간</th>
         <th class="">임대료</th>
         <!-- <th scope="col" class="mobile">단계<i class="fas fa-sort"></i></th> -->
         <th class="mobile">
@@ -183,26 +183,26 @@ function maketable(){
       } else {
         $.each(data, function(key, value){
           returns += '<tr>';
-          returns += '<td><input type="checkbox" value="'+value.rid+'" class="tbodycheckbox"></td>';
-          returns += '<td>'+datacount+'</td>';
+          returns += '<td class="mobile"><input type="checkbox" value="'+value.rid+'" class="tbodycheckbox"></td>';
+          returns += '<td class="">'+datacount+'</td>';
 
           if(value.status2==='present'){
-            returns += '<td><div class="badge badge-info text-wrap" style="width: 3rem;">현재</div></td>';
+            returns += '<td class=""><div class="badge badge-info text-wrap" style="width: 3rem;">현재</div></td>';
           } if(value.status2==='waiting'){
-            returns += '<td><div class="badge badge-warning text-wrap" style="width: 3rem;">대기</div></td>';
+            returns += '<td class=""><div class="badge badge-warning text-wrap" style="width: 3rem;">대기</div></td>';
           } if(value.status2==='the_end'){
-            returns += '<td><div class="badge badge-danger text-wrap" style="width: 3rem;">종료</div></td>';
+            returns += '<td class=""><div class="badge badge-danger text-wrap" style="width: 3rem;">종료</div></td>';
           }
 
-          returns += '<td><a href="/svc/service/customer/m_c_edit.php?id='+value.cid+'" data-toggle="tooltip" data-placement="top" title="'+value.ccnn+'">'+value.ccnn+'</a></td>';
+          returns += '<td class=""><a href="/svc/service/customer/m_c_edit.php?id='+value.cid+'" data-toggle="tooltip" data-placement="top" title="'+value.ccnn+'">'+value.ccnn+'</a></td>';
 
-          returns += '<td>'+value.contact+'</td>';
-          returns += '<td>'+value.gName+'</td>';
-          returns += '<td>'+value.rName+'</td>';
-          returns += '<td>'+value.startDate+'</td>';
-          returns += '<td>'+value.endDate2+'</td>';
-          returns += '<td>'+value.count2+'</td>';
-          returns += '<td><a href="contractEdit.php?id='+value.rid+'" >'+value.mtAmount+'</a>';
+          returns += '<td class=""><a href="tel:'+value.contact+'">'+value.contact+'</a></td>';
+          returns += '<td class="mobile">'+value.gName+'</td>';
+          returns += '<td class="">'+value.rName+'</td>';
+          returns += '<td class="mobile">'+value.startDate+'</td>';
+          returns += '<td class="mobile">'+value.endDate2+'</td>';
+          returns += '<td class="mobile">'+value.count2+'</td>';
+          returns += '<td class=""><a href="contractEdit.php?id='+value.rid+'" >'+value.mtAmount+'</a>';
 
           if(value.step==='clear'){
             returns += '<div class="badge badge-warning text-light" style="width: 1rem;">c</div></td>';
@@ -210,7 +210,7 @@ function maketable(){
             returns += '</td>';
           }
 
-          returns += '<td>';
+          returns += '<td class="mobile">';
 
           if(value.filecount > 0){
             returns += '<a href="contractEdit.php?id='+value.rid+'" class="badge badge-light">'+value.filecount+'</a>';

@@ -13,12 +13,10 @@
   </div>
   <table class="table table-sm table-hover text-center mt-3">
     <tr class="table-secondary">
-      <td style="width:5%">순번</td>
-      <!-- <td style="width:10%">작성자</td> -->
-      <td style="width:45%">내용</td>
-      <td style="width:40%">등록일시/수정일시</td>
-      <!-- <td style="width:20%">수정일시</td> -->
-      <td style="width:10%">관리</td>
+      <td style="width:5%" class="">순번</td>
+      <td style="width:45%" class="">내용</td>
+      <td style="width:40%" class="mobile">등록일시/수정일시</td>
+      <td style="width:10%" class="">관리</td>
     </tr>
     <?php
     if(count($memoRows)===0){
@@ -26,15 +24,13 @@
     } else {
       for ($i=0; $i < count($memoRows); $i++) { ?>
     <tr>
-     <td>
+     <td class="">
        <label class="grey"><?=$memoRows[$i]['num']?></label>
        <input type="hidden" name="memoid" value="<?=$memoRows[$i]['idrealContract_memo']?>">
      </td>
-     <!-- <td><input class="form-control form-control-sm text-center" name="memoCreator" value="<?=$memoRows[$i]['memoCreator']?>" disabled></td> -->
-     <td><input class="form-control form-control-sm text-center" name="memoContent" value="<?=$memoRows[$i]['memoContent']?>" disabled></td>
-     <td><small class="grey"><?=$memoRows[$i]['created']?>/<?=$memoRows[$i]['updated']?></small></td>
-     <!-- <td><label class="grey"><?=$memoRows[$i]['updated']?></label></td> -->
-     <td>
+     <td class=""><input class="form-control form-control-sm text-center" name="memoContent" value="<?=$memoRows[$i]['memoContent']?>" disabled></td>
+     <td class="mobile"><small class="grey"><?=$memoRows[$i]['created']?>/<?=$memoRows[$i]['updated']?></small></td>
+     <td class="">
        <button type="submit" name="memoEdit" class="btn btn-default grey">
          <i class='far fa-edit'></i>
        </button>

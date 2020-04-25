@@ -45,13 +45,13 @@
                    <button class="btn btn-outline-success btn-block" type="button" name="btnroomAdd">생성</button>
                  </div>
                  <div class="form-group col-md-4">
-                   <button class="btn btn-outline-success btn-block" type="button" name="btnCansel">취소</button>
+                   <button class="btn btn-outline-success btn-block" type="button" name="mbtnCansel">취소</button>
                  </div>
                </div>
                </td>
            </tr>
          </table>
-         <div class="container" id="below_rooms">
+         <div class="container" id="mbelow_rooms">
          </div><!--생성하기버튼 누르면 여기에 방번호가 쫙 나온다-->
        </div>
        <!-- <div class="modal-footer">

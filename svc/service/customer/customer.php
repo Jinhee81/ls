@@ -31,13 +31,13 @@ include $_SERVER['DOCUMENT_ROOT']."/svc/service/contract/building.php";
         <div class="row justify-content-md-center">
           <table>
             <tr>
-              <td width="8%">
+              <td width="8%" class="mobile">
                 <select class="form-control form-control-sm selectCall" name="dateDiv">
                   <option value="registerDate">등록일자</option>
                   <option value="updateDate">수정일자</option>
                 </select>
               </td>
-              <td width="8%">
+              <td width="8%" class="mobile">
                 <select class="form-control form-control-sm selectCall" name="periodDiv">
                   <option value="allDate">--</option>
                   <option value="nowMonth">당월</option>
@@ -46,18 +46,18 @@ include $_SERVER['DOCUMENT_ROOT']."/svc/service/contract/building.php";
                   <option value="nowYear" selected>당년</option>
                 </select>
               </td>
-              <td width="10%">
+              <td width="10%" class="mobile">
                 <input type="text" name="fromDate" value="" class="form-control form-control-sm text-center dateType yyyymmdd">
               </td>
-              <td width="1%">~</td>
-              <td width="10%">
+              <td width="1%" class="mobile">~</td>
+              <td width="10%" class="mobile">
                 <input type="text" name="toDate" value="" class="form-control form-control-sm text-center dateType yyyymmdd">
               </td>
-              <td width="8%">
+              <td width="8%" class="mobile">
                 <select name="building" class="form-control form-control-sm selectCall">
                 </select>
               </td>
-              <td width="8%">
+              <td width="8%" class="mobile">
                 <select name="customerDiv" class="form-control form-control-sm selectCall">
                   <option value="customerAll">구분전체</option>
                   <option value="입주자">입주자</option>
@@ -66,7 +66,7 @@ include $_SERVER['DOCUMENT_ROOT']."/svc/service/contract/building.php";
                   <option value="기타">기타</option>
                 </select>
               </td>
-              <td width="8%">
+              <td width="8%" class="">
                 <select class="form-control form-control-sm selectCall" name="etcCondi">
                   <option value="customer">성명/사업자명</option>
                   <option value="contact">연락처</option>
@@ -74,7 +74,7 @@ include $_SERVER['DOCUMENT_ROOT']."/svc/service/contract/building.php";
                   <option value="etc">특이사항</option>
                 </select>
               </td>
-              <td width="15%">
+              <td width="15%" class="">
                 <input type="text" name="cText" value="" class="form-control form-control-sm text-center">
               </td>
             </tr>
@@ -102,10 +102,10 @@ include $_SERVER['DOCUMENT_ROOT']."/svc/service/contract/building.php";
     <thead>
       <tr class="table-secondary">
         <th scope="col" class="mobile"><input type="checkbox" id="allselect"></th>
-        <th scope="col">순번</th>
-        <th scope="col" class="mobile">구분</th>
-        <th scope="col">성명</th>
-        <th scope="col">연락처</th>
+        <th scope="col" class="">순번</th>
+        <th scope="col" class="">구분</th>
+        <th scope="col" class="">성명</th>
+        <th scope="col" class="">연락처</th>
         <th scope="col" class="mobile">이메일</th>
         <th scope="col" class="mobile">특이사항</th>
         <th scope="col" class="mobile">등록일</th>
@@ -162,27 +162,27 @@ function maketable(){
       } else {
         $.each(data, function(key, value){
           returns += '<tr>';
-          returns += '<td><input type="checkbox" value="'+value.id+'" class="tbodycheckbox"></td>';
-          returns += '<td>'+datacount+'</td>';
-          returns += '<td>'+value.div1+'</td>';
+          returns += '<td class="mobile"><input type="checkbox" value="'+value.id+'" class="tbodycheckbox"></td>';
+          returns += '<td class="">'+datacount+'</td>';
+          returns += '<td class="">'+value.div1+'</td>';
 
           if(value.contractCount >= 1){
-            returns += '<td><a href="m_c_edit.php?id='+value.id+'" data-toggle="tooltip" data-placement="top" title="'+value.cName+'">'+value.cNamemb+'</a><span class="badge badge-pill badge-warning">'+value.contractCount+'</span></td>';
+            returns += '<td class=""><a href="m_c_edit.php?id='+value.id+'" data-toggle="tooltip" data-placement="top" title="'+value.cName+'">'+value.cNamemb+'</a><span class="badge badge-pill badge-warning">'+value.contractCount+'</span></td>';
           } else {
-            returns += '<td><a href="m_c_edit.php?id='+value.id+'" data-toggle="tooltip" data-placement="top" title="'+value.cName+'">'+value.cNamemb+'</a></td>';
+            returns += '<td class=""><a href="m_c_edit.php?id='+value.id+'" data-toggle="tooltip" data-placement="top" title="'+value.cName+'">'+value.cNamemb+'</a></td>';
           }
 
-          returns += '<td>'+value.cContact+'</td>';
-          returns += '<td>'+value.email+'</td>';
-          returns += '<td>'+value.etc+'</td>';
-          returns += '<td>'+value.created+'</td>';
-          returns += '<td>'+value.updated+'</td>';
+          returns += '<td class=""><a href="tel:'+value.cContact+'">'+value.cContact+'</a></td>';
+          returns += '<td class="mobile">'+value.email+'</td>';
+          returns += '<td class="mobile">'+value.etc+'</td>';
+          returns += '<td class="mobile">'+value.created+'</td>';
+          returns += '<td class="mobile">'+value.updated+'</td>';
           if(value.gothere==='임대계약'){
-            returns += '<td><a href="/svc/service/contract/contract_add1.php?id='+value.id+'" class="badge badge-secondary">계약</a></td>';
+            returns += '<td class="mobile"><a href="/svc/service/contract/contract_add1.php?id='+value.id+'" class="badge badge-secondary">계약</a></td>';
           } else if(value.gothere==='기타계약'){
-            returns += '<td><a href="/svc/service/contractetc/contractetc_add1.php?id='+value.id+'" class="badge badge-secondary">계약</a></td>';
+            returns += '<td class="mobile"><a href="/svc/service/contractetc/contractetc_add1.php?id='+value.id+'" class="badge badge-secondary">계약</a></td>';
           } else {
-            returns += '<td></td>';
+            returns += '<td class="mobile"></td>';
           }
 
           returns += '</tr>';
@@ -267,6 +267,7 @@ $(document).ready(function(){
 
   $('input[name=cText]').on('keyup', function(){
       maketable();
+      console.log('solmi');
   })
 
   //=================== customerArray start ==============//

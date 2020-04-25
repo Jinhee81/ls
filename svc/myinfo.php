@@ -23,8 +23,8 @@ $row = mysqli_fetch_array($result);
 
  ?>
 <section class="container">
-  <div class="jumbotron">
-    <h3 class="display-4">내 정보를 확인 또는 수정합니다.</h3>
+  <div class="jumbotron pt-3 pb-3">
+    <h3 class="">내 정보를 확인 또는 수정합니다.</h3>
     <hr class="my-4">
     <p class="lead"><?=$_SESSION['email']?>님은 현재 <?=$row['gradename']?>등급이며 <?=number_format($row['coin'])?>코인 보유중입니다.</p>
     <a class="btn btn-primary btn-sm" href="usecount.php" role="button">사용량/결제정보조회</a>

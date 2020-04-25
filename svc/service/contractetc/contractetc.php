@@ -33,14 +33,14 @@ include "good.php";
       <div class="row justify-content-md-center">
         <table>
           <tr>
-            <td width="6%" class="">
+            <td width="6%" class="mobile">
               <select class="form-control form-control-sm selectCall" name="dateDiv">
                 <option value="executiveDate">입금일자</option>
                 <option value="createTime">등록일자</option>
                 <option value="updateTime">수정일자</option>
               </select><!--codi1-->
             </td>
-            <td width="6%" class="">
+            <td width="6%" class="mobile">
               <select class="form-control form-control-sm selectCall" name="periodDiv">
                 <option value="allDate">--</option>
                 <option value="nowMonth" selected>당월</option>
@@ -50,12 +50,12 @@ include "good.php";
                 <option value="nowYear">당년</option>
               </select><!--codi2-->
             </td>
-            <td width="6%" class="">
+            <td width="6%" class="mobile">
               <input type="text" name="fromDate" value="" class="form-control form-control-sm text-center dateType yyyymmdd"><!--codi3-->
             </td>
-            <td width="1%" class=""> ~
+            <td width="1%" class="mobile"> ~
             </td>
-            <td width="6%" class="">
+            <td width="6%" class="mobile">
               <input type="text" name="toDate" value="" class="form-control form-control-sm text-center dateType yyyymmdd"><!--codi4-->
             </td>
             <td width="6%" class="">
@@ -101,14 +101,14 @@ include "good.php";
         <th class="mobile">
           <input type="checkbox" id="allselect">
         </th>
-        <th class="mobile">순번</th>
-        <th class="mobile">상품</th>
-        <th class="mobile">성명</th>
-        <th class="mobile">연락처</th>
+        <th class="">순번</th>
+        <th class="">상품</th>
+        <th class="">성명</th>
+        <th class="">연락처</th>
         <th class="mobile">공급가액</th>
         <th class="mobile">세액</th>
-        <th class="mobile">합계</th>
-        <th class="mobile">입금일</th>
+        <th class="">합계</th>
+        <th class="">입금일</th>
         <th class="mobile">입금구분</th>
         <th class="mobile">특이사항</th>
       </tr>
@@ -163,17 +163,17 @@ function maketable(){
       } else {
         $.each(data, function(key, value){
           returns += '<tr>';
-          returns += '<td class=""><input type="checkbox" value="'+value.eid+'" class="tbodycheckbox"></td>';
+          returns += '<td class="mobile"><input type="checkbox" value="'+value.eid+'" class="tbodycheckbox"></td>';
           returns += '<td class="">'+datacount+'</td>';
           returns += '<td class="">'+value.goodname+'</td>';
           returns += '<td class=""><a href="/svc/service/customer/m_c_edit.php?id='+value.cid+'" data-toggle="tooltip" data-placement="top" title="'+value.cname+'">'+value.cnamemb+'</a></td>';
-          returns += '<td class="">'+value.contact+'</td>';
-          returns += '<td class="">'+value.pAmount+'</td>';
-          returns += '<td class="">'+value.pvAmount+'</td>';
+          returns += '<td class=""><a href="tel:'+value.contact+'">'+value.contact+'</a></td>';
+          returns += '<td class="mobile">'+value.pAmount+'</td>';
+          returns += '<td class="mobile">'+value.pvAmount+'</td>';
           returns += '<td class=""><a href="contractetc_edit.php?id='+value.eid+'" >'+value.ptAmount+'</a></td>';
           returns += '<td class="">'+value.executiveDate+'</td>';
-          returns += '<td class="">'+value.payKind+'</td>';
-          returns += '<td class=""><label class="" data-toggle="tooltip" data-placement="top" data-title="'+value.eetc+'">'+value.etcmb+'</td>';
+          returns += '<td class="mobile">'+value.payKind+'</td>';
+          returns += '<td class="mobile"><label class="" data-toggle="tooltip" data-placement="top" data-title="'+value.eetc+'">'+value.etcmb+'</td>';
           returns += '</tr>';
 
           datacount -= 1;

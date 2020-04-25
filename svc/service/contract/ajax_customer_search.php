@@ -29,8 +29,8 @@ if(isset($_POST['query'])){
     where
       customer.user_id={$_SESSION['id']} and
       div1='입주자' and
-      (regexp_like(customer.name, '{$_POST['query']}') or
-       regexp_like(customer.companyname, '{$_POST['query']}'))
+      (customer.name like '%{$_POST['query']}%' or
+      customer.companyname like '%{$_POST['query']}%')
       ";
 
     // echo $sql;

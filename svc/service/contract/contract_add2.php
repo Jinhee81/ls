@@ -103,7 +103,7 @@ include "building.php";
               </div>
               <div class="form-group col-md-1 mb-0">
                     <label><span id='star' style='color:#F7BE81;'>* </span>기간</label>
-                    <input type="number" class="form-control" name="monthCount" placeholder="" min="1" max="72" required>
+                    <input type="number" class="form-control" name="monthCount" value="12" min="1" max="72" required>
               </div>
               <div class="form-group col-md-2 mb-0">
                     <label><span id='star' style='color:#F7BE81;'>* </span>시작일자</label>
@@ -266,15 +266,18 @@ $(document).ready(function(){
 
 })//document.ready function closing}
 
-$(document).on('click', 'ul', function(){
+$(document).on('click', 'li', function(){
   $('#customer').val($(this).text());
   $('#customerList').fadeOut();
   // var customerId = $(this).attr('customerId');
   var a = $(this);
-  var customerId = a.children().children('input[name=customerId]').val();
-  var buildingIdx = a.children().children('input[name=buildingId]').val();
-  var buildingName = a.children().children('input[name=buildingName]').val();
-  var buildingPay = a.children().children('input[name=buildingPay]').val();
+  var customerId = a.children('input[name=customerId]').val();
+  var buildingIdx = a.children('input[name=buildingId]').val();
+  var buildingName = a.children('input[name=buildingName]').val();
+  var buildingPay = a.children('input[name=buildingPay]').val();
+
+  console.log(a);
+  console.log(customerId, buildingIdx, buildingName, buildingPay);
 
   $('#customerId').val(customerId);
   $('select[name=building]').html('<option value="'+buildingIdx+'">'+buildingName+'</option>');

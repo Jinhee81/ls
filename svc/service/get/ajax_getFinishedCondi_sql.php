@@ -179,6 +179,6 @@ order by roomdiv desc, executiveDate desc
 ";
 
 
-// echo $sql;
+echo $sql;
 
 ?>

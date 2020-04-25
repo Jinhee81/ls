@@ -21,9 +21,9 @@ $sql = "
     user_id, createTime, count2, endDate2)
   VALUES (
     {$customer_id},
-    {$_POST['building_id']},
-    {$_POST['group_id']},
-    {$_POST['room_id']},
+    {$_POST['building']},
+    {$_POST['group']},
+    {$_POST['room']},
     '{$_POST['payOrder']}',
     {$_POST['monthCount']},
     '{$_POST['startDate']}',
@@ -52,9 +52,9 @@ for ($i=1; $i <= (int)$_POST['monthCount']; $i++) {
     $contractRow[$i] = array();
     $mEndDate = date("Y-m-d", strtotime($mStartDate."+1 month"."-1 day"));
 
-    if($_POST['payOrder']==='선불'){
+    if($_POST['payOrder']==='선납'){
       $mExpectedDate = $mStartDate;
-    } else if($_POST['payOrder']==='후불'){
+    } else if($_POST['payOrder']==='후납'){
       $mExpectedDate = $mEndDate;
     }
 
@@ -120,8 +120,8 @@ echo "<script>alert('저장되었습니다.');
       location.href = 'contractEdit.php?id=$id';
       </script>";
 
-// if ($_POST['endDate'] === $mEndDate){
-//   echo '정상적으로 스케쥴 생성되었음';
+// // if ($_POST['endDate'] === $mEndDate){
+// //   echo '정상적으로 스케쥴 생성되었음';
 // } //우와 2020년에 윤달이 있어서 종료일자가 안맞음, 그래서 이걸로 확인체크하는것은 없애기로 함
 
  ?>

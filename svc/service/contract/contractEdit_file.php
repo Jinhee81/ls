@@ -1,19 +1,4 @@
 <div class="p-3 mb-2 text-dark border border-info rounded">
-    <!-- <div class="row justify-content-md-center">
-          <div class="col col-sm-5">
-            <form action="p_file_upload.php" method="post" enctype="multipart/form-data">
-                <div class="input-group">
-                  <div class="custom-file">
-                    <input type="file" class="custom-file-input" id="inputGroupFile02" aria-describedby="inputGroupFileAddon02">
-                    <label class="custom-file-label" for="inputGroupFile02">파일선택</label>
-                  </div>
-                  <div class="input-group-append">
-                    <button class="btn btn-outline-secondary" type="button" id="inputGroupFileAddon02">등록</button>
-                  </div>
-                </div>
-            </form>
-          </div>
-      </div> -->
   <h5>첨부파일</h5>
   <form name="uploadForm" id="uploadForm" method="post" action="p_file_upload.php" enctype="multipart/form-data">
     <label for="">첨부파일</label>
@@ -24,11 +9,11 @@
   <div class="mt-3">
     <table class="table table-sm table-hover text-center">
       <tr class="table-secondary">
-        <td>순번</td>
-        <td>파일명</td>
-        <td>용량</td>
-        <td>등록일시</td>
-        <td>관리</td>
+        <td class="">순번</td>
+        <td class="">파일명</td>
+        <td class="mobile">용량</td>
+        <td class="mobile">등록일시</td>
+        <td class="mobile">관리</td>
       </tr>
       <?php
       if(count($fileRows)===0){
@@ -36,18 +21,18 @@
       } else {
         for ($i=0; $i < count($fileRows); $i++) { ?>
       <tr>
-        <td>
+        <td class="">
           <?=$fileRows[$i]['num']?>
           <input type="hidden" name="fileid" value="<?=$fileRows[$i]['file_id']?>">
         </td>
-        <td>
+        <td class="">
           <a href="download.php?file_id=<?=$fileRows[$i]['file_id']?>" target="_blank"><?=$fileRows[$i]['name_orig']?></a>
         </td>
-        <td>
+        <td class="mobile">
           <?=$fileRows[$i]['bytes']?>
         </td>
-        <td><?=$fileRows[$i]['reg_time']?></td>
-        <td>
+        <td class="mobile"><?=$fileRows[$i]['reg_time']?></td>
+        <td class="mobile">
           <button type="submit" name="fileDelete" class="btn btn-default grey">
             <i class='far fa-trash-alt'></i>
           </button>

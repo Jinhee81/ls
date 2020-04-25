@@ -36,7 +36,7 @@ if($_POST['cText']){
   if($_POST['etcCondi']==='customer'){
     $etcCondi = " and (customer.name like '%".$_POST['cText']."%' or companyname like '%".$_POST['cText']."%')";
   } elseif($_POST['etcCondi']==='contact'){
-    $etcCondi = " and (contact1 like '%".$_POST['cText']."%' or contact2 like '%".$_POST['cText']."%' or contact3 like '%".$_POST['cText']."%')";
+    $etcCondi = " and (customer.contact1 like '%".$_POST['cText']."%' or customer.contact2 like '%".$_POST['cText']."%' or customer.contact3 like '%".$_POST['cText']."%')";
   } elseif($_POST['etcCondi']==='contractId'){
     $etcCondi = " and (etcContract.id like '%".$_POST['cText']."%')";
   }

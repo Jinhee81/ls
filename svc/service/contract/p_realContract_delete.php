@@ -35,7 +35,7 @@ if(!$result_p){
 }
 
 $sql2 = "
-      delete from realcontract_deposit
+      delete from realContract_deposit
           where realContract_id={$filtered_id}
       ";
 $result2 = mysqli_query($conn, $sql2);

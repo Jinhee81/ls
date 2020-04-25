@@ -166,7 +166,7 @@ $output = $cName.' | '.$cContact;
               </div>
               <div class="form-group col-md-1 mb-0">
                     <label><span id='star' style='color:#F7BE81;'>* </span>기간</label>
-                    <input type="number" class="form-control" name="monthCount" placeholder="" min="1" max="72" required>
+                    <input type="number" class="form-control" name="monthCount" value="12" min="1" max="72" required>
               </div>
               <div class="form-group col-md-2 mb-0">
                     <label><span id='star' style='color:#F7BE81;'>* </span>시작일자</label>
@@ -305,6 +305,7 @@ $(document).ready(function(){
   })
 
 })//document.ready function closing}
+
 
 $('#contractDate').on('change', function(){
   var readyStartDate = $('#contractDate').val();

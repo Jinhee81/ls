@@ -6,7 +6,7 @@
 
     <!-- <img class="mb-4" src="/img/logo.png" alt="" width="72" height="72"> -->
     <h1 class="h3 mb-3 font-weight-normal">임대관리시스템 리스맨에 접속하신 것을 환영합니다!</h1>
-    <div class="text-center container mt-5" style="width:400px;">
+    <div class="text-center container mt-5" style="width:360px;">
       <form method="post" action ="login_check.php" class="form-signin">
         <div class="form-group">
           <input type="email" name="email" class="form-control" placeholder="이메일주소" required="" autofocus="">

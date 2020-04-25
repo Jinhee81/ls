@@ -34,20 +34,18 @@
     <table class="table table-sm table-hover text-center" style="width:100%" cellspacing="0" id="checkboxTestTbl">
       <thead>
         <tr class="table-info">
-          <td scope="col" class=""><input type="checkbox" id="checkAll"></td>
-          <td scope="col">순번</td>
-          <td scope="col">시작일/종료일</td>
-          <!-- <td scope="col">종료일</td> -->
-          <td scope="col">공급가액/세액</td>
-          <!-- <td scope="col" class="mobile">세액</td> -->
+          <td scope="col" class="mobile"><input type="checkbox" id="checkAll"></td>
+          <td scope="col" class="">순번</td>
+          <td scope="col" class="">시작일/종료일</td>
+          <td scope="col" class="">공급가액/세액</td>
           <td scope="col" class="">합계</td>
-          <td scope="col">입금예정일</td>
-          <td scope="col" class="">입금구분</td>
-          <td scope="col" class="">청구번호</td>
-          <td scope="col" class="">수납구분</td>
-          <td scope="col">입금일</td>
-          <td scope="col" class="">입금(미납)액</td>
-          <td scope="col" class="">연체일수/이자</td>
+          <td scope="col" class="mobile">입금예정일</td>
+          <td scope="col" class="mobile">입금구분</td>
+          <td scope="col" class="mobile">청구번호</td>
+          <td scope="col" class="mobile">수납구분</td>
+          <td scope="col" class="mobile">입금일</td>
+          <td scope="col" class="mobile">입금(미납)액</td>
+          <td scope="col" class="mobile">연체일수/이자</td>
           <!-- <td scope="col" class="">연체이자</td> -->
           <td scope="col" class="mobile">증빙</td>
         </tr>
@@ -56,11 +54,11 @@
         <?php
         for ($i=0; $i < count($allRows); $i++) { ?>
         <tr>
-          <td><input type='checkbox' class='checkSelect' name='chk[]' value='<?=$allRows[$i]['idcontractSchedule']?>'></td><!-- 체크박스 -->
-          <td><label class="font-weight-light"><?=$allRows[$i]['ordered']?></label></td><!-- 순번 -->
-          <td><label class="font-weight-light mb-0"><?=$allRows[$i]['mStartDate']?></label><br>
+          <td class="mobile"><input type='checkbox' class='checkSelect' name='chk[]' value='<?=$allRows[$i]['idcontractSchedule']?>'></td><!-- 체크박스 -->
+          <td class=""><label class="font-weight-light"><?=$allRows[$i]['ordered']?></label></td><!-- 순번 -->
+          <td class=""><label class="font-weight-light mb-0"><?=$allRows[$i]['mStartDate']?></label><br>
           <label class="font-weight-light mb-0"><?=$allRows[$i]['mEndDate']?></label></td><!-- 시작일/종료일 -->
-          <td>
+          <td class="">
             <?php
             if($allRows[$i]['payId']){
               echo "<label class='text-right font-weight-light numberComma mb-0'>".$allRows[$i]['mMamount']."</label><br><label class='text-right font-weight-light numberComma mb-0'>".$allRows[$i]['mVmAmount']."</label>";
@@ -70,7 +68,7 @@
             }
              ?>
           </td><!-- 공급가액/세액 -->
-          <td>
+          <td class="">
             <?php
             if($allRows[$i]['payId']){
               echo "<label class='text-right font-weight-light numberComma'>".$allRows[$i]['mTmAmount']."</label>";
@@ -80,7 +78,7 @@
             }
             ?>
           </td><!-- 합계 -->
-          <td>
+          <td class="mobile">
             <?php
             if($allRows[$i]['payId']){
               echo "<label class='text-center font-weight-light'>".$allRows[$i]['paySchedule2']['pExpectedDate']."</label>";
@@ -90,21 +88,21 @@
             }
             ?>
           </td><!-- 예정일 -->
-          <td>
+          <td class="mobile">
             <?php
             if($allRows[$i]['payId']){
               echo "<label class='text-center'>".$allRows[$i]['paySchedule2']['payKind']."</label>";
             }
             ?>
           </td><!-- 구분 -->
-          <td>
+          <td class="mobile">
             <?php
             if($allRows[$i]['payId'] && $allRows[$i]['payIdOrder']==='0'){
               echo "<label class='text-primary modalAsk font-weight-light' data-toggle='modal' data-target='#pPay'><u>".$allRows[$i]['payId']."</u></label>";
             }
             ?>
           </td><!-- 청구번호 -->
-          <td>
+          <td class="mobile">
             <?php
             // 수납구분 당분간 주석처리
             if($allRows[$i]['payId'] && $allRows[$i]['payIdOrder']==='0'){
@@ -121,13 +119,13 @@
             }
             ?>
           </td><!-- 수납구분-->
-          <td>
+          <td class="mobile">
             <?php
             if($allRows[$i]['payId']){
               echo "<label class='text-center font-weight-light green'>".$allRows[$i]['paySchedule2']['executiveDate']."</label>";
             }?>
           </td><!-- 입금일 -->
-          <td>
+          <td class="mobile">
             <?php
             if($allRows[$i]['payId'] && $allRows[$i]['payIdOrder']==='0'){
               if($allRows[$i]['paySchedule2']['executiveDate']) {
@@ -142,7 +140,7 @@
             }
              ?>
           </td><!-- 입금액 -->
-          <td>
+          <td class="mobile">
             <?php
             if($allRows[$i]['payId'] && $allRows[$i]['payIdOrder']==='0'){
               if($allRows[$i]['paySchedule2']['executiveDate']) {
@@ -180,7 +178,7 @@
             }
             ?><!--연체이자-->
           </td><!-- 연체일수/이자 -->
-          <td></td><!-- 증빙 -->
+          <td class="mobile"></td><!-- 증빙 -->
         </tr>
         <?php
         }

@@ -39,7 +39,7 @@ $sql = "select
         from customer
         where user_id={$_SESSION['id']} and building_id={$_POST['building']}
               $etcDate $etcCondi
-        order by created desc";
+        order by id desc";
 // echo $sql
 
 $result = mysqli_query($conn, $sql);
@@ -94,15 +94,15 @@ for ($i=0; $i < count($allRows); $i++) {
     $allRows[$i]['gothere'] = '';
   }
 
-  $allRows[$i]['cNamemb'] = mb_substr($allRows[$i]['cName'],0,10);
+  $allRows[$i]['cNamemb'] = mb_substr($allRows[$i]['cName'],0,10,'utf-8');
 
-  $allRows[$i]['email'] = mb_substr($allRows[$i]['email'],0,8);
+  $allRows[$i]['email'] = mb_substr($allRows[$i]['email'],0,8,'utf-8');
 
-  $allRows[$i]['etc'] = mb_substr($allRows[$i]['etc'],0,10);
+  $allRows[$i]['etc'] = mb_substr($allRows[$i]['etc'],0,10,'utf-8');
 
-  $allRows[$i]['created'] = mb_substr($allRows[$i]['created'],0,10);
+  $allRows[$i]['created'] = mb_substr($allRows[$i]['created'],0,10,'utf-8');
 
-  $allRows[$i]['updated'] = mb_substr($allRows[$i]['updated'],0,10);
+  $allRows[$i]['updated'] = mb_substr($allRows[$i]['updated'],0,10,'utf-8');
 }
 
 

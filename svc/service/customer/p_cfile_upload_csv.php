@@ -1,5 +1,9 @@
 <?php //고객생성 파일
+// ini_set('display_errors', 1);
+// ini_set('error_reporting', E_ALL);
 session_start();
+header('Content-Type: text/html; charset=UTF-8');
+
 include $_SERVER['DOCUMENT_ROOT']."/svc/view/conn.php";
 
 
@@ -8,45 +12,49 @@ include $_SERVER['DOCUMENT_ROOT']."/svc/view/conn.php";
 // print_r($_POST);
 // print_r($_SESSION);
 
-for ($i=0; $i < count($_POST)/12; $i++) {
-  $customerRow[$i]=[];
+$a = array();
+
+foreach ($_POST as $key => $value) {
+  if($key != 'building'){
+    array_push($a, mysqli_real_escape_string($conn, $value));
+  }
+}
+
+for ($i=0; $i < count($a)/12; $i++) {
+  $customerRow[$i]=array();
 } //$customerRow 라는 배열을 만듦
 
-$a = [];
-foreach ($_POST as $key => $value) {
-  array_push($a, $key);
-}
-// print_r($a);
-
-for ($i=0; $i < count($_POST); $i++) {
+for ($i=0; $i < count($a); $i++) {
   if($i < 12){
-    array_push($customerRow[0], $_POST[$a[$i]]);
-  } else {
-    array_push($customerRow[floor($i/12)], $_POST[$a[$i]]);
+    array_push($customerRow[0], $a[$i]);
+  } elseif($i >= 12) {
+    array_push($customerRow[floor($i/12)], $a[$i]);
   }
 }
 
 for ($i=0; $i < count($customerRow); $i++) {
   $customerRow[$i][3] = explode('-', $customerRow[$i][3]);
-  $customerRow[$i][10] = explode('-', $customerRow[$i][10]);
+  $customerRow[$i][8] = explode('-', $customerRow[$i][8]);
 }
 
-print_r($customerRow);
+// print_r($customerRow);
 
 for ($i=0; $i < count($customerRow); $i++) {
 
   $addCheck1 = "
     select count(*) from customer
     where
-      user_id={$_SESSION['id']} and name = '{$customerRow[2]}'
+      user_id={$_SESSION['id']}
+      and name = '{$customerRow[$i][2]}'
+      and building_id = {$_POST['building']}
       ";
   // echo $addCheck1;
   $result_addCheck1 = mysqli_query($conn, $addCheck1);
   $row_addCheck1 = mysqli_fetch_array($result_addCheck1);
 
   if((int)$row_addCheck1[0] >= 1){
-    echo "<script>alert('중복된 이름이 존재합니다. 중복된 이름은 저장이 안돼요.');
-          location.href = 'm_c_add_csv1.php';</script>";
+    echo "<script>alert('".$customerRow[$i][2]."이름이 이미 존재합니다. 다른 이름으로 저장하거나 다시 확인해주세요.');
+          history.back();</script>";
     exit();
   }
 
@@ -55,25 +63,28 @@ for ($i=0; $i < count($customerRow); $i++) {
     select count(*) from customer
     where
       user_id={$_SESSION['id']} and
-      contact1 = '{$customerRow[3][0]}' and
-      contact2 = '{$customerRow[3][1]}' and
-      contact3 = '{$customerRow[3][2]}'
+      contact1 = '{$customerRow[$i][3][0]}' and
+      contact2 = '{$customerRow[$i][3][1]}' and
+      contact3 = '{$customerRow[$i][3][2]}'
+      and building_id = {$_POST['building']}
       ";
   // echo $addCheck2;
   $result_addCheck2 = mysqli_query($conn, $addCheck2);
   $row_addCheck2 = mysqli_fetch_array($result_addCheck2);
 
   if((int)$row_addCheck2[0] >= 1){
-    echo "<script>alert('중복된 연락처가 존재합니다. 중복된 연락처는 저장이 안돼요.');
-          location.href = 'm_c_add.php_csv1';</script>";
+    echo "<script>alert('".$customerRow[$i][2]."이름의 연락처 ".$customerRow[$i][3][0].$customerRow[$i][3][1].$customerRow[$i][3][2]." 번호가 존재합니다. 중복된 연락처는 저장이 안돼요.');
+          history.back();</script>";
     exit();
   }
+}
 
+for ($i=0; $i < count($customerRow); $i++) {
   $sql = "
     INSERT INTO
       customer
       (div1, div2, name, contact1, contact2, contact3,
-      gender, email, div3, div4, div5, companyname, cNumber1, cNumber2, cNumber3, etc, created, createPerson, user_id)
+      gender, email, div3, companyname, cNumber1, cNumber2, cNumber3, div4, div5, etc, created, createPerson, user_id, building_id)
       VALUES
       ('{$customerRow[$i][0]}',
       '{$customerRow[$i][1]}',
@@ -85,13 +96,16 @@ for ($i=0; $i < count($customerRow); $i++) {
       '{$customerRow[$i][5]}',
       '{$customerRow[$i][6]}',
       '{$customerRow[$i][7]}',
-      '{$customerRow[$i][8]}',
+      '{$customerRow[$i][8][0]}',
+      '{$customerRow[$i][8][1]}',
+      '{$customerRow[$i][8][2]}',
       '{$customerRow[$i][9]}',
-      '{$customerRow[$i][10][0]}',
-      '{$customerRow[$i][10][1]}',
-      '{$customerRow[$i][10][2]}',
+      '{$customerRow[$i][10]}',
       '{$customerRow[$i][11]}',
-      now(), {$_SESSION['id']}, {$_SESSION['id']}
+      now(),
+      '{$_SESSION['manager_name']}',
+      {$_SESSION['id']},
+      {$_POST['building']}
       )
   ";
 
@@ -100,9 +114,10 @@ for ($i=0; $i < count($customerRow); $i++) {
   $result = mysqli_query($conn, $sql);
   if(!$result){
     echo "<script>alert('저장과정에 문제가 생겼습니다. 관리자에게 문의하세요.');
-    location.href = 'customer.php';
+    history.back();
     </script>";
     error_log(mysqli_error($conn));
+    exit();
   }
 }
 

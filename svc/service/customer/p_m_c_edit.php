@@ -65,21 +65,22 @@ $sql = "
     add3 = '{$fil['add3']}',
     etc = '{$fil['etc']}',
     updated = now(),
-    updatePerson = {$_SESSION['id']}
+    updatePerson = '{$_SESSION['manager_name']}'
   WHERE id = {$filtered_id}
 ";
 
 echo $sql;
 
-$result = mysqli_query($conn, $sql);
-if($result){
-  echo "<script>alert('수정하였습니다.');
-  location.href = 'm_c_edit.php?id=$filtered_id';
-  </script>";
-} else {
-  echo "<script>alert('수정 과정에 문제가 생겼습니다. 관리자에게 문의하세요.');
-  location.href = 'customer.php';
-  </script>";
-  error_log(mysqli_error($conn));
-}
+// $result = mysqli_query($conn, $sql);
+// if($result){
+//   echo "<script>alert('수정하였습니다.');
+//   history.back();
+//   </script>";
+// } else {
+//   echo "<script>alert('수정 과정에 문제가 생겼습니다. 관리자에게 문의하세요.');
+//   history.back();
+//   </script>";
+//   error_log(mysqli_error($conn));
+// }
+
 ?>

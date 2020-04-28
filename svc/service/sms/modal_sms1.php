@@ -29,8 +29,11 @@
                   <label class="col pr-0">발송번호</label>
                 </div>
                 <div class="col col-sm-8">
-                  <input type="text" class="form-control form-control-sm col" name="sendphonenumber" disabled>
+                  <input type="text" class="form-control form-control-sm col" name="sendphonenumber" readonly>
                 </div>
+              </div>
+              <div class="row mb-2 pl-2 pr-2">
+                <small>발송번호는 상단 <i class="fas fa-cog"></i>환경설정->물건명->발송번호에서 설정합니다.</small>
               </div>
 
             </div>

@@ -8,35 +8,44 @@ if(!isset($_SESSION['is_login'])){
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
   <head>
-    <title>세입자일괄등록</title>
+    <title>관계자일괄등록</title>
 <?php
 include $_SERVER['DOCUMENT_ROOT']."/svc/view/service_header1_meta.php";
 include $_SERVER['DOCUMENT_ROOT']."/svc/view/service_header2.php";
 include $_SERVER['DOCUMENT_ROOT']."/svc/view/conn.php";
+include $_SERVER['DOCUMENT_ROOT']."/svc/service/contract/building.php";
 ?>
 
 <section class="container">
-  <div class="jumbotron">
-    <h1 class="display-4">일괄등록 화면입니다!</h1>
-    <p class="lead">이 화면에서는 한꺼번에 많은 세입자를 등록합니다.</p>
+  <div class="jumbotron pt-3 pb-3">
+    <h3 class="">일괄등록 화면입니다!</h3>
+    <p class="lead">이 화면에서는 한꺼번에 많은 사람들을 등록합니다.</p>
     <small>(1)<span id='star' style='color:#F7BE81;'>* </span>표시는 반드시 입력해야 합니다. (2)연락처는 010으로 시작하는 핸드폰번호 기준입니다.(지역번호 02로 시작하는 번호 또는 031로 시작하는 번호는 고객상세화면에서 수정하세요)</small>
     <hr class="my-4">
     <a class="btn btn-primary btn-sm mobile" href="m_c_add_csv1.php" role="button">csv등록</a>
   </div>
 </section>
+
 <section class="container" style="max-width:1200px;">
   <form method="post" action ="p_m_c_adds.php">
     <div class="form-group row justify-content-md-center">
-      <div class="col-sm-1 pl-0 pr-0" style="">
-        <label>구분(대)</label>
-      </div>
-      <div class="col-sm-1 pl-0 pr-0" style="">
-        <select name="div1" class="form-control">
-          <option value="입주자">입주자</option>
-          <option value="거래처">거래처</option>
-          <option value="기타">기타</option>
-        </select>
-      </div>
+      <table width="500px">
+        <tr class="text-center">
+          <td width="25%"><label>구분(대)</label></td>
+          <td width="30%">
+            <select name="div1" class="form-control">
+              <option value="입주자">입주자</option>
+              <option value="거래처">거래처</option>
+              <option value="기타">기타</option>
+            </select>
+          </td>
+          <td width="15%"><label>물건</label></td>
+          <td width="30%">
+            <select name="building" class="form-control">
+            </select>
+          </td>
+        </tr>
+      </table>
     </div>
 
     <table id="centerSection" class='table table-bordered text-center'>
@@ -100,6 +109,16 @@ include $_SERVER['DOCUMENT_ROOT']."/svc/view/conn.php";
 <script src="/svc/inc/js/datepicker-ko.js"></script>
 <script src="/svc/inc/js/etc/form.js?<?=date('YmdHis')?>"></script>
 <script src="/svc/inc/js/jquery.number.min.js"></script>
+
+<script type="text/javascript">
+  var buildingArray = <?php echo json_encode($buildingArray); ?>;
+  // console.log(buildingArray);
+  var groupoption;
+  for(var key in buildingArray){ //건물목록출력(비즈피스장암,비즈피스구로)
+    groupoption = "<option value='"+key+"'>"+buildingArray[key][0]+"</option>";
+    $('select[name=building]').append(groupoption);
+  }
+</script>
 
 <script type="text/javascript">
 $(document).ready(function () {

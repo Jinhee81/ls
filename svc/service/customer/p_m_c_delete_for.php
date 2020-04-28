@@ -1,4 +1,6 @@
 <?php
+ini_set('display_errors', 1);
+ini_set('error_reporting', E_ALL);
 header('Content-Type: text/html; charset=UTF-8');
 session_start();
 include $_SERVER['DOCUMENT_ROOT']."/svc/view/conn.php";
@@ -9,7 +11,7 @@ $a = explode(",", $_POST['customerArray']);
 // print_r($a);
 
 for ($i=0; $i < count($a)/3; $i++) {
-  $customerRow[$i]=[];
+  $customerRow[$i]=array();
 } //$customerRow 라는 배열을 만듦
 
 for ($i=0; $i < count($a); $i++) {

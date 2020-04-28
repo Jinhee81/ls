@@ -123,6 +123,9 @@ for ($i=0; $i < count($allRows); $i++) {
 
   $allRows[$i]['contact'] = $allRows[$i]['contact1'].'-'.$allRows[$i]['contact2'].'-'.$allRows[$i]['contact3'];
 
+  $allRows[$i]['startDate'] = date('Y-n-j', strtotime($allRows[$i]['startDate']));
+  $allRows[$i]['endDate2'] = date('Y-n-j', strtotime($allRows[$i]['endDate2']));
+
   $sql_step = "select idpaySchedule2 from paySchedule2 where realContract_id = {$allRows[$i]['rid']}";
   // echo $sql_step;
   $result_step = mysqli_query($conn, $sql_step);

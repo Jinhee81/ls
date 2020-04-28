@@ -25,7 +25,7 @@
         <button type="button" id="button2" class="btn btn-outline-info btn-sm mr-1" data-toggle="tooltip" data-placement="top" title="체크된것의 청구정보를 취소합니다">청구취소</button>
         <button type="button" id="button3" class="btn btn-outline-info btn-sm mobile mr-1" data-toggle="tooltip" data-placement="top" title="체크된것들을 입금처리합니다(청구번호가있어야 입금처리 가능해요.)">입금처리</button>
         <button type="button" id="button4" class="btn btn-outline-info btn-sm mobile mr-1" data-toggle="tooltip" data-placement="top" title="체크된것의 입금내역을 취소합니다">입금취소</button>
-        <button type="button" id="button8" class="btn btn-outline-danger btn-sm mobile">입금완료보이기</button>
+        <button type="button" id="button8" class="btn btn-outline-danger btn-sm">입금완료보이기</button>
       </div>
     </div>
   </div>
@@ -34,10 +34,12 @@
     <table class="table table-sm table-hover text-center" style="width:100%" cellspacing="0" id="checkboxTestTbl">
       <thead>
         <tr class="table-info">
-          <td scope="col" class="mobile"><input type="checkbox" id="checkAll"></td>
+          <td scope="col" class=""><input type="checkbox" id="checkAll"></td>
           <td scope="col" class="">순번</td>
           <td scope="col" class="">시작일/종료일</td>
+          <!-- <td scope="col">종료일</td> -->
           <td scope="col" class="">공급가액/세액</td>
+          <!-- <td scope="col" class="mobile">세액</td> -->
           <td scope="col" class="">합계</td>
           <td scope="col" class="mobile">입금예정일</td>
           <td scope="col" class="mobile">입금구분</td>
@@ -54,7 +56,7 @@
         <?php
         for ($i=0; $i < count($allRows); $i++) { ?>
         <tr>
-          <td class="mobile"><input type='checkbox' class='checkSelect' name='chk[]' value='<?=$allRows[$i]['idcontractSchedule']?>'></td><!-- 체크박스 -->
+          <td class=""><input type='checkbox' class='checkSelect' name='chk[]' value='<?=$allRows[$i]['idcontractSchedule']?>'></td><!-- 체크박스 -->
           <td class=""><label class="font-weight-light"><?=$allRows[$i]['ordered']?></label></td><!-- 순번 -->
           <td class=""><label class="font-weight-light mb-0"><?=$allRows[$i]['mStartDate']?></label><br>
           <label class="font-weight-light mb-0"><?=$allRows[$i]['mEndDate']?></label></td><!-- 시작일/종료일 -->
@@ -127,16 +129,18 @@
           </td><!-- 입금일 -->
           <td class="mobile">
             <?php
+
             if($allRows[$i]['payId'] && $allRows[$i]['payIdOrder']==='0'){
               if($allRows[$i]['paySchedule2']['executiveDate']) {
-                echo "<label class='text-center numberComma font-weight-light green'>".$allRows[$i]['paySchedule2']['getAmount']."</label>";
+                  echo "<label class='text-center numberComma font-weight-light green'>".$allRows[$i]['paySchedule2']['getAmount']."</label>";
               } else {
                 if($row3['pExpectedDate'] >= $currentDate){
                   echo "<label class='text-center numberComma font-weight-light sky'>"."&#40;".$allRows[$i]['paySchedule2']['ptAmount'].")"."</label>";
                 } else {
-                  echo "<label class='text-center numberComma font-weight-light pink'>"."&#40;".$allRows[$i]['paySchedule2']['ptAmount'].")"."</label>";
+                  echo "<label class='text-center font-weight-light pink'>"."(".number_format($allRows[$i]['paySchedule2']['ptAmount']).")"."</label>";
                 }
               }
+
             }
              ?>
           </td><!-- 입금액 -->

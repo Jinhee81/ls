@@ -186,10 +186,10 @@ include $_SERVER['DOCUMENT_ROOT']."/svc/service/contract/building.php";
 <script type="text/javascript">
   var buildingArray = <?php echo json_encode($buildingArray); ?>;
   // console.log(buildingArray);
-  var select2option;
+  var groupoption;
   for(var key in buildingArray){ //건물목록출력(비즈피스장암,비즈피스구로)
-    select2option = "<option value='"+key+"'>"+buildingArray[key][0]+"</option>";
-    $('select[name=building]').append(select2option);
+    groupoption = "<option value='"+key+"'>"+buildingArray[key][0]+"</option>";
+    $('select[name=building]').append(groupoption);
   }
 </script>
 

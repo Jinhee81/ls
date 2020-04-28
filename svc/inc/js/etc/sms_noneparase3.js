@@ -84,7 +84,7 @@ function sms_noneparase(){
   var aa = 'sendedArray1';
   var bb = '/svc/service/sms/p_sendedsms1.php';
 
-  function goCategoryPage(a,b,c,d,e,f,g,h){
+  function goCategoryPage(a,b,c,d,e,f,g,h,i){
       var frm = formCreate(a, 'post', b,'');
       frm = formInput(frm, 'sendedArray1', c);
       frm = formInput(frm, 'textareaOnly', d);
@@ -92,6 +92,7 @@ function sms_noneparase(){
       frm = formInput(frm, 'smsTime', f);
       frm = formInput(frm, 'getByte', g);
       frm = formInput(frm, 'smsDiv', h);
+      frm = formInput(frm, 'sendphonenumber', i);
       formSubmit(frm);
   }
 
@@ -101,12 +102,13 @@ function sms_noneparase(){
     var smsTimeValue = $('#timeSetVal').val();
     var getByte = $('#getByteOnly').text();
     var smsDiv = $('#smsDivOnly').children().text();
+    var sendphonenumber = $('input[name=sendphonenumber]').val();
     if(textareaOnly.length===0){
       alert('문자내용이 없는 경우 문자전송할수 없습니다.');
       return false;
     }
 
-    goCategoryPage(aa, bb, sendedArray1, textareaOnly, smsTime, smsTimeValue, getByte, smsDiv);
+    goCategoryPage(aa, bb, sendedArray1, textareaOnly, smsTime, smsTimeValue, getByte, smsDiv, sendphonenumber);
 
   })
 }

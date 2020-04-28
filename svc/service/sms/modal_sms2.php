@@ -24,7 +24,7 @@
                     <option value="immediately">즉시전송</option>
                     <option value="reservation">예약전송</option>
                   </select>
-                  <input type="text" class="form-control form-control-sm mr-1" name="sendphonenumber" value="발송번호:<?=$_SESSION['cellphone']?>" disabled style="width: 11rem;">
+                  <input type="text" class="form-control form-control-sm mr-1" name="sendphonenumber" readonly style="width: 11rem;">
                   <button type="button" name="button" class="btn btn-sm btn-primary" style="width: 3rem;" id="smsSendBtn2">전송</button>
                 </div>
                 <div class="row mt-1" style="padding-left:12px;" id="timeSet2">

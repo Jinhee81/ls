@@ -14,30 +14,33 @@
   <table class="table table-sm table-hover text-center mt-3">
     <tr class="table-secondary">
       <td style="width:5%" class="">순번</td>
+      <!-- <td style="width:10%">작성자</td> -->
       <td style="width:45%" class="">내용</td>
       <td style="width:40%" class="mobile">등록일시/수정일시</td>
-      <td style="width:10%" class="">관리</td>
+      <!-- <td style="width:20%">수정일시</td> -->
+      <td style="width:10%" class="mobile">관리</td>
     </tr>
     <?php
     if(count($memoRows)===0){
       echo "<tr><td colspan='6'>등록된 메모가 없습니다.</td></tr>";
     } else {
-      for ($i=0; $i < count($memoRows); $i++) { ?>
+        for ($i=0; $i < count($memoRows); $i++) { ?>
     <tr>
-     <td class="">
-       <label class="grey"><?=$memoRows[$i]['num']?></label>
-       <input type="hidden" name="memoid" value="<?=$memoRows[$i]['idrealContract_memo']?>">
-     </td>
-     <td class=""><input class="form-control form-control-sm text-center" name="memoContent" value="<?=$memoRows[$i]['memoContent']?>" disabled></td>
-     <td class="mobile"><small class="grey"><?=$memoRows[$i]['created']?>/<?=$memoRows[$i]['updated']?></small></td>
-     <td class="">
-       <button type="submit" name="memoEdit" class="btn btn-default grey">
-         <i class='far fa-edit'></i>
-       </button>
-       <button type="submit" name="memoDelete" class="btn btn-default grey">
-         <i class='far fa-trash-alt'></i>
-       </button>
-     </td>
+        <td class="">
+            <input class="form-control form-control-sm text-center" type="hidden" name="memoCreator" value="<?=$memoRows[$i]['memoCreator']?>" disabled>
+            <label class="grey"><?=$memoRows[$i]['num']?></label>
+            <input type="hidden" name="memoid" id="memoid" value="<?=$memoRows[$i]['idrealContract_memo']?>">
+        </td>
+        <td class="">
+          <input class="form-control form-control-sm text-center" name="memoContent" id="memoContent" value="<?=$memoRows[$i]['memoContent']?>" disabled></td>
+        <td class="mobile">
+          <small class="grey"><?=$memoRows[$i]['created']?>/<?=$memoRows[$i]['updated']?></small>
+        </td>
+     <!-- <td><label class="grey"><//?=$memoRows[$i]['updated']?></label></td> -->
+        <td id="append" class="mobile">
+          <button type="submit" name="memoEdit" id="edit<?=$memoRows[$i]['idrealContract_memo']?>" class="btn btn-default grey"><i class='far fa-edit'></i></button>
+          <button type="submit" name="memoDelete" id="del<?=$memoRows[$i]['idrealContract_memo']?>" class="btn btn-default grey"><i class='far fa-trash-alt'></i></button>
+        </td>
     </tr>
 <?php }
 } ?>

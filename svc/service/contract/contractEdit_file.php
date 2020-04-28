@@ -1,4 +1,19 @@
 <div class="p-3 mb-2 text-dark border border-info rounded">
+    <!-- <div class="row justify-content-md-center">
+          <div class="col col-sm-5">
+            <form action="p_file_upload.php" method="post" enctype="multipart/form-data">
+                <div class="input-group">
+                  <div class="custom-file">
+                    <input type="file" class="custom-file-input" id="inputGroupFile02" aria-describedby="inputGroupFileAddon02">
+                    <label class="custom-file-label" for="inputGroupFile02">파일선택</label>
+                  </div>
+                  <div class="input-group-append">
+                    <button class="btn btn-outline-secondary" type="button" id="inputGroupFileAddon02">등록</button>
+                  </div>
+                </div>
+            </form>
+          </div>
+      </div> -->
   <h5>첨부파일</h5>
   <form name="uploadForm" id="uploadForm" method="post" action="p_file_upload.php" enctype="multipart/form-data">
     <label for="">첨부파일</label>

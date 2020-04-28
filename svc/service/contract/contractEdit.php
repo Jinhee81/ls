@@ -65,9 +65,9 @@ include "contractEdit_condi.php";
    var buildingArray = <?php echo json_encode($buildingArray); ?>;
    var groupBuildingArray = <?php echo json_encode($groupBuildingArray); ?>;
    var roomArray = <?php echo json_encode($roomArray); ?>;
-   console.log(buildingArray);
-   console.log(groupBuildingArray);
-   console.log(roomArray);
+//    console.log(buildingArray);
+//    console.log(groupBuildingArray);
+//    console.log(roomArray);
  </script>
 
 <script>
@@ -124,7 +124,7 @@ $(document).ready(function(){
 
   for (var i = 1; i <= allCnt; i++) {
     var executiveDateIs = table.find("tr:eq("+i+")").children("td:eq(9)").children('label').text();
-    console.log(executiveDateIs);
+    // console.log(executiveDateIs);
     if(executiveDateIs){
       table.find("tr:eq("+i+")").css('display', 'none');
     }
@@ -429,7 +429,7 @@ if(psId===""){ //trim()이거를 안넣으니 빈문자열로 인식이 안되�
 
 contractScheduleArray.push(psId);
 }
-console.log(contractScheduleArray);
+// console.log(contractScheduleArray);
 
 var aa = 'getAmountDrop';
 var bb = 'p_payScheduleGetAmountCanselFor.php';
@@ -582,17 +582,21 @@ $('#memoButton').click(function(){
 });
 
 $("button[name='memoEdit']").click(function(){
-    var memoid = $(this).parent().parent().children().children('input:eq(0)');
-    var memoCreator = $(this).parent().parent().children().children('input:eq(1)');
+    var memoid = $(this).parent().parent().children().children('input:eq(1)');
+    var memoCreator = $(this).parent().parent().children().children('input:eq(0)');
     var memoContent = $(this).parent().parent().children().children('input:eq(2)');
     // console.log(memoid, memoCreator, memoContent);
     var smallEditButton = "<button type='button' name='smallEditButton' class='btn btn-secondary btn-sm'>수정</button><button type='button' name='smallEditButtonCancel' class='btn btn-secondary btn-sm'>취소</button>";
 
     memoCreator.removeAttr("disabled");
     memoContent.removeAttr("disabled");
-    $(this).hide();//편집버튼을 누르면 편집아이콘 및 휴지통아이콘은 없어져야한다.
-    $(this).next().hide();
-    memoContent.after(smallEditButton);
+    // $(this).hide();//편집버튼을 누르면 편집아이콘 및 휴지통아이콘은 없어져야한다.
+    // $(this).next().hide();
+    var memo = $(this).attr('id');
+    $('#'+memo).hide();
+    var del = 'del'+memo.replace('edit','');
+    $('#'+del).hide();
+    $('#'+memo).after(smallEditButton);
     // console.log('solmi');
 
     $("button[name='smallEditButton']").click(function(){
@@ -600,8 +604,8 @@ $("button[name='memoEdit']").click(function(){
         var aa = 'memoEdit';
         var bb = 'p_memoEdit.php';
         var contractId = '<?=$filtered_id?>';
-        var memoid = $(this).parent().parent().children().children('input:eq(0)').val();
-        var memoCreator = $(this).parent().parent().children().children('input:eq(1)').val();
+        var memoid = $(this).parent().parent().children().children('input:eq(1)').val();
+        var memoCreator = $(this).parent().parent().children().children('input:eq(0)').val();
         var memoContent = $(this).parent().parent().children().children('input:eq(2)').val();
         // console.log(contractId, memoid, memoCreator, memoContent);
 
@@ -622,25 +626,27 @@ $("button[name='memoEdit']").click(function(){
       // var memoCreator = $(this).parent().parent().children().children('input:eq(1)').val();
       // var memoContent = $(this).parent().parent().children().children('input:eq(2)').val();
 
-      var memoid = $(this).parent().parent().children().children('input:eq(0)');
-      var memoCreator = $(this).parent().parent().children().children('input:eq(1)');
+      var memoid = $(this).parent().parent().children().children('input:eq(1)');
+      var memoCreator = $(this).parent().parent().children().children('input:eq(0)');
       var memoContent = $(this).parent().parent().children().children('input:eq(2)');
 
       // console.log(memoid, memoCreator, memoContent);
-      var smallsubmitButton = "<button type='submit' name='memoEdit' class='btn btn-default grey'><i class='far fa-edit'></i></button><button type='submit' name='memoDelete' class='btn btn-default grey'><i class='far fa-trash-alt'></i></button>";
+      //var smallsubmitButton = "<button type='submit' name='memoEdit' class='btn btn-default grey'><i class='far fa-edit'></i></button><button type='submit' name='memoDelete' class='btn btn-default grey'><i class='far fa-trash-alt'></i></button>";
 
       memoCreator.attr("disabled", true);
       memoContent.attr("disabled", true);
       $(this).hide();
       $(this).prev().hide();
-      $(this).parent().parent().find('td:eq(5)').html(smallsubmitButton)
+      //$(this).parent().parent().find('td:eq(5)').html(smallsubmitButton)
+      $('#'+memo).show();
+      $('#'+del).show();
     });
 
 
 });
 
 $("button[name='memoDelete']").click(function(){
-    var memoid = $(this).parent().parent().children().children('input:eq(0)').val();
+    var memoid = $(this).parent().parent().children().children('input:eq(1)').val();
 
     // console.log('메모삭제', memoid);
 

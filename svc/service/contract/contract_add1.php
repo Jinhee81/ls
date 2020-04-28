@@ -307,87 +307,59 @@ $(document).ready(function(){
 })//document.ready function closing}
 
 
-$('#contractDate').on('change', function(){
-  var readyStartDate = $('#contractDate').val();
+function dateFormat(x){
+  var yyyy = x.getFullYear().toString();
+  var mm = (x.getMonth()+1).toString();
+  var dd = x.getDate().toString();
 
-  getStartDate();
-
-  function getStartDate(){
-    var arr1 = readyStartDate.split('-');
-    var sDate = new Date(arr1[0], arr1[1]-1, arr1[2]);
-
-    dateFormat();
-    $('#startDate').attr('value', dateFormat());
-
-    function dateFormat(){
-      var yyyy = sDate.getFullYear().toString();
-      var mm = (sDate.getMonth()+1).toString();
-      var dd = sDate.getDate().toString();
-
-      var startDate = yyyy+'-'+(mm[1] ? mm : '0'+mm[0])+'-'+(dd[1]?dd:'0'+dd[0]);
-      return startDate;
-    }
-  }
-}) //contractDate on change closing괄호, 최초계약일자=시작일자
-
-$('#contractDate').on('change', function(){
-  var readyStartDate = $('#contractDate').val();
-
-  getDepositInDate();
-
-  function getDepositInDate(){
-    var arr1 = readyStartDate.split('-');
-    var gDate = new Date(arr1[0], arr1[1]-1, arr1[2]);
-
-    dateFormat();
-    $('#depositInDate').attr('value', dateFormat());
-
-    function dateFormat(){
-      var yyyy = gDate.getFullYear().toString();
-      var mm = (gDate.getMonth()+1).toString();
-      var dd = gDate.getDate().toString();
-
-      var depositInDate = yyyy+'-'+(mm[1] ? mm : '0'+mm[0])+'-'+(dd[1]?dd:'0'+dd[0]);
-      return depositInDate;
-    }
-  }
-}) //contractDate on change closing괄호, 최초계약일자=보증금입금일자
-
-
-
-function getEndDate(){
-  var a = Number($("input[name='monthCount']").val());
-  var b = $('#startDate').val();
-  // console.log(b);
-  var arr1 = b.split('-');
-  var sDate = new Date(arr1[0], arr1[1]-1, arr1[2]);
-  // console.log(sDate);
-  // var eDate = new Date(arr1[0], arr1[1]-1+a, arr1[2]-1);
-  var eDate = new Date(sDate.getFullYear(), sDate.getMonth() + a, sDate.getDate()-1);
-  // console.log(eDate);
-  // console.log(a);
-
-  dateFormat();
-  $('#endDate').attr('value', dateFormat());
-  $('#endDate1').attr('value', dateFormat());
-
-  function dateFormat(){
-    var yyyy = eDate.getFullYear().toString();
-    var mm = (eDate.getMonth()+1).toString();
-    var dd = eDate.getDate().toString();
-
-    var endDate = yyyy+'-'+(mm[1] ? mm : '0'+mm[0])+'-'+(dd[1]?dd:'0'+dd[0]);
-    return endDate;
-  }
-
+  var date = yyyy+'-'+mm+'-'+dd;
+  return date;
 }
 
+$('#contractDate').on('change', function(){
+  var startDate = $(this).val();
+  $('#startDate').val(startDate);
+  $('#depositInDate').val(startDate);
+
+  var monthCount = Number($('input[name=monthCount]').val());
+
+  var arr1 = startDate.split('-');
+  var sDate = new Date(arr1[0], arr1[1]-1, arr1[2]);
+  var eDate = new Date(sDate.getFullYear(), sDate.getMonth() + monthCount, sDate.getDate()-1);
+
+  var endDate = dateFormat(eDate);
+
+  $('#endDate').val(endDate);
+
+}) //contractDate on change closing괄호, 최초계약일자=시작일자
+
+
 $('#startDate').on('change', function(event){
-  getEndDate();
+  var startDate = $(input[name=startDate]).val();
+  $('#startDate').val(startDate);
+
+  var monthCount = Number($('input[name=monthCount]').val());
+
+  var arr1 = startDate.split('-');
+  var sDate = new Date(arr1[0], arr1[1]-1, arr1[2]);
+  var eDate = new Date(sDate.getFullYear(), sDate.getMonth() + monthCount, sDate.getDate()-1);
+
+  var endDate = dateFormat(eDate);
+
+  $('#endDate').val(endDate);
 })
 
 $('input[name="monthCount"]').on('change', function(event){
-  getEndDate();
+  var startDate = $('input[name=startDate]').val();
+  var monthCount = Number($('input[name=monthCount]').val());
+
+  var arr1 = startDate.split('-');
+  var sDate = new Date(arr1[0], arr1[1]-1, arr1[2]);
+  var eDate = new Date(sDate.getFullYear(), sDate.getMonth() + monthCount, sDate.getDate()-1);
+
+  var endDate = dateFormat(eDate);
+
+  $('#endDate').val(endDate);
 })
 
 

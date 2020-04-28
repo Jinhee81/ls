@@ -306,11 +306,14 @@ $(document).ready(function(){
       customerArray.push(customerArrayEle);
     } else {
       var currow = $(this).closest('tr');
-      var colOrder = Number(currow.find('td:eq(1)').text());
       var colid = currow.find('td:eq(0)').children('input').val();
-      var colStep = currow.find('td:eq(3)').children('span').text();
-      var dropReady = customerArrayEle.push(colOrder, colid, colStep);
-      var index = customerArray.indexOf(dropReady);
+
+      for (var i = 0; i < customerArray.length; i++) {
+        if(customerArray[i][1] ==colid){
+          var index = i;
+          break;
+        }
+      }
       customerArray.splice(index, 1);
     }
     console.log(customerArray);

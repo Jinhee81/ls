@@ -297,12 +297,7 @@ $('button[name=btnroomAdd]').on('click', function(){ //모달안의 생성버튼
     $('#mbelow_rooms').empty();
   })
 
-
 })//모달안의 생성버튼 누를 때}
-
-
-
-
 
 </script>
 

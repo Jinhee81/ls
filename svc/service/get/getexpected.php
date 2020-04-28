@@ -14,7 +14,7 @@ include $_SERVER['DOCUMENT_ROOT']."/svc/view/service_header2.php";
 include $_SERVER['DOCUMENT_ROOT']."/svc/view/conn.php";
 include $_SERVER['DOCUMENT_ROOT']."/svc/main/condition.php";
 include $_SERVER['DOCUMENT_ROOT']."/svc/service/contract/building.php";
-
+// header("Content-Type: text/html; charset=UTF-8");
 $sql_sms = "select
           screen, title, description
         from sms
@@ -62,12 +62,12 @@ while($row_sms = mysqli_fetch_array($result_sms)){
       <div class="row justify-content-md-center">
         <table>
           <tr>
-            <td width="6%">
+            <td width="6%" class="mobile">
               <select class="form-control form-control-sm selectCall" name="dateDiv">
                 <option value="pExpectedDate">예정일자</option>
               </select><!--codi1-->
             </td>
-            <td width="6%">
+            <td width="6%" class="mobile">
               <select class="form-control form-control-sm selectCall" name="periodDiv">
                 <option value="allDate">--</option>
                 <option value="nowMonth">당월</option>
@@ -76,23 +76,23 @@ while($row_sms = mysqli_fetch_array($result_sms)){
                 <option value="nowYear">당년</option>
               </select><!--시간구분-->
             </td>
-            <td width="8%">
+            <td width="8%" class="mobile">
               <input type="text" name="fromDate" value="" class="form-control form-control-sm text-center dateType yyyymmdd"><!--codi3-->
             </td>
-            <td width="1%">~</td>
-            <td width="8%">
+            <td width="1%" class="mobile">~</td>
+            <td width="8%" class="mobile">
               <input type="text" name="toDate" value="" class="form-control form-control-sm text-center dateType yyyymmdd"><!--codi4-->
             </td>
-            <td width="7%">
+            <td width="7%" class="">
               <select class="form-control form-control-sm selectCall" name="building">
               </select><!--건물-->
             </td>
-            <td width="7%">
+            <td width="7%" class="mobile">
               <select class="form-control form-control-sm selectCall" name="group">
                 <option value="groupAll">그룹전체</option>
               </select><!--그룹-->
             </td>
-            <td width="7%">
+            <td width="7%" class="">
               <select class="form-control form-control-sm selectCall" name="etcCondi">
                 <option value="customer">성명/사업자명</option>
                 <option value="contact">연락처</option>
@@ -100,7 +100,7 @@ while($row_sms = mysqli_fetch_array($result_sms)){
                 <option value="roomId">방번호</option>
               </select><!--codi8-->
             </td>
-            <td width="12%">
+            <td width="12%" class="">
               <input type="text" name="cText" value="" class="form-control form-control-sm text-center"><!--codi9-->
             </td>
           </tr>
@@ -112,7 +112,7 @@ while($row_sms = mysqli_fetch_array($result_sms)){
 
 <!-- 문자 및 세금계산서발행 섹션 -->
 <section class="container">
-    <div class="row mobile">
+    <div class="row">
         <div class="col col-md-7">
           <div class="row ml-0">
             <table>
@@ -130,19 +130,19 @@ while($row_sms = mysqli_fetch_array($result_sms)){
                 </td>
                 <td>
                   <a href="/svc/service/sms/smsSetting.php" target="_blank">
-                  <button class="btn btn-sm btn-block btn-dark" id="smsSettingBtn"><i class="fas fa-angle-double-right"></i> 상용구설정</button></a>
+                  <button class="btn btn-sm btn-block btn-dark mobile" id="smsSettingBtn"><i class="fas fa-angle-double-right"></i> 상용구설정</button></a>
                 </td>
                 <td>
                   <a href="/svc/service/sms/sent.php" target="_blank">
                   <button class="btn btn-sm btn-block btn-dark" id="smsSettingBtn"><i class="fas fa-angle-double-right"></i> 보낸문자목록</button></a>
                 </td>
-                <td><button class="btn btn-sm btn-block btn-danger" name="button1" data-toggle="tooltip" data-placement="top" title="작업중입니다^^;">청구취소</button></td>
-                <td><button class="btn btn-sm btn-block btn-warning" name="button2" data-toggle="tooltip" data-placement="top" title="작업중입니다^^;">납부처리</button></td>
+                <td><button class="btn btn-sm btn-block btn-danger mobile" name="button1" data-toggle="tooltip" data-placement="top" title="작업중입니다^^;">청구취소</button></td>
+                <td><button class="btn btn-sm btn-block btn-warning mobile" name="button2" data-toggle="tooltip" data-placement="top" title="작업중입니다^^;">납부처리</button></td>
               </tr>
             </table>
           </div>
         </div>
-        <div class="col col-md-5">
+        <div class="col col-md-5 mobile">
           <div class="row justify-content-end">
             <div class="col col-md-3 pl-0 pr-1">
               <input type="text" name="taxDate" value="" class="form-control form-control-sm dateType text-center">
@@ -177,7 +177,7 @@ while($row_sms = mysqli_fetch_array($result_sms)){
         <th scope="col">순번</th>
         <th scope="col" class="mobile">그룹명</th>
         <th scope="col">방번호</th>
-        <th scope="col">입주자</th>
+        <th scope="col">세입자</th>
         <th scope="col">연락처</th>
         <th scope="col" class="mobile">개월</th>
         <th scope="col" class="mobile">시작일/종료일</th>
@@ -206,8 +206,7 @@ include $_SERVER['DOCUMENT_ROOT']."/svc/service/sms/modal_sms1.php";
 include $_SERVER['DOCUMENT_ROOT']."/svc/service/sms/modal_sms2.php";
  ?>
 
-<?php include $_SERVER['DOCUMENT_ROOT']."/svc/view/service_footer.php"; ?>
-
+ <?php include $_SERVER['DOCUMENT_ROOT']."/svc/view/service_footer.php"; ?>
 
 <script src="/svc/inc/js/jquery-3.3.1.min.js"></script>
 <script src="/svc/inc/js/popper.min.js"></script>
@@ -240,6 +239,20 @@ include $_SERVER['DOCUMENT_ROOT']."/svc/service/sms/modal_sms2.php";
 
 <script>
 var taxDiv = 'charge'; //입금예정리스트여서 청구라는 뜻의 charge 사용, 입금완료리스트에서는 영수라는 뜻의 accept 사용 예정
+
+
+function taxInfo2(bid,mun,ccid) {
+var tmps = "<iframe name='ifm_pops_21' id='ifm_pops_21' class='popup_iframe'   scrolling='no' src=''></iframe>";
+$("body").append(tmps);
+//alert( "/inc/tax_invoice2.php?chkId="+chkId+"&callnum="+subIdx );
+
+$("#ifm_pops_21").attr("src","/svc/service/get/tax_invoice.php?building_idx="+bid+"&mun="+mun+"&id="+ccid+"&flag=expected");
+$('#ifm_pops_21').show();
+$('.pops_wrap, .pops_21').show();
+
+}
+
+
 
 function maketable(){
   var mtable = $.ajax({
@@ -275,8 +288,11 @@ function maketable(){
           returns += '<input type="hidden" name="address" value="'+value.address+'">';
           returns += '<input type="hidden" name="div4" value="'+value.div4+'">';
           returns += '<input type="hidden" name="div5" value="'+value.div5+'">';
+          returns += '<input type="hidden" name="bid" id="bid" value="'+value.bid+'">';
+          returns += '<input type="hidden" name="mun" id="mun" value="'+value.mun+'">';
+          returns += '<input type="hidden" name="ccid" id="ccid" value="'+value.ccid+'">';
           returns += '</td>';
-          returns += '<td>'+value.contact+'</td>';
+          returns += '<td><a href="tel:'+value.contact+'">'+value.contact+'</a></td>';
           returns += '<td class="mobile">'+value.monthCount+'</td>';
           returns += '<td class="mobile"><label class="mb-0">' + value.pStartDate+'</label><br>';
           returns += '<label class="mb-0">' + value.pEndDate+'</label></td>';
@@ -289,9 +305,11 @@ function maketable(){
           returns += '<td class="mobile">'+value.payKind+'</td>';//입금구분
           returns += '<td class="mobile"><label class="mb-0">'+value.delaycount+'</label><br>';
           returns += '<label class="mb-0">' + value.delayinterest+'</label></td>';//연체일수,연체이자
-
+          var mun = value.mun;
+          var bid = value.bid;
+          var ccid = value.ccid;
           if(value.taxSelect==='세금계산서'){
-            returns += '<td class="mobile"><span class="badge badge-warning text-light" style="width: 1.5rem;">세</span>'+value.taxDate+'</td>';
+            returns += '<td class="mobile"><a onclick="taxInfo2('+bid+',\''+mun+'\',\''+ccid+'\');"><span class="badge badge-warning text-light" style="width: 1.5rem;">세</span>'+value.taxDate+'</a></td>';
           } else if(value.taxSelect==='현금영수증'){
             returns += '<td class="mobile"><span class="badge badge-info text-light" style="width: 1.5rem;">현</span>'+value.taxDate+'</td>';
           } else {

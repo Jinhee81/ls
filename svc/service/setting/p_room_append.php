@@ -27,54 +27,25 @@ if($changecount > 100){
 $order = $row[0] + 1;
 for ($i=0; $i < count($a); $i++) {
 
-  $sql_check = "select count(*) from r_g_in_building
-                where group_in_building_id = {$_POST['groupId']}
-                      and rName = '{$a[$i]}'";
-  $result_check = mysqli_query($conn, $sql_check);
-
-  if(!$result_check){
+  $sql = "INSERT INTO r_g_in_building
+    (ordered, rName, group_in_building_id)
+    VALUES (
+    {$order},
+    '{$a[$i]}',
+    {$_POST['groupId']}
+    )
+  ";
+  // echo $sql;
+  $result = mysqli_query($conn, $sql);
+  if(!$result){
     echo "<script>
-            alert('저장과정에 문제가 생겼습니다. 관리자에게 문의하세요(1).');
+            alert('저장과정에 문제가 생겼습니다. 관리자에게 문의하세요(2).');
             history.back();
          </script>";
     exit();
-  } else {
-    $row_check = mysqli_fetch_array($result_check);
+  }
+  $order += 1;
 
-    // echo 'solmi';
-    //
-    // print_r((int)$row_check[0]);
-    // print_r($_POST['groupName']);
-    // print_r($a[$i]);
-
-    if((int)$row_check[0] >= 1){
-
-      echo "<script>
-              alert('".$_POST['groupName']." 그룹명의 ".$a[$i]." 관리번호는 이미 존재하기때문에 추가 안되요. 다시 확인하고 입력해주세요.');
-              history.back();
-           </script>";
-      exit();
-    } else {
-      $sql = "INSERT INTO r_g_in_building
-        (ordered, rName, group_in_building_id)
-        VALUES (
-        {$order},
-        '{$a[$i]}',
-        {$_POST['groupId']}
-        )
-      ";
-      // echo $sql;
-      $result = mysqli_query($conn, $sql);
-      if(!$result){
-        echo "<script>
-                alert('저장과정에 문제가 생겼습니다. 관리자에게 문의하세요(2).');
-                history.back();
-             </script>";
-        exit();
-      }
-      $order += 1;
-    } //result }
-  } //result check }
 }//for }
 
 

@@ -9,9 +9,9 @@ include $_SERVER['DOCUMENT_ROOT']."/svc/view/conn.php";
 ?>
 
 <section class="container">
-  <div class="jumbotron">
-    <h1 class="display-4"> >> 관리물건 등록 화면입니다!</h1>
-    <p class="lead">관리물건이란 </p>
+  <div class="jumbotron pt-3 pb-3">
+    <h3 class=""> >> 관리물건 등록 화면입니다!</h3>
+    <!-- <p class="lead">관리물건이란 </p> -->
     <hr class="my-4">
     <small>(1) '명칭'은 평상시 부르는 이름으로 적어주세요. 예)도레미고시원, 성공빌딩 (2) '수금방법'은 임대료를 선불로 수납할 경우 선불 선택, 후불로 수납할경우 후불을 선택하세요.</small>
   </div>
@@ -42,8 +42,8 @@ include $_SERVER['DOCUMENT_ROOT']."/svc/view/conn.php";
       <label class="col-sm-3 col-form-label">수금방법</label>
       <div class="col-sm-9">
         <select name="pay" class="form-control">
-          <option value="선불">선불</option>
-          <option value="후불">후불</option>
+          <option value="선납">선납</option>
+          <option value="후납">후납</option>
         </select>
       </div>
     </div>

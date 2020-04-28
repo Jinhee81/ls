@@ -136,16 +136,16 @@ $clist['add3'] = htmlspecialchars($row['add3']);
         <div class="form-group col-md-3">
           <p class="mb-1">사업자구분</p>
           <select name="div3" class="form-control">
-            <option value=""<?php if($clist['div2']=='개인'||$clist['div2']=='개인사업자'){
+            <option value=""<?php if($row['div3']==''){
               echo "selected";
             } ?>></option>
-            <option value="주식회사"<?php if($clist['div2']=='법인사업자'&&$clist['div3']=='주식회사'){
+            <option value="주식회사"<?php if($row['div3']=='주식회사'){
               echo "selected";
             } ?>>주식회사</option>
-            <option value="유한회사"<?php if($clist['div2']=='법인사업자'&&$clist['div3']=='유한회사'){
+            <option value="유한회사"<?php if($row['div3']=='유한회사'){
               echo "selected";
             } ?>>유한회사</option>
-            <option value="합자회사"<?php if($clist['div2']=='법인사업자'&&$clist['div3']=='합자회사'){
+            <option value="합자회사"<?php if($row['div3']=='합자회사'){
               echo "selected";
             } ?>>합자회사</option>
           </select>

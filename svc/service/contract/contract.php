@@ -96,14 +96,56 @@ include "building.php";
   </div>
 </section>
 
-<!-- 삭제,등록,엑셀저장부분 -->
+<!-- 문자 및 세금계산서발행 섹션 -->
 <section class="container mb-2">
+    <div class="row">
+        <div class="col col-md-7">
+          <div class="row ml-0">
+            <table>
+              <tr>
+                <td>
+                  <select class="form-control form-control-sm" id="smsTitle" name="">
+                    <option value="상용구없음">상용구없음</option>
+                    <?php for ($i=0; $i < count($rowsms); $i++) {
+                      echo "<option value='".$rowsms[$i]['title']."'>".$rowsms[$i]['title']."</option>";
+                    } ?>
+                  </select>
+                </td>
+                <td>
+                  <button class="btn btn-sm btn-block btn-outline-primary" id="smsBtn" data-toggle="modal" data-target="#smsModal1"><i class="far fa-envelope"></i> 보내기</button>
+                </td>
+                <td>
+                  <a href="/svc/service/sms/smsSetting.php" target="_blank">
+                  <button class="btn btn-sm btn-block btn-dark mobile" id="smsSettingBtn"><i class="fas fa-angle-double-right"></i> 상용구설정</button></a>
+                </td>
+                <td>
+                  <a href="/svc/service/sms/sent.php" target="_blank">
+                  <button class="btn btn-sm btn-block btn-dark" id="smsSettingBtn"><i class="fas fa-angle-double-right"></i> 보낸문자목록</button></a>
+                </td>
+              </tr>
+            </table>
+          </div>
+        </div>
+        <div class="col col-md-5 mobile">
+          <div class="row justify-content-end mr-0">
+            <a href="contract_add2.php" role="button" class="btn btn-sm btn-primary mr-1">신규등록</a>
+            <button type="button" class="btn btn-sm btn-danger mr-1" name="rowDeleteBtn" data-toggle="tooltip" data-placement="top" title="'c'표시된것만 삭제 가능합니다">선택삭제</button>
+            <button type="button" class="btn btn-info btn-sm" name="button" data-toggle="tooltip" data-placement="top" title="작업준비중입니다."><i class="far fa-file-excel"></i>엑셀저장</button>
+
+
+          </div>
+        </div>
+    </div>
+</section>
+
+<!-- 삭제,등록,엑셀저장부분 -->
+<!-- <section class="container mb-2">
   <div class="row justify-content-end mr-0">
     <a href="contract_add2.php" role="button" class="btn btn-sm btn-primary mr-1">신규등록</a>
     <button type="button" class="btn btn-sm btn-danger mr-1" name="rowDeleteBtn" data-toggle="tooltip" data-placement="top" title="'c'표시된것만 삭제 가능합니다">선택삭제</button>
     <button type="button" class="btn btn-info btn-sm" name="button" data-toggle="tooltip" data-placement="top" title="작업준비중입니다."><i class="far fa-file-excel"></i>엑셀저장</button>
   </div>
-</section>
+</section> -->
 
 
 <!-- 표내용 -->

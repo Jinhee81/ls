@@ -204,11 +204,13 @@ function sms_existparase(){
       return false;
     }
 
-    function goCategoryPage(a,b,c,d,e){
+    function goCategoryPage(a,b,c,d,e,f,g){
         var frm = formCreate(a, 'post', b,'');
         frm = formInput(frm, 'sendedArray2', c);
         frm = formInput(frm, 'timeDiv', d);
         frm = formInput(frm, 'smsTime', e);
+        frm = formInput(frm, 'getByte', f);
+        frm = formInput(frm, 'sendphonenumber', g);
         formSubmit(frm);
     }
 
@@ -216,9 +218,12 @@ function sms_existparase(){
     var aa = 'sendedArray2';
     var bb = '/svc/service/sms/p_sendedsms2.php';
     var smsTime = $('#smsTime2').val();
+    var textareaValue = $('.textareaMany').val();
+    var getBytee = byteLength(textareaValue);
     var smsTimeValue = $('#timeSetVal2').val();
+    var sendphonenumber = $('input[name=sendphonenumber]').val();
 
-    goCategoryPage(aa, bb, sendedArray2json, smsTime, smsTimeValue);
+    goCategoryPage(aa, bb, sendedArray2json, smsTime, smsTimeValue,getBytee,sendphonenumber);
 
 
 

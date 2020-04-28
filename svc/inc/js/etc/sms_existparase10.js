@@ -13,7 +13,7 @@ function sms_existparase(){
   var trAccu;
   for (var i = 0; i < smsReadyArray.length; i++) {
       // smsDescription.replace(/{받는사람}/gi,smsReadyArray[i][4]['받는사람']);
-      var result = smsDescription.replace(/{받는사람}|{이메일}|{납부일}|{증빙일}|{공급가액}|{세액}|{합계}|{예정일}|{시작일}|{종료일}|{개월수}|{연체일수}|{연체이자}/g, function(v){
+      var result = smsDescription.replace(/{받는사람}|{이메일}|{납부일}|{증빙일}|{공급가액}|{세액}|{합계}|{예정일}|{시작일}|{종료일}|{개월수}|{연체일수}|{연체이자}|{사업자명}/g, function(v){
         switch (v) {
           case "{받는사람}":return smsReadyArray[i][4]['받는사람'];
           case "{이메일}":return smsReadyArray[i][6]['이메일'];
@@ -28,6 +28,7 @@ function sms_existparase(){
           case "{개월수}":return smsReadyArray[i][16]['개월수'];
           case "{연체일수}":return smsReadyArray[i][17]['연체일수'];
           case "{연체이자}":return smsReadyArray[i][18]['연체이자'];
+          case "{사업자명}":return smsReadyArray[i][19]['사업자명'];
         }
       });
       // console.log(result);

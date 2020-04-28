@@ -1,4 +1,5 @@
 <?php
+//이거가 서버에 있는 파일. 관리 매우 중요함...
 session_start();
 if(!isset($_SESSION['is_login'])){
   header('Location: /svc/login.php');
@@ -284,7 +285,7 @@ function maketable(){
           returns += '<input type="hidden" name="customer_id" value="'+value.cid+'">';
           returns += '<input type="hidden" name="name" value="'+value.ccname+'">';
           returns += '<input type="hidden" name="companynumber" value="'+value.companynumber+'">';
-          returns += '<input type="hidden" name="companyname" value="'+value.companyname+'">';
+          returns += '<input type="hidden" name="companyname" value="'+value.ccompanyname+'">';
           returns += '<input type="hidden" name="address" value="'+value.address+'">';
           returns += '<input type="hidden" name="div4" value="'+value.div4+'">';
           returns += '<input type="hidden" name="div5" value="'+value.div5+'">';

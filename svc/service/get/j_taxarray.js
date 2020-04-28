@@ -36,7 +36,7 @@ $("#allselect").click(function(){
   } else {
     taxArray = [];
   }
-  console.log(taxArray);
+  // console.log(taxArray);
 })
 
 $(document).on('click', '.tbodycheckbox', function(){
@@ -107,5 +107,5 @@ var taxArrayEle = [];
       taxArray.splice(index, 1);
 
     }
-console.log(taxArray);
+// console.log(taxArray);
 })

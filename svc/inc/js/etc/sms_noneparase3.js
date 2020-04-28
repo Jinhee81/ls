@@ -2,7 +2,7 @@ function sms_noneparase(){
   var trAccu;
   for (var i = 0; i < smsReadyArray.length; i++) {
     var j = i + 1;
-    var tr = "<tr><td>"+j+"</td><td class='text-left'>"+smsReadyArray[i][4]['받는사람']+"</td></tr>"
+    var tr = "<tr><td>"+j+"</td><td class='text-left'>"+smsReadyArray[i][4]['받는사람']+"("+smsReadyArray[i][5]['연락처']+")</td></tr>"
     trAccu += tr;
   }
   $('#tbody').html(trAccu);

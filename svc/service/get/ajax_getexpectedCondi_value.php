@@ -32,12 +32,17 @@ for ($i=0; $i < count($allRows); $i++) {
     $allRows[$i]['cname'] = $allRows[$i]['ccname'];
   }
 
+  if($allRows[$i]['div2']==='개인사업자'){
+    $allRows[$i]['ccompanyname'] = $allRows[$i]['companyname'];
+  } else if($allRows[$i]['div2']==='법인사업자'){
+    $allRows[$i]['ccompanyname'] = $allRows[$i]['cdiv3'].$allRows[$i]['companyname'];
+  } else if($allRows[$i]['div2']==='개인'){
+    $allRows[$i]['ccompanyname'] = '';
+  }
+
   $allRows[$i]['cnamemb'] = mb_substr($allRows[$i]['cname'],0,5,"utf-8");
 
   $allRows[$i]['contact'] = $allRows[$i]['contact1'].'-'.$allRows[$i]['contact2'].'-'.$allRows[$i]['contact3'];
-
-  $allRows[$i]['cnamecontact'] = $allRows[$i]['cname'] .','. $allRows[$i]['contact'];
-
 
 
   $allRows[$i]['address'] = $allRows[$i]['add1'].', '.$allRows[$i]['add2'].' '.$allRows[$i]['add3'];
@@ -72,6 +77,9 @@ for ($i=0; $i < count($allRows); $i++) {
   if($allRows[$i]['div5']===null){
     $allRows[$i]['div5'] = '';
   }
+  $allRows[$i]['pStartDate'] = date('Y-n-j', strtotime($allRows[$i]['pStartDate']));
+  $allRows[$i]['pEndDate'] = date('Y-n-j', strtotime($allRows[$i]['pEndDate']));
+  $allRows[$i]['pExpectedDate'] = date('Y-n-j', strtotime($allRows[$i]['pExpectedDate']));
 } //for문closing
 
 // print_r($allRows);

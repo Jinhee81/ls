@@ -153,11 +153,11 @@ while($row_sms = mysqli_fetch_array($result_sms)){
                   <button class="btn btn-sm btn-block btn-outline-primary" id="smsBtn" data-toggle="modal" data-target="#smsModal1"><i class="far fa-envelope"></i> 보내기</button>
                 </td>
                 <td>
-                  <a href="/svc/service/sms/smsSetting.php" target="_blank">
+                  <a href="/svc/service/sms/smsSetting.php">
                   <button class="btn btn-sm btn-block btn-dark" id="smsSettingBtn"><i class="fas fa-angle-double-right"></i> 상용구설정</button></a>
                 </td>
                 <td>
-                  <a href="/svc/service/sms/sent.php" target="_blank">
+                  <a href="/svc/service/sms/sent.php">
                   <button class="btn btn-sm btn-block btn-dark" id="smsSettingBtn"><i class="fas fa-angle-double-right"></i> 보낸문자목록</button></a>
                 </td>
                 <!-- <td><button class="btn btn-sm btn-block btn-danger" name="button1" data-toggle="tooltip" data-placement="top" title="작업중입니다^^;">납부취소</button></td> 이거 하려다가 안했음, 이유는 기타계약이 있어서 납부취소를 하면 안됌-->

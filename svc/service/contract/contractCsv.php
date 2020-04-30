@@ -6,92 +6,164 @@ if(!isset($_SESSION['is_login'])){
 include $_SERVER['DOCUMENT_ROOT']."/svc/view/service_header1_meta.php";
 include $_SERVER['DOCUMENT_ROOT']."/svc/view/service_header2.php";
 include $_SERVER['DOCUMENT_ROOT']."/svc/view/conn.php";
-include "building.php";
 ?>
 
 <!-- <script src="csaddss.js?v=<%=System.currentTimeMillis() %>"></script> -->
-
-<style>
-  .inputWithIcon input[type=search]{
-    padding-left: 40px;
-  }
-  .inputWithIcon {
-    position: relative;
-  }
-  .inputWithIcon i{
-    position: absolute;
-    left: 4px;
-    top: 4px;
-    padding: 9px 8px;
-    color: #aaa;
-    transition: .3s;
-  }
-  .inputWithIcon input[type=search]:focus+i{
-    color: dodgerBlue;
-  }
-  #customerList ul {
-    background-color: #eee;
-    cursor: pointer;
-  }
-  #customerList li {
-    padding: 12px;
+<style media="screen">
+  .italic{
+    font-style: italic;
+    color: blue;
   }
 </style>
 
+
 <section class="container">
-  <div class="jumbotron">
-    <h1 class="display-4">계약등록 csv화면입니다</h1>
-    <!-- <p class="lead">이 화면에서는 각 방의 세입자를 등록합니다.</p> -->
+  <div class="jumbotron pt-3 pb-3">
+    <h3 class="">계약등록 csv화면입니다</h3>
+    <p class="lead">이 화면에서는 엑셀업로드 형식으로 임대계약을 등록합니다.</p>
     <small>
       <!-- (1)<span id='star' style='color:#F7BE81;'>* </span>표시는 반드시 입력해야 합니다.  -->
-      (1)공실일 경우는 행삭제를 하여 없애주세요.</small>
+    </small>
     <hr class="my-4">
+    <form name="uploadForm" id="uploadForm" method="post" action="m_c_add_csv2.php" enctype="multipart/form-data">
+      <label for="">첨부파일</label>
+      <input type="file" name="upfile" id="upfile">
+      <input type="button" name="uploadBtn" value="업로드">
+    </form>
   </div>
 </section>
-<section class="container-fluid">
-      <div class="container form-row justify-content-center">
-          <div class="form-group col-md-2 text-center">
-              <label for="">물건명</label>
-          </div>
-          <div class="form-group col-md-2">
-              <select class="form-control form-control-sm" id="select1">
-              </select>
-          </div>
-      </div>
 
-      <div class="" id="allVals" >
+<section class="container">
+  <div class="example">
+    <table class="table table-bordered text-center">
+      <tr>
+        <td><span id='star' style='color:#F7BE81;'>* </span>물건명</td>
+        <td><span id='star' style='color:#F7BE81;'>* </span>그룹명</td>
+        <td><span id='star' style='color:#F7BE81;'>* </span>관리번호</td>
+        <td><span id='star' style='color:#F7BE81;'>* </span>성명</td>
+        <td>계약일자</td>
+        <td>공급가액</td>
+        <td>세액</td>
+        <td>개월수</td>
+        <td>시작일</td>
+        <td>보증금</td>
+        <td>보증금입금일</td>
+      </tr>
+      <tr>
+        <td></td><!--물건명-->
+        <td></td><!--그룹명-->
+        <td></td><!--관리번호-->
+        <td></td><!--성명-->
+        <td></td><!--계약일자-->
+        <td></td><!--공급가액-->
+        <td></td><!--세액-->
+        <td></td><!--개월수-->
+        <td></td><!--시작일-->
+        <td></td><!--보증금-->
+        <td></td><!--보증금입금일-->
+      </tr>
+      <tr class="italic">
+        <td>예시)</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+      </tr>
+      <tr class="italic">
+        <td>도레미고시원</td>
+        <td>9층</td>
+        <td>901호</td>
+        <td>이효리</td>
+        <td>2020-01-01</td>
+        <td>500000</td>
+        <td>0</td>
+        <td>12</td>
+        <td>2020-01-01</td>
+        <td>500000</td>
+        <td>2020-01-01</td>
+      </tr>
+      <tr class="italic">
+        <td>도레미고시원</td>
+        <td>10층</td>
+        <td>1001호</td>
+        <td>이상순</td>
+        <td>2020-01-01</td>
+        <td>300000</td>
+        <td>0</td>
+        <td>12</td>
+        <td>2020-01-01</td>
+        <td>300000</td>
+        <td>2020-01-01</td>
+      </tr>
+      <tr>
+        <td colspan="11" class="text-left font-weight-light">
+          *주의사항<br>
+          물건명, 그룹명, 관리번호는 반드시 환경설정에서 등록한 이름 그대로 사용해주세요(안그러면 인식을 못합니다)<br>
+          성명에는 반드시 관계자에서 등록한 이름 그대로 사용해주세요 (안그러면 인식을 못합니다.)<br>
+          공급가액, 세액, 보증금 항목은 콤마(,)를 제거하여 숫자만 넣어주세요.
+          날짜 입력시 yyyy-mm-dd형식으로 입력해주세요. 7월4일 이런식으로 글자가 들어가면 오류 발생합니다.<br><br>
 
-      </div>
-    <div class="d-flex justify-content-center">
-      <button type='button' class='btn btn-primary mr-1' id='saveBtn'>저장</button>
-      <a href='contract.php'><button type='button' class='btn btn-secondary'>계약리스트화면으로</button></a>
-    </div>
+          이 작업이 어렵고 번거롭지만, 이것만 해내면 정말 편리한 임대관리시스템을 만날 수 있으니 힘내세요!
+
+        </td>
+      </tr>
+    </table>
+  </div>
 </section>
 
+<?php include $_SERVER['DOCUMENT_ROOT']."/svc/view/service_footer.php";?>
+
+<script src="/svc/inc/js/jquery-3.3.1.min.js"></script>
+<script src="/svc/inc/js/popper.min.js"></script>
+<script src="/svc/inc/js/bootstrap.min.js"></script>
+
 <script>
-
-var select1option, buildingIdx ;
-
-for(var key in buildingArray){ //건물목록출력(비즈피스장암,비즈피스구로)
-    select1option = "<option value='"+key+"'>"+buildingArray[key][0]+"</option>";
-    $('#select1').append(select1option);
-}
-buildingIdx = $('#select1').val();
-// console.log(buildingIdx);
-
 $(document).ready(function(){
 
-    $.ajax({
-      url: 'ajax_realContractCsvLoad.php',
-      method: 'post',
-      data: { buildingIdx : buildingIdx },
-      success: function(data){
-        $('#allVals').html(data);
-      }
-    })
-})
+  $('input[name=uploadBtn]').on('click', function(){
+    var extArray = new Array('csv');
+    var path = $('#upfile').val();
+    console.log(path);
 
+    if(path===""){
+      alert('파일을 선택해주세요.');
+      return false;
+    }
+
+    var pos = path.lastIndexOf(".");
+    if(pos < 0){
+      alert('확장자가 없는 파일입니다.');
+      return false;
+    }
+
+    var ext = path.slice(path.lastIndexOf(".")+1).toLowerCase();
+    var checkExt = false;
+    for (var i = 0; i < extArray.length; i++) {
+      if(ext === extArray[i]){
+        checkExt = true;
+        break;
+      }
+    }
+    // console.log(ext, checkExt);
+
+    if(checkExt === false){
+      alert('csv확장자만 업로드 가능합니다.');
+      return false;
+    }
+
+    var f = $('#uploadForm');
+    f.submit();
+  })
+
+})//docu.ready }
 
 
 </script>
-<?php include $_SERVER['DOCUMENT_ROOT']."/svc/view/service_footer.php";?>
+</body>
+</html>

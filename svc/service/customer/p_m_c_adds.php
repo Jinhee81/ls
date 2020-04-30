@@ -35,7 +35,7 @@ for ($i=0; $i < count($customerRow); $i++) {
   $customerRow[$i][4] = explode("-", $customerRow[$i][4]);
 }
 
-print_r($customerRow);
+// print_r($customerRow);
 
 for ($i=0; $i < count($customerRow); $i++) {
 
@@ -112,7 +112,7 @@ for ($i=0; $i < count($customerRow); $i++) {
 
   $result = mysqli_query($conn, $sql);
   if($result){
-    echo "<script>alert('저장되었습니다.');
+    echo "<script>alert('저장하였습니다.');
     location.href = 'customer.php';
     </script>";
   } else {

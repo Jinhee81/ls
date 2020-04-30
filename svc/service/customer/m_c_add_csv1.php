@@ -11,8 +11,8 @@ include $_SERVER['DOCUMENT_ROOT']."/svc/view/conn.php";
 <section class="container">
   <div class="jumbotron pt-3 pb-3">
     <h3 class="">CSV파일등록 화면입니다!</h3>
-    <p class="lead">이 화면에서는 엑셀업로드형식으로 세입자를 등록합니다. </p>
-    <small>(1)<span id='star' style='color:#F7BE81;'>* </span>표시는 반드시 입력해야 합니다. (2)한번에 등록가능한 세입자는 80명입니다. (3)엑셀프로그램이 없다면 구글스프레드시트에서 작업하고 링크 주소를 보내주셔도 됩니다! <a href="https://docs.google.com/spreadsheets/d/1VVLH_oyEs4GmCK3Um7gvifQR-vKJ6t0E4z7n6AYlN8A/edit#gid=0" target="_blank" class="badge badge-success">구글스프레드시트 바로가기</a></small>
+    <p class="lead">이 화면에서는 엑셀업로드형식으로 입주자를 등록합니다. </p>
+    <small>(1)<span id='star' style='color:#F7BE81;'>* </span>표시는 반드시 입력해야 합니다. (2)엑셀프로그램이 없다면 구글스프레드시트에서 작업하고 링크 주소를 보내주셔도 됩니다! <a href="https://docs.google.com/spreadsheets/d/1VVLH_oyEs4GmCK3Um7gvifQR-vKJ6t0E4z7n6AYlN8A/edit#gid=0" target="_blank" class="badge badge-success">구글스프레드시트 바로가기</a></small>
     <hr class="my-4">
     <!-- <div class="input-group mb-3">
       <div class="custom-file">
@@ -30,6 +30,7 @@ include $_SERVER['DOCUMENT_ROOT']."/svc/view/conn.php";
     </form>
   </div>
 </section>
+
 <section class="container">
   <div class="example">
     <table class="table table-bordered text-center">
@@ -89,7 +90,7 @@ include $_SERVER['DOCUMENT_ROOT']."/svc/view/conn.php";
       </tr>
       <tr>
         <td colspan="12" class="text-left font-weight-light">
-          (1) <div class="badge badge-primary text-wrap" style="width: 3rem;">구분1</div> : '세입자','거래처','기타' 중 1개의 값만 넣으세요. 오타/띄어쓰기에 유의하여 주세요.(필수값)<br>
+          (1) <div class="badge badge-primary text-wrap" style="width: 3rem;">구분1</div> : '입주자','거래처','기타' 중 1개의 값만 넣으세요. 오타/띄어쓰기에 유의하여 주세요.(필수값)<br>
           (2) <div class="badge badge-primary text-wrap" style="width: 3rem;">구분2</div> : '개인','개인사업자','법인사업자' 중 1개의 값만 넣으세요. 오타/띄어쓰기에 유의하여 주세요.(필수값)<br>
           (3) <div class="badge badge-primary text-wrap" style="width: 3rem;">성명</div> : 자유롭게 적어주는데 보통 사람이름을 적어주세요. 글자수는 20글자로 제한됩니다.<br>
           (4) <div class="badge badge-primary text-wrap" style="width: 3rem;">연락처</div> : '010-1234-1234' 형식으로 넣어주세요. 만약 유선번호일경우 반드시 지역번호 포함하여 '02-111-1234'로 '-'가 2개이며, 숫자만 입력되어야 합니다.<br>
@@ -111,6 +112,8 @@ include $_SERVER['DOCUMENT_ROOT']."/svc/view/conn.php";
 <?php include $_SERVER['DOCUMENT_ROOT']."/svc/view/service_footer.php";?>
 
 <script src="/svc/inc/js/jquery-3.3.1.min.js"></script>
+<script src="/svc/inc/js/popper.min.js"></script>
+<script src="/svc/inc/js/bootstrap.min.js"></script>
 
 <script>
 $(document).ready(function(){

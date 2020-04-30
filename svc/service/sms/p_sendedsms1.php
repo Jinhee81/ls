@@ -1,5 +1,8 @@
 <!-- 문자상용구없음으로 문자보냈을때 처리파일 -->
 <?php
+// ini_set('display_errors', 1);
+// ini_set('error_reporting', E_ALL);
+
 session_start();
 include $_SERVER['DOCUMENT_ROOT']."/svc/view/conn.php";
 header("Content-Type: text/html; charset=UTF-8");
@@ -25,7 +28,7 @@ if($_POST['timeDiv']==='reservation'){
               ('{$_POST['smsDiv']}',
                '{$_POST['getByte']}',
                '{$_POST['smsTime']}',
-               '{$a[$i][4]->입주자}',
+               '{$a[$i][4]->받는사란}',
                '{$a[$i][3]->방번호}',
                '{$a[$i][5]->연락처}',
                '{$_POST['textareaOnly']}',
@@ -113,7 +116,7 @@ if($_POST['timeDiv']==='reservation'){
             error_log(mysqli_error($conn));
             exit();
       }
-    }//for end}
+    }//예약전송 for end}
   }
 } else {
 
@@ -125,7 +128,7 @@ if($_POST['timeDiv']==='reservation'){
             ('{$_POST['smsDiv']}',
              '{$_POST['getByte']}',
              now(),
-             '{$a[$i][4]->입주자}',
+             '{$a[$i][4]->받는사람}',
              '{$a[$i][3]->방번호}',
              '{$a[$i][5]->연락처}',
              '{$_POST['textareaOnly']}',
@@ -213,7 +216,7 @@ if($_POST['timeDiv']==='reservation'){
           error_log(mysqli_error($conn));
           exit();
     }
-  }//for end}
+  }//즉시전송 for end}
 
 
 
@@ -222,12 +225,5 @@ if($_POST['timeDiv']==='reservation'){
 echo "<script>alert('전송하였습니다.');
         history.back();
       </script>";
-
-// echo "<script>alert('전송하였습니다.');
-//         location.href='sent.php';
-//       </script>";
-
-
-
 
 ?>

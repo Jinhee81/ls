@@ -94,7 +94,7 @@ include $_SERVER['DOCUMENT_ROOT']."/svc/service/contract/building.php"; //이거
         <th class="">전송시간</th>
         <th class="">받는사람</th>
         <th class="">연락처</th>
-        <th class="">방번호</th>
+        <th class="">관리번호</th>
         <th class="">문자내용</th>
         <th class="">전송결과</th>
       </tr>
@@ -105,7 +105,7 @@ include $_SERVER['DOCUMENT_ROOT']."/svc/service/contract/building.php"; //이거
   </table>
 </section>
 
-<section id="allVals2">
+<section id="allVals2" class="container">
 
 </section>
 
@@ -155,7 +155,7 @@ function maketable(){
           returns += '<td class="">'+value.sendtime+'<input type="hidden" name="byte" value="'+value.byte+'"></td>';
           returns += '<td class=""><label data-toggle="tooltip" data-placement="top" title="'+value.customer+'">'+value.customermb+'</label></td>';
           returns += '<td class="">'+value.phonenumber+'<input type="hidden" name="sentnumber" value="'+value.sentnumber+'"></td>';
-          returns += '<td class="">'+value.roomnumber+'</td>';
+          returns += '<td class="">'+value.roomNumber+'</td>';
           returns += '<td class=""><p class="modalDescription" data-toggle="modal" data-target="#smsDescription">'+value.descriptionmb+'</p><input type="hidden" name="description" value="'+value.description+'"></td>';
           returns += '<td class="">'+value.result+'</td>';
 

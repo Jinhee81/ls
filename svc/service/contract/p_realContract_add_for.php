@@ -15,24 +15,20 @@ $row_pay = mysqli_fetch_array($result_pay);
 $a = explode(",", $_POST['allArray']);
 // print_r($a);
 
-for ($i=0; $i < count($a)/12; $i++) {
+for ($i=0; $i < count($a)/13; $i++) {
   $contractRow[$i]=[];
 } //$contractRow 라는 배열을 만듦
-
+//
 for ($i=0; $i < count($a); $i++) {
-  if($i < 12){
+  if($i < 13){
     array_push($contractRow[0], $a[$i]);
   } else {
-    array_push($contractRow[floor($i/12)], $a[$i]);
+    array_push($contractRow[floor($i/13)], $a[$i]);
   }
 }
 
-for ($i=0; $i < count($contractRow); $i++) {
-  $contractRow[$i][2] = substr($contractRow[$i][2], -9);
-}
-
-// print_r($contractRow);
-
+print_r($contractRow);
+//
 for ($i=0; $i < count($contractRow); $i++) {
   $sql = "
       INSERT INTO realContract (
@@ -45,18 +41,18 @@ for ($i=0; $i < count($contractRow); $i++) {
           {$_POST['buildingId']},
           {$_POST['groupId']},
           {$contractRow[$i][1]},
-          '{$row_pay[0]}',
-          {$contractRow[$i][7]},
-          '{$contractRow[$i][8]}',
-          '{$contractRow[$i][9]}',
           '{$contractRow[$i][3]}',
+          {$contractRow[$i][8]},
+          '{$contractRow[$i][9]}',
+          '{$contractRow[$i][10]}',
           '{$contractRow[$i][4]}',
           '{$contractRow[$i][5]}',
           '{$contractRow[$i][6]}',
+          '{$contractRow[$i][7]}',
           {$_SESSION['id']},
           now(),
-          {$contractRow[$i][7]},
-          '{$contractRow[$i][9]}'
+          {$contractRow[$i][8]},
+          '{$contractRow[$i][10]}'
           )
   ";
   // echo $sql;
@@ -74,30 +70,30 @@ for ($i=0; $i < count($contractRow); $i++) {
 
   $id = mysqli_insert_id($conn); //방금넣은 계약번호아이디를 가져오는거
 
-  $mStartDate = $contractRow[$i][8]; //초기시작일 가져오기
+  $mStartDate = $contractRow[$i][9]; //초기시작일 가져오기
 
-  for ($j=1; $j <= (int)$contractRow[$i][7]; $j++) {
-      $contractRow[$i][12][$j] = array();
+  for ($j=1; $j <= (int)$contractRow[$i][8]; $j++) {
+      $contractRow[$i][13][$j] = array();
 
-      $mEndDate = date("Y-m-d", strtotime($mStartDate."+1 month"."-1 day"));
+      $mEndDate = date("Y-n-j", strtotime($mStartDate."+1 month"."-1 day"));
 
-      if($row_pay[0]==='선불'){
+      if($contractRow[$i][3]==='선납'){
         $mExpectedDate = $mStartDate;
-      } else if($row_pay[0]==='후불'){
+      } else if($contractRow[$i][3]==='후납'){
         $mExpectedDate = $mEndDate;
       }
 
-      array_push($contractRow[$i][12][$j], $j, $mStartDate, $mEndDate, $contractRow[$i][4], $contractRow[$i][5], $contractRow[$i][6], $mExpectedDate, $id);
-      $mStartDate = date("Y-m-d", strtotime($mEndDate."+1 day"));
+      array_push($contractRow[$i][13][$j], $j, $mStartDate, $mEndDate, $contractRow[$i][5], $contractRow[$i][6], $contractRow[$i][7], $mExpectedDate, $id);
+      $mStartDate = date("Y-n-j", strtotime($mEndDate."+1 day"));
   }
 
   $sql_deposit = "
           INSERT INTO realContract_deposit
             (inDate, inMoney, remainMoney, saved, realContract_id)
           VALUES (
+            '{$contractRow[$i][12]}',
             '{$contractRow[$i][11]}',
-            '{$contractRow[$i][10]}',
-            '{$contractRow[$i][10]}',
+            '{$contractRow[$i][11]}',
             now(),
             $id
           )
@@ -109,7 +105,7 @@ for ($i=0; $i < count($contractRow); $i++) {
     // echo "<script>alert('보증금 저장과정에 문제가 생겼습니다. 관리자에게 문의하세요(1).');
     //       </script>";
     echo "<script>alert('보증금 저장과정에 문제가 생겼습니다. 관리자에게 문의하세요(1).');
-          location.href = 'contractAll.php';
+          history.back();
           </script>";
     error_log(mysqli_error($conn));
     exit();
@@ -120,20 +116,20 @@ for ($i=0; $i < count($contractRow); $i++) {
 // print_r($contractRow);
 
 for ($i=0; $i < count($contractRow); $i++) {
-  for ($j=1; $j <= $contractRow[$i][7]; $j++) {
+  for ($j=1; $j <= $contractRow[$i][8]; $j++) {
     $sql2 = "
             INSERT INTO contractSchedule (
               ordered, mStartDate, mEndDate, mMamount, mVmAmount, mTmAmount,
               mExpectedDate, realContract_id)
             VALUES (
-              {$contractRow[$i][12][$j][0]},
-              '{$contractRow[$i][12][$j][1]}',
-              '{$contractRow[$i][12][$j][2]}',
-              '{$contractRow[$i][12][$j][3]}',
-              '{$contractRow[$i][12][$j][4]}',
-              '{$contractRow[$i][12][$j][5]}',
-              '{$contractRow[$i][12][$j][6]}',
-              {$contractRow[$i][12][$j][7]}
+              {$contractRow[$i][13][$j][0]},
+              '{$contractRow[$i][13][$j][1]}',
+              '{$contractRow[$i][13][$j][2]}',
+              '{$contractRow[$i][13][$j][3]}',
+              '{$contractRow[$i][13][$j][4]}',
+              '{$contractRow[$i][13][$j][5]}',
+              '{$contractRow[$i][13][$j][6]}',
+              {$contractRow[$i][13][$j][7]}
             )
       ";
     // echo $sql2;

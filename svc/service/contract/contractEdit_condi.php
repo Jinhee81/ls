@@ -1,6 +1,4 @@
 <?php
-$currentDate = date('Y-m-d');
-// echo $currentDate;
 
 $filtered_id = mysqli_real_escape_string($conn, $_GET['id']);//계약번호
 settype($filtered_id, 'integer');
@@ -89,11 +87,11 @@ $difference = count(array_diff_assoc($edited_period, $original_period));
 
 $currentDate = date('Y-m-d');
 // echo $currentDate;
-if($currentDate >= $row['startDate'] && $currentDate <= $row['endDate2']){
+if($currentDate >= date('Y-m-d', strtotime($row['startDate'])) && $currentDate <= date('Y-m-d', strtotime($row['endDate2']))){
   $status = '현재';
-} elseif ($currentDate < $row['startDate']) {
+} elseif ($currentDate < date('Y-m-d', strtotime($row['startDate']))) {
   $status = '대기';
-} elseif ($currentDate > $edited_period[2]) {
+} elseif ($currentDate > date('Y-m-d', strtotime($edited_period))) {
   $status = '종료';
 }
 // print_r($status);

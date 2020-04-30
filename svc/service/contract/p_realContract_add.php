@@ -50,7 +50,7 @@ $mStartDate = $_POST['startDate']; //초기시작일 가져오기
 for ($i=1; $i <= (int)$_POST['monthCount']; $i++) {
 
     $contractRow[$i] = array();
-    $mEndDate = date("Y-m-d", strtotime($mStartDate."+1 month"."-1 day"));
+    $mEndDate = date("Y-n-j", strtotime($mStartDate."+1 month"."-1 day"));
 
     if($_POST['payOrder']==='선납'){
       $mExpectedDate = $mStartDate;
@@ -60,7 +60,7 @@ for ($i=1; $i <= (int)$_POST['monthCount']; $i++) {
 
     array_push($contractRow[$i], $i, $mStartDate, $mEndDate, $_POST['mAmount'], $_POST['mvAmount'], $_POST['mtAmount'], $mExpectedDate);
     // print_r($i);
-    $mStartDate = date("Y-m-d", strtotime($mEndDate."+1 day"));
+    $mStartDate = date("Y-n-j", strtotime($mEndDate."+1 day"));
 }
 // print_r($contractRow);
 // echo 'bbbbb';

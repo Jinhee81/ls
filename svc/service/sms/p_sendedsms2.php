@@ -117,7 +117,7 @@ if($_POST['timeDiv']==='reservation'){
             error_log(mysqli_error($conn));
             exit();
       }
-    }//for end}
+    }//예약문자 for end}
   }
 } else {
 
@@ -136,6 +136,8 @@ if($_POST['timeDiv']==='reservation'){
              '{$_POST['sendphonenumber']}',
              {$_SESSION['id']}
             )";
+
+            // echo $sql;
 
 
 if($_POST['getByte']>80){
@@ -221,7 +223,7 @@ if($_POST['getByte']>80){
 } //else end}
 
 echo "<script>alert('전송하였습니다.');
-         location.href='sent.php';
+         history.back();
       </script>";
 
 ?>

@@ -18,8 +18,8 @@ include "building.php";
     <!-- <p class="lead">고객이란 입주한 세입자 및 문의하는 문의고객, 거래처 등을 포함합니다. 고객등록이 되어야 임대계약 등록이 가능합니다!</p> -->
     <small>(1)<span id='star' style='color:#F7BE81;'> * </span>표시는 필수 입력값입니다. (2)<b>[입주자자정보]</b>에는 입주자만 등록 가능합니다. (거래처 및 문의고객은 검색결과가 없다고 표시되니 주의하세요!) <b>[입주자정보]</b>의 제일우측 숫자는 고객번호로써 시스템데이터임을 참고하여주세요. (3)<b>[기간정보]</b>의 기간(개월수)에는 최대 72개월(6년)까지 등록 가능합니다.</small>
     <hr class="my-4">
-    <a class="btn btn-primary btn-sm" href="contractAll.php" role="button">일괄계약등록(1)</a>
-    <a class="btn btn-primary btn-sm" href="contractAll2.php" role="button">일괄계약등록(2)</a>
+    <a class="btn btn-primary btn-sm" href="contractAll.php" role="button">일괄계약등록</a>
+    <!-- <a class="btn btn-primary btn-sm" href="contractAll2.php" role="button">일괄계약등록(2)</a> 이건 추후 업데이트하기로 함-->
     <!-- <a class="btn btn-primary btn-sm" href="contractCustomer.php" role="button">그룹별세입자등록</a>-->
     <a class="btn btn-primary btn-sm" href="contractCsv.php" role="button">계약csv등록</a>
     <a class="btn btn-primary btn-sm" href="/svc/service/customer/m_c_add.php" role="button">입주자등록</a>
@@ -210,7 +210,7 @@ function customersearch(){
 
         $('#customerList').fadeIn();
         $('#customerList').html(returns);
-      }
+      }//success}
     })
   }
   return customerlist;

@@ -12,36 +12,10 @@ include "building.php";
 
 <!-- <script src="csaddss.js?v=<%=System.currentTimeMillis() %>"></script> -->
 
-<style>
-  .inputWithIcon input[type=search]{
-    padding-left: 40px;
-  }
-  .inputWithIcon {
-    position: relative;
-  }
-  .inputWithIcon i{
-    position: absolute;
-    left: 4px;
-    top: 4px;
-    padding: 9px 8px;
-    color: #aaa;
-    transition: .3s;
-  }
-  .inputWithIcon input[type=search]:focus+i{
-    color: dodgerBlue;
-  }
-  #customerList ul {
-    background-color: #eee;
-    cursor: pointer;
-  }
-  #customerList li {
-    padding: 12px;
-  }
-</style>
 
 <section class="container">
-  <div class="jumbotron">
-    <h1 class="display-4">계약일괄등록(2) 화면입니다!</h1>
+  <div class="jumbotron pt-3 pb-3">
+    <h3 class="">계약일괄등록(2) 화면입니다!</h3>
     <p class="lead">이 화면에서는 방별로 방계약을 등록합니다.</p>
     <small>(1)<span id='star' style='color:#F7BE81;'>* </span>표시는 반드시 입력해야 합니다. (2)공실일 경우는 행삭제를 하여 없애주세요.</small>
     <hr class="my-4">
@@ -62,15 +36,15 @@ include "building.php";
               </tr>
               <tr>
                 <td>
-                  <select class="form-control form-control-sm" id="select1">
+                  <select class="form-control form-control-sm" name="building">
                   </select>
                 </td>
                 <td>
-                  <select class="form-control form-control-sm" id="select2">
+                  <select class="form-control form-control-sm" name="group">
                   </select>
                 </td>
                 <td>
-                  <select class="form-control form-control-sm" id="select3">
+                  <select class="form-control form-control-sm" name="room">
                   </select>
                 </td>
                 <td>
@@ -102,29 +76,48 @@ include "building.php";
     </div>
 </section>
 
+<?php include $_SERVER['DOCUMENT_ROOT']."/svc/view/service_footer.php";?>
+
+<script src="/svc/inc/js/jquery-3.3.1.min.js"></script>
+<script src="/svc/inc/js/jquery-ui.min.js"></script>
+<script src="/svc/inc/js/jquery.number.min.js"></script>
+<script src="/svc/inc/js/popper.min.js"></script>
+<script src="/svc/inc/js/bootstrap.min.js"></script>
+<script src="/svc/inc/js/datepicker-ko.js"></script>
+<script src="/svc/inc/js/etc/form.js?<?=date('YmdHis')?>"></script>
+
+<script type="text/javascript">
+  var buildingArray = <?php echo json_encode($buildingArray); ?>;
+  var groupBuildingArray = <?php echo json_encode($groupBuildingArray); ?>;
+  var roomArray = <?php echo json_encode($roomArray); ?>;
+  console.log(buildingArray);
+  console.log(groupBuildingArray);
+  console.log(roomArray);
+</script>
+
 <script>
 
-var select1option, select2option, select3option, buildingIdx, groupIdx, roomIdx;
+var buildingoption, groupoption, buildingIdx, groupIdx;
 
 for(var key in buildingArray){ //건물목록출력(비즈피스장암,비즈피스구로)
-    select1option = "<option value='"+key+"'>"+buildingArray[key][0]+"</option>";
-    $('#select1').append(select1option);
+    buildingoption = "<option value='"+key+"'>"+buildingArray[key][0]+"</option>";
+    $('select[name=building]').append(buildingoption);
 }
-buildingIdx = $('#select1').val();
+buildingIdx = $('select[name=building]').val();
 
 for(var key2 in groupBuildingArray[buildingIdx]){ //그룹목록출력(상주,비상주)
-    select2option = "<option value='"+key2+"'>"+groupBuildingArray[buildingIdx][key2]+"</option>";
+    groupoption = "<option value='"+key2+"'>"+groupBuildingArray[buildingIdx][key2]+"</option>";
     // console.log(select3option);
-    $('#select2').append(select2option);
+    $('select[name=group]').append(groupoption);
 }
-groupIdx = $('#select2').val();
+groupIdx = $('select[name=group]').val();
 
 for(var key3 in roomArray[groupIdx]){ //목록출력(201호,202호)
-    select3option = "<option value='"+key3+"'>"+roomArray[groupIdx][key3]+"</option>";
+    roomoption = "<option value='"+key3+"'>"+roomArray[groupIdx][key3]+"</option>";
     // console.log(select3option);
-    $('#select3').append(select3option);
+    $('select[name=room]').append(roomoption);
 }
-roomIdx = $('#select3').val();
+roomIdx = $('select[name=room]').val();
 
 $('#select1').on('change', function(event){
     buildingIdx = $('#select1').val();
@@ -260,84 +253,6 @@ $('.table').on('keyup', '.amountNumber:input[type="text"]', function(){
   // console.log(colmAmount);
 })
 
-$('.table').on('change', 'input[name="contractDate"]', function(){
-  // console.log('hellostartdate');
-    var currow = $(this).closest('tr');
-
-    getStartDate();
-    getDepositInDate();
-
-    function getStartDate(){
-        var contractDate = currow.find('td:eq(2)').children('input:eq(0)').val();
-        // console.log(contractDate);
-
-        var arr1 = contractDate.split('-');
-        var sDate = new Date(arr1[0], arr1[1]-1, arr1[2]);
-
-        currow.find('td:eq(5)').children('input:eq(0)').val(dateFormat());
-
-        function dateFormat(){
-            var yyyy = sDate.getFullYear().toString();
-            var mm = (sDate.getMonth()+1).toString();
-            var dd = sDate.getDate().toString();
-            var startDate = yyyy+'-'+(mm[1] ? mm : '0'+mm[0])+'-'+(dd[1]?dd:'0'+dd[0]);
-            return startDate;
-        }
-    }
-
-    function getDepositInDate(){
-        var contractDate = currow.find('td:eq(2)').children('input:eq(0)').val();
-        // console.log(contractDate);
-
-        var arr1 = contractDate.split('-');
-        var dDate = new Date(arr1[0], arr1[1]-1, arr1[2]);
-
-        currow.find('td:eq(7)').children('input:eq(0)').val(dateFormat());
-
-        function dateFormat(){
-            var yyyy = dDate.getFullYear().toString();
-            var mm = (dDate.getMonth()+1).toString();
-            var dd = dDate.getDate().toString();
-            var depositInDate = yyyy+'-'+(mm[1] ? mm : '0'+mm[0])+'-'+(dd[1]?dd:'0'+dd[0]);
-            return depositInDate;
-        }
-    }
-})
-
-function getEndDate(tr){
-  var monthCount = Number(tr.find('td:eq(4)').children('input').val());
-  var startDate = tr.find('td:eq(5)').children('input:eq(0)').val();
-  // console.log(monthCount, startDate);
-
-  var arr1 = startDate.split('-');
-  var sDate = new Date(arr1[0], arr1[1]-1, arr1[2]);
-  var eDate = new Date(sDate.getFullYear(), sDate.getMonth() + monthCount, sDate.getDate()-1);
-  // console.log(eDate);
-
-  tr.find('td:eq(5)').children('input:eq(1)').val(dateFormat());
-
-  function dateFormat(){
-    var yyyy = eDate.getFullYear().toString();
-    var mm = (eDate.getMonth()+1).toString();
-    var dd = eDate.getDate().toString();
-
-    var endDate = yyyy+'-'+(mm[1] ? mm : '0'+mm[0])+'-'+(dd[1]?dd:'0'+dd[0]);
-    return endDate;
-  }
-
-}
-
-$('.table').on('change', 'input[name="startDate"]', function(){
-  // console.log('hellostartdate');
-  var currow = $(this).closest('tr');
-  getEndDate(currow);
-})
-
-$('.table').on('change', 'input[name="monthCount"]', function(){
-  // console.log('hellostartdate');
-  var currow = $(this).closest('tr');
-  getEndDate(currow);
-})
 
 $('#saveBtn').on('click', function(){
   var allCnt = Number($('#table1 input[type="search"]').length);
@@ -419,4 +334,5 @@ $('#saveBtn').on('click', function(){
 })
 
 </script>
-<?php include $_SERVER['DOCUMENT_ROOT']."/svc/view/service_footer.php";?>
+</body>
+</html>

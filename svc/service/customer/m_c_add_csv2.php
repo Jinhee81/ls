@@ -74,20 +74,19 @@ if(isset($_FILES['upfile']) && $_FILES['upfile']['name'] !== ""){
               ?>
             <tr>
               <td><?=$i?></td>
-              <td class="pl-1 pr-1 pt-1 pb-1"><input type="text" class="form-control form-control-sm pl-1 pr-1 pt-1 pb-1 text-center div1" name="<?=$i?>div1" value="<?=$data[0]?>" required></td><!--구분1-->
-              <td class="pl-1 pr-1 pt-1 pb-1"><input type="text" class="form-control form-control-sm pl-1 pr-1 pt-1 pb-1 text-center div2" name="<?=$i?>div2" value="<?=$data[1]?>" required></td><!--구분2-->
-              <td class="pl-1 pr-1 pt-1 pb-1"><input type="text" class="form-control form-control-sm pl-1 pr-1 pt-1 pb-1 text-center name" name="<?=$i?>name" value="<?=$data[2]?>" required maxLength="9"></td><!--성명-->
-              <td class="pl-1 pr-1 pt-1 pb-1"><input type="text" class="form-control form-control-sm pl-1 pr-1 pt-1 pb-1 text-center contact" name="<?=$i?>contact" value="<?=$data[3]?>" required></td><!--연락처-->
-              <td class="pl-1 pr-1 pt-1 pb-1"><input type="text" class="form-control form-control-sm pl-1 pr-1 pt-1 pb-1 text-center gender" name="<?=$i?>gender" value="<?=$data[4]?>"></td><!--성별-->
-              <td class="pl-1 pr-1 pt-1 pb-1"><input type="email" class="form-control form-control-sm pl-1 pr-1 pt-1 pb-1 text-center email" name="<?=$i?>email" value="<?=$data[5]?>" maxLength="40"></td><!--이메일-->
-              <td class="pl-1 pr-1 pt-1 pb-1"><input type="text" class="form-control form-control-sm pl-1 pr-1 pt-1 pb-1 text-center div3" name="<?=$i?>div3" value="<?=$data[6]?>"></td><!--법인사업자구분-->
+              <td class="pl-1 pr-1 pt-1 pb-1"><input type="text" class="form-control form-control-sm pl-1 pr-1 pt-1 pb-1 text-center" name="building" value="<?=$data[0]?>" required></td><!--물건명-->
+              <td class="pl-1 pr-1 pt-1 pb-1"><input type="text" class="form-control form-control-sm pl-1 pr-1 pt-1 pb-1 text-center" name="group" value="<?=$data[1]?>" required></td><!--그룹명-->
+              <td class="pl-1 pr-1 pt-1 pb-1"><input type="text" class="form-control form-control-sm pl-1 pr-1 pt-1 pb-1 text-center" name="room" value="<?=$data[2]?>" required></td><!--관리번호-->
+              <td class="pl-1 pr-1 pt-1 pb-1"><input type="text" class="form-control form-control-sm pl-1 pr-1 pt-1 pb-1 text-center" name="name" value="<?=$data[3]?>" required></td><!--성명-->
+              <td class="pl-1 pr-1 pt-1 pb-1"><input type="text" class="form-control form-control-sm pl-1 pr-1 pt-1 pb-1 text-center dateType yyyymmdd" name="contractDate" value="<?=$data[4]?>" maxlength=10></td><!--계약일자-->
+              <td class="pl-1 pr-1 pt-1 pb-1"><input type="text" class="form-control form-control-sm pl-1 pr-1 pt-1 pb-1 text-right amountNumber numberComma" name="mamount" value="<?=$data[5]?>" numberOnly><input type="text" class="form-control form-control-sm pl-1 pr-1 pt-1 pb-1 text-right amountNumber numberComma" name="mvAmount" value="<?=$data[6]?>" numberOnly></td><!--공급가액,세액-->
+              <td class="pl-1 pr-1 pt-1 pb-1"><input type="text" class="form-control form-control-sm pl-1 pr-1 pt-1 pb-1 text-center" name="mvAmount" value="<?=$data[6]?>"></td><!--합계-->
 
-              <td class="pl-1 pr-1 pt-1 pb-1"><input type="text" class="form-control form-control-sm pl-1 pr-1 pt-1 pb-1 text-center companyname" name="<?=$i?>companyname" value="<?=$data[7]?>" maxLength="14"></td><!--사업자명-->
-              <td class="pl-1 pr-1 pt-1 pb-1"><input type="text" class="form-control form-control-sm pl-1 pr-1 pt-1 pb-1 text-center companyNumber" name="<?=$i?>companyNumber" value="<?=$data[8]?>"></td><!--사업자번호-->
-              <td class="pl-1 pr-1 pt-1 pb-1"><input type="text" class="form-control form-control-sm pl-1 pr-1 pt-1 pb-1 text-center div4" name="<?=$i?>div4" value="<?=$data[9]?>" maxLength="9"></td><!--업태-->
-              <td class="pl-1 pr-1 pt-1 pb-1"><input type="text" class="form-control form-control-sm pl-1 pr-1 pt-1 pb-1 text-center div5" name="<?=$i?>div5" value="<?=$data[10]?>" maxLength="14"></td><!--업종-->
+              <td class="pl-1 pr-1 pt-1 pb-1"><input type="number" class="form-control form-control-sm pl-1 pr-1 pt-1 pb-1 text-center" name="monthCount" value="<?=$data[7]?>"  min='1' max='72'></td><!--개월수-->
+              <td class="pl-1 pr-1 pt-1 pb-1"><input type="text" class="form-control form-control-sm pl-1 pr-1 pt-1 pb-1 text-center dateType yyyymmdd" name="startDate" value="<?=$data[8]?>" maxlength=10><input type="text" class="form-control form-control-sm pl-1 pr-1 pt-1 pb-1 text-center dateType yyyymmdd" name="endDate" value="" maxlength=10></td><!--시작일,종료일-->
+              <td class="pl-1 pr-1 pt-1 pb-1"><input type="text" class="form-control form-control-sm pl-1 pr-1 pt-1 pb-1 text-center amountNumber numberComma" name="depositMoney" value="<?=$data[9]?>" maxLength="9"></td><!--보증금-->
+              <td class="pl-1 pr-1 pt-1 pb-1"><input type="text" class="form-control form-control-sm pl-1 pr-1 pt-1 pb-1 text-center dateType yyyymmdd" name="depositInDate" value="<?=$data[10]?>" maxLength="10"></td><!--보증금입금일-->
 
-              <td class="pl-1 pr-1 pt-1 pb-1"><input type="text" class="form-control form-control-sm pl-1 pr-1 pt-1 pb-1 text-center etc" name="<?=$i?>etc" value="<?=$data[11]?>" maxLength="47"></td><!--특이사항-->
               <td class="pl-1 pr-1 pt-2 pb-1">
                 <img src="/svc/inc/img/svg/minus.svg" width="20" name="minus">
               </td><!--행추가/삭제-->
@@ -333,39 +332,43 @@ $(document).ready(function(){
       }
     })
 
-    var namearray = [];
-    var namecount = $('.name:input', customerTable).length;
+    //===========중복체크부분, 일단 넣지않기로
 
-    for (var i = 0; i < namecount; i++) {
-      var a = $('.name:eq('+i+')').val();
-      namearray.push(a);
-    }
+    // var namearray = [];
+    // var namecount = $('.name:input', customerTable).length;
+    //
+    // for (var i = 0; i < namecount; i++) {
+    //   var a = $('.name:eq('+i+')').val();
+    //   namearray.push(a);
+    // }
+    //
+    // for (var i = 0; i < namearray.length; i++) {
+    //   for (var j = i+1; j < namearray.length; j++) {
+    //     if(namearray[i]===namearray[j]){
+    //       alert(namearray[i]+' 이름이 중복되어 등록 불가합니다. 다시 확인해주세요.');
+    //       return false;
+    //     }
+    //   }
+    // }
+    //
+    // var contactarray = [];
+    // var contactcount = $('.contact:input', customerTable).length;
+    //
+    // for (var i = 0; i < contactcount; i++) {
+    //   var a = $('.contact:eq('+i+')').val();
+    //   contactarray.push(a);
+    // }
+    //
+    // for (var i = 0; i < contactarray.length; i++) {
+    //   for (var j = i+1; j < contactarray.length; j++) {
+    //     if(contactarray[i]===contactarray[j]){
+    //       alert(contactarray[i]+' 연락처가 중복되어 등록 불가합니다. 다시 확인해주세요.');
+    //       return false;
+    //     }
+    //   }
+    // }
 
-    for (var i = 0; i < namearray.length; i++) {
-      for (var j = i+1; j < namearray.length; j++) {
-        if(namearray[i]===namearray[j]){
-          alert(namearray[i]+' 이름이 중복되어 등록 불가합니다. 다시 확인해주세요.');
-          return false;
-        }
-      }
-    }
-
-    var contactarray = [];
-    var contactcount = $('.contact:input', customerTable).length;
-
-    for (var i = 0; i < contactcount; i++) {
-      var a = $('.contact:eq('+i+')').val();
-      contactarray.push(a);
-    }
-
-    for (var i = 0; i < contactarray.length; i++) {
-      for (var j = i+1; j < contactarray.length; j++) {
-        if(contactarray[i]===contactarray[j]){
-          alert(contactarray[i]+' 연락처가 중복되어 등록 불가합니다. 다시 확인해주세요.');
-          return false;
-        }
-      }
-    }
+    //===========중복체크부분, 일단 넣지않기로  함 ^
 
     var lastconclude = conclude.indexOf(1);
     // console.log(conclude);

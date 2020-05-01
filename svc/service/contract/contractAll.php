@@ -104,13 +104,13 @@ var tableCol2 ="<td><input type='search' name='customer' class='form-control for
 
 var tableCol3 ="<td><input type='text' name='contractDate' class='form-control form-control-sm text-center dateType yyyymmdd'  maxlength=10></td>"; //계약일자
 
-var tableCol4 ="<td><input type='text' class='form-control form-control-sm text-right amountNumber numberComma' value='0' numberOnly><input type='text' class='form-control form-control-sm text-right amountNumber numberComma' value='0' numberOnly><input type='text' class='form-control form-control-sm text-right amountNumber numberComma' value='0' disabled></td>"; //공급가액/세액/합계
+var tableCol4 ="<td><input type='text' class='form-control form-control-sm text-right amountNumber' value='0' numberOnly><input type='text' class='form-control form-control-sm text-right amountNumber' value='0' numberOnly><input type='text' class='form-control form-control-sm text-right amountNumber' value='0' disabled numberOnly></td>"; //공급가액/세액/합계
 
 var tableCol5 ="<td><input type='number' class='form-control form-control-sm text-center' value='12' min='1' max='72' name='monthCount'></td>"; //기간
 
 var tableCol6 ="<td><input type='text' class='form-control form-control-sm text-center dateType yyyymmdd' name='startDate'  maxlength=10><input type='text' class='form-control form-control-sm text-center dateType' name='endDate' disabled></td>"; //시작일(종료일)
 
-var tableCol7 ="<td><input type='text' class='form-control form-control-sm text-center amountNumber numberComma' value='0' numberOnly></td>"; //보증금
+var tableCol7 ="<td><input type='text' class='form-control form-control-sm text-center amountNumber' value='0' numberOnly></td>"; //보증금
 
 var tableCol8 ="<td><input type='text' class='form-control form-control-sm text-center dateType yyyymmdd' maxlength=10 name='depositInDate'></td></tr>"; //보증금입금일자
 
@@ -214,7 +214,6 @@ $(document).ready(function(){
 
         $("input:text[numberOnly]").number(true);
 
-        // $(".numberComma").number(true);
         $('.yyyymmdd').keydown(function (event) {
          var key = event.charCode || event.keyCode || 0;
          $text = $(this);
@@ -274,8 +273,6 @@ $(document).ready(function(){
         });
 
         $("input:text[numberOnly]").number(true);
-
-        // $(".numberComma").number(true);
 
         $('.yyyymmdd').keydown(function (event) {
          var key = event.charCode || event.keyCode || 0;
@@ -364,6 +361,8 @@ $('.table').on('keyup', '.amountNumber:input[type="text"]', function(){
   var colmtAmount = colmAmount + colmvAmount;
   currow.find('td:eq(3)').children('input:eq(2)').val(colmtAmount);
   // console.log(colmAmount);
+
+  $("input:text[numberOnly]").number(true);
 })
 
 function dateFormat(x){

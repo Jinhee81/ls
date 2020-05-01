@@ -8,11 +8,18 @@ include $_SERVER['DOCUMENT_ROOT']."/svc/view/service_header2.php";
 include $_SERVER['DOCUMENT_ROOT']."/svc/view/conn.php";
 ?>
 
+<style media="screen">
+  .italic{
+    font-style: italic;
+    color: blue;
+  }
+</style>
+
 <section class="container">
   <div class="jumbotron pt-3 pb-3">
     <h3 class="">CSV파일등록 화면입니다!</h3>
     <p class="lead">이 화면에서는 엑셀업로드형식으로 입주자를 등록합니다. </p>
-    <small>(1)<span id='star' style='color:#F7BE81;'>* </span>표시는 반드시 입력해야 합니다. (2)엑셀프로그램이 없다면 구글스프레드시트에서 작업하고 링크 주소를 보내주셔도 됩니다! <a href="https://docs.google.com/spreadsheets/d/1VVLH_oyEs4GmCK3Um7gvifQR-vKJ6t0E4z7n6AYlN8A/edit#gid=0" target="_blank" class="badge badge-success">구글스프레드시트 바로가기</a></small>
+    <small>(1)<span id='star' style='color:#F7BE81;'>* </span>표시는 반드시 입력해야 합니다. (2)엑셀프로그램이 없다면 구글스프레드시트에서 작업하고 링크 주소를 아래 메일로 보내주세요. <a href="https://docs.google.com/spreadsheets/d/1VVLH_oyEs4GmCK3Um7gvifQR-vKJ6t0E4z7n6AYlN8A/edit#gid=0" target="_blank" class="badge badge-success">구글스프레드시트 바로가기</a></small>
     <hr class="my-4">
     <!-- <div class="input-group mb-3">
       <div class="custom-file">
@@ -87,7 +94,79 @@ include $_SERVER['DOCUMENT_ROOT']."/svc/view/conn.php";
         <td></td>
         <td></td>
         <td></td>
+        <td></td>
       </tr>
+      <tr class="italic">
+        <td>예시)</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+      </tr>
+      <tr class="italic">
+        <td>입주자</td>
+        <td>개인</td>
+        <td>원빈</td>
+        <td>010-1234-1234</td>
+        <td>남</td>
+        <td>bin@hanmail.net</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+      </tr>
+      <tr class="italic">
+        <td>입주자</td>
+        <td>개인사업자</td>
+        <td>박보검</td>
+        <td>010-1234-1234</td>
+        <td>남</td>
+        <td>bo@hanmail.net</td>
+        <td></td>
+        <td>리스맨소프트</td>
+        <td>123-12-12345</td>
+        <td>서비스</td>
+        <td>시스템</td>
+        <td></td>
+      </tr>
+      <tr class="italic">
+        <td>입주자</td>
+        <td>법인사업자</td>
+        <td>싸이</td>
+        <td>010-1234-1234</td>
+        <td>남</td>
+        <td>psy@hanmail.net</td>
+        <td>주식회사</td>
+        <td>싸이터스</td>
+        <td>123-12-12345</td>
+        <td>서비스</td>
+        <td>연예기획</td>
+        <td></td>
+      </tr>
+      <tr class="italic">
+        <td>거래처</td>
+        <td>개인사업자</td>
+        <td>공유</td>
+        <td>010-1234-1234</td>
+        <td>남</td>
+        <td>kong@hanmail.net</td>
+        <td></td>
+        <td>공유청소</td>
+        <td>123-12-12345</td>
+        <td>서비스</td>
+        <td>환경관리</td>
+        <td></td>
+      </tr>
+
       <tr>
         <td colspan="12" class="text-left font-weight-light">
           (1) <div class="badge badge-primary text-wrap" style="width: 3rem;">구분1</div> : '입주자','거래처','기타' 중 1개의 값만 넣으세요. 오타/띄어쓰기에 유의하여 주세요.(필수값)<br>

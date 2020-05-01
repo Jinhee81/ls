@@ -236,7 +236,7 @@ $output = $cName.' | '.$cContact;
 
   //이거는 계약등록하는 화면에서 필요한 js파일, 헷깔리지 말것 (building.js랑 비슷한데 내용이 더 많음)
 
-  var groupoption, roomoption, buildingIdx, groupIdx;
+  var groupoption, roomoption, buildingIdx, groupIdx, roomIdx;
 
   buildingIdx = $('select[name=building]').val();
 

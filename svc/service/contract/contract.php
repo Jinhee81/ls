@@ -179,6 +179,11 @@ include "building.php";
   </table>
 </section>
 
+<?php
+include $_SERVER['DOCUMENT_ROOT']."/svc/service/sms/modal_sms1.php";
+include $_SERVER['DOCUMENT_ROOT']."/svc/service/sms/modal_sms2.php";
+ ?>
+
 <?php include $_SERVER['DOCUMENT_ROOT']."/svc/view/service_footer.php"; ?>
 
 
@@ -190,6 +195,8 @@ include "building.php";
 <script src="/svc/inc/js/etc/newdate8.js?<?=date('YmdHis')?>"></script>
 <script src="/svc/inc/js/etc/checkboxtable.js?<?=date('YmdHis')?>"></script>
 <script src="/svc/inc/js/etc/form.js?<?=date('YmdHis')?>"></script>
+<script src="/svc/inc/js/etc/sms_noneparase3.js?<?=date('YmdHis')?>"></script>
+<script src="/svc/inc/js/etc/sms_existparase10.js?<?=date('YmdHis')?>"></script>
 
 <script type="text/javascript">
   var buildingArray = <?php echo json_encode($buildingArray); ?>;
@@ -201,6 +208,8 @@ include "building.php";
 </script>
 
 <script src="/svc/inc/js/etc/building.js?<?=date('YmdHis')?>"></script>
+
+<script type="text/javascript" src="j_sms_array.js?<?=date('YmdHis')?>"></script>
 
 
 <script>
@@ -476,5 +485,9 @@ $('#button6').click(function(){ //n개월추가 버튼, 모달클릭으로 바�
 }); //n개월추가
 
 </script>
+
+<script type="text/javascript" src="/svc/service/get/js_sms_tax.js?<?=date('YmdHis')?>">
+</script>
+
 </body>
 </html>

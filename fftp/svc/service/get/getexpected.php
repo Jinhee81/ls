@@ -1,4 +1,5 @@
 <?php
+//이거가 서버에 있는 파일. 관리 매우 중요함...
 session_start();
 if(!isset($_SESSION['is_login'])){
   header('Location: /svc/login.php');
@@ -129,15 +130,15 @@ while($row_sms = mysqli_fetch_array($result_sms)){
                   <button class="btn btn-sm btn-block btn-outline-primary" id="smsBtn" data-toggle="modal" data-target="#smsModal1"><i class="far fa-envelope"></i> 보내기</button>
                 </td>
                 <td>
-                  <a href="/svc/service/sms/smsSetting.php" target="_blank">
+                  <a href="/svc/service/sms/smsSetting.php">
                   <button class="btn btn-sm btn-block btn-dark mobile" id="smsSettingBtn"><i class="fas fa-angle-double-right"></i> 상용구설정</button></a>
                 </td>
                 <td>
-                  <a href="/svc/service/sms/sent.php" target="_blank">
+                  <a href="/svc/service/sms/sent.php">
                   <button class="btn btn-sm btn-block btn-dark" id="smsSettingBtn"><i class="fas fa-angle-double-right"></i> 보낸문자목록</button></a>
                 </td>
-                <td><button class="btn btn-sm btn-block btn-danger mobile" name="button1" data-toggle="tooltip" data-placement="top" title="작업중입니다^^;">청구취소</button></td>
-                <td><button class="btn btn-sm btn-block btn-warning mobile" name="button2" data-toggle="tooltip" data-placement="top" title="작업중입니다^^;">납부처리</button></td>
+                <!-- <td><button class="btn btn-sm btn-block btn-danger mobile" name="button1" data-toggle="tooltip" data-placement="top" title="작업중입니다^^;">청구취소</button></td>
+                <td><button class="btn btn-sm btn-block btn-warning mobile" name="button2" data-toggle="tooltip" data-placement="top" title="작업중입니다^^;">납부처리</button></td> -->
               </tr>
             </table>
           </div>
@@ -174,16 +175,16 @@ while($row_sms = mysqli_fetch_array($result_sms)){
     <thead>
       <tr class="table-secondary">
         <th scope="col"><input type="checkbox" id="allselect"></th>
-        <th scope="col">순번</th>
+        <th scope="col" class="">순번</th>
         <th scope="col" class="mobile">그룹명</th>
-        <th scope="col">방번호</th>
-        <th scope="col">세입자</th>
-        <th scope="col">연락처</th>
+        <th scope="col" class="">방번호</th>
+        <th scope="col" class="">세입자</th>
+        <th scope="col" class="">연락처</th>
         <th scope="col" class="mobile">개월</th>
         <th scope="col" class="mobile">시작일/종료일</th>
         <th scope="col">예정일</th>
         <th scope="col" class="mobile">공급가액/세액</th>
-        <th scope="col">합계</th>
+        <th scope="col" class="">합계</th>
         <th scope="col" class="mobile">구분</th>
         <th scope="col" class="mobile">연체일수/이자</th>
         <th scope="col" class="mobile">증빙</th>
@@ -284,7 +285,7 @@ function maketable(){
           returns += '<input type="hidden" name="customer_id" value="'+value.cid+'">';
           returns += '<input type="hidden" name="name" value="'+value.ccname+'">';
           returns += '<input type="hidden" name="companynumber" value="'+value.companynumber+'">';
-          returns += '<input type="hidden" name="companyname" value="'+value.companyname+'">';
+          returns += '<input type="hidden" name="companyname" value="'+value.ccompanyname+'">';
           returns += '<input type="hidden" name="address" value="'+value.address+'">';
           returns += '<input type="hidden" name="div4" value="'+value.div4+'">';
           returns += '<input type="hidden" name="div5" value="'+value.div5+'">';

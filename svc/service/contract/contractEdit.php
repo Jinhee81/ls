@@ -42,7 +42,7 @@ include "contractEdit_condi.php";
    </div><!-- 최하단 계약정보작성자보여주기세션 -->
 
    <div class="d-flex justify-content-center mt-3">
-     <a class="btn btn-secondary mr-1" href="contract.php" role="button">계약목록 바로가기</a>
+     <a class="btn btn-secondary mr-1" href="contract.php" role="button"><i class="fas fa-angle-double-right"></i> 계약목록</a>
      <a class="btn btn-outline-secondary mr-1" href="contractAll.php" role="button">일괄계약등록</a>
      <a class="btn btn-outline-secondary mr-1" href="contract_add2.php" role="button">계약등록</a>
    </div><!-- 버튼모음 섹션 -->
@@ -72,12 +72,9 @@ include "contractEdit_condi.php";
 
 <script>
 
+var step = '<?=$step?>';
+
 $(document).ready(function(){
-  var step = '<?=$step?>';
-  if(step ==! 'clear'){
-    $('button[name="contractEdit"]').attr('disabled', true);
-    $('button[name="contractDelete"]').attr('disabled', true);
-  }
 
   $(function () {
       $('[data-toggle="tooltip"]').tooltip()
@@ -192,17 +189,6 @@ $(document).ready(function(){
 
 }) //document.ready function closing}
 
-
-
-var step = '<?=$step?>';
-// console.log(step);
-if(step === 'clear'){
-  $('button[name="contractEdit"]').attr('disabled', false);
-  $('button[name="contractDelete"]').attr('disabled', false);
-} else {
-  $('button[name="contractEdit"]').attr('disabled', true);
-  $('button[name="contractDelete"]').attr('disabled', true);
-}
 
 
 var table = $("#checkboxTestTbl");
@@ -727,6 +713,16 @@ $("button[name='contractDelete']").on('click', function(){
   var contractId = '<?=$filtered_id?>';
   var memocount = '<?=count($memoRows)?>';
   var filecount = '<?=count($fileRows)?>';
+
+  if(step==='청구'){
+    alert('청구정보를 삭제해야 계약삭제 가능합니다.체크박스 선택 후 청구취소버튼을 누르세요.');
+    return false;
+  }
+
+  if(step==='입금'){
+    alert('입금정보를 삭제해야 계약삭제 가능합니다.체크박스 선택 후 입금취소버튼을 누르세요.');
+    return false;
+  }
 
   if(Number(memocount)>0){
     alert('메모를 삭제해야 계약삭제 가능합니다.');

@@ -22,8 +22,9 @@ include $_SERVER['DOCUMENT_ROOT']."/svc/view/conn.php";
     <h3 class="">계약등록 csv화면입니다</h3>
     <p class="lead">이 화면에서는 엑셀업로드 형식으로 임대계약을 등록합니다.</p>
     <small>
-      <!-- (1)<span id='star' style='color:#F7BE81;'>* </span>표시는 반드시 입력해야 합니다.  -->
+      (1)<span id='star' style='color:#F7BE81;'>* </span>표시는 반드시 입력해야 합니다. (2)엑셀프로그램이 없다면 구글스프레드시트에서 작업하고 링크 주소를 아래 메일로 보내주세요. <a href="https://docs.google.com/spreadsheets/d/1VVLH_oyEs4GmCK3Um7gvifQR-vKJ6t0E4z7n6AYlN8A/edit#gid=0" target="_blank" class="badge badge-success">구글스프레드시트 바로가기</a>
     </small>
+
     <hr class="my-4">
     <form name="uploadForm" id="uploadForm" method="post" action="m_c_add_csv2.php" enctype="multipart/form-data">
       <label for="">첨부파일</label>

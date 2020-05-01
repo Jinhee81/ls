@@ -137,8 +137,8 @@ while($row_sms = mysqli_fetch_array($result_sms)){
                   <a href="/svc/service/sms/sent.php">
                   <button class="btn btn-sm btn-block btn-dark" id="smsSettingBtn"><i class="fas fa-angle-double-right"></i> 보낸문자목록</button></a>
                 </td>
-                <td><button class="btn btn-sm btn-block btn-danger mobile" name="button1" data-toggle="tooltip" data-placement="top" title="작업중입니다^^;">청구취소</button></td>
-                <td><button class="btn btn-sm btn-block btn-warning mobile" name="button2" data-toggle="tooltip" data-placement="top" title="작업중입니다^^;">납부처리</button></td>
+                <!-- <td><button class="btn btn-sm btn-block btn-danger mobile" name="button1" data-toggle="tooltip" data-placement="top" title="작업중입니다^^;">청구취소</button></td>
+                <td><button class="btn btn-sm btn-block btn-warning mobile" name="button2" data-toggle="tooltip" data-placement="top" title="작업중입니다^^;">납부처리</button></td> -->
               </tr>
             </table>
           </div>
@@ -270,7 +270,7 @@ function maketable(){
       var totalptAmount = 0;
 
       if(datacount===0){
-        returns ="<tr><td colspan='14'>조회값이 없어요. 조회조건을 다시 확인하거나 서둘러 입력해주세요!</td></tr>";
+        returns ="<tr><td colspan='14'>아직 임대료를 청구한 데이터가 없네요. 임대계약에서 청구하기를 실행하세요!</td></tr>";
       } else {
         $.each(data, function(key, value){
           returns += '<tr>';

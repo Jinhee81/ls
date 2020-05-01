@@ -39,45 +39,46 @@ for ($i=0; $i < count($customerRow); $i++) {
 
 // print_r($customerRow);
 
-for ($i=0; $i < count($customerRow); $i++) {
-
-  $addCheck1 = "
-    select count(*) from customer
-    where
-      user_id={$_SESSION['id']}
-      and name = '{$customerRow[$i][2]}'
-      and building_id = {$_POST['building']}
-      ";
-  // echo $addCheck1;
-  $result_addCheck1 = mysqli_query($conn, $addCheck1);
-  $row_addCheck1 = mysqli_fetch_array($result_addCheck1);
-
-  if((int)$row_addCheck1[0] >= 1){
-    echo "<script>alert('".$customerRow[$i][2]."이름이 이미 존재합니다. 다른 이름으로 저장하거나 다시 확인해주세요.');
-          history.back();</script>";
-    exit();
-  }
-
-
-  $addCheck2 = "
-    select count(*) from customer
-    where
-      user_id={$_SESSION['id']} and
-      contact1 = '{$customerRow[$i][3][0]}' and
-      contact2 = '{$customerRow[$i][3][1]}' and
-      contact3 = '{$customerRow[$i][3][2]}'
-      and building_id = {$_POST['building']}
-      ";
-  // echo $addCheck2;
-  $result_addCheck2 = mysqli_query($conn, $addCheck2);
-  $row_addCheck2 = mysqli_fetch_array($result_addCheck2);
-
-  if((int)$row_addCheck2[0] >= 1){
-    echo "<script>alert('".$customerRow[$i][2]."이름의 연락처 ".$customerRow[$i][3][0].$customerRow[$i][3][1].$customerRow[$i][3][2]." 번호가 존재합니다. 중복된 연락처는 저장이 안돼요.');
-          history.back();</script>";
-    exit();
-  }
-}
+// for ($i=0; $i < count($customerRow); $i++) {
+//
+//   $addCheck1 = "
+//     select count(*) from customer
+//     where
+//       user_id={$_SESSION['id']}
+//       and name = '{$customerRow[$i][2]}'
+//       and building_id = {$_POST['building']}
+//       ";
+//   // echo $addCheck1;
+//   $result_addCheck1 = mysqli_query($conn, $addCheck1);
+//   $row_addCheck1 = mysqli_fetch_array($result_addCheck1);
+//
+//   if((int)$row_addCheck1[0] >= 1){
+//     echo "<script>alert('".$customerRow[$i][2]."이름이 이미 존재합니다. 다른 이름으로 저장하거나 다시 확인해주세요.');
+//           history.back();</script>";
+//     exit();
+//   }
+//
+//
+//   $addCheck2 = "
+//     select count(*) from customer
+//     where
+//       user_id={$_SESSION['id']} and
+//       contact1 = '{$customerRow[$i][3][0]}' and
+//       contact2 = '{$customerRow[$i][3][1]}' and
+//       contact3 = '{$customerRow[$i][3][2]}'
+//       and building_id = {$_POST['building']}
+//       ";
+//   // echo $addCheck2;
+//   $result_addCheck2 = mysqli_query($conn, $addCheck2);
+//   $row_addCheck2 = mysqli_fetch_array($result_addCheck2);
+//
+//   if((int)$row_addCheck2[0] >= 1){
+//     echo "<script>alert('".$customerRow[$i][2]."이름의 연락처 ".$customerRow[$i][3][0].$customerRow[$i][3][1].$customerRow[$i][3][2]." 번호가 존재합니다. 중복된 연락처는 저장이 안돼요.');
+//           history.back();</script>";
+//     exit();
+//   }
+// }
+//정말 고민하다가 엑셀업로드에서는 그냥 다 넣기로 함, 중복체크 안하기로 함
 
 for ($i=0; $i < count($customerRow); $i++) {
   $sql = "

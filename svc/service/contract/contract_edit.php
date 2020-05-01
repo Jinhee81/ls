@@ -6,6 +6,7 @@ if(!isset($_SESSION['is_login'])){
 include $_SERVER['DOCUMENT_ROOT']."/svc/view/service_header1_meta.php";
 include $_SERVER['DOCUMENT_ROOT']."/svc/view/service_header2.php";
 include $_SERVER['DOCUMENT_ROOT']."/svc/view/conn.php";
+include "building.php";
 
 // print_r($_SESSION);
 // print_r($_GET['id']);
@@ -18,25 +19,39 @@ $row_a = mysqli_fetch_array($result_a);
 
 $sql_c = "
           select
-              id, name, div2, div3, companyname, contact1, contact2, contact3,
-              cNumber1, cNumber2, cNumber3
+              customer.id as cid,
+              customer.name,
+              customer.div2,
+              customer.div3,
+              customer.companyname as comname,
+              customer.contact1 as c1,
+              customer.contact2 as c2,
+              customer.contact3 as c3,
+              customer.cNumber1 as companyn1,
+              customer.cNumber2 as companyn2,
+              customer.cNumber3 as companyn3,
+              building.id as bid,
+              building.bName,
+              building.pay
             from customer
-            where id={$row_a[0]}
+            left join building
+                on customer.building_id = building.id
+            where customer.id={$row_a[0]}
     ";
 // echo $sql_c;
 $result_c = mysqli_query($conn, $sql_c);
 $row_c = mysqli_fetch_array($result_c);
 
-$clist['id'] = htmlspecialchars($row_c['id']);
+$clist['id'] = htmlspecialchars($row_c['cid']);
 $clist['div2'] = htmlspecialchars($row_c['div2']);
-$clist['contact1'] = htmlspecialchars($row_c['contact1']);
-$clist['contact2'] = htmlspecialchars($row_c['contact2']);
-$clist['contact3'] = htmlspecialchars($row_c['contact3']);
+$clist['contact1'] = htmlspecialchars($row_c['c1']);
+$clist['contact2'] = htmlspecialchars($row_c['c2']);
+$clist['contact3'] = htmlspecialchars($row_c['c3']);
 $clist['name'] = htmlspecialchars($row_c['name']);
-$clist['companyname'] = htmlspecialchars($row_c['companyname']);
-$clist['cNumber1'] = htmlspecialchars($row_c['cNumber1']);
-$clist['cNumber2'] = htmlspecialchars($row_c['cNumber2']);
-$clist['cNumber3'] = htmlspecialchars($row_c['cNumber3']);
+$clist['companyname'] = htmlspecialchars($row_c['comname']);
+$clist['cNumber1'] = htmlspecialchars($row_c['companyn1']);
+$clist['cNumber2'] = htmlspecialchars($row_c['companyn2']);
+$clist['cNumber3'] = htmlspecialchars($row_c['companyn3']);
 
 // print_r($clist);
 
@@ -69,90 +84,18 @@ $row_main = mysqli_fetch_array($result_main);
 
 // print_r($row_main);
 
-$sql = "select * from building where user_id = {$row_main['user_id']}";
-// echo $sql;
-$result = mysqli_query($conn, $sql);
-while($row = mysqli_fetch_array($result)){
-  $buildingArray[$row['id']] = [$row['bName'],$row['pay']];
-}
-
-foreach ($buildingArray as $key => $value) { //key는 건물아이디, value는 건물이름
-  $sql2 = "select * from group_in_building where building_id={$key}"; //건물아이디로 그룹조회
-  // echo $sql2;
-  $result2 = mysqli_query($conn, $sql2);
-  $groupBuildingArray[$key] = array();
-  while($row2 = mysqli_fetch_array($result2)){
-    $groupBuildingArray[$key][$row2['id']]=$row2['gName'];//그룹아이디
-  }
-}
-
-foreach ($groupBuildingArray as $key => $value) {
-  $sql3 = "select id from group_in_building where building_id={$key}"; //건물아이디로 그룹조회 (건물아이디가 키값)
-  // echo $sql3;
-  $result3 = mysqli_query($conn, $sql3);
-  while($row3 = mysqli_fetch_array($result3)){
-    $sql4 = "select id, rName from r_g_in_building where group_in_building_id={$row3['id']}";
-    // echo $sql4;다시 그룹아이디로 방번호조회
-    $result4 = mysqli_query($conn, $sql4);
-    while($row4 = mysqli_fetch_array($result4)){
-      $roomArray[$row3['id']][$row4['id']]=$row4['rName'];
-    }
-  }
-}
-
-// echo "building Array : "; print_r($buildingArray);
-// echo "group Array : "; print_r($groupBuildingArray);
-// echo "room Array : "; print_r($roomArray);
 ?>
-<script type="text/javascript">
-  var buildingArray = <?php echo json_encode($buildingArray); ?>;
-  var groupBuildingArray = <?php echo json_encode($groupBuildingArray); ?>;
-  var roomArray = <?php echo json_encode($roomArray); ?>;
-  var buildingValue = <?php echo json_encode($row_main['building_id']); ?>;
-  var groupValue = <?php echo json_encode($row_main['group_in_building_id']); ?>;
-  var roomValue = <?php echo json_encode($row_main['r_g_in_building_id']); ?>;
 
-  // console.log(buildingArray);
-  // console.log(groupBuildingArray);
-  // console.log(roomArray);
-  // console.log(buildingValue);
-  // console.log(groupValue);
-  // console.log(roomValue);
-</script>
-<style>
-  .inputWithIcon input[type=search]{
-    padding-left: 40px;
-  }
-  .inputWithIcon {
-    position: relative;
-  }
-  .inputWithIcon i{
-    position: absolute;
-    left: 4px;
-    top: 4px;
-    padding: 9px 8px;
-    color: #aaa;
-    transition: .3s;
-  }
-  .inputWithIcon input[type=search]:focus+i{
-    color: dodgerBlue;
-  }
-  #customerList ul {
-    background-color: #eee;
-    cursor: pointer;
-  }
-  #customerList li {
-    padding: 12px;
-  }
-</style>
+
 <section class="container">
-  <div class="jumbotron">
-    <h1 class="display-4">방계약 수정 화면입니다!</h1>
+  <div class="jumbotron pt-3 pb-3">
+    <h3 class="">임대계약 수정 화면입니다!</h3>
     <!-- <p class="lead">고객이란 입주한 세입자 및 문의하는 문의고객, 거래처 등을 포함합니다. 고객등록이 되어야 임대계약 등록이 가능합니다!</p> -->
     <small>(1)<span id='star' style='color:#F7BE81;'> * </span>표시는 필수 입력값입니다. (2)<b>[세입자정보]</b>에는 세입자만 등록 가능합니다. (거래처 및 문의고객은 검색결과가 없다고 표시되니 주의하세요!) <b>[세입자정보]</b>의 제일우측 숫자는 세입자번호로써 시스템데이터임을 참고하여주세요.(3)<b>[기간정보]</b>의 기간(개월수)에는 최대 72개월(6년)까지 등록 가능합니다.</small>
     <hr class="my-4">
   </div>
 </section>
+
 <section class="container">
   <form method="post" action="p_realContract_edit.php">
     <div class="form-row">
@@ -173,50 +116,30 @@ foreach ($groupBuildingArray as $key => $value) {
               <div class="form-row">
                 <div class="form-group col-md-2"><!--물건목록-->
                     <label>물건명</label>
-                    <select id="select2" name="building_id" class="form-control">
-<?php
-$sql_building = "select id, bName from building where user_id={$row_main['user_id']}";
-$result_building = mysqli_query($conn, $sql_building);
-while($row_building = mysqli_fetch_array($result_building)){?>
-  <option value="<?=$row_building['id']?>"
-    <?php if ($row_building['id']===$row_main['building_id']) {
-      echo "selected";
-    }?>
-    ><?=$row_building['bName']?>
-  </option>
-<?php } ?>
+                    <select name="building" class="form-control">
+                      <option value="<?=$row_c['bid']?>"><?=$row_c['bName']?></option>
                     </select>
                 </div>
                 <div class="form-group col-md-2"><!--그룹목록-->
                     <label>그룹명</label>
-                    <select id="select3" name="group_id" class="form-control">
-<?php
-$sql_group = "select id, gName from group_in_building where building_id={$row_main['building_id']}";
-$result_group = mysqli_query($conn, $sql_group);
-while($row_group = mysqli_fetch_array($result_group)){?>
-  <option value="<?=$row_group['id']?>"
-    <?php if ($row_group['id']===$row_main['group_in_building_id']) {
-      echo "selected";
-    }?>
-    ><?=$row_group['gName']?>
-  </option>
-<?php } ?>
+                    <select name="group" class="form-control">
+                       <?php
+                       $sql = "select id, gName from group_in_building where building_id={$row_c['bid']}";
+                       $result = mysqli_query($conn, $sql);
+                       while($row = mysqli_fetch_array($result)){?>
+                         <option value="<?=$row['id']?>"<?php if($row['id']===$row_main['group_in_building_id']){ echo "selected";} ?>><?=$row['gName']?></option>
+                      <?php }?>
                     </select>
                 </div>
                 <div class="form-group col-md-2"><!--관리번호목록-->
                     <label>관리호수</label>
-                    <select id="select4" name="room_id" class="form-control" onchange="">
-<?php
-$sql_room = "select id, rName from r_g_in_building where group_in_building_id={$row_main['group_in_building_id']}";
-$result_room = mysqli_query($conn, $sql_room);
-while($row_room = mysqli_fetch_array($result_room)){?>
-  <option value="<?=$row_room['id']?>"
-    <?php if ($row_room['id']===$row_main['r_g_in_building_id']) {
-      echo "selected";
-    }?>
-    ><?=$row_room['rName']?>
-  </option>
-<?php } ?>
+                    <select name="room" class="form-control">
+                      <?php
+                      $sql = "select id, rName from r_g_in_building where group_in_building_id={$row_main['group_in_building_id']}";
+                      $result = mysqli_query($conn, $sql);
+                      while($row = mysqli_fetch_array($result)){?>
+                        <option value="<?=$row['id']?>"<?php if($row['id']===$row_main['r_g_in_building_id']){ echo "selected";} ?>><?=$row['rName']?></option>
+                     <?php }?>
                     </select>
                 </div>
                 <div class="form-group col-md-2">
@@ -246,15 +169,9 @@ while($row_room = mysqli_fetch_array($result_room)){?>
               </div>
               <div class="form-group col-md-1 mb-0"><!--선불,후불체크-->
                     <label>수납</label>
-                    <select id="select5" name="payOrder" class="form-control">
-                        <option value="선불"
-<?php if($row_main['payOrder']==='선불') {
-  echo "selected";
-}?>>선불</option>
-                        <option value="후불"
-<?php if($row_main['payOrder']==='후불') {
-  echo "selected";
-}?>>후불</option>
+                    <select name="payOrder" class="form-control">
+                      <option value="선납"<?php if($row_c['pay']=='선납')echo "selected"; ?>>선납</option>
+                      <option value="후납"<?php if($row_c['pay']=='후납')echo "selected"; ?>>후납</option>
                     </select>
               </div>
               <div class="form-group col-md-1 mb-0">
@@ -290,8 +207,38 @@ while($row_room = mysqli_fetch_array($result_room)){?>
 
 <?php include $_SERVER['DOCUMENT_ROOT']."/svc/view/service_footer.php";?>
 
-<script src="/admin/js/jquery-ui.min.js"></script>
-<script src="/admin/js/datepicker-ko.js"></script>
+<script src="/svc/inc/js/jquery-3.3.1.min.js"></script>
+<script src="/svc/inc/js/jquery.number.min.js"></script>
+<script src="/svc/inc/js/jquery-ui.min.js"></script>
+<script src="/svc/inc/js/datepicker-ko.js"></script>
+<script src="/svc/inc/js/popper.min.js"></script>
+<script src="/svc/inc/js/bootstrap.min.js"></script>
+
+<script type="text/javascript">
+
+  var buildingArray = <?php echo json_encode($buildingArray); ?>;
+  var groupBuildingArray = <?php echo json_encode($groupBuildingArray); ?>;
+  var roomArray = <?php echo json_encode($roomArray); ?>;
+  console.log(buildingArray);
+  console.log(groupBuildingArray);
+  console.log(roomArray);
+
+  var roomoption, groupIdx, roomIdx;
+
+
+  $('select[name=group]').on('change', function(event){
+    groupIdx = $('select[name=group]').val();
+    $('select[name=room]').empty();
+    for(var key3 in roomArray[groupIdx]){
+      roomoption = "<option value='"+key3+"'>"+roomArray[groupIdx][key3]+"</option>";
+      $('select[name=room]').append(roomoption);
+    }
+  })
+
+  // console.log(buildingIdx, groupIdx, roomIdx);
+
+</script>
+
 <script>
 
 $('#contractDate').on('change', function(){
@@ -341,7 +288,7 @@ $('#contractDate').on('change', function(){
 }) //contractDate on change closing괄호, 최초계약일자=보증금입금일자
 
 var select2option, select3option, select4option, select5option, buildingIdx, groupIdx;
-var pay = ["선불", "후불"];
+var pay = ["선납", "후납"];
 
 
 
@@ -384,31 +331,7 @@ $('#select3').on('change', function(event){
 
 // console.log(buildingIdx, groupIdx, roomIdx);
 
-function getEndDate(){
-  var a = Number($("input[name='monthCount']").val());
-  var b = $('#startDate').val();
-  // console.log(b);
-  var arr1 = b.split('-');
-  var sDate = new Date(arr1[0], arr1[1]-1, arr1[2]);
-  // console.log(sDate);
-  // var eDate = new Date(arr1[0], arr1[1]-1+a, arr1[2]-1);
-  var eDate = new Date(sDate.getFullYear(), sDate.getMonth() + a, sDate.getDate()-1);
-  // console.log(eDate);
-  // console.log(a);
 
-  $('#endDate').attr('value', dateFormat());
-  $('#endDate1').attr('value', dateFormat());
-
-  function dateFormat(){
-    var yyyy = eDate.getFullYear().toString();
-    var mm = (eDate.getMonth()+1).toString();
-    var dd = eDate.getDate().toString();
-
-    var endDate = yyyy+'-'+(mm[1] ? mm : '0'+mm[0])+'-'+(dd[1]?dd:'0'+dd[0]);
-    return endDate;
-  }
-
-}
 
 $('#startDate').on('change', function(event){
   getEndDate();

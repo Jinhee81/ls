@@ -73,6 +73,7 @@ for ($i=0; $i < count($allRows); $i++) {
     $allRows[$i]['cdiv3'] = '(기)';
   }
 
+
   if($allRows[$i]['div2']==='개인사업자'){
     $allRows[$i]['cName'] = $allRows[$i]['name'].'('.$allRows[$i]['companyname'].','.$allRows[$i]['cNumber'].')';
   } else if($allRows[$i]['div2']==='법인사업자'){
@@ -80,6 +81,8 @@ for ($i=0; $i < count($allRows); $i++) {
   } else if($allRows[$i]['div2']==='개인'){
     $allRows[$i]['cName'] = $allRows[$i]['name'];
   }
+
+  $allRows[$i]['companyname'] = $allRows[$i]['cdiv3'].$allRows[$i]['companyname'];
 
 
   if($allRows[$i]['div1']==='문의'){
@@ -96,7 +99,7 @@ for ($i=0; $i < count($allRows); $i++) {
 
   $allRows[$i]['cNamemb'] = mb_substr($allRows[$i]['cName'],0,10,'utf-8');
 
-  $allRows[$i]['email'] = mb_substr($allRows[$i]['email'],0,8,'utf-8');
+  $allRows[$i]['emailmb'] = mb_substr($allRows[$i]['email'],0,8,'utf-8');
 
   $allRows[$i]['etc'] = mb_substr($allRows[$i]['etc'],0,10,'utf-8');
 

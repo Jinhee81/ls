@@ -86,12 +86,43 @@ include $_SERVER['DOCUMENT_ROOT']."/svc/service/contract/building.php";
 
 </section>
 
-<!-- 삭제,등록,엑셀저장부분 -->
+<!-- 문자 및 세금계산서발행 섹션 -->
 <section class="container mb-2">
-  <div class="row justify-content-end mr-0">
-    <a href="m_c_add.php" role="button" class="btn btn-primary btn-sm mr-1" name="button">신규등록</a>
-    <button type="button" class="btn btn-danger btn-sm mr-1" name="rowDeleteBtn">선택삭제</button>
-    <button type="button" class="btn btn-info btn-sm" name="button" data-toggle="tooltip" data-placement="top" title="작업준비중입니다."><i class="far fa-file-excel"></i>엑셀저장</button>
+  <div class="row">
+    <div class="col col-md-7">
+      <div class="row ml-0">
+        <table>
+          <tr>
+            <td>
+              <select class="form-control form-control-sm" id="smsTitle" name="">
+                <option value="상용구없음">상용구없음</option>
+                <?php for ($i=0; $i < count($rowsms); $i++) {
+                  echo "<option value='".$rowsms[$i]['title']."'>".$rowsms[$i]['title']."</option>";
+                } ?>
+              </select>
+            </td>
+            <td>
+              <button class="btn btn-sm btn-block btn-outline-primary" id="smsBtn" data-toggle="modal" data-target="#smsModal1"><i class="far fa-envelope"></i> 보내기</button>
+            </td>
+            <td>
+              <a href="/svc/service/sms/smsSetting.php">
+              <button class="btn btn-sm btn-block btn-dark mobile" id="smsSettingBtn"><i class="fas fa-angle-double-right"></i> 상용구설정</button></a>
+            </td>
+            <td>
+              <a href="/svc/service/sms/sent.php">
+              <button class="btn btn-sm btn-block btn-dark" id="smsSettingBtn"><i class="fas fa-angle-double-right"></i> 보낸문자목록</button></a>
+            </td>
+          </tr>
+        </table>
+      </div>
+    </div>
+    <div class="col col-md-5 mobile">
+      <div class="row justify-content-end mr-0">
+        <a href="m_c_add.php" role="button" class="btn btn-primary btn-sm mr-1" name="button">신규등록</a>
+        <button type="button" class="btn btn-danger btn-sm mr-1" name="rowDeleteBtn">선택삭제</button>
+        <button type="button" class="btn btn-info btn-sm" name="button" data-toggle="tooltip" data-placement="top" title="작업준비중입니다."><i class="far fa-file-excel"></i>엑셀저장</button>
+      </div>
+    </div>
   </div>
 </section>
 
@@ -122,6 +153,11 @@ include $_SERVER['DOCUMENT_ROOT']."/svc/service/contract/building.php";
 
 </section>
 
+<?php
+include $_SERVER['DOCUMENT_ROOT']."/svc/service/sms/modal_sms1.php";
+include $_SERVER['DOCUMENT_ROOT']."/svc/service/sms/modal_sms2.php";
+ ?>
+
 <?php include $_SERVER['DOCUMENT_ROOT']."/svc/view/service_footer.php"; ?>
 
 <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
@@ -133,9 +169,13 @@ include $_SERVER['DOCUMENT_ROOT']."/svc/service/contract/building.php";
 <script src="/svc/inc/js/etc/checkboxtable.js?<?=date('YmdHis')?>"></script>
 <script src="/svc/inc/js/etc/form.js?<?=date('YmdHis')?>"></script>
 
+<script src="/svc/inc/js/etc/sms_noneparase3.js?<?=date('YmdHis')?>"></script>
+<script src="/svc/inc/js/etc/sms_existparase10.js?<?=date('YmdHis')?>"></script>
+
 <script type="text/javascript">
   var buildingArray = <?php echo json_encode($buildingArray); ?>;
   console.log(buildingArray);
+  var smsSettingArray = <?php echo json_encode($rowsms); ?>;
 
   var buildingoption;
   for(var key in buildingArray){ //건물목록출력(비즈피스장암,비즈피스구로)
@@ -143,6 +183,8 @@ include $_SERVER['DOCUMENT_ROOT']."/svc/service/contract/building.php";
     $('select[name=building]').append(buildingoption);
   }
 </script>
+
+<script type="text/javascript" src="js_sms_array_customer.js?<?=date('YmdHis')?>"></script>
 
 <script>
 
@@ -165,15 +207,19 @@ function maketable(){
           returns += '<td class="mobile"><input type="checkbox" value="'+value.id+'" class="tbodycheckbox"></td>';
           returns += '<td class="">'+datacount+'</td>';
           returns += '<td class="">'+value.div1+'</td>';
+          returns += '<td class=""><a href="m_c_edit.php?id='+value.id+'" data-toggle="tooltip" data-placement="top" title="'+value.cName+'">'+value.cNamemb+'</a>';
+
+          returns += '<input type="hidden" name="name" value="'+value.name+'">';
+          returns += '<input type="hidden" name="companyname" value="'+value.companyname+'">';
 
           if(value.contractCount >= 1){
-            returns += '<td class=""><a href="m_c_edit.php?id='+value.id+'" data-toggle="tooltip" data-placement="top" title="'+value.cName+'">'+value.cNamemb+'</a><span class="badge badge-pill badge-warning">'+value.contractCount+'</span></td>';
+            returns += '<span class="badge badge-pill badge-warning">'+value.contractCount+'</span></td>';
           } else {
-            returns += '<td class=""><a href="m_c_edit.php?id='+value.id+'" data-toggle="tooltip" data-placement="top" title="'+value.cName+'">'+value.cNamemb+'</a></td>';
+            returns += '</td>';
           }
 
           returns += '<td class=""><a href="tel:'+value.cContact+'">'+value.cContact+'</a></td>';
-          returns += '<td class="mobile">'+value.email+'</td>';
+          returns += '<td class="mobile">'+value.emailmb+'<input type="hidden" value="'+value.email+'"></td>';
           returns += '<td class="mobile">'+value.etc+'</td>';
           returns += '<td class="mobile">'+value.created+'</td>';
           returns += '<td class="mobile">'+value.updated+'</td>';
@@ -208,6 +254,13 @@ $(document).ready(function(){
   dateinput2(periodDiv);
 
   maketable();
+
+  $('#href_smsSetting').on('click', function(){
+    var moveCheck = confirm('문자상용구설정 화면으로 이동합니다. 이동하시겠습니까?');
+    if(moveCheck){
+      location.href='/svc/service/sms/smsSetting.php';
+    }
+  })
 
   $('.dateType').datepicker({
     changeMonth: true,
@@ -267,7 +320,7 @@ $(document).ready(function(){
 
   $('input[name=cText]').on('keyup', function(){
       maketable();
-      console.log('solmi');
+      // console.log('solmi');
   })
 
   //=================== customerArray start ==============//
@@ -351,5 +404,9 @@ $(document).ready(function(){
 
 
 </script>
+
+<script type="text/javascript" src="/svc/service/get/js_sms_tax.js?<?=date('YmdHis')?>">
+</script>
+
 </body>
 </html>

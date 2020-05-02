@@ -71,11 +71,17 @@ $sql = "
       customer.contact1,
       customer.contact2,
       customer.contact3,
+      customer.cNumber1,
+      customer.cNumber2,
+      customer.cNumber3,
+      customer.email,
       building.bName,
       group_in_building.gName,
       r_g_in_building.rName,
       startDate,
       endDate2,
+      mAmount,
+      mvAmount,
       mtAmount,
       getStatus(startDate, endDate2) as status2,
       count2
@@ -103,6 +109,9 @@ while($row = mysqli_fetch_array($result)){
 }
 
 for ($i=0; $i < count($allRows); $i++) {
+
+  $allRows[$i]['cNumber'] = $allRows[$i]['cNumber1'].'-'.$allRows[$i]['cNumber2'].'-'.$allRows[$i]['cNumber3'];
+
   if($allRows[$i]['div3']==='주식회사'){
     $allRows[$i]['cdiv3'] = '(주)';
   } elseif($allRows[$i]['div3']==='유한회사'){
@@ -114,12 +123,16 @@ for ($i=0; $i < count($allRows); $i++) {
   }
 
   if($allRows[$i]['div2']==='개인사업자'){
-    $allRows[$i]['ccnn'] = $allRows[$i]['cname'].'('.$allRows[$i]['ccomname'].')';
+    $allRows[$i]['ccnn'] = $allRows[$i]['cname'].'('.$allRows[$i]['ccomname'].','.$allRows[$i]['cNumber'].')';
   } else if($allRows[$i]['div2']==='법인사업자'){
-    $allRows[$i]['ccnn'] = $allRows[$i]['cdiv3'].$allRows[$i]['ccomname'].'('.$allRows[$i]['cname'].')';
+    $allRows[$i]['ccnn'] = $allRows[$i]['cdiv3'].$allRows[$i]['ccomname'].'('.$allRows[$i]['cname'].','.$allRows[$i]['cNumber'].')';
   } else if($allRows[$i]['div2']==='개인'){
     $allRows[$i]['ccnn'] = $allRows[$i]['cname'];
   }
+
+  $allRows[$i]['ccomname'] = mb_substr($allRows[$i]['cdiv3'].$allRows[$i]['ccomname'],0,10,'utf-8');
+
+  $allRows[$i]['ccnnmb'] = mb_substr($allRows[$i]['ccnn'],0,10,'utf-8');
 
   $allRows[$i]['contact'] = $allRows[$i]['contact1'].'-'.$allRows[$i]['contact2'].'-'.$allRows[$i]['contact3'];
 

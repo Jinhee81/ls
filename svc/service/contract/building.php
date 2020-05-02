@@ -17,6 +17,20 @@ while($row = mysqli_fetch_array($result)){
                     );
 }
 
+$buildingcount = 0;
+foreach ($buildingArray as $key => $value) {
+  $buildingcount += count($value);
+}
+
+// print_r($buildingcount);
+
+if($buildingcount===0){
+  echo "<script>
+    alert('물건을 등록한 것이 없네요. 환경설정에서 물건을 등록해야 이용할 수 있어요!');
+    </script>";
+  echo "<meta http-equiv='refresh' content='0; url=/svc/service/setting/building.php'>";
+}
+
 foreach ($buildingArray as $key => $value) { //key는 건물아이디, value는 건물이름
   $sql2 = "select * from group_in_building where building_id={$key}"; //건물아이디로 그룹조회
   // echo $sql2;
@@ -40,5 +54,21 @@ foreach ($groupBuildingArray as $key => $value) {
       $roomArray[$row3['id']][$row4['id']]=$row4['rName'];
     }
   }
+}
+
+//room 개수 구하고, room 등록이 없으면 환경설정화면으로 이동시킴
+
+$roomcount = 0;
+foreach ($roomArray as $key => $value) {
+  $roomcount += count($value);
+}
+
+// print_r($roomcount);
+
+if($roomcount===0){
+  echo "<script>
+    alert('관리호수를 등록한 것이 없네요. 환경설정에서 관리호수를 등록해야 이용할 수 있어요!');
+    </script>";
+  echo "<meta http-equiv='refresh' content='0; url=/svc/service/setting/building.php'>";
 }
  ?>

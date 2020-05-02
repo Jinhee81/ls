@@ -14,6 +14,20 @@ include $_SERVER['DOCUMENT_ROOT']."/svc/view/service_header2.php";
 include $_SERVER['DOCUMENT_ROOT']."/svc/view/conn.php";
 include $_SERVER['DOCUMENT_ROOT']."/svc/main/condition.php";
 include "building.php";
+
+$sql_sms = "select
+          screen, title, description
+        from sms
+        where
+          user_id={$_SESSION['id']} and
+          screen='임대계약화면'";
+// echo $sql_sms;
+
+$result_sms = mysqli_query($conn, $sql_sms);
+$rowsms = array();
+while($row_sms = mysqli_fetch_array($result_sms)){
+  $rowsms[] = $row_sms;
+}
 ?>
 
 <!-- 제목 -->
@@ -138,15 +152,6 @@ include "building.php";
     </div>
 </section>
 
-<!-- 삭제,등록,엑셀저장부분 -->
-<!-- <section class="container mb-2">
-  <div class="row justify-content-end mr-0">
-    <a href="contract_add2.php" role="button" class="btn btn-sm btn-primary mr-1">신규등록</a>
-    <button type="button" class="btn btn-sm btn-danger mr-1" name="rowDeleteBtn" data-toggle="tooltip" data-placement="top" title="'c'표시된것만 삭제 가능합니다">선택삭제</button>
-    <button type="button" class="btn btn-info btn-sm" name="button" data-toggle="tooltip" data-placement="top" title="작업준비중입니다."><i class="far fa-file-excel"></i>엑셀저장</button>
-  </div>
-</section> -->
-
 
 <!-- 표내용 -->
 <section class="container">
@@ -202,6 +207,7 @@ include $_SERVER['DOCUMENT_ROOT']."/svc/service/sms/modal_sms2.php";
   var buildingArray = <?php echo json_encode($buildingArray); ?>;
   var groupBuildingArray = <?php echo json_encode($groupBuildingArray); ?>;
   var roomArray = <?php echo json_encode($roomArray); ?>;
+  var smsSettingArray = <?php echo json_encode($rowsms); ?>;
   console.log(buildingArray);
   console.log(groupBuildingArray);
   console.log(roomArray);
@@ -209,7 +215,7 @@ include $_SERVER['DOCUMENT_ROOT']."/svc/service/sms/modal_sms2.php";
 
 <script src="/svc/inc/js/etc/building.js?<?=date('YmdHis')?>"></script>
 
-<script type="text/javascript" src="j_sms_array.js?<?=date('YmdHis')?>"></script>
+<script type="text/javascript" src="js_sms_array_rcontract.js?<?=date('YmdHis')?>"></script>
 
 
 <script>
@@ -245,7 +251,12 @@ function maketable(){
             returns += '<td class=""><div class="badge badge-danger text-wrap" style="width: 3rem;">종료</div></td>';
           }
 
-          returns += '<td class=""><a href="/svc/service/customer/m_c_edit.php?id='+value.cid+'" data-toggle="tooltip" data-placement="top" title="'+value.ccnn+'">'+value.ccnn+'</a></td>';
+          returns += '<td class=""><a href="/svc/service/customer/m_c_edit.php?id='+value.cid+'" data-toggle="tooltip" data-placement="top" title="'+value.ccnn+'">'+value.ccnnmb+'</a>';
+
+          returns += '<input type="hidden" name="customername" value="'+value.cname+'">';
+          returns += '<input type="hidden" name="customercompanyname" value="'+value.ccomname+'">';
+          returns += '<input type="hidden" name="email" value="'+value.email+'">';
+          returns += '<input type="hidden" name="customerId" value="'+value.cid+'"></td>';
 
           returns += '<td class=""><a href="tel:'+value.contact+'">'+value.contact+'</a></td>';
           returns += '<td class="mobile">'+value.gName+'</td>';
@@ -254,6 +265,9 @@ function maketable(){
           returns += '<td class="mobile">'+value.endDate2+'</td>';
           returns += '<td class="mobile">'+value.count2+'</td>';
           returns += '<td class=""><a href="contractEdit.php?id='+value.rid+'" >'+value.mtAmount+'</a>';
+
+          returns += '<input type="hidden" name="mAmount" value="'+value.mAmount+'">';
+          returns += '<input type="hidden" name="mvAmount" value="'+value.mvAmount+'">';
 
           if(value.step==='clear'){
             returns += '<div class="badge badge-warning text-light" style="width: 1rem;">c</div></td>';
@@ -294,6 +308,13 @@ $(document).ready(function(){
     dateinput2(periodDiv);
 
     maketable();
+
+    $('#href_smsSetting').on('click', function(){
+      var moveCheck = confirm('문자상용구설정 화면으로 이동합니다. 이동하시겠습니까?');
+      if(moveCheck){
+        location.href='/svc/service/sms/smsSetting.php';
+      }
+    })
 
 
     $('.dateType').datepicker({

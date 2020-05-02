@@ -2,7 +2,7 @@
 <?php
 session_start();
 include $_SERVER['DOCUMENT_ROOT']."/svc/view/conn.php";
-
+header('Content-Type: text/html; charset=UTF-8');
 // print_r($_POST);
 // print_r($_SESSION);
 

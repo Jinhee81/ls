@@ -47,7 +47,7 @@ $result_grade = mysqli_query($conn, $sql_grade);
 $row_grade = mysqli_fetch_array($result_grade);
 
 $sql_c_p = "select count(*)
-        from realcontract
+        from realContract
         where user_id={$_SESSION['id']} and
               getstatus(startdate, enddate2) = 'present'
         ";

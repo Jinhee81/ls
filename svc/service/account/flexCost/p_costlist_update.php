@@ -5,13 +5,13 @@ session_start();
 header('Content-Type: text/html; charset=UTF-8');
 include $_SERVER['DOCUMENT_ROOT']."/svc/view/conn.php";
 
-print_r($_POST);
-echo 111;
+// print_r($_POST);
+// echo 111;
 
 $a = json_decode($_POST['costlistArray1']);
 $b = json_decode($_POST['costlistArray2']);
 
-print_r($a);
+// print_r($a);
 
 for ($i=0; $i < count($a); $i++) {
   $amount1 = number_format((int)$a[$i][2]);
@@ -72,10 +72,7 @@ for ($i=0; $i < count($b); $i++) {
 }
 
 echo "<script>alert('저장하였습니다.');
-      location.href='flexCost1.php?buildingIdx=".$_POST['buildingIdx']."&building=".$_POST['building']."&year=".$_POST['year']."&month=".$_POST['month']."';
+      history.back();
       </script>";
 
  ?>
-
-<!-- location.href='flexCost1.php?buildingIdx".$_POST['buildingIdx']."=&building".$_POST['building']."&year".$_POST['year']."&month".$_POST['month']."'; -->
- <!-- location.href='flexCost1.php?buildingIdx=".$_POST['buildingIdx']."&building=".$_POST['building']."&year=".$_POST['year']."&month=".$_POST['month']."'; -->

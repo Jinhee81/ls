@@ -1,5 +1,6 @@
 <?php
 session_start();
+header('Content-Type: text/html; charset=UTF-8');
 include $_SERVER['DOCUMENT_ROOT']."/svc/view/conn.php";
 
 // echo $_POST;
@@ -22,14 +23,13 @@ $sql = "
         (select @num :=0)a, costlist
   where user_id = {$_SESSION['id']} and
         building_id = {$_POST['buildingIdx']} and
-        fixflexdiv = 'flex' and
+        fixflexdiv = 'fix' and
         DATE(payDate) BETWEEN '{$fromDate}' and '{$toDate}'
   order by
       id asc
   ";
 
 // echo $sql;
-
 $result = mysqli_query($conn, $sql);
 // $total_rows = mysqli_num_rows($result);
 $allRows = array();
@@ -38,4 +38,5 @@ while($row = mysqli_fetch_array($result)){
 }
 
 echo json_encode($allRows);
+
 ?>

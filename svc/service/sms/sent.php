@@ -31,13 +31,13 @@ include $_SERVER['DOCUMENT_ROOT']."/svc/service/contract/building.php"; //이거
      <div class="row justify-content-md-center">
        <form>
          <table>
-           <tr>
+           <tr class="text-center">
              <td width="6%" class="">
                <select class="form-control form-control-sm selectCall" name="dateDiv">
                  <option value="sendtime">전송일자</option>
                </select>
              </td>
-             <td width="6%" class="">
+             <td width="4%" class="">
                <select class="form-control form-control-sm selectCall"name="periodDiv">
                  <option value="allDate">--</option>
                  <option value="nowMonth" selected>당월</option>
@@ -54,14 +54,14 @@ include $_SERVER['DOCUMENT_ROOT']."/svc/service/contract/building.php"; //이거
              <td width="6%" class="">
                <input type="text" name="toDate" value="" class="form-control form-control-sm text-center dateType">
              </td>
-             <td width="6%" class="">
+             <td width="4%" class="">
                <select class="form-control form-control-sm selectCall" id="type" name="type">
                  <option value="typeAll">유형</option>
-                 <option value="sms">단문(sms)</option>
-                 <option value="mms">장문(mms)</option>
+                 <option value="sms">단문</option>
+                 <option value="mms">장문</option>
                </select><!--유형-->
              </td>
-             <td width="6%" class="">
+             <td width="4%" class="">
                <select class="form-control form-control-sm selectCall" id="result" name="result">
                  <option value="resultall">결과</option>
                  <option value="success">전송성공</option>
@@ -70,11 +70,11 @@ include $_SERVER['DOCUMENT_ROOT']."/svc/service/contract/building.php"; //이거
              </td>
              <td width="6%" class="">
                <select class="form-control form-control-sm selectCall" id="etcCondi" name="etcCondi">
-                 <option value="customer">받는사람</option>
-                 <option value="contact">연락처</option>
+                 <option value="customer">수신자</option>
+                 <option value="contact">수신번호</option>
                </select>
              </td>
-             <td width="6%" class="">
+             <td width="8%" class="">
                <input type="text" name="cText" class="form-control form-control-sm text-center">
              </td>
            </tr>
@@ -92,9 +92,9 @@ include $_SERVER['DOCUMENT_ROOT']."/svc/service/contract/building.php"; //이거
         <th class="">순번</th>
         <th class="">유형</th>
         <th class="">전송시간</th>
-        <th class="">받는사람</th>
-        <th class="">연락처</th>
-        <th class="">관리번호</th>
+        <th class="">수신자</th>
+        <th class="">수신번호</th>
+        <th class="">발신번호</th>
         <th class="">문자내용</th>
         <th class="">전송결과</th>
       </tr>
@@ -155,7 +155,7 @@ function maketable(){
           returns += '<td class="">'+value.sendtime+'<input type="hidden" name="byte" value="'+value.byte+'"></td>';
           returns += '<td class=""><label data-toggle="tooltip" data-placement="top" title="'+value.customer+'">'+value.customermb+'</label></td>';
           returns += '<td class="">'+value.phonenumber+'<input type="hidden" name="sentnumber" value="'+value.sentnumber+'"></td>';
-          returns += '<td class="">'+value.roomNumber+'</td>';
+          returns += '<td class="">'+value.sentnumber+'</td>';
           returns += '<td class=""><p class="modalDescription" data-toggle="modal" data-target="#smsDescription">'+value.descriptionmb+'</p><input type="hidden" name="description" value="'+value.description+'"></td>';
           returns += '<td class="">'+value.result+'</td>';
 

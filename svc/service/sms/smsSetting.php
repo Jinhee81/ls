@@ -48,7 +48,7 @@ while($row = mysqli_fetch_array($result)){
       <div class="col col-sm-3">
         <select class="form-control" id="screenName">
             <option value="all">전체</option>
-            <option value="입주자화면">입주자화면</option>
+            <option value="관계자화면">관계자화면</option>
             <option value="임대계약화면">임대계약화면</option>
             <option value="납부예정화면">납부예정화면</option>
             <option value="납부완료화면">납부완료화면</option>

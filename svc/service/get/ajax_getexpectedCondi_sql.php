@@ -90,7 +90,7 @@ $sql = "
         paySchedule2.executiveDate is null
         $groupCondi $etcCondi $etcDate
   order by
-        pExpectedDate asc
+        date_format(pExpectedDate, '%Y-%m-%d') asc
   ";
 
 ?>

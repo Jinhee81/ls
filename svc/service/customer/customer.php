@@ -14,6 +14,20 @@ include $_SERVER['DOCUMENT_ROOT']."/svc/view/service_header2.php";
 include $_SERVER['DOCUMENT_ROOT']."/svc/view/conn.php";
 include $_SERVER['DOCUMENT_ROOT']."/svc/main/condition.php";
 include $_SERVER['DOCUMENT_ROOT']."/svc/service/contract/building.php";
+
+$sql_sms = "select
+          screen, title, description
+        from sms
+        where
+          user_id={$_SESSION['id']} and
+          screen='관계자화면'";
+// echo $sql_sms;
+
+$result_sms = mysqli_query($conn, $sql_sms);
+$rowsms = array();
+while($row_sms = mysqli_fetch_array($result_sms)){
+  $rowsms[] = $row_sms;
+}
 ?>
 
 <section class="container">

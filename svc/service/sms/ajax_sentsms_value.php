@@ -1,4 +1,7 @@
 <?php
+ini_set('display_errors', 1);
+ini_set('error_reporting', E_ALL);
+header('Content-Type: text/html; charset=UTF-8');
 include "ajax_sentsms_sql.php";
 
 $result = mysqli_query($conn, $sql);

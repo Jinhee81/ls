@@ -1,7 +1,7 @@
 <?php
 
 $currentYear = date('Y');
-$currentMonth = date('m');
+$currentMonth = date('n');
 
 // print_r($currentYear);
 // var_dump($currentMonth);

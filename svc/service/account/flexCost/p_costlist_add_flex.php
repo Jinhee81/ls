@@ -11,9 +11,9 @@ $sql = "insert into costlist
         values
         ('flex',
          '{$_POST['title']}',
-         '{$_POST['amount1']}',
-         '{$_POST['amount2']}',
-         '{$_POST['amount3']}',
+         '{$_POST['mamount1']}',
+         '{$_POST['mamount2']}',
+         '{$_POST['mamount3']}',
          '{$_POST['payDate']}',
          '{$_POST['taxDate']}',
          '{$_POST['etc']}',

@@ -10,6 +10,9 @@
 #checkboxTestTbl tr.selected{background-color: #A9D0F5;}
 select .selectCall{background-color: #A9D0F5;}
 
+#modalTable tr.selected{background-color: #A9D0F5;}
+select .selectCall{background-color: #A9D0F5;}
+
 @media (max-width: 990px) {
       .mobile {
         display: none;

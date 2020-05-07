@@ -197,6 +197,7 @@ include $_SERVER['DOCUMENT_ROOT']."/svc/service/sms/modal_sms2.php";
 <script src="/svc/inc/js/popper.min.js"></script>
 <script src="/svc/inc/js/bootstrap.min.js"></script>
 <script src="/svc/inc/js/datepicker-ko.js"></script>
+<script src="/svc/inc/js/jquery-ui-timepicker-addon.js"></script>
 <script src="/svc/inc/js/etc/newdate8.js?<?=date('YmdHis')?>"></script>
 <script src="/svc/inc/js/etc/checkboxtable.js?<?=date('YmdHis')?>"></script>
 <script src="/svc/inc/js/etc/form.js?<?=date('YmdHis')?>"></script>

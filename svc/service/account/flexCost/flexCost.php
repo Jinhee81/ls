@@ -20,7 +20,7 @@ include "yearMonth.php";
 
 <section class="container">
   <div class="jumbotron pt-3 pb-3">
-    <h2 class="">지출을 입력합니다.</h2>
+    <h3 class="">지출을 입력하세요.</h3>
     <p class="lead">
       <!-- (1) 상태(진행 - 현재 계약 진행 중), (대기 - 곧 계약시작임), (종료 - 종료된 계약)로 구분합니다.<br>
       (2) 월이용료를 클릭하면 해당 계약의 상세페이지가 나옵니다.<br>
@@ -95,51 +95,15 @@ include "yearMonth.php";
 
       </div>
 
-      <div class="">
-        <table class="table table-hover text-center mt-2 table-sm" id="checkboxTestTbl">
-          <thead>
-            <tr class="table-info">
-              <!-- <th scope="col"><input type="checkbox"></th> -->
-              <th width="5%" class="">순번</th>
-              <th width="14%" class="">내역</th>
-              <th width="10%" class="mobile">금액</th>
-              <th width="10%" class="mobile">공급가액</th>
-              <th width="10%" class="mobile">세액</th>
-              <th width="12%" class="">지출일자</th>
-              <th width="12%" class="">증빙일자</th>
-              <th width="21%" class="">특이사항</th>
-              <th width="5%" class="mobile"></th>
-            </tr>
-          </thead>
-          <tbody id="fixcostList">
+      <div class="" id="fixcostList">
 
-          </tbody>
-        </table>
       </div>
     </div>
     <hr>
     <div class="">
       <h5 class="display-5"># 변동비 <span class="badge badge-success" id="badge2" data-toggle="modal" data-target="#modal2">변동비입력</span></h5>
-      <div class="">
-        <table class="table table-hover text-center mt-2 table-sm" id="checkboxTestTbl">
-          <thead>
-            <tr class="table-info">
-              <!-- <th scope="col"><input type="checkbox"></th> -->
-              <th width="5%" class="">순번</th>
-              <th width="14%" class="">내역</th>
-              <th width="10%" class="mobile">금액</th>
-              <th width="10%" class="mobile">공급가액</th>
-              <th width="10%" class="mobile">세액</th>
-              <th width="12%" class="">지출일자</th>
-              <th width="12%" class="">증빙일자</th>
-              <th width="21%" class="">특이사항</th>
-              <th width="5%" class="mobile"></th>
-            </tr>
-          </thead>
-          <tbody id="flexcostList">
+      <div id="flexcostList">
 
-          </tbody>
-        </table>
       </div>
     </div>
     <hr>
@@ -171,14 +135,12 @@ include "yearMonth.php";
 
 
 <script>
-
 var buildingIdx = $('select[name=building]').val();
-var building = $('select[name=building] option:selected').text();
 var year = $('select[name=year]').val();
-var yearText = $('select[name=year] option:selected').text();
 var month = $('select[name=month]').val();
+var yearText = $('select[name=year] option:selected').text();
 var monthText = $('select[name=month] option:selected').text();
-
+var building = $('select[name=building] option:selected').text();
 var modalbuildingOption = "<option value='"+buildingIdx+"'>"+building+"</option>";
 var modalyearOption = "<option value='"+year+"'>"+yearText+"</option>";
 var modalmonthOption = "<option value='"+month+"'>"+monthText+"</option>";
@@ -191,141 +153,68 @@ $('input[name=payDate]').val(modalDate);
 //---- ^ buildingIdx 전역변수 선언 ^------//
 
 function fntblfix(){
+  buildingIdx = $('select[name=building]').val();
+  year = $('select[name=year]').val();
+  month = $('select[name=month]').val();
+
   var fixtable = $.ajax({
     url: 'ajax_fixcostLoad.php',
     method: 'post',
     data: {buildingIdx:buildingIdx, year:year, month:month},
     success: function(data){
-      data = JSON.parse(data);
-      datacount = data.length;
-
-      var returns = '';
-
-      if(datacount === 0){
-        returns ="<tr><td colspan='9'>조회값이 없어요.</td></tr>";
-      } else {
-        $.each(data, function(key, value){
-          returns += "<tr>";
-          returns += '<td>'+value.num+'<input type="hidden" name="id" value="'+value.id+'"></td>';
-          returns += '<td>'+value.title+'</td>';
-          returns += '<td>'+'<input type="text" class="form-control form-control-sm text-right amountNumber" name="amount1"  value="'+value.amount1+'"></td>';
-          returns += '<td>'+'<input type="text" class="form-control form-control-sm text-right amountNumber" name="amount2"  value="'+value.amount2+'"></td>';
-          returns += '<td>'+'<input type="text" class="form-control form-control-sm text-right amountNumber" name="amount3"  value="'+value.amount3+'"></td>';
-          returns += '<td>'+'<input type="text" class="form-control form-control-sm dateType text-center" name="payDate"  value="'+value.payDate+'"></td>';
-
-          if(value.taxDate==null){
-            returns += '<td>'+'<input type="text" class="form-control form-control-sm dateType text-center" name="taxDate"  value=""></td>';
-          } else {
-            returns += '<td>'+'<input type="text" class="form-control form-control-sm dateType text-center" name="taxDate"  value="'+value.taxDate+'"></td>';
-          }
-
-          if(value.etc==null){
-            returns += '<td>'+'<input type="text" class="form-control form-control-sm text-center" name="etc" value=""></td>';
-          } else {
-            returns += '<td>'+'<input type="text" class="form-control form-control-sm text-center" name="etc" value="'+value.etc+'"></td>';
-          }
-
-          returns += '<td>'+'<button type="submit" name="delete" class="btn btn-default grey"><i class="far fa-trash-alt" name="delete"></i></button>'+'</td>';
-          returns += "</tr>";
-
-        })
-      }
-      $('#fixcostList').html(returns);
+      $('#fixcostList').html(data);
     }//success}
   })//ajax}
   return fixtable;
 }//function}
 
 function fntblflex(){
+  buildingIdx = $('select[name=building]').val();
+  year = $('select[name=year]').val();
+  month = $('select[name=month]').val();
+
   var flextable = $.ajax({
     url: 'ajax_flexcostLoad.php',
     method: 'post',
     data: {buildingIdx:buildingIdx, year:year, month:month},
     success: function(data){
-      data = JSON.parse(data);
-      datacount = data.length;
-
-      var returns = '';
-
-      if(datacount === 0){
-        returns ="<tr><td colspan='9'>조회값이 없어요.</td></tr>";
-      } else {
-        $.each(data, function(key, value){
-          returns += "<tr>";
-          returns += '<td>'+value.num+'<input type="hidden" name="id" value="'+value.id+'"></td>';
-          returns += '<td>'+value.title+'</td>';
-          returns += '<td>'+'<input type="text" class="form-control form-control-sm text-right amountNumber" name="amount1"  value="'+value.amount1+'"></td>';
-          returns += '<td>'+'<input type="text" class="form-control form-control-sm text-right amountNumber" name="amount2"  value="'+value.amount2+'"></td>';
-          returns += '<td>'+'<input type="text" class="form-control form-control-sm text-right amountNumber" name="amount3"  value="'+value.amount3+'"></td>';
-          returns += '<td>'+'<input type="text" class="form-control form-control-sm dateType text-center" name="payDate"  value="'+value.payDate+'"></td>';
-
-          if(value.taxDate==null){
-            returns += '<td>'+'<input type="text" class="form-control form-control-sm dateType text-center" name="taxDate"  value=""></td>';
-          } else {
-            returns += '<td>'+'<input type="text" class="form-control form-control-sm dateType text-center" name="taxDate"  value="'+value.taxDate+'"></td>';
-          }
-
-          if(value.etc==null){
-            returns += '<td>'+'<input type="text" class="form-control form-control-sm text-center" name="etc" value=""></td>';
-          } else {
-            returns += '<td>'+'<input type="text" class="form-control form-control-sm text-center" name="etc" value="'+value.etc+'"></td>';
-          }
-
-          returns += '<td>'+'<button type="button" name="delete" class="btn btn-default grey"><i class="far fa-trash-alt"></i></button>'+'</td>';
-          returns += "</tr>";
-
-        })
-      }
-      $('#flexcostList').html(returns);
+      $('#flexcostList').html(data);
     }//success}
   })//ajax}
   return flextable;
 }//function}
 
+function fntblmodalfix(){
+  var buildingIdx = $('select[name=building]').val();
+  var building = $('select[name=building] option:selected').text();
+  var year = $('select[name=year]').val();
+  var month = $('select[name=month]').val();
+  var modalbuildingOption = "<option value='"+buildingIdx+"'>"+building+"</option>";
+
+  $('select[name=modalbuilding]').html(modalbuildingOption);
+
+  var modalfixtable = $.ajax({
+    url: 'ajax_modalfixcostLoad.php',
+    method: 'post',
+    data: {buildingIdx:buildingIdx, year:year, month:month},
+    success: function(data){
+      $('#fixcostListModal').html(data);
+    }//success}
+  })//ajax}
+  return modalfixtable;
+}//function}
+
 $(document).ready(function(){
   fntblfix();
   fntblflex();
-
-  $(document).on('click', '.amountNumber', function(){
-    $(this).select();
-  })
-
-  $(document).on('keyup', '.amountNumber', function(){
-    $(this).number(true);
-  })
-
-  $(document).on('click', '.dateType', function(){
-    console.log('s');
-    $(this).datepicker({
-      changeMonth: true,
-      changeYear: true,
-      showButtonPanel: true,
-      currentText: '오늘',
-      closeText: '닫기'
-    });
-  })
-
-  // $(".amountNumber").click(function(){
-  //   $(this).select();
-  // });
-
-  $(".amountNumber").number(true);
-
-  $.ajax({
-    url: 'ajax_modalfixcostLoad.php',
-    method: 'post',
-    data: {building:building, buildingIdx:buildingIdx},
-    success: function(data){
-      $('#fixcostListModal').html(data);
-    }
-  })//고정비입력 모달 출력
-
+  fntblmodalfix();
 })//------------ ^ document.ready ^------//
 
 
 $('select[name=building]').on('change', function(){
   fntblfix();
   fntblflex();
+  fntblmodalfix();
 })
 
 $('select[name=year]').on('change', function(){
@@ -341,11 +230,9 @@ $('select[name=month]').on('change', function(){
 $('#href_fixcost').on('click', function(){
   var moveCheck = confirm('고정비관리 화면으로 이동합니다. 이동하시겠습니까?');
   if(moveCheck){
-    location.href='/service/account/fixcost.php';
+    location.href='/svc/service/account/fixcost/fixcost.php';
   }
-})
-
-//------------------------------------------------ ^ 모달안 고정비출력 ^------//
+})//------- ^ 모달안 고정비출력 ^------//
 
 $('#btn1').on('click', function(){
   var year = $('select[name=year]').val();
@@ -416,26 +303,22 @@ $('#btnSave').on('click', function(){//------ ^전체 저장버튼 클릭 ^-----
     var building = $('select[name=building] :selected').text();
     var year = $('select[name=year]').val();
     var month = $('select[name=month]').val();
-    var fixrow = $('#fixcostList tr').length;
-    var flexrow = $('#flexcostList tr').length;
-
-    // console.log(fixrow, flexrow);
+    var fixrow = $('#fixcostTable tbody tr').length - 1;
+    var flexrow = $('#flexcostTable tbody tr').length - 1;
 
     // var editableArray = [];
     var costlistArray1 = [];
     for (var i = 0; i < fixrow; i++) {
       var costlistArray1ele = [];
 
-      var costlistid = $('#fixcostList').find("tr:eq("+i+")").find("td:eq(0)").children('input').val(); //아이디
-      var costlistTitle = $('#fixcostList').find("tr:eq("+i+")").find("td:eq(1)").text(); //내역
-      var costlistAmount1 = $('#fixcostList').find("tr:eq("+i+")").find("td:eq(2)").children('input').val().replace(/,/g,''); //금액
-      var costlistAmount2 = $('#fixcostList').find("tr:eq("+i+")").find("td:eq(3)").children('input').val().replace(/,/g,''); //공급가액
-      var costlistAmount3 = $('#fixcostList').find("tr:eq("+i+")").find("td:eq(4)").children('input').val().replace(/,/g,''); //세액
-      var costlistPaydate = $('#fixcostList').find("tr:eq("+i+")").find("td:eq(5)").children('input').val(); //지출일자
-      var costlistTaxdate = $('#fixcostList').find("tr:eq("+i+")").find("td:eq(6)").children('input').val(); //증빙일자
-      var costlistEtc = $('#fixcostList').find("tr:eq("+i+")").find("td:eq(7)").children('input').val(); //특이사항
-
-      var costlistAmount11 = Number(costlistAmount2) + Number(costlistAmount3);
+      var costlistid = $('#fixcostTable tbody').find("tr:eq("+i+")").find("td:eq(0)").children('input').val(); //아이디
+      var costlistTitle = $('#fixcostTable tbody').find("tr:eq("+i+")").find("td:eq(1)").text(); //내역
+      var costlistAmount1 = $('#fixcostTable tbody').find("tr:eq("+i+")").find("td:eq(2)").children('input').val().replace(/,/g,''); //금액
+      var costlistAmount2 = $('#fixcostTable tbody').find("tr:eq("+i+")").find("td:eq(3)").children('input').val().replace(/,/g,''); //공급가액
+      var costlistAmount3 = $('#fixcostTable tbody').find("tr:eq("+i+")").find("td:eq(4)").children('input').val().replace(/,/g,''); //세액
+      var costlistPaydate = $('#fixcostTable tbody').find("tr:eq("+i+")").find("td:eq(5)").children('input').val(); //지출일자
+      var costlistTaxdate = $('#fixcostTable tbody').find("tr:eq("+i+")").find("td:eq(6)").children('input').val(); //증빙일자
+      var costlistEtc = $('#fixcostTable tbody').find("tr:eq("+i+")").find("td:eq(7)").children('input').val(); //특이사항
 
       costlistAmount1 = Number(costlistAmount1);
       costlistAmount2 = Number(costlistAmount2);
@@ -463,14 +346,14 @@ $('#btnSave').on('click', function(){//------ ^전체 저장버튼 클릭 ^-----
     for (var i = 0; i < flexrow; i++) {
       var costlistArray2ele = [];
 
-      var costlist2id = $('#flexcostList').find("tr:eq("+i+")").find("td:eq(0)").children('input').val(); //아이디
-      var costlist2Title = $('#flexcostList').find("tr:eq("+i+")").find("td:eq(1)").text(); //내역
-      var costlist2Amount1 = $('#flexcostList').find("tr:eq("+i+")").find("td:eq(2)").children('input').val().replace(/,/g,''); //금액
-      var costlist2Amount2 = $('#flexcostList').find("tr:eq("+i+")").find("td:eq(3)").children('input').val().replace(/,/g,''); //공급가액
-      var costlist2Amount3 = $('#flexcostList').find("tr:eq("+i+")").find("td:eq(4)").children('input').val().replace(/,/g,''); //세액
-      var costlist2Paydate = $('#flexcostList').find("tr:eq("+i+")").find("td:eq(5)").children('input').val(); //지출일자
-      var costlist2Taxdate = $('#flexcostList').find("tr:eq("+i+")").find("td:eq(6)").children('input').val(); //증빙일자
-      var costlist2Etc = $('#flexcostList').find("tr:eq("+i+")").find("td:eq(7)").children('input').val(); //특이사항
+      var costlist2id = $('#flexcostTable tbody').find("tr:eq("+i+")").find("td:eq(0)").children('input').val(); //아이디
+      var costlist2Title = $('#flexcostTable tbody').find("tr:eq("+i+")").find("td:eq(1)").children().val().trim(); //내역
+      var costlist2Amount1 = $('#flexcostTable tbody').find("tr:eq("+i+")").find("td:eq(2)").children('input').val().replace(/,/g,''); //금액
+      var costlist2Amount2 = $('#flexcostTable tbody').find("tr:eq("+i+")").find("td:eq(3)").children('input').val().replace(/,/g,''); //공급가액
+      var costlist2Amount3 = $('#flexcostTable tbody').find("tr:eq("+i+")").find("td:eq(4)").children('input').val().replace(/,/g,''); //세액
+      var costlist2Paydate = $('#flexcostTable tbody').find("tr:eq("+i+")").find("td:eq(5)").children('input').val(); //지출일자
+      var costlist2Taxdate = $('#flexcostTable tbody').find("tr:eq("+i+")").find("td:eq(6)").children('input').val(); //증빙일자
+      var costlist2Etc = $('#flexcostTable tbody').find("tr:eq("+i+")").find("td:eq(7)").children('input').val(); //특이사항
 
       costlist2Amount1 = Number(costlist2Amount1);
       costlist2Amount2 = Number(costlist2Amount2);
@@ -577,22 +460,6 @@ $('#btnDeleteAll').on('click', function(){
 
 })//상단 전체삭제버튼 클릭시
 
-$('i[name=delete]').on('click', function(){
-  var id = $(this).parent().parent().children('td:eq(0)').children().val();
-
-  console.log(id);
-  console.log('solmi');
-
-  goCategoryPage('costdelete', 'p_costlist_delete.php', id);
-
-  function goCategoryPage(a,b,c){
-    var frm = formCreate(a, 'post', b,'');
-    frm = formInput(frm, 'id', c);
-    formSubmit(frm);
-  }
-
-
-})
 
 </script>
 

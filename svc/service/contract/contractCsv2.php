@@ -1,4 +1,7 @@
 <?php
+ini_set('display_errors', 1);
+ini_set('error_reporting', E_ALL);
+
 session_start();
 if(!isset($_SESSION['is_login'])){
   header('Location: /svc/login.php');
@@ -8,7 +11,6 @@ include $_SERVER['DOCUMENT_ROOT']."/svc/view/service_header2.php";
 include $_SERVER['DOCUMENT_ROOT']."/svc/view/conn.php";
 ?>
 
-<!-- <script src="csaddss.js?v=<%=System.currentTimeMillis() %>"></script> -->
 <style media="screen">
   .italic{
     font-style: italic;
@@ -26,7 +28,7 @@ include $_SERVER['DOCUMENT_ROOT']."/svc/view/conn.php";
     </small>
 
     <hr class="my-4">
-
+1122234
   </div>
 </section>
 
@@ -45,6 +47,7 @@ if(isset($_FILES['upfile']) && $_FILES['upfile']['name'] !== ""){
   <form method="post" action="p_cfile_upload_csv.php">
     <table class="table table-bordered text-center">
       <tr>
+        <td>순번</td>
         <td><span id='star' style='color:#F7BE81;'>* </span>물건명</td>
         <td><span id='star' style='color:#F7BE81;'>* </span>그룹명</td>
         <td><span id='star' style='color:#F7BE81;'>* </span>관리번호</td>
@@ -56,27 +59,27 @@ if(isset($_FILES['upfile']) && $_FILES['upfile']['name'] !== ""){
         <td>시작일</td>
         <td>보증금</td>
         <td>보증금입금일</td>
+        <td></td>
       </tr>
       <?php
         $i = 1;
         while($data = fgetcsv($handle)){
+          // $data = array_map("utf8_encode", $data);
           ?>
         <tr>
           <td><?=$i?></td>
-          <td class="pl-1 pr-1 pt-1 pb-1"><input type="text" class="form-control form-control-sm pl-1 pr-1 pt-1 pb-1 text-center div1" name="<?=$i?>div1" value="<?=$data[0]?>" required></td><!--구분1-->
-          <td class="pl-1 pr-1 pt-1 pb-1"><input type="text" class="form-control form-control-sm pl-1 pr-1 pt-1 pb-1 text-center div2" name="<?=$i?>div2" value="<?=$data[1]?>" required></td><!--구분2-->
-          <td class="pl-1 pr-1 pt-1 pb-1"><input type="text" class="form-control form-control-sm pl-1 pr-1 pt-1 pb-1 text-center name" name="<?=$i?>name" value="<?=$data[2]?>" required maxLength="9"></td><!--성명-->
-          <td class="pl-1 pr-1 pt-1 pb-1"><input type="text" class="form-control form-control-sm pl-1 pr-1 pt-1 pb-1 text-center contact" name="<?=$i?>contact" value="<?=$data[3]?>" required></td><!--연락처-->
-          <td class="pl-1 pr-1 pt-1 pb-1"><input type="text" class="form-control form-control-sm pl-1 pr-1 pt-1 pb-1 text-center gender" name="<?=$i?>gender" value="<?=$data[4]?>"></td><!--성별-->
-          <td class="pl-1 pr-1 pt-1 pb-1"><input type="email" class="form-control form-control-sm pl-1 pr-1 pt-1 pb-1 text-center email" name="<?=$i?>email" value="<?=$data[5]?>" maxLength="40"></td><!--이메일-->
-          <td class="pl-1 pr-1 pt-1 pb-1"><input type="text" class="form-control form-control-sm pl-1 pr-1 pt-1 pb-1 text-center div3" name="<?=$i?>div3" value="<?=$data[6]?>"></td><!--법인사업자구분-->
+          <td class="pl-1 pr-1 pt-1 pb-1"><input type="text" class="form-control form-control-sm pl-1 pr-1 pt-1 pb-1 text-center div1" name="<?=$i?>div1" value="<?=iconv('UFT-8', $data[0])?>" required></td><!--물건명-->
+          <td class="pl-1 pr-1 pt-1 pb-1"><input type="text" class="form-control form-control-sm pl-1 pr-1 pt-1 pb-1 text-center div2" name="<?=$i?>div2" value="<?=$data[1]?>" required></td><!--그룹명-->
+          <td class="pl-1 pr-1 pt-1 pb-1"><input type="text" class="form-control form-control-sm pl-1 pr-1 pt-1 pb-1 text-center name" name="<?=$i?>name" value="<?=$data[2]?>" required maxLength="9"></td><!--관리번호-->
+          <td class="pl-1 pr-1 pt-1 pb-1"><input type="text" class="form-control form-control-sm pl-1 pr-1 pt-1 pb-1 text-center contact" name="<?=$i?>contact" value="<?=$data[3]?>" required></td><!--성명-->
+          <td class="pl-1 pr-1 pt-1 pb-1"><input type="text" class="form-control form-control-sm pl-1 pr-1 pt-1 pb-1 text-center gender" name="<?=$i?>gender" value="<?=$data[4]?>"></td><!--계약일자-->
+          <td class="pl-1 pr-1 pt-1 pb-1"><input type="email" class="form-control form-control-sm pl-1 pr-1 pt-1 pb-1 text-center email" name="<?=$i?>email" value="<?=$data[5]?>" maxLength="40"></td><!--공급가액-->
+          <td class="pl-1 pr-1 pt-1 pb-1"><input type="text" class="form-control form-control-sm pl-1 pr-1 pt-1 pb-1 text-center div3" name="<?=$i?>div3" value="<?=$data[6]?>"></td><!--세액-->
 
-          <td class="pl-1 pr-1 pt-1 pb-1"><input type="text" class="form-control form-control-sm pl-1 pr-1 pt-1 pb-1 text-center companyname" name="<?=$i?>companyname" value="<?=$data[7]?>" maxLength="14"></td><!--사업자명-->
-          <td class="pl-1 pr-1 pt-1 pb-1"><input type="text" class="form-control form-control-sm pl-1 pr-1 pt-1 pb-1 text-center companyNumber" name="<?=$i?>companyNumber" value="<?=$data[8]?>"></td><!--사업자번호-->
-          <td class="pl-1 pr-1 pt-1 pb-1"><input type="text" class="form-control form-control-sm pl-1 pr-1 pt-1 pb-1 text-center div4" name="<?=$i?>div4" value="<?=$data[9]?>" maxLength="9"></td><!--업태-->
-          <td class="pl-1 pr-1 pt-1 pb-1"><input type="text" class="form-control form-control-sm pl-1 pr-1 pt-1 pb-1 text-center div5" name="<?=$i?>div5" value="<?=$data[10]?>" maxLength="14"></td><!--업종-->
-
-          <td class="pl-1 pr-1 pt-1 pb-1"><input type="text" class="form-control form-control-sm pl-1 pr-1 pt-1 pb-1 text-center etc" name="<?=$i?>etc" value="<?=$data[11]?>" maxLength="47"></td><!--특이사항-->
+          <td class="pl-1 pr-1 pt-1 pb-1"><input type="text" class="form-control form-control-sm pl-1 pr-1 pt-1 pb-1 text-center companyname" name="<?=$i?>companyname" value="<?=$data[7]?>" maxLength="14"></td><!--개월수-->
+          <td class="pl-1 pr-1 pt-1 pb-1"><input type="text" class="form-control form-control-sm pl-1 pr-1 pt-1 pb-1 text-center companyNumber" name="<?=$i?>companyNumber" value="<?=$data[8]?>"></td><!--시작일-->
+          <td class="pl-1 pr-1 pt-1 pb-1"><input type="text" class="form-control form-control-sm pl-1 pr-1 pt-1 pb-1 text-center div4" name="<?=$i?>div4" value="<?=$data[9]?>" maxLength="9"></td><!--보증금-->
+          <td class="pl-1 pr-1 pt-1 pb-1"><input type="text" class="form-control form-control-sm pl-1 pr-1 pt-1 pb-1 text-center div5" name="<?=$i?>div5" value="<?=$data[10]?>" maxLength="14"></td><!--보증금입금일-->
           <td class="pl-1 pr-1 pt-2 pb-1">
             <img src="/svc/inc/img/svg/minus.svg" width="20" name="minus">
           </td><!--행추가/삭제-->

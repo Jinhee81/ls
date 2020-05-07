@@ -21,6 +21,13 @@ if($_POST['fromDate'] && $_POST['toDate']){
   $etcDate = " and (DATE($dateDiv) <= '{$_POST['toDate']}')";
 }
 
+$div1 = "";
+if($_POST['customerDiv']==='customerAll'){
+  $div1 = "";
+} else {
+  $div1 = " and div1 = '{$_POST['customerDiv']}'";
+}
+
 $etcCondi = "";
 if($_POST['cText']){
   if($_POST['etcCondi']==='customer'){
@@ -38,7 +45,7 @@ $sql = "select
           id, div1, div2, name, div3, companyname, cNumber1, cNumber2, cNumber3, contact1, contact2, contact3, email, etc, created, updated
         from customer
         where user_id={$_SESSION['id']} and building_id={$_POST['building']}
-              $etcDate $etcCondi
+              $etcDate $div1 $etcCondi
         order by id desc";
 // echo $sql
 

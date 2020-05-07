@@ -44,7 +44,7 @@
               <thead>
                 <tr class="table-dark">
                   <td>순번</td>
-                  <td>세입자</td>
+                  <td>수신번호</td>
                 </tr>
               </thead>
               <tbody id="tbody">

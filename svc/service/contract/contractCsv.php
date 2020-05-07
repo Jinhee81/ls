@@ -26,7 +26,7 @@ include $_SERVER['DOCUMENT_ROOT']."/svc/view/conn.php";
     </small>
 
     <hr class="my-4">
-    <form name="uploadForm" id="uploadForm" method="post" action="m_c_add_csv2.php" enctype="multipart/form-data">
+    <form name="uploadForm" id="uploadForm" method="post" action="contractCsv2.php" enctype="multipart/form-data">
       <label for="">첨부파일</label>
       <input type="file" name="upfile" id="upfile">
       <input type="button" name="uploadBtn" value="업로드">

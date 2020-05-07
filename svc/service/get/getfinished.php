@@ -271,7 +271,7 @@ function maketable(){
     data: $('form').serialize(),
     success: function(data){
       data = JSON.parse(data);
-      console.log(data);
+      // console.log(data);
       datacount = data.length;
 
       var returns = '';

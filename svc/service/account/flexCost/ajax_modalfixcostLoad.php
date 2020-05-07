@@ -3,7 +3,7 @@ session_start();
 include $_SERVER['DOCUMENT_ROOT']."/svc/view/conn.php";
 
 // echo $_POST;
-print_r($_POST);
+// print_r($_POST);
 
 $sql = "
         select
@@ -30,30 +30,32 @@ $allRows = array();
 while($row = mysqli_fetch_array($result)){
   $allRows[]=$row;
 }
+?>
+<table class="table table-hover text-center mt-2 table-sm" id="modalTable">
+  <thead>
+    <tr class="table-info">
+      <th scope="col"><input type="checkbox" id="allselect"></th>
+      <th scope="col">순번</th>
+      <th scope="col">관리물건</th>
+      <th scope="col">내역</th>
+      <th scope="col">금액</th>
+      <th scope="col">공급가액</th>
+      <th scope="col">세액</th>
+    </tr>
+  </thead>
+  <tbody>
 
+<?php
 // print_r($allRows);
 
 if(count($allRows)===0){
-  echo "조회값이 없습니다.";
+  echo "<tr><td colspan='7'>저장된 고정비내역이 없네요. 상단의 <span class='badge badge-danger'>new 생성하기</span> 눌러서 관리물건의 고정비를 생성하세요.</td></tr>";
 } else {?>
-  <table class="table table-hover text-center mt-2 table-sm" id="modalTable">
-    <thead>
-      <tr class="table-info">
-        <th scope="col"><input type="checkbox"></th>
-        <th scope="col">순번</th>
-        <th scope="col">관리물건</th>
-        <th scope="col">내역</th>
-        <th scope="col">금액</th>
-        <th scope="col">공급가액</th>
-        <th scope="col">세액</th>
-      </tr>
-    </thead>
-    <tbody>
       <?php
        for($i=0; $i < count($allRows); $i++){?>
          <tr>
            <td>
-             <input type="checkbox" value="<?=$allRows[$i]['id']?>">
+             <input type="checkbox" class="tbodycheckbox" value="<?=$allRows[$i]['id']?>">
            </td>
            <td>
              <?=$allRows[$i]['num']?>
@@ -77,38 +79,40 @@ if(count($allRows)===0){
 
 var table1 = $("#modalTable");
 
-// 테이블 헤더에 있는 checkbox 클릭시
-$("thead :checkbox", table1).change(function(){
-
+$("#allselect").change(function(){
   if($(this).is(":checked")){
-    $("input:checkbox", table1).attr('checked',true);
-    $("tbody tr", table1).addClass("selected");
-    // console.log('1');
+    $(".tbodycheckbox").prop('checked',true);
+    $(".tbodycheckbox").parent().parent().addClass("selected");
+    // console.log('맨위체크박스 체크함');
   } else {
-    $("input:checkbox", table1).attr('checked',false);
-    $("tbody tr", table1).removeClass("selected");
-    // console.log('2');
+    $(".tbodycheckbox").prop('checked',false);
+    $(".tbodycheckbox").parent().parent().removeClass("selected");
+    // console.log('맨위체크박스 체크취소');
   }
+
 })
 
-// 헤더에 있는 체크박스외 다른 체크박스 클릭시
-$("tbody :checkbox", table1).change(function(){
-  var allCnt = $("tbody :checkbox", table1).length;
-  var checkedCnt = $("tbody :checkbox", table1).filter(":checked").length;
+$(document).on('change', '.tbodycheckbox', function(){
+  var allCnt = $(".tbodycheckbox").length;
+  var checkedCnt = $(".tbodycheckbox").filter(":checked").length;
 
-  if($(this).prop("checked")==true){
-    $(this).attr('checked',true);
+  // console.log(allCnt, checkedCnt);
+
+  if($(this).is(":checked")){
+    $(this).prop('checked',true);
     $(this).parent().parent().addClass("selected");
   } else {
-    $(this).attr('checked',false);
+    $(this).prop('checked',false);
     $(this).parent().parent().removeClass("selected");
   }
 
-  if(allCnt==checkedCnt){
-    $("thead :checkbox", table1).attr("checked", true);
+  if( allCnt==checkedCnt ){
+    $("#allselect").prop("checked", true);
+  } else {
+    $("#allselect").prop("checked", false);
   }
-  console.log(allCnt, checkedCnt);
 })
+
 
 
 </script>

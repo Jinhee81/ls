@@ -307,7 +307,6 @@ function maketable(){
 
           returns += '<td class=""><a href="/svc/service/customer/m_c_edit.php?id='+value.customer_id+'" data-toggle="tooltip" data-placement="top" title="'+value.cname+'" class="cnameclass">'+value.cnamemb+'</a>';
 
-          returns += '<input type="hidden" name="contact" value="'+value.contact+'">';
           returns += '<input type="hidden" name="email" value="'+value.email+'">';
           returns += '<input type="hidden" name="customer_id" value="'+value.customer_id+'">';
           returns += '<input type="hidden" name="cname" value="'+value.cname+'">';

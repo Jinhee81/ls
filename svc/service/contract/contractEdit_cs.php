@@ -57,13 +57,13 @@
         for ($i=0; $i < count($allRows); $i++) { ?>
         <tr>
           <td class=""><input type='checkbox' class='checkSelect' name='chk[]' value='<?=$allRows[$i]['idcontractSchedule']?>'></td><!-- 체크박스 -->
-          <td class=""><label class="font-weight-light"><?=$allRows[$i]['ordered']?></label></td><!-- 순번 -->
-          <td class=""><label class="font-weight-light mb-0"><?=$allRows[$i]['mStartDate']?></label><br>
-          <label class="font-weight-light mb-0"><?=$allRows[$i]['mEndDate']?></label></td><!-- 시작일/종료일 -->
+          <td class=""><label class=""><?=$allRows[$i]['ordered']?></label></td><!-- 순번 -->
+          <td class=""><label class=" mb-0"><?=$allRows[$i]['mStartDate']?></label><br>
+          <label class=" mb-0"><?=$allRows[$i]['mEndDate']?></label></td><!-- 시작일/종료일 -->
           <td class="">
             <?php
             if($allRows[$i]['payId']){
-              echo "<label class='text-right font-weight-light numberComma mb-0'>".$allRows[$i]['mMamount']."</label><br><label class='text-right font-weight-light numberComma mb-0'>".$allRows[$i]['mVmAmount']."</label>";
+              echo "<label class='text-right  numberComma mb-0'>".$allRows[$i]['mMamount']."</label><br><label class='text-right  numberComma mb-0'>".$allRows[$i]['mVmAmount']."</label>";
               // echo "exists";
             } else {
               echo "<input type='text' size='10' class='form-control form-control-sm text-right amountNumber mb-0' name='mAmount' value='".$allRows[$i]['mMamount']."' numberOnly><input type='text' size='10' class='form-control form-control-sm text-right amountNumber mb-0' name='mAmount' value='".$allRows[$i]['mVmAmount']."' numberOnly>";
@@ -73,7 +73,7 @@
           <td class="">
             <?php
             if($allRows[$i]['payId']){
-              echo "<label class='text-right font-weight-light numberComma'>".$allRows[$i]['mTmAmount']."</label>";
+              echo "<label class='text-right  numberComma'>".$allRows[$i]['mTmAmount']."</label>";
               // echo "exists";
             } else {
               echo "<input type='text' size='10' class='form-control form-control-sm text-right amountNumber' name='mAmount' value='".$allRows[$i]['mTmAmount']."' numberOnly>";
@@ -83,7 +83,7 @@
           <td class="mobile">
             <?php
             if($allRows[$i]['payId']){
-              echo "<label class='text-center font-weight-light'>".$allRows[$i]['paySchedule2']['pExpectedDate']."</label>";
+              echo "<label class='text-center '>".$allRows[$i]['paySchedule2']['pExpectedDate']."</label>";
               // echo "exists";
             } else {
               echo "<input type='text' size='10' class='form-control form-control-sm text-center dateType' name='expecteDay' value='".$allRows[$i]['mExpectedDate']."'>";
@@ -100,7 +100,7 @@
           <td class="mobile">
             <?php
             if($allRows[$i]['payId'] && $allRows[$i]['payIdOrder']==='0'){
-              echo "<label class='text-primary modalAsk font-weight-light' data-toggle='modal' data-target='#pPay'><u>".$allRows[$i]['payId']."</u></label>";
+              echo "<label class='text-primary modalAsk ' data-toggle='modal' data-target='#pPay'><u>".$allRows[$i]['payId']."</u></label>";
             }
             ?>
           </td><!-- 청구번호 -->
@@ -124,7 +124,7 @@
           <td class="mobile">
             <?php
             if($allRows[$i]['payId']){
-              echo "<label class='text-center font-weight-light green'>".$allRows[$i]['paySchedule2']['executiveDate']."</label>";
+              echo "<label class='text-center  green'>".$allRows[$i]['paySchedule2']['executiveDate']."</label>";
             }?>
           </td><!-- 입금일 -->
           <td class="mobile">
@@ -132,12 +132,12 @@
 
             if($allRows[$i]['payId'] && $allRows[$i]['payIdOrder']==='0'){
               if($allRows[$i]['paySchedule2']['executiveDate']) {
-                  echo "<label class='text-center numberComma font-weight-light green'>".$allRows[$i]['paySchedule2']['getAmount']."</label>";
+                  echo "<label class='text-center numberComma  green'>".$allRows[$i]['paySchedule2']['getAmount']."</label>";
               } else {
                 if($row3['pExpectedDate'] >= $currentDate){
-                  echo "<label class='text-center numberComma font-weight-light sky'>"."&#40;".$allRows[$i]['paySchedule2']['ptAmount'].")"."</label>";
+                  echo "<label class='text-center numberComma  sky'>"."&#40;".$allRows[$i]['paySchedule2']['ptAmount'].")"."</label>";
                 } else {
-                  echo "<label class='text-center font-weight-light pink'>"."(".number_format($allRows[$i]['paySchedule2']['ptAmount']).")"."</label>";
+                  echo "<label class='text-center  pink'>"."(".number_format($allRows[$i]['paySchedule2']['ptAmount']).")"."</label>";
                 }
               }
 
@@ -149,15 +149,15 @@
             if($allRows[$i]['payId'] && $allRows[$i]['payIdOrder']==='0'){
               if($allRows[$i]['paySchedule2']['executiveDate']) {
                 if($allRows[$i]['paySchedule2']['executiveDate'] <= $allRows[$i]['paySchedule2']['pExpectedDate']) {
-                  echo "<label class='text-center font-weight-light green mb-0'>0</label><br>";
+                  echo "<label class='text-center  green mb-0'>0</label><br>";
                 } else {
-                  echo "<label class='text-center numberComma font-weight-light green mb-0'>";echo $allRows[$i]['paySchedule2']['delaycount']."</label><br>";
+                  echo "<label class='text-center numberComma  green mb-0'>";echo $allRows[$i]['paySchedule2']['delaycount']."</label><br>";
                 }
               } else {
                 if($allRows[$i]['paySchedule2']['pExpectedDate'] >= $currentDate) {
-                  echo "<label class='text-center font-weight-light sky mb-0'>0</label><br>";
+                  echo "<label class='text-center  sky mb-0'>0</label><br>";
                 } else {
-                  echo "<label class='text-center numberComma font-weight-light pink mb-0'>";echo $allRows[$i]['paySchedule2']['delaycount']."</label><br>";
+                  echo "<label class='text-center numberComma  pink mb-0'>";echo $allRows[$i]['paySchedule2']['delaycount']."</label><br>";
                 }
               }
             }
@@ -166,17 +166,17 @@
             if($allRows[$i]['payId'] && $allRows[$i]['payIdOrder']==='0'){
               if($allRows[$i]['paySchedule2']['executiveDate']) {
                 if($allRows[$i]['paySchedule2']['executiveDate'] <= $allRows[$i]['paySchedule2']['pExpectedDate']) {
-                  echo "<label class='text-center font-weight-light green mb-0'>0</label>";
+                  echo "<label class='text-center  green mb-0'>0</label>";
                 } else {
                   $notGetDayCountAmount = $allRows[$i]['paySchedule2']['ptAmount'] * ($allRows[$i]['paySchedule2']['delaycount'] / 365) * 0.27;
-                  echo "<label class='text-center numberComma font-weight-light green mb-0'>".(int)$notGetDayCountAmount."</label>";
+                  echo "<label class='text-center numberComma  green mb-0'>".(int)$notGetDayCountAmount."</label>";
                 }
               } else {
                 if($allRows[$i]['paySchedule2']['pExpectedDate'] >= $currentDate) {
-                  echo "<label class='text-center font-weight-light sky mb-0'>0</label>";
+                  echo "<label class='text-center  sky mb-0'>0</label>";
                 } else {
                   $notGetDayCountAmount = $allRows[$i]['paySchedule2']['ptAmount'] * ($allRows[$i]['paySchedule2']['delaycount'] / 365) * 0.27;
-                  echo "<label class='text-center numberComma font-weight-light pink mb-0'>".(int)$notGetDayCountAmount."</label>";
+                  echo "<label class='text-center numberComma  pink mb-0'>".(int)$notGetDayCountAmount."</label>";
                 }
               }
             }

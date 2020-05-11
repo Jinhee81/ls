@@ -21,7 +21,7 @@ include "contractEdit_condi.php";
  ?>
 
 <div class="container jumbotron pt-3 pb-3 mb-2">
-  <h2 class="">계약상세내용입니다.(#202)</h2>
+  <h2 class="">계약상세내용입니다.(#202) (계약번호 : <?=$filtered_id?>)</h2>
 </div>
 <div class="container">
   <?php include "contractEdit_button.php";?>
@@ -319,6 +319,11 @@ $('#button1').click(function(){ //청구설정버튼 클릭시
 })
 
 $('#button2').click(function(){ //청구취소버튼 클릭시
+
+  if(expectedDayArray.length===0){
+    alert('선택한 내역이 없습니다.');
+    return false;
+  }
 
   var contractScheduleArray = [];
 

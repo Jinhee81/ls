@@ -269,13 +269,11 @@ var tmps = "<iframe name='ifm_pops_21' id='ifm_pops_21' class='popup_iframe'   s
 $("body").append(tmps);
 //alert( "/inc/tax_invoice2.php?chkId="+chkId+"&callnum="+subIdx );
 
-$("#ifm_pops_21").attr("src","/svc/service/get/tax_invoice.php?building_idx="+bid+"&mun="+mun+"&id="+ccid+"&flag=finished");
+$("#ifm_pops_21").attr("src","/svc/service/get/tax_invoice.php?building_idx="+bid+"&mun="+mun+"&id="+ccid+"&flag=expected");
 $('#ifm_pops_21').show();
 $('.pops_wrap, .pops_21').show();
 
 }
-
-
 
 function maketable(){
   var mtable = $.ajax({
@@ -284,7 +282,7 @@ function maketable(){
     data: $('form').serialize(),
     success: function(data){
       data = JSON.parse(data);
-      console.log(data);
+      // console.log(data);
       datacount = data.length;
 
       var returns = '';
@@ -337,15 +335,18 @@ function maketable(){
 
           returns += '<td class="">'+value.contact+'</td>';
 
-          var mun = value.mun;
-          var bid = value.bid;
-          var ccid = value.ccid;
           if(value.roomdiv==='room'){
             returns += '<td class="">'+'임대계약'+'('+value.groupname+','+value.roomname+')'+'<input type="hidden" name="roomdiv" value="'+value.roomdiv+'"><input type="hidden" name="groupname" value="'+value.groupname+'"><input type="hidden" name="roomname" value="'+value.roomname+'"></td>';
           } else if(value.roomdiv==='good'){
             returns += '<td class="">'+'기타계약'+'('+value.goodname2+')'+'<input type="hidden" name="roomdiv" value="'+value.roomdiv+'"><input type="hidden" name="groupname" value="'+value.goodname2+'"><input type="hidden" name="roomname" value=""></td>';
           }
+
+          var mun = value.mun;
+          var bid = value.bid;
+          var ccid = value.ccid;
+
           if(value.taxSelect==='세금계산서'){
+            // returns += '<td class="mobile"><span class="badge badge-warning text-light" style="width: 1.5rem;">세</span>'+value.taxDate+'</td>';
             returns += '<td class="mobile"><a onclick="taxInfo2('+bid+',\''+mun+'\',\''+ccid+'\');"><span class="badge badge-warning text-light" style="width: 1.5rem;">세</span>'+value.taxDate+'</a></td>';
           } else if(value.taxSelect==='현금영수증'){
             returns += '<td class="mobile"><span class="badge badge-info text-light" style="width: 1.5rem;">현</span>'+value.taxDate+'</td>';

@@ -174,7 +174,7 @@ while($row_sms = mysqli_fetch_array($result_sms)){
   <table class="table table-sm table-bordered table-hover text-center mt-2 table-sm" id="checkboxTestTbl">
     <thead>
       <tr class="table-secondary">
-        <th scope="col"><input type="checkbox" id="allselect"></th>
+        <th scope="col" class=""><input type="checkbox" id="allselect"></th>
         <th scope="col" class="">순번</th>
         <th scope="col" class="mobile">그룹명</th>
         <th scope="col" class="">방번호</th>
@@ -182,7 +182,7 @@ while($row_sms = mysqli_fetch_array($result_sms)){
         <th scope="col" class="">연락처</th>
         <th scope="col" class="mobile">개월</th>
         <th scope="col" class="mobile">시작일/종료일</th>
-        <th scope="col">예정일</th>
+        <th scope="col" class="">예정일</th>
         <th scope="col" class="mobile">공급가액/세액</th>
         <th scope="col" class="">합계</th>
         <th scope="col" class="mobile">구분</th>
@@ -270,7 +270,7 @@ function maketable(){
       var totalptAmount = 0;
 
       if(datacount===0){
-        returns ="<tr><td colspan='14'>조회값이 없어요. 조회조건을 다시 확인하거나 서둘러 입력해주세요!</td></tr>";
+        returns ="<tr><td colspan='14'>아직 임대료를 청구한 데이터가 없네요. 임대계약에서 청구하기를 실행하세요!</td></tr>";
       } else {
         $.each(data, function(key, value){
           returns += '<tr>';
@@ -518,7 +518,6 @@ $('select[name=building]').on('change', function(){
 
     $('input[name=sendphonenumber]').val(sendphonenumber);
 
-    $('input[name=sendphonenumber]').val(sendphonenumber);
     maketable();
 })
 

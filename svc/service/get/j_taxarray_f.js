@@ -11,15 +11,15 @@ $("#allselect").click(function(){
       var colOrder = Number(table.find("tr:eq("+i+")").find("td:eq(1)").text());//순번
       var colid = Number(table.find("tr:eq("+i+")").find("td:eq(0)").children('input').val());//청구번호
 
-      Number(table.find("tr:eq("+i+")").find("td:eq(7)").children('input:eq(3)').val());//세입자번호
-      var companynumber = table.find("tr:eq("+i+")").find("td:eq(7)").children('input:eq(5)').val();//사업자번호
-      var companyname = table.find("tr:eq("+i+")").find("td:eq(7)").children('input:eq(6)').val();//사업자명
-      var name = table.find("tr:eq("+i+")").find("td:eq(7)").children('input:eq(4)').val();//성명
-      var address = table.find("tr:eq("+i+")").find("td:eq(7)").children('input:eq(7)').val();//주소
-      var div4 = table.find("tr:eq("+i+")").find("td:eq(7)").children('input:eq(8)').val();//업태
-      var div5 = table.find("tr:eq("+i+")").find("td:eq(7)").children('input:eq(9)').val();//종목
+      Number(table.find("tr:eq("+i+")").find("td:eq(7)").children('input[name=customer_id]').val());//세입자번호
+      var companynumber = table.find("tr:eq("+i+")").find("td:eq(7)").children('input[name=companynumber]').val();//사업자번호
+      var companyname = table.find("tr:eq("+i+")").find("td:eq(7)").children('input[name=companyname]').val();//사업자명
+      var name = table.find("tr:eq("+i+")").find("td:eq(7)").children('input[name=name]').val();//성명
+      var address = table.find("tr:eq("+i+")").find("td:eq(7)").children('input[name=address]').val();//주소
+      var div4 = table.find("tr:eq("+i+")").find("td:eq(7)").children('input[name=div4]').val();//업태
+      var div5 = table.find("tr:eq("+i+")").find("td:eq(7)").children('input[name=div5]').val();//종목
       var contact = table.find("tr:eq("+i+")").find("td:eq(8)").text();//연락처
-      var email = table.find("tr:eq("+i+")").find("td:eq(7)").children('input:eq(1)').val();//이메일
+      var email = table.find("tr:eq("+i+")").find("td:eq(7)").children('input[name=email]').val();//이메일
       var supplyamount = table.find("tr:eq("+i+")").find("td:eq(3)").text();//공급가액
       var vatamount = table.find("tr:eq("+i+")").find("td:eq(4)").text();//세액
       var totalamount = table.find("tr:eq("+i+")").find("td:eq(5)").children().text();//합계
@@ -27,11 +27,11 @@ $("#allselect").click(function(){
       var startdate = table.find("tr:eq("+i+")").find("td:eq(2)").children('input:eq(0)').val();//청구시작일
       var enddate = table.find("tr:eq("+i+")").find("td:eq(2)").children('input:eq(1)').val();//청구종료일
       var monthcount = table.find("tr:eq("+i+")").find("td:eq(2)").children('input:eq(2)').val();//청구개월
-      var contractDiv = table.find("tr:eq("+i+")").find("td:eq(9)").children('input:eq(0)').val();//계약구분,방계약인지기타계약인지
+      var contractDiv = table.find("tr:eq("+i+")").find("td:eq(9)").children('input[name=roomdiv]').val();//계약구분,방계약인지기타계약인지
 
       var comment;//비고
 
-      if(contractDiv==='임대계약'){
+      if(contractDiv==='room'){
         comment = "기간 ("+startdate+"~"+enddate+", "+monthcount+"개월 이용료)";//비고
       }
 
@@ -56,15 +56,15 @@ var taxArrayEle = [];
       var colOrder = Number(currow.find('td:eq(1)').text());
       var colid = Number(currow.find("td:eq(0)").children('input').val());
 
-      Number(currow.find("td:eq(7)").children('input:eq(3)').val());//세입자번호
-      var companynumber = currow.find("td:eq(7)").children('input:eq(5)').val();//사업자번호
-      var companyname = currow.find("td:eq(7)").children('input:eq(6)').val();//사업자명
-      var name = currow.find("td:eq(7)").children('input:eq(4)').val();//성명
-      var address = currow.find("td:eq(7)").children('input:eq(7)').val();//주소
-      var div4 = currow.find("td:eq(7)").children('input:eq(8)').val();//업태
-      var div5 = currow.find("td:eq(7)").children('input:eq(9)').val();//종목
+      Number(currow.find("td:eq(7)").children('input[name=customer_id]').val());//세입자번호
+      var companynumber = currow.find("td:eq(7)").children('input[name=companynumber]').val();//사업자번호
+      var companyname = currow.find("td:eq(7)").children('input[name=companyname]').val();//사업자명
+      var name = currow.find("td:eq(7)").children('input[name=name]').val();//성명
+      var address = currow.find("td:eq(7)").children('input[name=address]').val();//주소
+      var div4 = currow.find("td:eq(7)").children('input[name=div4]').val();//업태
+      var div5 = currow.find("td:eq(7)").children('input[name=div5]').val();//종목
       var contact = currow.find("td:eq(8)").text();//연락처
-      var email = currow.find("td:eq(7)").children('input:eq(1)').val();//이메일
+      var email = currow.find("td:eq(7)").children('input[name=email]').val();//이메일
       var supplyamount = currow.find("td:eq(3)").text();//공급가액
       var vatamount = currow.find("td:eq(4)").text();//세액
       var totalamount = currow.find("td:eq(5)").children().text();//합계
@@ -74,11 +74,11 @@ var taxArrayEle = [];
       var startdate = currow.find("td:eq(2)").children('input:eq(0)').val();//청구시작일
       var enddate = currow.find("td:eq(2)").children('input:eq(1)').val();//청구종료일
       var monthcount = currow.find("td:eq(2)").children('input:eq(2)').val();//청구개월
-      var contractDiv = currow.find("td:eq(9)").children('input:eq(0)').val();//계약구분,방계약인지기타계약인지
+      var contractDiv = currow.find("td:eq(9)").children('input[name=roomdiv]').val();//계약구분,방계약인지기타계약인지
 
       var comment;//비고
 
-      if(contractDiv==='임대계약'){
+      if(contractDiv==='room'){
         comment = "기간 ("+startdate+"~"+enddate+", "+monthcount+"개월 이용료)";//비고
       }
 

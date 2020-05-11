@@ -64,7 +64,11 @@ for ($i=0; $i < count($payrow); $i++) {
         exit();
       }
 
-      echo "<script>alert('청구취소하였습니다.');
+      // echo "<script>alert('청구취소하였습니다.');
+      //          location.href='contractEdit.php?id=$filtered_id';
+      //       </script>";//alert 없앰
+
+      echo "<script>
                location.href='contractEdit.php?id=$filtered_id';
             </script>";
       if($result2===false){

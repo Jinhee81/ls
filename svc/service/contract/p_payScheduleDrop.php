@@ -49,9 +49,12 @@ if($result){
       exit();
     }
 
+    // echo "<script>
+    //         alert('청구취소하였습니다.');
+    //         history.back();
+    //       </script>";
     echo "<script>
-            alert('청구취소하였습니다.');
-            history.back();
+            location.href='contractEdit.php?id=$filtered_id';
           </script>";
   } else {
     echo "<script>alert('저장과정에 문제가 생겼습니다. 관리자에게 문의하세요.');

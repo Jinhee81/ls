@@ -27,11 +27,12 @@ $(document).on('change', '.tbodycheckbox', function(){
     $(this).parent().parent().removeClass("selected");
   }
 
-  if( allCnt==checkedCnt ){
-    $("#allselect").prop("checked", true);
-  } else {
-    $("#allselect").prop("checked", false);
-  }
+  // if( allCnt==checkedCnt ){
+  //   $("#allselect").prop("checked", true);
+  // } else {
+  //   $("#allselect").prop("checked", false);
+  // }
+  //이거를 주석처리함. 왜냐면 이걸 해놓은니 자꾸 맨위 체크박스가 체크되었어서 다음조회시 불편해서 없앰 20.5.11월
 });
 
 // 테이블 바디에 있는 checkbox 클릭시, 이걸 펑션화하려고 했는데 암만해도 안된다  ㅠㅠ

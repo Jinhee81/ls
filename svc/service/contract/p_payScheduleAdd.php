@@ -168,7 +168,13 @@ if($result5===false){
   exit();
 }
 
-echo "<script>alert('청구하였습니다.');
-         location.href='contractEdit.php?id=$filtered_id';
+echo "<script>
+        location.href='contractEdit.php?id=$filtered_id';
       </script>";
+
+// echo "<script>
+// alert('청구하였습니다.');
+//          location.href='contractEdit.php?id=$filtered_id';
+//       </script>";
+// alert가 너무 번거로워서 빼기로 함
  ?>

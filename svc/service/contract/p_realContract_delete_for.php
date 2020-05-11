@@ -18,7 +18,7 @@ for ($i=0; $i < count($contractRow); $i++) {
   $result = mysqli_query($conn, $sql);
 
   $sql3 = "
-    delete from realcontract_deposit
+    delete from realContract_deposit
           where realContract_id={$contractRow[$i][1]}
   ";
   // echo $sql3;보증금삭제

@@ -182,7 +182,21 @@ while($row_memoS=mysqli_fetch_array($result_memoS)) {
 }
 
 $sql2 = "
-        SELECT * FROM contractSchedule WHERE realContract_id = {$filtered_id}
+        SELECT
+            idcontractSchedule,
+            ordered,
+            mStartDate,
+            mEndDate,
+            mMamount,
+            mVmAmount,
+            mTmAmount,
+            mExpectedDate,
+            payId,
+            payIdOrder,
+            realContract_id
+        FROM contractSchedule
+        WHERE realContract_id = {$filtered_id}
+        order by ordered asc
         ";
 // echo $sql2;
 $result2 = mysqli_query($conn, $sql2);
@@ -218,7 +232,8 @@ for ($i=0; $i < count($allRows); $i++) {
       $allRows[$i]['paySchedule2'] = $row3;
     }
     // print_r($allRows[$i]['paySchedule2']); echo '111';
-  }
+    $allRows[$i]['paySchedule2']['pExpectedDate'] = date('Y-n-j', strtotime($allRows[$i]['paySchedule2']['pExpectedDate']));
+  }//if closing}
 
 }//for closing}
 

@@ -37,7 +37,7 @@ while($row_sms = mysqli_fetch_array($result_sms)){
     <p class="lead">
       (1) 상태(<span class="badge badge-info text-wrap" style="width: 3rem;">현재</span>, <span class="badge badge-warning text-wrap" style="width: 3rem;">대기</span>, <span class="badge badge-danger text-wrap" style="width: 3rem;">종료</span>)로 계약을 구분해요.<br>
       (2) 임대료를 클릭하면 해당 계약의 상세페이지를 볼 수 있어요.<br>
-      <!-- (3) 임대료 옆에 <span class='badge badge-warning text-light' style='width: 1rem;'>c</span>표시된 것은 삭제 가능합니다. -->
+      (3) 계약만 등록된 상태 (clear)는 따로 조회 가능합니다 (현재, 종료, 대기 뒤 clear 선택함)
     </p>
   </div>
 </section>
@@ -81,6 +81,7 @@ while($row_sms = mysqli_fetch_array($result_sms)){
                 <option value="pIng" selected>현재</option>
                 <option value="pEnd">종료</option>
                 <option value="pWaiting">대기</option>
+                <option value="clear">clear</option>
               </select><!--codi5-->
             </td>
             <td width="6%" class="">
@@ -143,7 +144,7 @@ while($row_sms = mysqli_fetch_array($result_sms)){
         <div class="col col-md-5 mobile">
           <div class="row justify-content-end mr-0">
             <a href="contract_add2.php" role="button" class="btn btn-sm btn-primary mr-1">신규등록</a>
-            <button type="button" class="btn btn-sm btn-danger mr-1" name="rowDeleteBtn" data-toggle="tooltip" data-placement="top" title="'c'표시된것만 삭제 가능합니다">선택삭제</button>
+            <button type="button" class="btn btn-sm btn-danger mr-1" name="rowDeleteBtn" data-toggle="tooltip" data-placement="top" title="임대료 숫자 뒤 'c'표시된것만 삭제 가능합니다">선택삭제</button>
             <button type="button" class="btn btn-info btn-sm" name="button" data-toggle="tooltip" data-placement="top" title="작업준비중입니다."><i class="far fa-file-excel"></i>엑셀저장</button>
 
 
@@ -184,6 +185,10 @@ while($row_sms = mysqli_fetch_array($result_sms)){
   </table>
 </section>
 
+<section class="container" id="sql">
+
+</section>
+
 <?php
 include $_SERVER['DOCUMENT_ROOT']."/svc/service/sms/modal_sms1.php";
 include $_SERVER['DOCUMENT_ROOT']."/svc/service/sms/modal_sms2.php";
@@ -220,6 +225,19 @@ include $_SERVER['DOCUMENT_ROOT']."/svc/service/sms/modal_sms2.php";
 
 
 <script>
+
+function sql(){
+  var sql = $.ajax({
+    url: 'ajax_realContractSql2.php',
+    method: 'post',
+    data: $('form').serialize(),
+    success: function(data){
+      $('#sql').html(data);
+    }
+  })
+  return sql;
+}
+
 function maketable(){
 
   // $(function () {
@@ -241,8 +259,8 @@ function maketable(){
       } else {
         $.each(data, function(key, value){
           returns += '<tr>';
-          returns += '<td class="mobile"><input type="checkbox" value="'+value.rid+'" class="tbodycheckbox"></td>';
-          returns += '<td class="">'+datacount+'</td>';
+          returns += '<td class="mobile"><input type="checkbox" name="rid" value="'+value.rid+'" class="tbodycheckbox"></td>';
+          returns += '<td class="" data-toggle="tooltip" data-placement="top" title="'+value.rid+'">'+datacount+'</td>';
 
           if(value.status2==='present'){
             returns += '<td class=""><div class="badge badge-info text-wrap" style="width: 3rem;">현재</div></td>';
@@ -286,6 +304,7 @@ function maketable(){
             returns += '<a href="contractEdit.php?id='+value.rid+'" class="badge badge-dark">'+value.memocount+'</a>';
           }
 
+          // returns += value.stepped + '</td>';
           returns += '</td>';
           returns += '</tr>';
 
@@ -309,6 +328,7 @@ $(document).ready(function(){
     dateinput2(periodDiv);
 
     maketable();
+    // sql();
 
     $('#href_smsSetting').on('click', function(){
       var moveCheck = confirm('문자상용구설정 화면으로 이동합니다. 이동하시겠습니까?');
@@ -350,6 +370,7 @@ $(document).ready(function(){
 
 $('select[name=dateDiv]').on('change', function(){
     maketable();
+    // sql();
 })
 
 $('select[name=periodDiv]').on('change', function(){
@@ -357,35 +378,43 @@ $('select[name=periodDiv]').on('change', function(){
     // console.log(periodDiv);
     dateinput2(periodDiv);
     maketable();
+    // sql();
 })
 
 $('input[name=fromDate]').on('change', function(){
     maketable();
+    // sql();
 })
 
 $('input[name=toDate]').on('change', function(){
     maketable();
+    // sql();
 })
 
 $('select[name=progress]').on('change', function(){
     maketable();
+    // sql();
 })
 
 $('select[name=building]').on('change', function(){
     maketable();
+    // sql();
 })
 
 $('select[name=group]').on('change', function(){
     maketable();
+    // sql();
 })
 
 $('select[name=etcCondi]').on('change', function(){
     maketable();
+    // sql();
 })
 
 
 $('input[name=cText]').on('keyup', function(){
     maketable();
+    // sql();
 })
 //---------조회버튼클릭평션 end and contractArray 펑션 시작--------------//
 
@@ -428,12 +457,13 @@ $(document).on('change', '.tbodycheckbox', function(){
     } else {
       var currow = $(this).closest('tr');
       var colOrder = Number(currow.find('td:eq(1)').text());
-      var colid = currow.find('td:eq(0)').children('input').val();
-      var colStep = currow.find('td:eq(10)').children('div').text();
-      var colFile = currow.find("td:eq(11)").children('a:eq(0)').text();
-      var colMemo = currow.find("td:eq(11)").children('a:eq(1)').text();
-      var dropReady = contractArrayEle.push(colOrder, colid, $.trim(colStep), colFile, colMemo);
-      var index = contractArray.indexOf(dropReady);
+
+      for (var i = 0; i < contractArray.length; i++) {
+        if(contractArray[i][0]===colOrder){
+          var index = i;
+          break;
+        }
+      }
       contractArray.splice(index, 1);
     }
     console.log(contractArray);
@@ -445,9 +475,15 @@ $(document).on('change', '.tbodycheckbox', function(){
 //---------contractArray펑션 end 삭제버튼펑션 시작--------------//
 $('button[name="rowDeleteBtn"]').on('click', function(){
 // console.log(contractArray);
+
+if(contractArray.length === 0){
+  alert('1개 이상을 선택하여 주세요.');
+  return false;
+}
+
 for (var i = 0; i < contractArray.length; i++) {
   if(!(contractArray[i][2] === 'c')){
-    alert("'c'표시된것만 삭제 가능합니다.");
+    alert("'c'표시된것만 삭제 가능합니다."+contractArray[i][0]+"행 확인하세요");
     return false;
   }
   if(!(contractArray[i][3]==="")){

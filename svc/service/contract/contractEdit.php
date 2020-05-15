@@ -26,27 +26,47 @@ include "contractEdit_condi.php";
 <div class="container">
   <?php include "contractEdit_button.php";?>
   <?php include "contractEdit_ci.php";?>
-  <?php
-  include "contractEdit_cs.php";
-  include "contractEdit_cs_modal_nadd.php";//n개월추가모달
-  include "contractEdit_cs_modal_regist.php";//청구설정모달
-  ?>
-  <?php include "contractEdit_deposit.php";?>
-  <?php include "contractEdit_file.php";?>
-  <?php include "contractEdit_memo.php";?>
-</div>
 
+  <!-- 하단 탭 -->
+  <nav>
+    <div class="nav nav-tabs" id="nav-tab" role="tablist">
+      <a class="nav-item nav-link active" id="nav-home-tab" data-toggle="tab" href="#nav-home" role="tab" aria-controls="nav-home" aria-selected="true">스케쥴</a>
+      <a class="nav-item nav-link" id="nav-profile-tab" data-toggle="tab" href="#nav-deposit" role="tab" aria-controls="nav-profile" aria-selected="false">보증금</a>
+      <a class="nav-item nav-link" id="nav-contact-tab" data-toggle="tab" href="#nav-file" role="tab" aria-controls="nav-contact" aria-selected="false">파일</a>
+      <a class="nav-item nav-link" id="nav-contact-tab" data-toggle="tab" href="#nav-memo" role="tab" aria-controls="nav-contact" aria-selected="false">메모</a>
+    </div>
+  </nav>
+  <div class="tab-content" id="nav-tabContent">
+    <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
+      <?php
+      include "contractEdit_cs.php";
+      include "contractEdit_cs_modal_nadd.php";//n개월추가모달
+      include "contractEdit_cs_modal_regist.php"
+       ?>
+    </div>
+    <div class="tab-pane fade" id="nav-deposit" role="tabpanel" aria-labelledby="nav-profile-tab">
+      <?php include "contractEdit_deposit.php";?>
+    </div>
+    <div class="tab-pane fade" id="nav-file" role="tabpanel" aria-labelledby="nav-contact-tab">
+      <?php include "contractEdit_file.php";?>
+    </div>
+    <div class="tab-pane fade" id="nav-memo" role="tabpanel" aria-labelledby="nav-contact-tab">
+      <?php include "contractEdit_memo.php";?>
+    </div>
+  </div>
 
-   <div class="d-flex justify-content-center">
+  <!-- 최하단 계약정보작성자보여주기섹션 -->
+  <section class="d-flex justify-content-center">
      <small class="form-text text-muted text-center">계약번호[<?=$row[0]?>] 등록일시[<?=$row['createTime']?>] 수정일시[<?=$row['updateTime']?>] </small>
-   </div><!-- 최하단 계약정보작성자보여주기세션 -->
+  </section>
 
-   <div class="d-flex justify-content-center mt-3">
+  <!-- 버튼모음 섹션 -->
+  <section class="d-flex justify-content-center mt-3">
      <a class="btn btn-secondary mr-1" href="contract.php" role="button"><i class="fas fa-angle-double-right"></i> 계약목록</a>
      <a class="btn btn-outline-secondary mr-1" href="contractAll.php" role="button">일괄계약등록</a>
      <a class="btn btn-outline-secondary mr-1" href="contract_add2.php" role="button">계약등록</a>
-   </div><!-- 버튼모음 섹션 -->
- </div>
+  </section>
+</div>
 
  <?php include $_SERVER['DOCUMENT_ROOT']."/svc/view/service_footer.php"; ?>
 

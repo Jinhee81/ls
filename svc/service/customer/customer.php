@@ -1,3 +1,4 @@
+<!-- pagenation 작업 시작 -->
 <?php
 session_start();
 if(!isset($_SESSION['is_login'])){
@@ -108,6 +109,15 @@ while($row_sms = mysqli_fetch_array($result_sms)){
         <table>
           <tr>
             <td>
+              <select class="form-control form-control-sm" name="pagerow">
+                <option value="5">5줄 보기</option>
+                <option value="10">10줄 보기</option>
+                <option value="30">30줄 보기</option>
+                <option value="50">50줄 보기</option>
+                <option value="100" selected>100줄 보기</option>
+              </select>
+            </td>
+            <td>
               <select class="form-control form-control-sm" id="smsTitle" name="">
                 <option value="상용구없음">상용구없음</option>
                 <?php for ($i=0; $i < count($rowsms); $i++) {
@@ -140,6 +150,11 @@ while($row_sms = mysqli_fetch_array($result_sms)){
   </div>
 </section>
 
+<section class="container">
+  <div class="row ml-0">
+    <label for=""> 총 <span id="countall"></span>건</label>
+  </div>
+</section>
 
 <!-- 표내용 -->
 <section class="container">
@@ -163,7 +178,14 @@ while($row_sms = mysqli_fetch_array($result_sms)){
     </tbody>
   </table>
 </section>
-<section id="allVals2">
+
+<!-- 페이지 -->
+<section class="container" id="page">
+
+</section>
+
+
+<section id="query" class="container">
 
 </section>
 
@@ -203,24 +225,31 @@ include $_SERVER['DOCUMENT_ROOT']."/svc/service/sms/modal_sms2.php";
 
 <script>
 
-function maketable(){
+function maketable(x,y){
+
+  var form = $('form').serialize();
   var mtable = $.ajax({
     url: 'ajax_customerLoad.php',
     method: 'post',
-    data: $('form').serialize(),
+    data: {'form' : form,
+           'pagerow' : x,
+           'getPage' : y
+          },
     success: function(data){
       data = JSON.parse(data);
       datacount = data.length;
 
       var returns = '';
+      var countall;
 
       if(datacount===0){
         returns ="<tr><td colspan='10'>조회값이 없어요. 조회조건을 다시 확인하거나 서둘러 입력해주세요!</td></tr>";
       } else {
         $.each(data, function(key, value){
+          countall = value.count;//원래의 전체길이를 구하는  (pagenation하기 위한 전체길이)
           returns += '<tr>';
           returns += '<td class="mobile"><input type="checkbox" value="'+value.id+'" class="tbodycheckbox"></td>';
-          returns += '<td class="">'+datacount+'</td>';
+          returns += '<td class="">'+value.num+'</td>';
           returns += '<td class="">'+value.div1+'</td>';
           returns += '<td class=""><a href="m_c_edit.php?id='+value.id+'" data-toggle="tooltip" data-placement="top" title="'+value.cName+'">'+value.cNamemb+'</a>';
 
@@ -249,14 +278,54 @@ function maketable(){
           returns += '</tr>';
 
           datacount -= 1;
-        })
-      }
+
+        })//each end}
+      }//else end}
 
       $('#allVals').html(returns);
-    }
+      $('#countall').text(countall);
+      var totalpage = Math.ceil(Number(countall)/Number(x));
+
+      var totalpageArray = [];
+
+      for (var i = 1; i <= totalpage; i++) {
+        totalpageArray.push(i);
+      }
+
+      var paging = '<nav aria-label="..."><ul class="pagination pagination-sm justify-content-center">';
+
+      for (var i = 1; i <= totalpageArray.length; i++) {
+        // paging += '<li class="page-item"><a class="page-link" href="customer0.php?page='+i+'">'+i+'</a></li>';
+        paging += '<li class="page-item"><a class="page-link">'+i+'</a></li>';
+      }
+
+      paging += '</ul></nav>';
+
+      // console.log(totalpageArray);
+      $('#page').html(paging);
+
+
+    }//success end}
   })
 
   return mtable;
+}
+
+function makesql(x,y){
+
+  var form = $('form').serialize();
+  var query = $.ajax({
+    url: 'ajax_customerLoad_sql0.php',
+    method: 'post',
+    data: {'form' : form,
+           'pagerow' : x,
+           'getPage' : y
+          },
+    success: function(data){
+      $('#query').html(data);
+    }//success end}
+  })
+  return query;
 }
 
 $(document).ready(function(){
@@ -268,7 +337,43 @@ $(document).ready(function(){
   var periodDiv = $('select[name=periodDiv]').val();
   dateinput2(periodDiv);
 
-  maketable();
+  var pagerow = $('select[name=pagerow]').val();
+  var getPage = 1;
+
+  maketable(pagerow, getPage);
+  makesql(pagerow, getPage);
+
+  $('select[name=pagerow]').on('change', function(){
+    var pagerow = $('select[name=pagerow]').val();
+    var getPage = 1;
+    maketable(pagerow, getPage);
+    makesql(pagerow, getPage);
+    console.log('pagerow변경 :'+pagerow);
+  })
+
+  $(document).on('click', '.page-link', function(){
+    // console.log('minsun222');
+    // console.log($(this).text());
+    // console.log($(this).parent());
+    $(this).parent('li').attr('class','active');
+    // $(this).parent().css('color','#ffffff').css('background-color','#007bff'); 일단 이거는 다음에 하자 너무 잘 안됨. bind를 알아야하나? ㅠㅠ
+    // $(this).parent().addClass('active').siblings().removeClass('active');
+
+    // function fnpage(a){
+    //   var pagenumber = a.text();
+    //   return pagenumber;
+    // }
+    //
+    // var b = fnpage.bind($(this));
+    // console.log(b);
+    //
+    // b.parent().addClass('active');
+
+    var pagerow = $('select[name=pagerow]').val();
+    var getPage = $(this).text();
+    maketable(pagerow, getPage);
+    makesql(pagerow, getPage);
+  })
 
   $('#href_smsSetting').on('click', function(){
     var moveCheck = confirm('문자상용구설정 화면으로 이동합니다. 이동하시겠습니까?');
@@ -303,39 +408,62 @@ $(document).ready(function(){
   })
 
   $('select[name=dateDiv]').on('change', function(){
-      maketable();
+    var pagerow = $('select[name=pagerow]').val();
+    var getPage = 1;
+    maketable(pagerow,getPage);
+    makesql(pagerow,getPage);
   })
 
   $('select[name=periodDiv]').on('change', function(){
       var periodDiv = $('select[name=periodDiv]').val();
       // console.log(periodDiv);
       dateinput2(periodDiv);
-      maketable();
+      var pagerow = $('select[name=pagerow]').val();
+      var getPage = 1;
+      maketable(pagerow,getPage);
+      makesql(pagerow,getPage);
   })
 
   $('input[name=fromDate]').on('change', function(){
-      maketable();
+    var pagerow = $('select[name=pagerow]').val();
+    var getPage = 1;
+    maketable(pagerow,getPage);
+    makesql(pagerow,getPage);
   })
 
   $('input[name=toDate]').on('change', function(){
-      maketable();
+    var pagerow = $('select[name=pagerow]').val();
+    var getPage = 1;
+    maketable(pagerow,getPage);
+    makesql(pagerow,getPage);
   })
 
   $('select[name=building]').on('change', function(){
-      maketable();
+    var pagerow = $('select[name=pagerow]').val();
+    var getPage = 1;
+    maketable(pagerow,getPage);
+    makesql(pagerow,getPage);
   })
 
   $('select[name=customerDiv]').on('change', function(){
-      maketable();
+    var pagerow = $('select[name=pagerow]').val();
+    var getPage = 1;
+    maketable(pagerow,getPage);
+    makesql(pagerow,getPage);
   })
 
   $('select[name=etcCondi]').on('change', function(){
-      maketable();
+    var pagerow = $('select[name=pagerow]').val();
+    var getPage = 1;
+    maketable(pagerow,getPage);
+    makesql(pagerow,getPage);
   })
 
   $('input[name=cText]').on('keyup', function(){
-      maketable();
-      // console.log('solmi');
+    var pagerow = $('select[name=pagerow]').val();
+    var getPage = 1;
+    maketable(pagerow,getPage);
+    makesql(pagerow,getPage);
   })
 
   //=================== customerArray start ==============//

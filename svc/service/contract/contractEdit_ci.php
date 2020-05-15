@@ -2,7 +2,7 @@
 
 <!-- 계약정보세션 -->
 <section class="container">
-    <div class="form-row mb-2">
+    <div class="form-row mb-0">
       <div class="form-group col-md-5">
         <label class="mb-0">고객정보</label><br>
           <a href="/svc/service/customer/m_c_edit.php?id=<?=$row[1]?>">

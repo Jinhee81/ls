@@ -38,6 +38,8 @@ if($_POST['timeDiv']==='reservation'){
       // echo $sql;
       $result = mysqli_query($conn, $sql);
 
+      $sentsmsId = mysqli_insert_id($conn);
+
 
 
       if($_POST['getByte']>80){
@@ -54,7 +56,8 @@ if($_POST['timeDiv']==='reservation'){
             ETC1,
             ETC2,
             ETC3,
-            ETC4
+            ETC4,
+            ID
 
             ) value (
 
@@ -69,7 +72,8 @@ if($_POST['timeDiv']==='reservation'){
             'p',
             '11',
             '9',
-            'L'
+            'L',
+            {$sentsmsId}
             )";
 
         $result2 = mysqli_query($conn, $sql2);
@@ -80,6 +84,7 @@ if($_POST['timeDiv']==='reservation'){
       $sql3 = "insert into SC_TRAN (
         TR_SENDDATE,
         TR_ETC1,
+        TR_ETC2,
         TR_ETC4,
         TR_ETC5,
         TR_ETC6,
@@ -93,6 +98,7 @@ if($_POST['timeDiv']==='reservation'){
 
         '{$_POST['smsTime']}',
         'p',
+        {$sentsmsId},
         'L',
         '11',
         '9',
@@ -137,6 +143,7 @@ if($_POST['timeDiv']==='reservation'){
             )";
     // echo $sql2;
     $result2 = mysqli_query($conn, $sql2);
+    $sentsmsId = mysqli_insert_id($conn);
 
 
     if($_POST['getByte']>80){
@@ -153,7 +160,8 @@ if($_POST['timeDiv']==='reservation'){
             ETC1,
             ETC2,
             ETC3,
-            ETC4
+            ETC4,
+            ID
 
             ) value (
 
@@ -168,7 +176,8 @@ if($_POST['timeDiv']==='reservation'){
             'p',
             '11',
             '9',
-            'L'
+            'L',
+            {$sentsmsId}
             )";
 
         $result2 = mysqli_query($conn, $sql2);
@@ -179,6 +188,7 @@ if($_POST['timeDiv']==='reservation'){
       $sql3 = "insert into SC_TRAN (
         TR_SENDDATE,
         TR_ETC1,
+        TR_ETC2,
         TR_ETC4,
         TR_ETC5,
         TR_ETC6,
@@ -192,6 +202,7 @@ if($_POST['timeDiv']==='reservation'){
 
         now(),
         'p',
+        {$sentsmsId},
         'L',
         '11',
         '9',

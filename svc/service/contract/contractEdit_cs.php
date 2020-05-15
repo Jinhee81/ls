@@ -30,26 +30,26 @@
     </div>
   </div>
 
-  <div class="table-responsive">
+  <div class="table-responsive" style="height:400px;overflow:auto;">
     <table class="table table-sm table-hover text-center" style="width:100%" cellspacing="0" id="checkboxTestTbl">
       <thead>
         <tr class="table-info">
-          <td scope="col" class=""><input type="checkbox" id="checkAll"></td>
-          <td scope="col" class="">순번</td>
-          <td scope="col" class="">시작일/종료일</td>
+          <td scope="col" class="fixedHeader"><input type="checkbox" id="checkAll"></td>
+          <td scope="col" class="fixedHeader ">순번</td>
+          <td scope="col" class="fixedHeader ">시작일/종료일</td>
           <!-- <td scope="col">종료일</td> -->
-          <td scope="col" class="">공급가액/세액</td>
+          <td scope="col" class="fixedHeader ">공급가액/세액</td>
           <!-- <td scope="col" class="mobile">세액</td> -->
-          <td scope="col" class="">합계</td>
-          <td scope="col" class="mobile">입금예정일</td>
-          <td scope="col" class="mobile">입금구분</td>
-          <td scope="col" class="mobile">청구번호</td>
-          <td scope="col" class="mobile">수납구분</td>
-          <td scope="col" class="mobile">입금일</td>
-          <td scope="col" class="mobile">입금(미납)액</td>
-          <td scope="col" class="mobile">연체일수/이자</td>
+          <td scope="col" class="fixedHeader ">합계</td>
+          <td scope="col" class="fixedHeader mobile">입금예정일</td>
+          <td scope="col" class="fixedHeader mobile">입금구분</td>
+          <td scope="col" class="fixedHeader mobile">청구번호</td>
+          <td scope="col" class="fixedHeader mobile">수납구분</td>
+          <td scope="col" class="fixedHeader mobile">입금일</td>
+          <td scope="col" class="fixedHeader mobile">입금(미납)액</td>
+          <td scope="col" class="fixedHeader mobile">연체일수/이자</td>
           <!-- <td scope="col" class="">연체이자</td> -->
-          <td scope="col" class="mobile">증빙</td>
+          <td scope="col" class="fixedHeader mobile">증빙</td>
         </tr>
       </thead>
       <tbody id="schedule">

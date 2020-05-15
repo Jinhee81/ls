@@ -127,7 +127,6 @@ function maketable(){
   //     $('[data-toggle="tooltip"]').tooltip()
   // })
 
-
   var mtable = $.ajax({
     url: 'ajax_sentsms_value.php',
     method: 'post',

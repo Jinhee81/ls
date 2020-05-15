@@ -78,4 +78,15 @@ p .warningg {
   color: #FA5858; /*빨강색, 근데 왜 적용안되지? ㅜㅜ */
 }
 
+
+li.page-item.active {
+  color: #ffffff;
+  background-color: #007bff;
+}
+
+.fixedHeader {
+  position: sticky;
+  top:0;
+}
+
 /* html 색상 코드 : https://html-color-codes.info/Korean/ */

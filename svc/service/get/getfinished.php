@@ -244,6 +244,16 @@ include $_SERVER['DOCUMENT_ROOT']."/svc/service/sms/modal_sms2.php";
 <script src="/svc/inc/js/etc/form.js?<?=date('YmdHis')?>"></script>
 
 <script type="text/javascript">
+function taxInfo2(bid,mun,ccid) {
+    var tmps = "<iframe name='ifm_pops_21' id='ifm_pops_21' class='popup_iframe'   scrolling='no' src=''></iframe>";
+    $("body").append(tmps);
+    //alert( "/inc/tax_invoice2.php?chkId="+chkId+"&callnum="+subIdx );
+
+    $("#ifm_pops_21").attr("src","/svc/service/get/tax_invoice.php?building_idx="+bid+"&mun="+mun+"&id="+ccid+"&flag=finished");
+    $('#ifm_pops_21').show();
+    $('.pops_wrap, .pops_21').show();
+
+}
  var buildingArray = <?php echo json_encode($buildingArray); ?>;
  var groupBuildingArray = <?php echo json_encode($groupBuildingArray); ?>;
  var roomArray = <?php echo json_encode($roomArray); ?>;
@@ -311,6 +321,9 @@ function maketable(){
           returns += '<input type="hidden" name="customer_id" value="'+value.customer_id+'">';
           returns += '<input type="hidden" name="cname" value="'+value.cname+'">';
           returns += '<input type="hidden" name="name" value="'+value.name+'">';
+          returns += '<input type="hidden" name="bid" id="bid" value="'+value.bid+'">';
+          returns += '<input type="hidden" name="mun" id="mun" value="'+value.mun+'">';
+          returns += '<input type="hidden" name="ccid" id="ccid" value="'+value.ccid+'">';
           returns += '<input type="hidden" name="companynumber" value="'+value.companynumber+'">';
           returns += '<input type="hidden" name="companyname" value="'+value.companyname+'">';
           returns += '<input type="hidden" name="address" value="'+value.address+'">';
@@ -325,9 +338,12 @@ function maketable(){
           } else if(value.roomdiv==='good'){
             returns += '<td class="">'+'기타계약'+'('+value.goodname2+')'+'<input type="hidden" name="roomdiv" value="'+value.roomdiv+'"><input type="hidden" name="groupname" value="'+value.goodname2+'"><input type="hidden" name="roomname" value=""></td>';
           }
+          var mun = value.mun;
+          var bid = value.bid;
+          var ccid = value.ccid;
 
           if(value.taxSelect==='세금계산서'){
-            returns += '<td class="mobile"><span class="badge badge-warning text-light" style="width: 1.5rem;">세</span>'+value.taxDate+'</td>';
+            returns += '<td class="mobile"><a onclick="taxInfo2('+bid+',\''+mun+'\',\''+ccid+'\');"><span class="badge badge-warning text-light" style="width: 1.5rem;">세</span>'+value.taxDate+'</a></td>';
           } else if(value.taxSelect==='현금영수증'){
             returns += '<td class="mobile"><span class="badge badge-info text-light" style="width: 1.5rem;">현</span>'+value.taxDate+'</td>';
           } else {

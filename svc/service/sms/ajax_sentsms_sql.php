@@ -42,5 +42,4 @@ $sql = "select
         order by
           sendtime desc
         ";
-
 ?>

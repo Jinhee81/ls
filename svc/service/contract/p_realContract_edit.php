@@ -4,7 +4,7 @@ header('Content-Type: text/html; charset=UTF-8');
 session_start();
 include $_SERVER['DOCUMENT_ROOT']."/svc/view/conn.php";
 
-print_r($_POST);
+// print_r($_POST);
 // print_r($_SESSION);
 
 // $customer_id = $_POST['customer'];
@@ -33,7 +33,7 @@ $sql = "
     WHERE
       id = {$filtered_id}";
 
-echo $sql;
+// echo $sql;
 //
 $result = mysqli_query($conn, $sql);
 
@@ -83,7 +83,7 @@ if($result){
 
       if($result2===false){
         echo "<script>alert('수정과정에 문제가 생겼습니다. 관리자에게 문의하세요(2).');
-              location.href = 'contract_edit.php?id=$filtered_id';
+              history.back();
               </script>";
         error_log(mysqli_error($conn));
         exit();
@@ -91,14 +91,14 @@ if($result){
     } //for closing
   } else {
   echo "<script>alert('수정과정에 문제가 생겼습니다. 관리자에게 문의하세요(1).');
-        location.href = 'contract_edit.php?id=$filtered_id';
+        history.back();
         </script>";
   error_log(mysqli_error($conn));
   exit();
   } //if($result_delete) closing
 } else {
   echo "<script>alert('수정과정에 문제가 생겼습니다. 관리자에게 문의하세요(3).');
-        location.href = 'contract_edit.php?id=$filtered_id';
+        history.back();
         </script>";
   error_log(mysqli_error($conn));
   exit();
@@ -106,7 +106,7 @@ if($result){
 
 
 echo "<script>alert('수정하였습니다.');
-      location.href = 'contractEdit.php?id=$filtered_id';
+      location.href = 'contractEdit.php?page=schedule&id=$filtered_id';
       </script>";
 
  ?>

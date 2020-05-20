@@ -87,7 +87,7 @@ for ($i=0; $i < count($payExecutiveRow); $i++) {
   if($payExecutiveRow[$i][6]===0){
     echo "<script>
             alert('0원은 청구 불가합니다.');
-            location.href='contractEdit.php?id=$filtered_id';
+            location.href='contractEdit.php?page=schedule&id=$filtered_id';
           </script>";
     exit();
   }
@@ -115,7 +115,7 @@ for ($i=0; $i < count($payExecutiveRow); $i++) {
           {$payExecutiveRow[$i][9]}
         )
       ";
-  echo $sql;
+  // echo $sql;
   $result = mysqli_query($conn, $sql);
   if($result === true){
     $paySid = mysqli_insert_id($conn); //방금넣은 계약번호아이디를 가져오는거
@@ -135,7 +135,7 @@ for ($i=0; $i < count($payExecutiveRow); $i++) {
       $result2 = mysqli_query($conn, $sql2);
       if(!$result2){
         echo "<script>alert('저장과정에 문제가 생겼습니다. 관리자에게 문의하세요.(4)');
-                 location.href='contractEdit.php?id=$filtered_id';
+                 location.href='contractEdit.php?page=schedule&id=$filtered_id';
            </script>";
            error_log(mysqli_error($conn));
            exit();
@@ -143,7 +143,7 @@ for ($i=0; $i < count($payExecutiveRow); $i++) {
     }
   } else {
     echo "<script>alert('저장과정에 문제가 생겼습니다. 관리자에게 문의하세요.(2)');
-             location.href='contractEdit.php?id=$filtered_id';
+             location.href='contractEdit.php?page=schedule&id=$filtered_id';
        </script>";
        // echo "<script>alert('저장과정에 문제가 생겼습니다. 관리자에게 문의하세요.(2)');
        //    </script>";
@@ -162,14 +162,14 @@ $result5 = mysqli_query($conn, $sql5);
 
 if($result5===false){
   echo "<script>alert('저장과정에 문제가 생겼습니다. 관리자에게 문의하세요.(3)');
-        location.href = 'contractEdit.php?id=$filtered_id';
+        location.href = 'contractEdit.php?page=schedule&id=$filtered_id';
         </script>";
   error_log(mysqli_error($conn));
   exit();
 }
 
 echo "<script>
-        location.href='contractEdit.php?id=$filtered_id';
+        location.href='contractEdit.php?page=schedule&id=$filtered_id';
       </script>";
 
 // echo "<script>

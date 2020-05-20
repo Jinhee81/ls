@@ -54,7 +54,7 @@ if($result){
     //         history.back();
     //       </script>";
     echo "<script>
-            location.href='contractEdit.php?id=$filtered_id';
+            location.href='contractEdit.php?page=schedule&id=$filtered_id';
           </script>";
   } else {
     echo "<script>alert('저장과정에 문제가 생겼습니다. 관리자에게 문의하세요.');

@@ -189,7 +189,7 @@ include $_SERVER['DOCUMENT_ROOT']."/svc/service/sms/modal_sms2.php";
 
 <?php include $_SERVER['DOCUMENT_ROOT']."/svc/view/service_footer.php"; ?>
 
-<script src="https://code.jquery.com/jquery-3.3.1.js"></script>
+<script src="/svc/inc/js/jquery-3.3.1.min.js"></script>
 <script src="/svc/inc/js/jquery-ui.min.js"></script><!-- datepicker에 필요한 js file -->
 <script src="/svc/inc/js/popper.min.js"></script><!--툴팁함수호출에필요함-->
 <script src="/svc/inc/js/bootstrap.min.js"></script><!--툴팁함수호출하면 예쁘게부트스트랩표시가 됨-->
@@ -250,7 +250,7 @@ function maketable(x,y){
           returns += '<input type="hidden" name="companyname" value="'+value.companyname+'">';
 
           if(value.contractCount >= 1){
-            returns += '<span class="badge badge-pill badge-warning">'+value.contractCount+'</span></td>';
+            returns += '<a href="/svc/service/contract/contract.php?customerId='+value.id+'" class="badge badge-pill badge-warning">'+value.contractCount+'</a></td>';
           } else {
             returns += '</td>';
           }
@@ -288,11 +288,13 @@ function maketable(x,y){
       var paging = '<nav aria-label="..."><ul class="pagination pagination-sm justify-content-center">';
 
       for (var i = 1; i <= totalpageArray.length; i++) {
+        // paging += '<li class="page-item"><a class="page-link" href="customer0.php?page='+i+'">'+i+'</a></li>';
         paging += '<li class="page-item"><a class="page-link">'+i+'</a></li>';
       }
 
       paging += '</ul></nav>';
 
+      // console.log(totalpageArray);
       $('#page').html(paging);
 
 
@@ -306,7 +308,7 @@ function makesql(x,y){
 
   var form = $('form').serialize();
   var query = $.ajax({
-    url: 'ajax_customerLoad_sql0.php',
+    url: 'ajax_customerLoad_sql2.php',
     method: 'post',
     data: {'form' : form,
            'pagerow' : x,

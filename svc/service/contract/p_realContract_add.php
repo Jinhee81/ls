@@ -86,7 +86,7 @@ for ($i=1; $i <= count($contractRow); $i++) {
 
   if($result2===false){
     echo "<script>alert('저장과정에 문제가 생겼습니다. 관리자에게 문의하세요.');
-          location.href = 'contract_add1.php?id=$customer_id';
+          history.back();
           </script>";
     error_log(mysqli_error($conn));
     exit();
@@ -109,7 +109,7 @@ $result_deposit = mysqli_query($conn, $sql_deposit);
 
 if($result_deposit===false){
   echo "<script>alert('보증금 저장과정에 문제가 생겼습니다. 관리자에게 문의하세요.');
-        location.href = 'contract_add1.php?id=$customer_id';
+        history.back();
         </script>";
   error_log(mysqli_error($conn));
   exit();
@@ -117,7 +117,7 @@ if($result_deposit===false){
 
 
 echo "<script>alert('저장되었습니다.');
-      location.href = 'contractEdit.php?id=$id';
+      location.href = 'contractEdit.php?page=schedule&id=$id';
       </script>";
 
 // // if ($_POST['endDate'] === $mEndDate){

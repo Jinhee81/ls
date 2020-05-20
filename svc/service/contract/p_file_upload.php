@@ -11,7 +11,7 @@ $filtered_id = mysqli_real_escape_string($conn, $_POST['contract']);
 if(isset($_FILES['upfile']) && $_FILES['upfile']['name'] !== ""){
   $file = $_FILES['upfile'];
   $upload_directory = 'data/';
-  $ext_str = "hwp,xls,xlsx,doc,docx,pdf,jpg,gif,png,txt,ppt,pptx,tiff";
+  $ext_str = "hwp,xls,xlsx,doc,docx,pdf,jpg,jpeg,gif,png,txt,ppt,pptx,tiff";
   $allowed_extensions = explode(',', $ext_str);
 
   $max_file_size = 5242880;
@@ -37,7 +37,7 @@ if(isset($_FILES['upfile']) && $_FILES['upfile']['name'] !== ""){
     $query = "
             INSERT INTO upload_file(file_id, name_orig, name_save, size, reg_time, realContract_id) VALUES
             ('{$file_id}', '{$name_orig}', '{$name_save}', {$size}, now(), {$filtered_id})";
-    echo $query;
+    // echo $query;
     $result = mysqli_query($conn, $query);
     // $stmt = mysqli_prepare($conn, $query);
     // $bind = mysqli_stmt_bind_param($stmt, "sss", $file_id, $name_orig, $name_save, $size);
@@ -47,18 +47,18 @@ if(isset($_FILES['upfile']) && $_FILES['upfile']['name'] !== ""){
     if($result){
       echo "<script>
               alert('파일저장에 성공하였습니다.');
-              location.href='contractEdit.php?id=".$filtered_id."';
+              location.href='contractEdit.php?page=file&id=".$filtered_id."';
             </script>";
     } else {
       echo "<script>
               alert('파일저장에 실패했습니다. 관리자에게 문의하세요(1).');
-              location.href='contractEdit.php?id=".$filtered_id."';
+              history.back();
             </script>";
     }
 } else {
   echo "<script>
           alert('파일저장에 실패했습니다. 관리자에게 문의하세요(2).');
-          location.href='contractEdit.php?id=".$filtered_id."';
+          history.back();
         </script>";
   // echo "<script>
   //         alert('파일저장에 실패했습니다. 관리자에게 문의하세요.');

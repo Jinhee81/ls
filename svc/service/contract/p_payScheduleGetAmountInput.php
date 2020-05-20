@@ -44,8 +44,7 @@ if($result){
   }
 
   echo "<script>
-          alert('입금처리하였습니다.');
-          history.back();
+          location.href = 'contractEdit.php?page=schedule&id=$filtered_id';
         </script>";
 }
 else {

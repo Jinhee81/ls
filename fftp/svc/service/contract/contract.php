@@ -240,12 +240,14 @@ include $_SERVER['DOCUMENT_ROOT']."/svc/service/sms/modal_sms2.php";
 
 function sql(x,y){
   var form = $('form').serialize();
+  var getCid = location.search.split('customerId=')[1];
   var sql = $.ajax({
     url: 'ajax_realContractSql2.php',
     method: 'post',
     data: {'form' : form,
            'pagerow' : x,
-           'getPage' : y
+           'getPage' : y,
+           'customerId' : getCid
           },
     success: function(data){
       $('#sql').html(data);
@@ -256,12 +258,14 @@ function sql(x,y){
 
 function maketable(x,y){
   var form = $('form').serialize();
+  var getCid = location.search.split('customerId=')[1];
   var mtable = $.ajax({
     url: 'ajax_realContractLoad.php',
     method: 'post',
     data: {'form' : form,
            'pagerow' : x,
-           'getPage' : y
+           'getPage' : y,
+           'customerId' : getCid
           },
     success: function(data){
       data = JSON.parse(data);
@@ -270,8 +274,8 @@ function maketable(x,y){
       var returns = '';
       var countall;
 
-      console.log(typeof(x), x);
-      console.log(typeof(y), y);
+      // console.log(typeof(x), x);
+      // console.log(typeof(y), y);
 
       if(datacount===0){
         returns ="<tr><td colspan='12'>조회값이 없어요. 조회조건을 다시 확인하거나 서둘러 입력해주세요!</td></tr>";
@@ -304,7 +308,7 @@ function maketable(x,y){
           returns += '<td class="mobile">'+value.startDate+'</td>';
           returns += '<td class="mobile">'+value.endDate2+'</td>';
           returns += '<td class="mobile">'+value.count2+'</td>';
-          returns += '<td class=""><a href="contractEdit.php?id='+value.rid+'" >'+value.mtAmount+'</a>';
+          returns += '<td class=""><a href="contractEdit.php?page=schedule&id='+value.rid+'" >'+value.mtAmount+'</a>';
 
           returns += '<input type="hidden" name="mAmount" value="'+value.mAmount+'">';
           returns += '<input type="hidden" name="mvAmount" value="'+value.mvAmount+'">';

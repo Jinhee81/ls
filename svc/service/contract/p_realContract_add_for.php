@@ -3,8 +3,8 @@ header('Content-Type: text/html; charset=UTF-8');
 session_start();
 include $_SERVER['DOCUMENT_ROOT']."/svc/view/conn.php";
 
-print_r($_POST);
-print_r($_SESSION);
+// print_r($_POST);
+// print_r($_SESSION);
 
 $sql_pay = "select pay from building where id={$_POST['buildingId']}";
 // echo $sql_pay;
@@ -138,7 +138,7 @@ for ($i=0; $i < count($contractRow); $i++) {
 
     if($result2===false){
       echo "<script>alert('저장과정에 문제가 생겼습니다. 관리자에게 문의하세요(2).');
-            location.href = 'contractAll.php';
+            history.back();
             </script>";
       error_log(mysqli_error($conn));
       exit();

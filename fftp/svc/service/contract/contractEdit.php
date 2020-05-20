@@ -21,7 +21,10 @@ include "contractEdit_condi.php";
  ?>
 
 <div class="container jumbotron pt-3 pb-3 mb-2">
-  <h2 class="">계약상세내용입니다.(#202) (계약번호 : <?=$filtered_id?>)</h2>
+  <!-- <span><h3 class="">계약상세내용입니다.(#202)</h3></span><span><p>ㅋㅋ</p></span> -->
+  <label for="" style="font-size:32px;">계약상세내용입니다.(#202)</label>
+  <label class="font-italic" style="font-size:20px;color:#2E9AFE;">계약번호 <?=$filtered_id?>,보증금 <?=$row_deposit['remainMoney']?>원, 첨부파일 <?=count($fileRows)?>건, 메모작성 <?=count($memoRows)?>건</label>
+
 </div>
 <div class="container">
   <?php include "contractEdit_button.php";?>
@@ -29,30 +32,35 @@ include "contractEdit_condi.php";
 
   <!-- 하단 탭 -->
   <nav>
-    <div class="nav nav-tabs" id="nav-tab" role="tablist">
-      <a class="nav-item nav-link active" id="nav-home-tab" data-toggle="tab" href="#nav-home" role="tab" aria-controls="nav-home" aria-selected="true">스케쥴</a>
-      <a class="nav-item nav-link" id="nav-profile-tab" data-toggle="tab" href="#nav-deposit" role="tab" aria-controls="nav-profile" aria-selected="false">보증금</a>
-      <a class="nav-item nav-link" id="nav-contact-tab" data-toggle="tab" href="#nav-file" role="tab" aria-controls="nav-contact" aria-selected="false">파일</a>
-      <a class="nav-item nav-link" id="nav-contact-tab" data-toggle="tab" href="#nav-memo" role="tab" aria-controls="nav-contact" aria-selected="false">메모</a>
-    </div>
+    <ul class="nav nav-tabs">
+      <li class="nav-items">
+        <a id="navSchedule" class="nav-link <?php if($_GET['page']==='schedule'){echo "active";} ?>" href="contractEdit.php?page=schedule&id=<?=$filtered_id?>">스케쥴</a>
+      </li>
+      <li class="nav-items">
+        <a id="navDeposit" class="nav-link <?php if($_GET['page']==='deposit'){echo "active";} ?>" href="contractEdit.php?page=deposit&id=<?=$filtered_id?>">보증금</a>
+      </li>
+      <li class="nav-items">
+        <a id="navFile" class="nav-link <?php if($_GET['page']==='file'){echo "active";} ?>" href="contractEdit.php?page=file&id=<?=$filtered_id?>">첨부파일</a>
+      </li>
+      <li class="nav-items">
+        <a id="navMemo" class="nav-link <?php if($_GET['page']==='memo'){echo "active";} ?>" href="contractEdit.php?page=memo&id=<?=$filtered_id?>">메모작성</a>
+      </li>
+    </ul>
   </nav>
-  <div class="tab-content" id="nav-tabContent">
-    <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
-      <?php
+
+  <div class="">
+    <?php if($_GET['page']==='schedule'){
       include "contractEdit_cs.php";
       include "contractEdit_cs_modal_nadd.php";//n개월추가모달
-      include "contractEdit_cs_modal_regist.php"
-       ?>
-    </div>
-    <div class="tab-pane fade" id="nav-deposit" role="tabpanel" aria-labelledby="nav-profile-tab">
-      <?php include "contractEdit_deposit.php";?>
-    </div>
-    <div class="tab-pane fade" id="nav-file" role="tabpanel" aria-labelledby="nav-contact-tab">
-      <?php include "contractEdit_file.php";?>
-    </div>
-    <div class="tab-pane fade" id="nav-memo" role="tabpanel" aria-labelledby="nav-contact-tab">
-      <?php include "contractEdit_memo.php";?>
-    </div>
+      include "contractEdit_cs_modal_regist.php";
+    } else if($_GET['page']==='deposit'){
+      include "contractEdit_deposit.php";
+    } else if($_GET['page']==='file'){
+      include "contractEdit_file.php";
+    } else if($_GET['page']==='memo'){
+      include "contractEdit_memo.php";
+    }
+    ?>
   </div>
 
   <!-- 최하단 계약정보작성자보여주기섹션 -->
@@ -98,6 +106,11 @@ $(document).ready(function(){
 
   $(function () {
       $('[data-toggle="tooltip"]').tooltip()
+  })
+
+  $('#navDeposit').on('click', function(){
+    console.log('solmi');
+    $(this).addClass('active').siblings().removeClass('active');
   })
 
 
@@ -808,6 +821,11 @@ $('#button6').click(function(){ //n개월추가 버튼, 모달클릭으로 바�
         formSubmit(frm);
     }
 }); //n개월추가
+
+// $(document).on('click', '#navDeposit', function(){
+//   $(this).addClass('active');
+//   console.log('active');
+// })
 
 
 </script>

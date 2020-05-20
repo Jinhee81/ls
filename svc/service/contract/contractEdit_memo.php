@@ -32,7 +32,7 @@
             <input type="hidden" name="memoid" id="memoid" value="<?=$memoRows[$i]['idrealContract_memo']?>">
         </td>
         <td class="">
-          <input class="form-control form-control-sm text-center" name="memoContent" id="memoContent" value="<?=$memoRows[$i]['memoContent']?>" disabled></td>
+          <input class="form-control form-control-sm text-center" name="memoContent" value="<?=$memoRows[$i]['memoContent']?>" disabled></td>
         <td class="mobile">
           <small class="grey"><?=$memoRows[$i]['created']?>/<?=$memoRows[$i]['updated']?></small>
         </td>

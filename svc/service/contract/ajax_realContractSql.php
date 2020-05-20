@@ -6,6 +6,9 @@ include $_SERVER['DOCUMENT_ROOT']."/svc/view/conn.php";
 // print_r($_SESSION);
 // print_r($_POST);
 // echo '111';
+if(isset($_POST['customerId'])){
+  $getCondi = "and customer.id=".$_POST['customerId'];
+}
 
 parse_str($_POST['form'], $a);
 
@@ -76,6 +79,7 @@ $sql_count = "select count(*)
               where realContract.user_id = {$_SESSION['id']} and
                     realContract.building_id = {$a['building']}
                     $etcDate $etcIng $groupCondi $etcCondi
+                    $getCondi
               order by
                   group_in_building.id asc, r_g_in_building.id asc";
 
@@ -133,6 +137,7 @@ left join r_g_in_building
 where realContract.user_id = {$_SESSION['id']} and
       realContract.building_id = {$a['building']}
       $etcDate $etcIng $groupCondi $etcCondi
+      $getCondi
 order by
     realContract.group_in_building_id asc, realContract.r_g_in_building_id asc
 LIMIT {$start}, {$_POST['pagerow']}";

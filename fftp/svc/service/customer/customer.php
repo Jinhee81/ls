@@ -250,7 +250,7 @@ function maketable(x,y){
           returns += '<input type="hidden" name="companyname" value="'+value.companyname+'">';
 
           if(value.contractCount >= 1){
-            returns += '<span class="badge badge-pill badge-warning">'+value.contractCount+'</span></td>';
+            returns += '<a href="/svc/service/contract/contract.php?customerId='+value.id+'" class="badge badge-pill badge-warning">'+value.contractCount+'</a></td>';
           } else {
             returns += '</td>';
           }
@@ -308,7 +308,7 @@ function makesql(x,y){
 
   var form = $('form').serialize();
   var query = $.ajax({
-    url: 'ajax_customerLoad_sql0.php',
+    url: 'ajax_customerLoad_sql2.php',
     method: 'post',
     data: {'form' : form,
            'pagerow' : x,

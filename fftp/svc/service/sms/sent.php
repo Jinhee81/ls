@@ -7,7 +7,7 @@ if(!isset($_SESSION['is_login'])){
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
   <head>
-    <title>보낸문자리스트</title>
+    <title>보낸문자목록</title>
 <?php
 include $_SERVER['DOCUMENT_ROOT']."/svc/view/service_header1_meta.php";
 include $_SERVER['DOCUMENT_ROOT']."/svc/view/service_header2.php";
@@ -84,25 +84,38 @@ include $_SERVER['DOCUMENT_ROOT']."/svc/service/contract/building.php"; //이거
   </div>
 </section>
 
+<section class="container">
+  <div class="row ml-0">
+    <label for=""> 총 <span id="countall"></span>건</label>
+  </div>
+</section>
+
 <!-- 표 섹션 -->
 <section class="container">
-  <table class="table table-hover table-bordered table-sm text-center" id="checkboxTestTbl">
-    <thead>
-      <tr class="table-secondary">
-        <th class="">순번</th>
-        <th class="">유형</th>
-        <th class="">전송시간</th>
-        <th class="">수신자</th>
-        <th class="">수신번호</th>
-        <th class="">발신번호</th>
-        <th class="">문자내용</th>
-        <th class="">전송결과</th>
-      </tr>
-    </thead>
-    <tbody id="allVals">
+  <div class="mainTable">
+    <table class="table table-hover table-bordered table-sm text-center" id="checkboxTestTbl">
+      <thead>
+        <tr class="table-secondary">
+          <th class="fixedHeader">순번</th>
+          <th class="fixedHeader">유형</th>
+          <th class="fixedHeader">전송시간</th>
+          <th class="fixedHeader">수신자</th>
+          <th class="fixedHeader">수신번호</th>
+          <th class="fixedHeader">발신번호</th>
+          <th class="fixedHeader">문자내용</th>
+          <th class="fixedHeader">전송결과</th>
+        </tr>
+      </thead>
+      <tbody id="allVals">
 
-    </tbody>
-  </table>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- 페이지 -->
+<section class="container mt-2" id="page">
+
 </section>
 
 <section id="allVals2" class="container">
@@ -121,28 +134,32 @@ include $_SERVER['DOCUMENT_ROOT']."/svc/service/contract/building.php"; //이거
 
 <script>
 
-function maketable(){
-
-  // $(function () {
-  //     $('[data-toggle="tooltip"]').tooltip()
-  // })
-
+function maketable(x,y){
+  var form = $('form').serialize();
   var mtable = $.ajax({
     url: 'ajax_sentsms_value.php',
     method: 'post',
-    data: $('form').serialize(),
+    data: {'form' : form,
+           'pagerow' : x,
+           'getPage' : y
+          },
     success: function(data){
       data = JSON.parse(data);
       datacount = data.length;
 
       var returns = '';
-      //
+      var countall;
+
       if(datacount===0){
         returns ="<tr><td colspan='9'>조회값이 없어요.</td></tr>";
       } else {
         $.each(data, function(key, value){
+          countall = value.count;
+          var ordered = Number(value.num) - ((y-1)*x);
+
           returns += '<tr>';
-          returns += '<td class="">'+datacount+'</td>';
+          returns += '<td class="" data-toggle="tooltio" data-placement="top" title="'+value.id+'">'+ordered;
+          returns += '<input type="hidden" name="id" value="'+value.id+'"></td>';
 
           if(value.type === 'sms'){
             returns += '<td class=""><div class="badge badge-primary text-wrap" style="width: 3rem;">단문</div></td>';
@@ -152,12 +169,13 @@ function maketable(){
             returns += '<td class=""></td>';
           }
 
-          returns += '<td class="">'+value.sendtime+'<input type="hidden" name="byte" value="'+value.byte+'"></td>';
+          returns += '<td class="">'+value.sendtime+'<input type="hidden" name="byte" value="'+value.byte+'">';
+          returns += '<input type="hidden" name="yearmonth" value="'+value.yearmonth+'"></td>';
           returns += '<td class=""><label data-toggle="tooltip" data-placement="top" title="'+value.customer+'">'+value.customermb+'</label></td>';
           returns += '<td class="">'+value.phonenumber+'<input type="hidden" name="sentnumber" value="'+value.sentnumber+'"></td>';
           returns += '<td class="">'+value.sentnumber+'</td>';
           returns += '<td class=""><p class="modalDescription" data-toggle="modal" data-target="#smsDescription">'+value.descriptionmb+'</p><input type="hidden" name="description" value="'+value.description+'"></td>';
-          returns += '<td class="">'+value.result+'</td>';
+          returns += '<td class="">'+value.result2+'</td>';
 
           returns += '</tr>';
 
@@ -165,22 +183,42 @@ function maketable(){
         })
       }
       $('#allVals').html(returns);
+      $('#countall').text(countall);
+      var totalpage = Math.ceil(Number(countall)/Number(x));
+
+      var totalpageArray = [];
+
+      for (var i = 1; i <= totalpage; i++) {
+        totalpageArray.push(i);
+      }
+
+      var paging = '<nav aria-label="..."><ul class="pagination pagination-sm justify-content-center">';
+
+      for (var i = 1; i <= totalpageArray.length; i++) {
+        paging += '<li class="page-item"><a class="page-link">'+i+'</a></li>';
+      }
+
+      paging += '</ul></nav>';
+
+      $('#page').html(paging);
     }
   })
 
   return mtable;
 }
 
-function msql(){
+function sql(x,y){
+  var form = $('form').serialize();
   var msqlajax = $.ajax({
     url: 'ajax_sentsms_sql2.php',
     method: 'post',
-    data: $('form').serialize(),
+    data: {
+      'form':form, 'pagerow':x, 'getPage':y
+    },
     success: function(data){
       $('#allVals2').html(data);
     }
   });
-
   return msqlajax;
 }
 
@@ -190,8 +228,11 @@ $(document).ready(function(){
   var periodDiv = $('select[name=periodDiv]').val();
   dateinput2(periodDiv);
 
-  maketable();
-  msql();
+  var pagerow = 50;
+  var getPage = 1;
+
+  maketable(pagerow, getPage);
+  sql(pagerow, getPage);
 
 
   $('.dateType').datepicker({
@@ -200,6 +241,15 @@ $(document).ready(function(){
     showButtonPanel: true,
     currentText: '오늘',
     closeText: '닫기'
+  })
+
+  $(document).on('click', '.page-link', function(){
+    // $(this).parent('li').attr('class','active');
+    var pagerow = 50;
+    var getPage = $(this).text();
+    console.log(getPage);
+    maketable(pagerow, getPage);
+    sql(pagerow, getPage);
   })
 
 
@@ -229,46 +279,62 @@ $(document).ready(function(){
 })//---------document.ready end and 조회버튼클릭 펑션 시작--------------//
 
 $('select[name=dateDiv]').on('change', function(){
-    maketable();
-    msql();
+  var pagerow = 50;
+  var getPage = 1;
+  maketable(pagerow, getPage);
+  sql(pagerow, getPage);
 })
 
 $('select[name=periodDiv]').on('change', function(){
     var periodDiv = $('select[name=periodDiv]').val();
     // console.log(periodDiv);
     dateinput2(periodDiv);
-    maketable();
-    msql();
+    var pagerow = 50;
+    var getPage = 1;
+    maketable(pagerow, getPage);
+    sql(pagerow, getPage);
 })
 
 $('input[name=fromDate]').on('change', function(){
-    maketable();
-    msql();
+  var pagerow = 50;
+  var getPage = 1;
+  maketable(pagerow, getPage);
+  sql(pagerow, getPage);
 })
 
 $('input[name=toDate]').on('change', function(){
-    maketable();
-    msql();
+  var pagerow = 50;
+  var getPage = 1;
+  maketable(pagerow, getPage);
+  sql(pagerow, getPage);
 })
 
 $('select[name=type]').on('change', function(){
-    maketable();
-    msql();
+  var pagerow = 50;
+  var getPage = 1;
+  maketable(pagerow, getPage);
+  sql(pagerow, getPage);
 })
 
 $('select[name=result]').on('change', function(){
-    maketable();
-    msql();
+  var pagerow = 50;
+  var getPage = 1;
+  maketable(pagerow, getPage);
+  sql(pagerow, getPage);
 })
 
 $('select[name=etcCondi]').on('change', function(){
-    maketable();
-    msql();
+  var pagerow = 50;
+  var getPage = 1;
+  maketable(pagerow, getPage);
+  sql(pagerow, getPage);
 })
 
 $('input[name=cText]').on('keyup', function(){
-    maketable();
-    msql();
+  var pagerow = 50;
+  var getPage = 1;
+  maketable(pagerow, getPage);
+  sql(pagerow, getPage);
 })
 //---------조회버튼클릭평션 end and contractArray 펑션 시작--------------//
 

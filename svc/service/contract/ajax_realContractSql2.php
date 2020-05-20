@@ -8,6 +8,7 @@ print_r($_POST);
 // echo '111';
 
 include "ajax_realContractSql.php";
+echo $sql_count;
 echo $sql;
 
 

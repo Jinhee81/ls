@@ -72,8 +72,8 @@ if($_POST['timeDiv']==='reservation'){
             'p',
             '11',
             '9',
-            'L',
-            {$sentsmsId}
+            0,
+            '{$sentsmsId}'
             )";
 
         $result2 = mysqli_query($conn, $sql2);
@@ -176,8 +176,8 @@ if($_POST['timeDiv']==='reservation'){
             'p',
             '11',
             '9',
-            'L',
-            {$sentsmsId}
+            0,
+            '{$sentsmsId}'
             )";
 
         $result2 = mysqli_query($conn, $sql2);

@@ -88,11 +88,10 @@ if($_POST['getPage']=='1'){
   $start = ((int)$_POST['getPage']-1) * (int)$_POST['pagerow'];
 }
 
-$firstOrder = $row_count[0] + 1;
 
 $sql = "
 select
-    @num := @num - 1 as num,
+    @num := @num + 1 as num,
     realContract.id as rid,
     customer.id as cid,
     customer.name as cname,
@@ -120,7 +119,7 @@ select
     count2,
     (select count(*) from paySchedule2 where realContract_id=rid) as stepped
 from
-    (select @num := {$firstOrder})a,
+    (select @num := 0)a,
     realContract
 left join customer
     on realContract.customer_id = customer.id

@@ -18,9 +18,9 @@ $currentDateTime = date('Y-m-d H:i:s');
 $sql = "
   UPDATE realContract
     SET
-        building_id = {$_POST['building_id']},
-        group_in_building_id = {$_POST['group_id']},
-        r_g_in_building_id = {$_POST['room_id']},
+        building_id = {$_POST['building']},
+        group_in_building_id = {$_POST['group']},
+        r_g_in_building_id = {$_POST['room']},
         payOrder = '{$_POST['payOrder']}',
         monthCount = {$_POST['monthCount']},
         startDate = '{$_POST['startDate']}',
@@ -29,12 +29,11 @@ $sql = "
         mAmount = '{$_POST['mAmount']}',
         mvAmount = '{$_POST['mvAmount']}',
         mtAmount = '{$_POST['mtAmount']}',
-        updateTime = now(),
-        updatePerson = {$_SESSION['id']}
+        updateTime = now()
     WHERE
       id = {$filtered_id}";
 
-// echo $sql;
+echo $sql;
 //
 $result = mysqli_query($conn, $sql);
 
@@ -49,9 +48,9 @@ if($result){
         $contractRow[$i] = array();
         $mEndDate = date("Y-m-d", strtotime($mStartDate."+1 month"."-1 day"));
 
-        if($_POST['payOrder']==='선불'){
+        if($_POST['payOrder']==='선납'){
           $mExpectedDate = $mStartDate;
-        } else if($_POST['payOrder']==='후불'){
+        } else if($_POST['payOrder']==='후납'){
           $mExpectedDate = $mEndDate;
         }
 
@@ -84,7 +83,7 @@ if($result){
 
       if($result2===false){
         echo "<script>alert('수정과정에 문제가 생겼습니다. 관리자에게 문의하세요(2).');
-              location.href = 'contract_add1_edit.php?id=$filtered_id';
+              location.href = 'contract_edit.php?id=$filtered_id';
               </script>";
         error_log(mysqli_error($conn));
         exit();
@@ -92,11 +91,17 @@ if($result){
     } //for closing
   } else {
   echo "<script>alert('수정과정에 문제가 생겼습니다. 관리자에게 문의하세요(1).');
-        location.href = 'contract_add1_edit.php?id=$filtered_id';
+        location.href = 'contract_edit.php?id=$filtered_id';
         </script>";
   error_log(mysqli_error($conn));
   exit();
   } //if($result_delete) closing
+} else {
+  echo "<script>alert('수정과정에 문제가 생겼습니다. 관리자에게 문의하세요(3).');
+        location.href = 'contract_edit.php?id=$filtered_id';
+        </script>";
+  error_log(mysqli_error($conn));
+  exit();
 }//if($result, update) closing
 
 

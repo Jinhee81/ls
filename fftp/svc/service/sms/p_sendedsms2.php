@@ -59,7 +59,7 @@ if($_POST['timeDiv']==='reservation'){
             '{$_POST['smsTime']}',
             '{$a[$i][2]}',
             0,'','0',
-            'p','11','9','L',{$sentsmsId})";
+            'p','11','9',0,'{$sentsmsId}')";
 
         $result2 = mysqli_query($conn, $sql2);
         if(!$result2){
@@ -124,7 +124,7 @@ if($_POST['timeDiv']==='reservation'){
           ) value (
           '','{$a[$i][3]}','{$_POST['sendphonenumber']}',now(),
           '{$a[$i][2]}',
-          0,'','0','p','11','9','L',{$sentsmsId})";
+          0,'','0','p','11','9', 0,'{$sentsmsId}')";
       // echo $sql2;
 
       $result2 = mysqli_query($conn, $sql2);

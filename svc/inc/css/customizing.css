@@ -84,6 +84,12 @@ li.page-item.active {
   background-color: #007bff;
 }
 
+.mainTable {
+  height: auto;
+  max-height: 400px;
+  overflow: auto;
+}
+
 .fixedHeader {
   position: sticky;
   top:0;

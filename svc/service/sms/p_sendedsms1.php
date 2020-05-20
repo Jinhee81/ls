@@ -22,10 +22,11 @@ if($_POST['timeDiv']==='reservation'){
   } else {
     for ($i=0; $i < count($a); $i++) {
       $sql = "INSERT INTO sentsms
-              (type, byte, sendtime, customer, roomNumber, phonenumber,
+              (div1, type, byte, sendtime, customer, roomNumber, phonenumber,
                description, sentnumber, user_id)
               VALUES
-              ('{$_POST['smsDiv']}',
+              ('reservationed',
+               '{$_POST['smsDiv']}',
                '{$_POST['getByte']}',
                '{$_POST['smsTime']}',
                '{$a[$i][4]->받는사람}',
@@ -72,8 +73,8 @@ if($_POST['timeDiv']==='reservation'){
             'p',
             '11',
             '9',
-            'L',
-            {$sentsmsId}
+            0,
+            '{$sentsmsId}'
             )";
 
         $result2 = mysqli_query($conn, $sql2);
@@ -128,10 +129,11 @@ if($_POST['timeDiv']==='reservation'){
 
   for ($i=0; $i < count($a); $i++) {
     $sql2 = "INSERT INTO sentsms
-            (type, byte, sendtime, customer, roomNumber, phonenumber,
+            (div1, type, byte, sendtime, customer, roomNumber, phonenumber,
              description, sentnumber, user_id)
             VALUES
-            ('{$_POST['smsDiv']}',
+            ('immediately',
+             '{$_POST['smsDiv']}',
              '{$_POST['getByte']}',
              now(),
              '{$a[$i][4]->받는사람}',
@@ -176,8 +178,8 @@ if($_POST['timeDiv']==='reservation'){
             'p',
             '11',
             '9',
-            'L',
-            {$sentsmsId}
+            0,
+            '{$sentsmsId}'
             )";
 
         $result2 = mysqli_query($conn, $sql2);

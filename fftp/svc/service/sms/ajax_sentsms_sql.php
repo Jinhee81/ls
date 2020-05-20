@@ -24,12 +24,6 @@ if($a['type']==='typeAll'){
   $typeCondi = " and type = '{$a['type']}'";
 }
 
-if($a['div1']==='div1all'){
-  $div1Condi = "";
-} else {
-  $div1Condi = " and div1 = '{$a['div1']}'";
-}
-
 if($a['result']==='resultall'){
   $resultCondi = "";
 } else if($a['result']==='success') {
@@ -51,7 +45,7 @@ $sql_count = "select count(*)
               from
                 sentsms
               where user_id={$_SESSION['id']}
-                    $div1Condi $typeCondi $resultCondi $etcCondi $etcDate
+                    $typeCondi $resultCondi $etcCondi $etcDate
               order by
                 sendtime desc";
 $result_count = mysqli_query($conn, $sql_count);
@@ -67,13 +61,13 @@ $firstOrder = $row_count[0] + 1;
 
 $sql = "select
           @num := @num - 1 as num,
-          id, div1, type, byte, sendtime, customer, phonenumber, roomNumber,
+          id, type, byte, sendtime, customer, phonenumber, roomNumber,
           description, sentnumber, result
         from
           (select @num := {$firstOrder})a,
           sentsms
         where user_id={$_SESSION['id']}
-              $div1Condi $typeCondi $resultCondi $etcCondi $etcDate
+              $typeCondi $resultCondi $etcCondi $etcDate
         order by
           sendtime desc
         LIMIT {$start}, {$_POST['pagerow']}

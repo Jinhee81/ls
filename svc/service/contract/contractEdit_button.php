@@ -1,4 +1,4 @@
-<div class="jumbotron pt-3 pb-3 text-center border border-dark rounded">
+<div class="jumbotron mb-2 pt-3 pb-3 text-center border border-dark rounded">
   <a class="btn btn-dark btn-sm mr-1" href="contract.php" role="button"><i class="fas fa-angle-double-right"></i> 계약목록</a>
   <a class="btn btn-dark btn-sm mr-1" href="/service/account/deposit.php" role="button"><i class="fas fa-angle-double-right"></i> 보증금목록</a>
   <a href="contract_edit.php?id=<?=$filtered_id?>">

@@ -165,7 +165,7 @@ $row_main = mysqli_fetch_array($result_main);
               </div>
               <div class="form-group col-md-2 mb-0">
                     <label>합계</label>
-                    <input type="text" class="form-control text-right amountNumber numberComma" name="mtAmount" value="<?=$row_main['mtAmount']?>" readonly>
+                    <input type="text" class="form-control text-right amountNumber" name="mtAmount" value="<?=$row_main['mtAmount']?>" numberOnly readonly>
               </div>
               <div class="form-group col-md-1 mb-0"><!--선불,후불체크-->
                     <label>수납</label>
@@ -240,52 +240,13 @@ $row_main = mysqli_fetch_array($result_main);
 </script>
 
 <script>
+$('.amountNumber').on('click keyup', function(){
+  $(this).select();
+})
 
-$('#contractDate').on('change', function(){
-  var readyStartDate = $('#contractDate').val();
+$("input:text[numberOnly]").number(true);
 
-  getStartDate();
 
-  function getStartDate(){
-    var arr1 = readyStartDate.split('-');
-    var sDate = new Date(arr1[0], arr1[1]-1, arr1[2]);
-
-    dateFormat();
-    $('#startDate').attr('value', dateFormat());
-
-    function dateFormat(){
-      var yyyy = sDate.getFullYear().toString();
-      var mm = (sDate.getMonth()+1).toString();
-      var dd = sDate.getDate().toString();
-
-      var startDate = yyyy+'-'+(mm[1] ? mm : '0'+mm[0])+'-'+(dd[1]?dd:'0'+dd[0]);
-      return startDate;
-    }
-  }
-}) //contractDate on change closing괄호, 최초계약일자=시작일자
-
-$('#contractDate').on('change', function(){
-  var readyStartDate = $('#contractDate').val();
-
-  getDepositInDate();
-
-  function getDepositInDate(){
-    var arr1 = readyStartDate.split('-');
-    var gDate = new Date(arr1[0], arr1[1]-1, arr1[2]);
-
-    dateFormat();
-    $('#depositInDate').attr('value', dateFormat());
-
-    function dateFormat(){
-      var yyyy = gDate.getFullYear().toString();
-      var mm = (gDate.getMonth()+1).toString();
-      var dd = gDate.getDate().toString();
-
-      var depositInDate = yyyy+'-'+(mm[1] ? mm : '0'+mm[0])+'-'+(dd[1]?dd:'0'+dd[0]);
-      return depositInDate;
-    }
-  }
-}) //contractDate on change closing괄호, 최초계약일자=보증금입금일자
 
 var select2option, select3option, select4option, select5option, buildingIdx, groupIdx;
 var pay = ["선납", "후납"];
@@ -331,14 +292,59 @@ $('#select3').on('change', function(event){
 
 // console.log(buildingIdx, groupIdx, roomIdx);
 
+function dateFormat(x){
+  var yyyy = x.getFullYear().toString();
+  var mm = (x.getMonth()+1).toString();
+  var dd = x.getDate().toString();
+
+  var date = yyyy+'-'+mm+'-'+dd;
+  return date;
+}
+
+$('#contractDate').on('change', function(){
+  var startDate = $(this).val();
+  $('#startDate').val(startDate);
+  $('#depositInDate').val(startDate);
+
+  var monthCount = Number($('input[name=monthCount]').val());
+
+  var arr1 = startDate.split('-');
+  var sDate = new Date(arr1[0], arr1[1]-1, arr1[2]);
+  var eDate = new Date(sDate.getFullYear(), sDate.getMonth() + monthCount, sDate.getDate()-1);
+
+  var endDate = dateFormat(eDate);
+
+  $('#endDate').val(endDate);
+
+}) //contractDate on change closing괄호, 최초계약일자=시작일자
 
 
 $('#startDate').on('change', function(event){
-  getEndDate();
+  var startDate = $(input[name=startDate]).val();
+  $('#startDate').val(startDate);
+
+  var monthCount = Number($('input[name=monthCount]').val());
+
+  var arr1 = startDate.split('-');
+  var sDate = new Date(arr1[0], arr1[1]-1, arr1[2]);
+  var eDate = new Date(sDate.getFullYear(), sDate.getMonth() + monthCount, sDate.getDate()-1);
+
+  var endDate = dateFormat(eDate);
+
+  $('#endDate').val(endDate);
 })
 
 $('input[name="monthCount"]').on('change', function(event){
-  getEndDate();
+  var startDate = $('input[name=startDate]').val();
+  var monthCount = Number($('input[name=monthCount]').val());
+
+  var arr1 = startDate.split('-');
+  var sDate = new Date(arr1[0], arr1[1]-1, arr1[2]);
+  var eDate = new Date(sDate.getFullYear(), sDate.getMonth() + monthCount, sDate.getDate()-1);
+
+  var endDate = dateFormat(eDate);
+
+  $('#endDate').val(endDate);
 })
 
 $("input[name='mAmount']").on('keyup', function(){
@@ -356,7 +362,7 @@ $("input[name='mvAmount']").on('keyup', function(){
 })
 
 $('#submitbtn').on('click', function(){
-
+  $('form').submit();
 })
 
 $('.dateType').datepicker({

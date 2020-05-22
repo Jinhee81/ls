@@ -30,13 +30,13 @@ $result3 = mysqli_query($conn, $sql3);
 $row3 = mysqli_fetch_array($result3);
 
 $new_order = $row2[0]+1;
-$new_startDate = date("Y-m-d", strtotime($row3['mEndDate']."+1 day"));
-$new_endDate = date("Y-m-d", strtotime($new_startDate."+1 month"."-1 day"));
+$new_startDate = date("Y-n-j", strtotime($row3['mEndDate']."+1 day"));
+$new_endDate = date("Y-n-j", strtotime($new_startDate."+1 month"."-1 day"));
 
-if($row1[0]==='선불'){
-  $new_expectedDate = $new_startDate;
-} else if($row1[0]==='후불'){
-  $new_expectedDate = $new_endDate;
+if($row1[0]==='선납'){
+  $new_expectedDate = date("Y-n-j", strtotime($new_startDate."-1 day"));
+} else if($row1[0]==='후납'){
+  $new_expectedDate = date("Y-n-j", strtotime($new_endDate."+1 day"));
 }
 
 $sql4 = "

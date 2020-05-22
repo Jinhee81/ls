@@ -1,4 +1,3 @@
-<!-- 입금완료인거는 처음부터 숨기기처리하게 할것, 예전거는 예비파일 contractEdit30으로 저장되었7 -->
 <?php
 ini_set('display_errors', 1);
 ini_set('error_reporting', E_ALL);
@@ -22,8 +21,8 @@ include "contractEdit_condi.php";
 
 <div class="container jumbotron pt-3 pb-3 mb-2">
   <!-- <span><h3 class="">계약상세내용입니다.(#202)</h3></span><span><p>ㅋㅋ</p></span> -->
-  <label for="" style="font-size:32px;">계약상세내용입니다.(#202)</label>
-  <label class="font-italic" style="font-size:20px;color:#2E9AFE;">계약번호 <?=$filtered_id?>,보증금 <?=$row_deposit['remainMoney']?>원, 첨부파일 <?=count($fileRows)?>건, 메모작성 <?=count($memoRows)?>건</label>
+  <label for="" style="font-size:32px;">계약상세(#202)</label>
+  <label class="font-italic" style="font-size:20px;color:#2E9AFE;">계약번호 <?=$filtered_id?>,보증금 <?=$depositMoney?>원, 첨부파일 <?=count($fileRows)?>건, 메모작성 <?=count($memoRows)?>건</label>
 
 </div>
 <div class="container">
@@ -102,7 +101,50 @@ include "contractEdit_condi.php";
 
 var step = '<?=$step?>';
 
+$(document).on('click', '.modalAsk', function(){ //청구번호클릭하는거(모달클릭)
+  var currow2 = $(this).closest('tr');
+  var payNumber = currow2.find('td:eq(7)').children('label').children('u').text();
+  var filtered_id = '<?=$filtered_id?>';//계약번호
+  var expectedAmount = currow2.find('td:eq(10)').children().text();
+  var expectedDate = currow2.find('td:eq(5)').children().text();
+  var executiveDiv = currow2.find('td:eq(6)').children().text();
+  var executiveDate = currow2.find('td:eq(9)').children().text();
+  var executiveAmount = currow2.find('td:eq(10)').children().text();
+  var footer1 = "<button type='button' class='btn btn-secondary btn-sm mr-0' data-dismiss='modal'>닫기</button><button type='button' id='mpayBack' class='btn btn-warning btn-sm mr-0'>청구취소</button><button type='button' id='mgetExecute' class='btn btn-primary btn-sm'>입금완료</button>";
+  var footer2 = "<button type='button' class='btn btn-secondary btn-sm mr-0' data-dismiss='modal'>닫기</button><button type='button' id='mExecuteBack' class='btn btn-warning btn-sm mr-0'>입금취소</button>";
+
+  // console.log(expectedAmount, expectedDate, executiveDiv, executiveDate, executiveAmount);
+
+  $('#payId').text(payNumber);
+  $('#expectedAmount').val(expectedAmount);
+  $('#expectedDate').val(expectedDate);
+  if(executiveDiv==='계좌'){
+    $('#executiveDiv').val('계좌').prop('selected', true);
+  } else if(executiveDiv==='현금'){
+    $('#executiveDiv').val('현금').prop('selected', true);
+  } else if(executiveDiv==='카드'){
+    $('#executiveDiv').val('카드').prop('selected', true);
+  }
+
+  if(executiveDate){
+    $('#executiveDiv').prop('disabled', true);
+    $('#executiveDate').val(executiveDate).prop('disabled', true);
+    $('#executiveAmount').val(executiveAmount).prop('disabled', true);
+    $('.modal-footer').html(footer2);
+  } else {
+    $('#executiveDiv').prop('disabled', false);
+    $('#executiveDate').val(expectedDate).prop('disabled', false);
+    $('#executiveAmount').val(expectedAmount).prop('disabled', false);
+    $('.modal-footer').html(footer1);
+  }
+
+}) //청구번호클릭하는거(모달클릭) closing}
+
 $(document).ready(function(){
+
+  $('#mgetExecute').on('click', function(){ //입금완료버튼(모달안버튼) 클릭
+    console.log('1');
+  })
 
   $(function () {
       $('[data-toggle="tooltip"]').tooltip()
@@ -114,41 +156,7 @@ $(document).ready(function(){
   })
 
 
-  $('.modalAsk').on('click', function(){ //청구번호클릭하는거(모달클릭)
 
-    var currow2 = $(this).closest('tr');
-    var payNumber = currow2.find('td:eq(7)').children('label').children('u').text();
-    // console.log(payNumber);
-    var filtered_id = '<?=$filtered_id?>';
-    // console.log(filtered_id);
-
-      $.ajax({
-        url: 'ajax_paySchedule2_payid.php',
-        method: 'post',
-        data: {payNumber : payNumber, filtered_id:filtered_id},
-        success: function(data){
-          $('.payid').html(data);
-        }
-      })
-
-      $.ajax({
-        url: 'ajax_paySchedule2_search.php',
-        method: 'post',
-        data: {payNumber : payNumber, filtered_id:filtered_id},
-        success: function(data){
-          $('.modal-body').html(data);
-        }
-      })
-
-      $.ajax({
-        url: 'ajax_paySchedule2_modalfooter.php',
-        method: 'post',
-        data: {payNumber : payNumber, filtered_id:filtered_id},
-        success: function(data){
-          $('.modal-footer').html(data);
-        }
-      })
-  }) //청구번호클릭하는거(모달클릭) closing}
 
   var allCnt = $(":checkbox:not(:first)", table).length;
 
@@ -699,12 +707,7 @@ $("button[name='fileDelete']").click(function(){
 });
 
 
-$("input[name='depositInAmount']").on('keyup', function(){
-    var depositInAmount = Number($(this).val());
-    var depositOutAmount = Number($("input[name='depositOutAmount']").val());
-    var depositMoney = depositInAmount - depositOutAmount;
-    $("input[name='depositMoney']").val(depositMoney);
-});
+
 
 $("input[name='depositOutAmount']").on('keyup', function(){
     var depositInAmount = Number($("input[name='depositInAmount']").val());
@@ -826,6 +829,97 @@ $('#button6').click(function(){ //n개월추가 버튼, 모달클릭으로 바�
 //   $(this).addClass('active');
 //   console.log('active');
 // })
+
+//========================
+
+$(document).on('click', '#mgetExecute', function(){ //입금완료버튼(모달안버튼) 클릭
+
+  console.log('solmi');
+  var aa1 = 'payScheduleInput';
+  var bb1 = 'p_payScheduleGetAmountInput.php';
+  var contractId = '<?=$filtered_id?>';
+
+  var pid = $(this).parent().parent().children(':eq(0)').children(':eq(0)').children(':eq(0)').text(); //청구번호
+
+  var ppayKind = $(this).parent().prev().children().children(':eq(2)').children(':eq(1)').children().val(); //입금구분
+
+  var pgetDate = $(this).parent().prev().children().children(':eq(3)').children(':eq(1)').children().val(); //입금일
+
+  var pgetAmount = $(this).parent().prev().children().children(':eq(4)').children(':eq(1)').children().val(); //입금액
+
+  var pExpectedAmount = $(this).parent().prev().children().children(':eq(0)').children(':eq(1)').children().val(); //예정금액
+
+  // console.log(pExpectedAmount);
+
+  if(pgetAmount != pExpectedAmount){
+    alert('입금액과 예정금액은 같아야 합니다.');
+    return false;
+  }
+
+  goCategoryPage(aa1, bb1, pid, ppayKind, pgetDate, pgetAmount, contractId);
+
+  function goCategoryPage(a, b, c, d, e, f, g){
+    var frm = formCreate(a, 'post', b,'');
+    frm = formInput(frm, 'realContract_id', g);
+    frm = formInput(frm, 'payid', c);
+    frm = formInput(frm, 'paykind', d);
+    frm = formInput(frm, 'pgetdate', e);
+    frm = formInput(frm, 'pgetAmount', f);
+    formSubmit(frm);
+  }
+})
+
+//=======================
+$(document).on('click', '#mExecuteBack', function(){ //입금취소버튼(모달안버튼) 클릭
+  var aa1 = 'payScheduleGetAmountCansel';
+  var bb1 = 'p_payScheduleGetAmountCansel.php';
+  var contractId = '<?=$filtered_id?>';
+
+  var pid = $(this).parent().parent().children(':eq(0)').children(':eq(0)').children(':eq(0)').text(); //청구번호
+
+  // console.log(pid, contractId);
+
+  goCategoryPage(aa1, bb1, contractId, pid);
+
+  function goCategoryPage(a, b, c, d){
+    var frm = formCreate(a, 'post', b,'');
+    frm = formInput(frm, 'realContract_id', c);
+    frm = formInput(frm, 'payid', d);
+    formSubmit(frm);
+  }
+
+})
+//=======================
+
+$(document).on('click', '#mpayBack', function(){ //청구취소(삭제)버튼(모달안버튼) 클릭
+  var aa1 = 'payScheduleDrop';
+  var bb1 = 'p_payScheduleDrop.php';
+  var contractId = '<?=$filtered_id?>'
+
+  var pid = $(this).parent().parent().children(':eq(0)').children(':eq(0)').children(':eq(0)').text(); //청구번호
+
+  // console.log(pid, contractId);
+
+  goCategoryPage(aa1, bb1, contractId, pid);
+
+  function goCategoryPage(a, b, c, d){
+    var frm = formCreate(a, 'post', b,'');
+    frm = formInput(frm, 'realContract_id', c);
+    frm = formInput(frm, 'payid', d);
+    formSubmit(frm);
+  }
+
+})
+//========================
+
+$(document).on('keyup', "input[name='depositInAmount']", function(){
+    var depositInAmount = Number($(this).val());
+    var depositOutAmount = Number($("input[name='depositOutAmount']").val());
+    var depositMoney = depositInAmount - depositOutAmount;
+    $("input[name='depositMoney']").val(depositMoney);
+    console.log('solmi99');
+    console.log(depositInAmount, depositOutAmount, depositMoney);
+});
 
 
 </script>

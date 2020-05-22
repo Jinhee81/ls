@@ -78,9 +78,9 @@ for ($i=0; $i < count($contractRow); $i++) {
       $mEndDate = date("Y-n-j", strtotime($mStartDate."+1 month"."-1 day"));
 
       if($contractRow[$i][3]==='선납'){
-        $mExpectedDate = $mStartDate;
+        $mExpectedDate = date("Y-n-j", strtotime($mStartDate."-1 day"));
       } else if($contractRow[$i][3]==='후납'){
-        $mExpectedDate = $mEndDate;
+        $mExpectedDate = date("Y-n-j", strtotime($mEndDate."+1 day"));
       }
 
       array_push($contractRow[$i][13][$j], $j, $mStartDate, $mEndDate, $contractRow[$i][5], $contractRow[$i][6], $contractRow[$i][7], $mExpectedDate, $id);

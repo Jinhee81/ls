@@ -150,13 +150,13 @@
                 if($allRows[$i]['paySchedule2']['executiveDate'] <= $allRows[$i]['paySchedule2']['pExpectedDate']) {
                   echo "<label class='text-center  green mb-0'>0</label><br>";
                 } else {
-                  echo "<label class='text-center numberComma  green mb-0'>";echo $allRows[$i]['paySchedule2']['delaycount']."</label><br>";
+                  echo "<label class='text-center numberComma  green mb-0'>";echo $allRows[$i]['paySchedule2']['delaycount2']."</label><br>";
                 }
               } else {
                 if($allRows[$i]['paySchedule2']['pExpectedDate'] >= $currentDate) {
                   echo "<label class='text-center  sky mb-0'>0</label><br>";
                 } else {
-                  echo "<label class='text-center numberComma  pink mb-0'>";echo $allRows[$i]['paySchedule2']['delaycount']."</label><br>";
+                  echo "<label class='text-center numberComma  pink mb-0'>";echo $allRows[$i]['paySchedule2']['delaycount1']."</label><br>";
                 }
               }
             }
@@ -167,14 +167,14 @@
                 if($allRows[$i]['paySchedule2']['executiveDate'] <= $allRows[$i]['paySchedule2']['pExpectedDate']) {
                   echo "<label class='text-center  green mb-0'>0</label>";
                 } else {
-                  $notGetDayCountAmount = $allRows[$i]['paySchedule2']['ptAmount'] * ($allRows[$i]['paySchedule2']['delaycount'] / 365) * 0.27;
+                  $notGetDayCountAmount = $allRows[$i]['paySchedule2']['ptAmount'] * ($allRows[$i]['paySchedule2']['delaycount2'] / 365) * 0.27;
                   echo "<label class='text-center numberComma  green mb-0'>".(int)$notGetDayCountAmount."</label>";
                 }
               } else {
                 if($allRows[$i]['paySchedule2']['pExpectedDate'] >= $currentDate) {
                   echo "<label class='text-center  sky mb-0'>0</label>";
                 } else {
-                  $notGetDayCountAmount = $allRows[$i]['paySchedule2']['ptAmount'] * ($allRows[$i]['paySchedule2']['delaycount'] / 365) * 0.27;
+                  $notGetDayCountAmount = $allRows[$i]['paySchedule2']['ptAmount'] * ($allRows[$i]['paySchedule2']['delaycount1'] / 365) * 0.27;
                   echo "<label class='text-center numberComma  pink mb-0'>".(int)$notGetDayCountAmount."</label>";
                 }
               }

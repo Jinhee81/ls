@@ -13,7 +13,6 @@ $sql = "update
             inMoney = '{$_POST['depositInAmount']}',
             outDate = '{$_POST['depositOutDate']}',
             outMoney = '{$_POST['depositOutAmount']}',
-            remainMoney = '{$_POST['depositMoney']}',
             saved = now()
           where realContract_id = {$filtered_id}
        ";
@@ -21,7 +20,6 @@ $sql = "update
 $result = mysqli_query($conn, $sql);
 if($result){
   echo "<script>
-            alert('보증금내역이 저장되었습니다.');
             location.href = 'contractEdit.php?page=deposit&id=$filtered_id';
         </script>";
 } else {

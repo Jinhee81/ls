@@ -26,7 +26,7 @@ $sql = "INSERT INTO realContract_memo
 $result = mysqli_query($conn, $sql);
 
 if($result){
-  echo "<script>alert('메모를 등록하였습니다.');
+  echo "<script>
            location.href='contractEdit.php?page=memo&id=$filtered_id';
         </script>";
 } else {

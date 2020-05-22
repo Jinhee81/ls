@@ -184,8 +184,7 @@ $row_main = mysqli_fetch_array($result_main);
               </div>
               <div class="form-group col-md-2 mb-0">
                     <label>종료일자</label>
-                    <input type="text" id="endDate" class="form-control" name="endDate" value="<?=$row_main['endDate']?>" disabled>
-                    <input type="hidden" id="endDate1" class="form-control" name="endDate1" value="<?=$row_main['endDate']?>">
+                    <input type="text" id="endDate" class="form-control" name="endDate" value="<?=$row_main['endDate']?>" readonly>
               </div>
         </div>
       </div>

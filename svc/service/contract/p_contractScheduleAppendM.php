@@ -31,23 +31,23 @@ $result3 = mysqli_query($conn, $sql3);
 $row3 = mysqli_fetch_array($result3);
 
 $new_order = $row2[0]+1;
-$new_startDate = date("Y-m-d", strtotime($row3['mEndDate']."+1 day"));
-$new_endDate = date("Y-m-d", strtotime($new_startDate."+1 month"."-1 day"));
+$new_startDate = date("Y-n-j", strtotime($row3['mEndDate']."+1 day"));
+$new_endDate = date("Y-n-j", strtotime($new_startDate."+1 month"."-1 day"));
 
 for ($i=0; $i < (int)$_POST['addMonth']; $i++) {
   $newArray[$i] = array();
   array_push($newArray[$i], $new_order, $new_startDate, $new_endDate);
 
-  if($row1['payOrder']==='선불'){
-    $new_expectedDate = $new_startDate;
+  if($row1['payOrder']==='선납'){
+    $new_expectedDate = date("Y-n-j", strtotime($new_startDate."-1 day"));
   } else {
-    $new_expectedDate = $new_endDate;
+    $new_expectedDate = date("Y-n-j", strtotime($new_endDate."+1 day"));
   }
   array_push($newArray[$i], $new_expectedDate);
 
   $new_order += 1;
-  $new_startDate = date("Y-m-d", strtotime($new_endDate."+1 day"));
-  $new_endDate = date("Y-m-d", strtotime($new_startDate."+1 month"."-1 day"));
+  $new_startDate = date("Y-n-j", strtotime($new_endDate."+1 day"));
+  $new_endDate = date("Y-n-j", strtotime($new_startDate."+1 month"."-1 day"));
 }
 
 // print_r($newArray);

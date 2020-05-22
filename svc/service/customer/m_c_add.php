@@ -194,14 +194,11 @@ include $_SERVER['DOCUMENT_ROOT']."/svc/service/contract/building.php";
 </script>
 
 <script type="text/javascript">
-  $(document).ready(function(){
-
-    function maxlengthCheck(object){
-      if(object.value.length > object.maxLength){
-        object.value = object.value.slice(0, object.maxLength);
-      }
-    }//숫자 입력개수 제한하는 함수, 연락처1,2,3/사업자번호에 사용됨
-  })
+function maxlengthCheck(object){
+  if(object.value.length > object.maxLength){
+    object.value = object.value.slice(0, object.maxLength);
+  }
+}//숫자 입력개수 제한하는 함수, 연락처1,2,3/사업자번호에 사용됨
 </script>
 </body>
 </html>

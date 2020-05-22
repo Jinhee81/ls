@@ -91,7 +91,7 @@ if($currentDate >= date('Y-m-d', strtotime($row['startDate'])) && $currentDate <
   $status = '현재';
 } elseif ($currentDate < date('Y-m-d', strtotime($row['startDate']))) {
   $status = '대기';
-} elseif ($currentDate > date('Y-m-d', strtotime($edited_period))) {
+} elseif ($currentDate > date('Y-m-d', strtotime($edited_period[2]))) {
   $status = '종료';
 }
 // print_r($status);
@@ -122,11 +122,13 @@ $sql_deposit = "
       select
             inDate, inMoney,
             outDate, outMoney,
-            remainMoney, saved
+            saved
       from realContract_deposit where realContract_id={$filtered_id}";
 // echo $sql_deposit;
 $result_deposit = mysqli_query($conn, $sql_deposit);
 $row_deposit = mysqli_fetch_array($result_deposit);
+
+$depositMoney = number_format((int)$row_deposit['inMoney']-(int)$row_deposit['outMoney']);
 
 $sql_file = "
     select
@@ -222,7 +224,8 @@ for ($i=0; $i < count($allRows); $i++) {
                 payKind,
                 executiveDate,
                 getAmount,
-                TIMESTAMPDIFF(day, pExpectedDate, curdate()) as delaycount
+                TIMESTAMPDIFF(day, pExpectedDate, curdate()) as delaycount1,
+                TIMESTAMPDIFF(day, pExpectedDate, executiveDate) as delaycount2
             from paySchedule2
             where
                 idpaySchedule2={$allRows[$i]['payId']}";

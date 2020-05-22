@@ -15,6 +15,19 @@ date_default_timezone_set('Asia/Seoul'); //이거있어야지 시간대가 맞�
 $currentDateTime = date('Y-m-d H:i:s');
 // echo $currentDateTime;
 
+//기존스케쥴을 지워야 한다.
+$sql_delete = "DELETE from contractSchedule
+               where realContract_id = {$filtered_id}";
+$result_delete = mysqli_query($conn, $sql_delete);
+if(!$result_delete){
+  echo "<script>alert('수정과정에 문제가 생겼습니다. 관리자에게 문의하세요(4).');
+        history.back();
+        </script>";
+  error_log(mysqli_error($conn));
+  exit();
+}
+
+
 $sql = "
   UPDATE realContract
     SET
@@ -24,12 +37,14 @@ $sql = "
         payOrder = '{$_POST['payOrder']}',
         monthCount = {$_POST['monthCount']},
         startDate = '{$_POST['startDate']}',
-        endDate = '{$_POST['endDate1']}',
+        endDate = '{$_POST['endDate']}',
         contractDate = '{$_POST['contractDate']}',
         mAmount = '{$_POST['mAmount']}',
         mvAmount = '{$_POST['mvAmount']}',
         mtAmount = '{$_POST['mtAmount']}',
-        updateTime = now()
+        updateTime = now(),
+        count2 = {$_POST['monthCount']},
+        endDate2 = '{$_POST['endDate']}'
     WHERE
       id = {$filtered_id}";
 
@@ -46,17 +61,17 @@ if($result){
     for ($i=1; $i <= (int)$_POST['monthCount']; $i++) {
 
         $contractRow[$i] = array();
-        $mEndDate = date("Y-m-d", strtotime($mStartDate."+1 month"."-1 day"));
+        $mEndDate = date("Y-n-j", strtotime($mStartDate."+1 month"."-1 day"));
 
         if($_POST['payOrder']==='선납'){
-          $mExpectedDate = $mStartDate;
+          $mExpectedDate = date("Y-n-j", strtotime($mStartDate."-1 day"));
         } else if($_POST['payOrder']==='후납'){
-          $mExpectedDate = $mEndDate;
+          $mExpectedDate = date("Y-n-j", strtotime($mEndDate."+1 day"));
         }
 
         array_push($contractRow[$i], $i, $mStartDate, $mEndDate, $_POST['mAmount'], $_POST['mvAmount'], $_POST['mtAmount'], $mExpectedDate);
         // print_r($i);
-        $mStartDate = date("Y-m-d", strtotime($mEndDate."+1 day"));
+        $mStartDate = date("Y-n-j", strtotime($mEndDate."+1 day"));
     } //for closing
 
     // print_r($contractRow);

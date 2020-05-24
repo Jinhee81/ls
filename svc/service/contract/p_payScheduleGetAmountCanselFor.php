@@ -9,17 +9,15 @@ include $_SERVER['DOCUMENT_ROOT']."/svc/view/conn.php";
 
 $filtered_id = mysqli_real_escape_string($conn, $_POST['contractId']);
 
-$a = explode(",", $_POST['scheduleArray']);
+$a = json_decode($_POST['payIdArray']);
+// $b = explode(',', $a);
+
+// print_r($a);
 // var_dump($a);
 
 
 for ($i=0; $i < count($a); $i++) {
-  $sql = "
-        select * from paySchedule2 where idpaySchedule2={$a[$i]}
-  ";
-  // echo $sql;
-  $result = mysqli_query($conn, $sql);
-  $row = mysqli_fetch_array($result);
+
 
   $sql_u = "update paySchedule2
             set
@@ -40,16 +38,12 @@ for ($i=0; $i < count($a); $i++) {
     $result5 = mysqli_query($conn, $sql5);
 
     if($result5===false){
-      echo "<script>alert('저장과정에 문제가 생겼습니다. 관리자에게 문의하세요.');
+      echo "<script>alert('취소처리에 문제가 생겼습니다. 관리자에게 문의하세요.');
             history.back()';
             </script>";
       error_log(mysqli_error($conn));
       exit();
     }
-
-    echo "<script>
-            location.href = 'contractEdit.php?page=schedule&id=$filtered_id';
-          </script>";
   } else {
     echo "<script>alert('취소처리에 문제가 생겼습니다. 관리자에게 문의하세요.');
           history.back();
@@ -57,5 +51,9 @@ for ($i=0; $i < count($a); $i++) {
     error_log(mysqli_error($conn));
   }
 }
+
+echo "<script>
+        location.href = 'contractEdit.php?page=schedule&id=$filtered_id';
+      </script>";
 
 ?>

@@ -115,13 +115,13 @@ $row2 = mysqli_fetch_array($result2);
           <p class="mb-1"><span id='star' style='color:#F7BE81;'>* </span>연락처</p>
           <div class='form-row'>
             <div class='form group col-md-4'>
-              <input type='number' name='contact1' id='contact1' class='form-control' maxlength='3' value="<?=$clist['contact1']?>" required>
+              <input type='text' name='contact1' id='contact1' class='form-control' maxlength='3' value="<?=$clist['contact1']?>" required numberOnly>
             </div>
             <div class='form group col-md-4'>
-              <input type='number' name='contact2' id='contact2' class='form-control' maxlength='4' required oninput='maxlengthCheck(this);' value="<?=$clist['contact2']?>">
+              <input type='text' name='contact2' id='contact2' class='form-control' maxlength='4' required oninput='maxlengthCheck(this);' value="<?=$clist['contact2']?>" numberOnly>
             </div>
             <div class='form group col-md-4'>
-              <input type='number' name='contact3' id='contact3' class='form-control' maxlength='4' required oninput='maxlengthCheck(this);' value="<?=$clist['contact3']?>">
+              <input type='text' name='contact3' id='contact3' class='form-control' maxlength='4' required oninput='maxlengthCheck(this);' value="<?=$clist['contact3']?>" numberOnly>
             </div>
           </div>
         </div>
@@ -163,13 +163,13 @@ $row2 = mysqli_fetch_array($result2);
           <p class="mb-1">사업자번호</p>
           <div class='form-row'>
             <div class='form group col-md-4'>
-              <input type='number' name='cNumber1' class='form-control' maxlength='3' oninput='maxlengthCheck(this);' value="<?=$clist['cNumber1']?>">
+              <input type='text' name='cNumber1' class='form-control' maxlength='3' oninput='maxlengthCheck(this);' value="<?=$clist['cNumber1']?>" numberOnly>
             </div>
             <div class='form group col-md-3'>
-              <input type='number' name='cNumber2' class='form-control' maxlength='2' oninput='maxlengthCheck(this);' value="<?=$clist['cNumber2']?>">
+              <input type='text' name='cNumber2' class='form-control' maxlength='2' oninput='maxlengthCheck(this);' value="<?=$clist['cNumber2']?>" numberOnly>
             </div>
             <div class='form group col-md-5'>
-              <input type='number' name='cNumber3' class='form-control' maxlength='5' oninput='maxlengthCheck(this);' value="<?=$clist['cNumber3']?>">
+              <input type='text' name='cNumber3' class='form-control' maxlength='5' oninput='maxlengthCheck(this);' value="<?=$clist['cNumber3']?>" numberOnly>
             </div>
           </div>
         </div>
@@ -266,22 +266,30 @@ $row2 = mysqli_fetch_array($result2);
 
     $('button[name=btnDelete]').on('click', function(){
       var a = confirm('정말 삭제하시겠습니까?');
-
       if(a){
         var cid = <?=$filtered_id?>;
 
-        goCategoryPage('customerDelete', 'p_m_c_delete.php', cid);
+        goCategoryPage(cid);
 
-        function goCategoryPage(a, b, c){
-          var frm = formCreate(a, 'post', b,'');
-          frm = formInput(frm, 'cid', c);
+        function goCategoryPage(x){
+          var frm = formCreate('customerDelete', 'post', 'p_m_c_delete.php','');
+          frm = formInput(frm, 'cid', x);
           formSubmit(frm);
         }
       }
-
-
     })
   })
+
+  function maxlengthCheck(object){
+    if(object.value.length > object.maxLength){
+      object.value = object.value.slice(0, object.maxLength);
+    }
+  }//숫자 입력개수 제한하는 함수, 연락처1,2,3/사업자번호에 사용됨
+
+  $("input:text[numberOnly]").on("keyup", function() {
+    $(this).val($(this).val().replace(/[^0-9]/g,""));
+  });
+
 </script>
 </body>
 </html>

@@ -41,7 +41,7 @@ $sql_c = "
                 on customer.building_id = building.id
             where customer.id={$filtered_id}
     ";
-echo $sql_c;
+// echo $sql_c;
 $result_c = mysqli_query($conn, $sql_c);
 $row_c = mysqli_fetch_array($result_c);
 
@@ -282,6 +282,10 @@ $(document).ready(function(){
   })
 
   $('.amountNumber').on('click keyup', function(){
+    $(this).select();
+  })
+
+  $('input[name=monthCount]').on('click', function(){
     $(this).select();
   })
 

@@ -67,13 +67,13 @@ include $_SERVER['DOCUMENT_ROOT']."/svc/service/contract/building.php";
           <p class="mb-1"><span id='star' style='color:#F7BE81;'>* </span>연락처</p>
           <div class='form-row'>
             <div class='form group col-md-4'>
-              <input type='number' name='contact1' id='contact1' class='form-control' maxlength='3' value='010' required>
+              <input type='text' name='contact1' id='contact1' class='form-control' maxlength='3' value='010' required numberOnly>
             </div>
             <div class='form group col-md-4'>
-              <input type='number' name='contact2' id='contact2' class='form-control' maxlength='4' required oninput='maxlengthCheck(this);'>
+              <input type='text' name='contact2' id='contact2' class='form-control' maxlength='4' required oninput='maxlengthCheck(this);' numberOnly>
             </div>
             <div class='form group col-md-4'>
-              <input type='number' name='contact3' id='contact3' class='form-control' maxlength='4' required oninput='maxlengthCheck(this);'>
+              <input type='text' name='contact3' id='contact3' class='form-control' maxlength='4' required oninput='maxlengthCheck(this);' numberOnly>
             </div>
           </div>
         </div>
@@ -107,13 +107,13 @@ include $_SERVER['DOCUMENT_ROOT']."/svc/service/contract/building.php";
           <p class="mb-1">사업자번호</p>
           <div class='form-row'>
             <div class='form group col-md-4'>
-              <input type='number' name='cNumber1' class='form-control' maxlength='3' oninput='maxlengthCheck(this);'>
+              <input type='text' name='cNumber1' class='form-control' maxlength='3' oninput='maxlengthCheck(this);' numberOnly>
             </div>
             <div class='form group col-md-3'>
-              <input type='number' name='cNumber2' class='form-control' maxlength='2' oninput='maxlengthCheck(this);'>
+              <input type='text' name='cNumber2' class='form-control' maxlength='2' oninput='maxlengthCheck(this);' numberOnly>
             </div>
             <div class='form group col-md-5'>
-              <input type='number' name='cNumber3' class='form-control' maxlength='5' oninput='maxlengthCheck(this);'>
+              <input type='text' name='cNumber3' class='form-control' maxlength='5' oninput='maxlengthCheck(this);' numberOnly>
             </div>
           </div>
         </div>
@@ -199,6 +199,10 @@ function maxlengthCheck(object){
     object.value = object.value.slice(0, object.maxLength);
   }
 }//숫자 입력개수 제한하는 함수, 연락처1,2,3/사업자번호에 사용됨
+
+$("input:text[numberOnly]").on("keyup", function() {
+  $(this).val($(this).val().replace(/[^0-9]/g,""));
+});
 </script>
 </body>
 </html>

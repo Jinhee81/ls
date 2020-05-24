@@ -2,7 +2,7 @@
   <h5>메모</h5>
   <div class="form-row">
     <div class="col col-sm-2">
-      <input type="text" class="form-control form-control-sm text-center" id="memoInputer" value="<?=$_SESSION['user_name']?>">
+      <input type="text" class="form-control form-control-sm text-center" id="memoInputer" value="<?=$_SESSION['manager_name']?>">
     </div>
     <div class="col col-sm-8">
       <input type="text" class="form-control form-control-sm text-center" id="memoContent" value="" placeholder="계약의 메모를 입력하세요.">
@@ -14,9 +14,9 @@
   <table class="table table-sm table-hover text-center mt-3">
     <tr class="table-secondary">
       <td style="width:5%" class="">순번</td>
-      <!-- <td style="width:10%">작성자</td> -->
+      <td style="width:10%" class="">작성자</td>
       <td style="width:45%" class="">내용</td>
-      <td style="width:40%" class="mobile">등록일시/수정일시</td>
+      <td style="width:30%" class="mobile">등록일시/수정일시</td>
       <!-- <td style="width:20%">수정일시</td> -->
       <td style="width:10%" class="mobile">관리</td>
     </tr>
@@ -26,15 +26,21 @@
     } else {
         for ($i=0; $i < count($memoRows); $i++) { ?>
     <tr>
-        <td class="">
-            <input class="form-control form-control-sm text-center" type="hidden" name="memoCreator" value="<?=$memoRows[$i]['memoCreator']?>" disabled>
-            <label class="grey"><?=$memoRows[$i]['num']?></label>
+        <td>
+            <?=$memoRows[$i]['num']?>
             <input type="hidden" name="memoid" id="memoid" value="<?=$memoRows[$i]['idrealContract_memo']?>">
+        </td>
+        <td class="">
+            <input class="form-control form-control-sm text-center" name="memoContent" value="<?=$memoRows[$i]['memoCreator']?>" disabled></td>
         </td>
         <td class="">
           <input class="form-control form-control-sm text-center" name="memoContent" value="<?=$memoRows[$i]['memoContent']?>" disabled></td>
         <td class="mobile">
-          <small class="grey"><?=$memoRows[$i]['created']?>/<?=$memoRows[$i]['updated']?></small>
+          <small class="grey"><?=$memoRows[$i]['created']?>/<?php if(!$memoRows[$i]['updated']){
+            echo "-";
+          } else {
+            echo $memoRows[$i]['updated'];
+          } ?></small>
         </td>
      <!-- <td><label class="grey"><//?=$memoRows[$i]['updated']?></label></td> -->
         <td id="append" class="mobile">

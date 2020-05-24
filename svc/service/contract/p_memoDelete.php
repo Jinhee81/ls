@@ -20,7 +20,7 @@ $sql = "DELETE from realContract_memo
 $result = mysqli_query($conn, $sql);
 
 if($result){
-  echo "<script>alert('메모를 삭제하였습니다.')
+  echo "<script>
            location.href='contractEdit.php?page=memo&id=$filtered_id'
         </script>";
 } else {

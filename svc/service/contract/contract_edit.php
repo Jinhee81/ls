@@ -243,6 +243,10 @@ $('.amountNumber').on('click keyup', function(){
   $(this).select();
 })
 
+$('input[name=monthCount]').on('click', function(){
+  $(this).select();
+})
+
 $("input:text[numberOnly]").number(true);
 
 

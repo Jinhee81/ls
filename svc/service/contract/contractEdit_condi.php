@@ -224,6 +224,7 @@ for ($i=0; $i < count($allRows); $i++) {
                 payKind,
                 executiveDate,
                 getAmount,
+                monthCount,
                 TIMESTAMPDIFF(day, pExpectedDate, curdate()) as delaycount1,
                 TIMESTAMPDIFF(day, pExpectedDate, executiveDate) as delaycount2
             from paySchedule2
@@ -243,8 +244,7 @@ for ($i=0; $i < count($allRows); $i++) {
 }//for closing}
 
 // echo '------------';
-// print_r($allRows);
-
+// print_r($allRows[17]);
 
 
  ?>

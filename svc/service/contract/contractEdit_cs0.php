@@ -23,8 +23,8 @@
       <div class="row justify-content-end mr-0">
         <button type="button" id="button1" class="btn btn-outline-info btn-sm mr-1" data-toggle="tooltip" data-placement="top" title="체크된것을 청구설정합니다">청구설정</button>
         <button type="button" id="button2" class="btn btn-outline-info btn-sm mr-1" data-toggle="tooltip" data-placement="top" title="체크된것의 청구정보를 취소합니다">청구취소</button>
-        <button type="button" id="button3" class="btn btn-outline-info btn-sm mobile mr-1" data-toggle="tooltip" data-placement="top" title="체크된것들을 입금처리합니다(청구번호가있어야 입금처리 가능해요.)">일괄입금처리</button>
-        <button type="button" id="button4" class="btn btn-outline-info btn-sm mobile mr-1" data-toggle="tooltip" data-placement="top" title="체크된것의 입금내역을 취소합니다">일괄입금취소</button>
+        <button type="button" id="button3" class="btn btn-outline-info btn-sm mobile mr-1" data-toggle="tooltip" data-placement="top" title="체크된것들을 입금처리합니다(청구번호가있어야 입금처리 가능해요.)">입금처리</button>
+        <button type="button" id="button4" class="btn btn-outline-info btn-sm mobile mr-1" data-toggle="tooltip" data-placement="top" title="체크된것의 입금내역을 취소합니다">입금취소</button>
       </div>
     </div>
   </div>
@@ -33,21 +33,22 @@
     <table class="table table-sm table-hover text-center" style="width:100%" cellspacing="0" id="checkboxTestTbl">
       <thead>
         <tr class="table-info">
-          <td width="3%" class="fixedHeader"><input type="checkbox" id="checkAll"></td>
-          <td width="3%" class="fixedHeader">순번</td>
-          <td width="10%" class="fixedHeader">시작일/<br>종료일</td>
+          <td scope="col" class="fixedHeader"><input type="checkbox" id="checkAll"></td>
+          <td scope="col" class="fixedHeader">순번</td>
+          <td scope="col" class="fixedHeader">시작일/종료일</td>
           <!-- <td scope="col">종료일</td> -->
-          <td width="8%" class="fixedHeader">공급가액/<br>세액</td>
+          <td scope="col" class="fixedHeader">공급가액/세액</td>
           <!-- <td scope="col" class="mobile">세액</td> -->
-          <td width="10%" class="fixedHeader">합계</td>
-          <td width="10%" class="fixedHeader mobile">입금예정일</td>
-          <td width="6%" class="fixedHeader mobile">입금구분</td>
-          <td width="8%" class="fixedHeader mobile">청구번호/<br>(개월수)</td>
-          <td width="8%" class="fixedHeader mobile">수납구분</td>
-          <td width="10%" class="fixedHeader mobile">입금일/<br>입금(미납)액</td>
-          <td width="8%" class="fixedHeader mobile">연체일수/<br>이자</td>
+          <td scope="col" class="fixedHeader">합계</td>
+          <td scope="col" class="fixedHeader mobile">입금예정일</td>
+          <td scope="col" class="fixedHeader mobile">입금구분</td>
+          <td scope="col" class="fixedHeader mobile">청구번호</td>
+          <td scope="col" class="fixedHeader mobile">수납구분</td>
+          <td scope="col" class="fixedHeader mobile">입금일</td>
+          <td scope="col" class="fixedHeader mobile">입금(미납)액</td>
+          <td scope="col" class="fixedHeader mobile">연체일수/이자</td>
           <!-- <td scope="col" class="">연체이자</td> -->
-          <td width="8%" class="fixedHeader mobile">증빙</td>
+          <td scope="col" class="fixedHeader mobile">증빙</td>
         </tr>
       </thead>
       <tbody id="schedule">
@@ -90,30 +91,23 @@
           </td><!-- 예정일 -->
           <td class="mobile">
             <?php
-            if($allRows[$i]['payId'] && $allRows[$i]['payIdOrder']==='0'){
-              if($allRows[$i]['paySchedule2']['executiveDate']){
-                echo "<label class='text-center'>".$allRows[$i]['paySchedule2']['payKind']."</label>";
-              } else { ?>
-                <select class="form-control form-control-sm" name="payKind">
-                  <option value="계좌"<?php if($allRows[$i]['paySchedule2']['payKind']=='계좌'){echo "selected";} ?>>계좌</option>
-                  <option value="현금"<?php if($allRows[$i]['paySchedule2']['payKind']=='현금'){echo "selected";} ?>>현금</option>
-                  <option value="카드"<?php if($allRows[$i]['paySchedule2']['payKind']=='카드'){echo "selected";} ?>>카드</option>
-                </select>
-              <?php }
-             }
-            ?>
-          </td><!-- 입금구분 -->
-          <td class="mobile">
-            <?php
-            if($allRows[$i]['payId'] && $allRows[$i]['payIdOrder']==='0'){
-              echo "<label class='text-primary modalAsk mb-0' data-toggle='modal' data-target='#pPay'><u>".$allRows[$i]['payId']."</u></label></br><label class='mb-0'>(".$allRows[$i]['paySchedule2']['monthCount'].")"."</label>";
+            if($allRows[$i]['payId']){
+              echo "<label class='text-center'>".$allRows[$i]['paySchedule2']['payKind']."</label>";
             }
             ?>
-            <input type="hidden" name="monthCount" value="<?=$allRows[$i]['paySchedule2']['monthCount']?>">
-          </td><!-- 청구번호,청구번호의 개월수 -->
+          </td><!-- 구분 -->
           <td class="mobile">
             <?php
-            if($allRows[$i]['payId']){
+            if($allRows[$i]['payId'] && $allRows[$i]['payIdOrder']==='0'){
+              echo "<label class='text-primary modalAsk ' data-toggle='modal' data-target='#pPay'><u>".$allRows[$i]['payId']."</u></label>";
+            }
+            ?>
+          </td><!-- 청구번호 -->
+          <td class="mobile">
+            <?php
+            // 수납구분 당분간 주석처리
+            if($allRows[$i]['payId'] && $allRows[$i]['payIdOrder']==='0'){
+
               $executiveDate = new DateTime($allRows[$i]['paySchedule2']['executiveDate']);
               $expectedDate = new DateTime($allRows[$i]['paySchedule2']['pExpectedDate']);
               $currentDateDate = new DateTime($currentDate);
@@ -128,40 +122,38 @@
           </td><!-- 수납구분-->
           <td class="mobile">
             <?php
+            if($allRows[$i]['payId']){
+              echo "<label class='text-center  green'>".$allRows[$i]['paySchedule2']['executiveDate']."</label>";
+            }?>
+          </td><!-- 입금일 -->
+          <td class="mobile">
+            <?php
+
             if($allRows[$i]['payId'] && $allRows[$i]['payIdOrder']==='0'){
               if($allRows[$i]['paySchedule2']['executiveDate']) {
-                  echo "<label class='mb-0 text-center green'>".$allRows[$i]['paySchedule2']['executiveDate']."</label>";
+                  echo "<label class='text-center numberComma  green'>".$allRows[$i]['paySchedule2']['getAmount']."</label>";
               } else {
-                echo "<input type='text' class='form-control form-control-sm text-center' value='".$allRows[$i]['paySchedule2']['pExpectedDate']."'>";
+                if($row3['pExpectedDate'] >= $currentDate){
+                  echo "<label class='text-center numberComma  sky'>"."&#40;".$allRows[$i]['paySchedule2']['ptAmount'].")"."</label>";
+                } else {
+                  echo "<label class='text-center  pink'>"."(".number_format($allRows[$i]['paySchedule2']['ptAmount']).")"."</label>";
+                }
               }
-            }
-             ?><!-- 입금일 -->
-             <?php
 
-             if($allRows[$i]['payId'] && $allRows[$i]['payIdOrder']==='0'){
-               if($allRows[$i]['paySchedule2']['executiveDate']) {
-                   echo "<label class='mb-0 text-center numberComma  green'>".$allRows[$i]['paySchedule2']['getAmount']."</label>";
-               } else {
-                 if($row3['pExpectedDate'] >= $currentDate){
-                   echo "<label class='mb-0 text-center numberComma  sky'>"."&#40;".$allRows[$i]['paySchedule2']['ptAmount'].")"."</label>";
-                 } else {
-                   echo "<label class='mb-0 text-center  pink'>"."(".number_format($allRows[$i]['paySchedule2']['ptAmount']).")"."</label>";
-                 }
-               }
-             }
-              ?><!-- 입금액 -->
-          </td>
+            }
+             ?>
+          </td><!-- 입금액 -->
           <td class="mobile">
             <?php
             if($allRows[$i]['payId'] && $allRows[$i]['payIdOrder']==='0'){
               if($allRows[$i]['paySchedule2']['executiveDate']) {
-                if(strtotime($allRows[$i]['paySchedule2']['executiveDate']) <= strtotime($allRows[$i]['paySchedule2']['pExpectedDate'])) {
-                  echo "<label class='text-center green mb-0'>0</label><br>";
+                if($allRows[$i]['paySchedule2']['executiveDate'] <= $allRows[$i]['paySchedule2']['pExpectedDate']) {
+                  echo "<label class='text-center  green mb-0'>0</label><br>";
                 } else {
-                  echo "<label class='text-center numberComma green mb-0'>".$allRows[$i]['paySchedule2']['delaycount2']."</label><br>";
+                  echo "<label class='text-center numberComma  green mb-0'>";echo $allRows[$i]['paySchedule2']['delaycount2']."</label><br>";
                 }
               } else {
-                if(strtotime($allRows[$i]['paySchedule2']['pExpectedDate']) >= $currentDate) {
+                if($allRows[$i]['paySchedule2']['pExpectedDate'] >= $currentDate) {
                   echo "<label class='text-center  sky mb-0'>0</label><br>";
                 } else {
                   echo "<label class='text-center numberComma  pink mb-0'>";echo $allRows[$i]['paySchedule2']['delaycount1']."</label><br>";
@@ -172,15 +164,15 @@
             <?php
             if($allRows[$i]['payId'] && $allRows[$i]['payIdOrder']==='0'){
               if($allRows[$i]['paySchedule2']['executiveDate']) {
-                if(strtotime($allRows[$i]['paySchedule2']['executiveDate']) <= strtotime($allRows[$i]['paySchedule2']['pExpectedDate'])) {
-                  echo "<label class='text-center green mb-0'>0</label>";
+                if($allRows[$i]['paySchedule2']['executiveDate'] <= $allRows[$i]['paySchedule2']['pExpectedDate']) {
+                  echo "<label class='text-center  green mb-0'>0</label>";
                 } else {
-                  $notGetDayCountAmount = $allRows[$i]['paySchedule2']['ptAmount'] * ($allRows[$i]['paySchedule2']['delaycount2'] / 365) * 0.27;+
-                  echo "<label class='text-center numberComma green mb-0'>".(int)$notGetDayCountAmount."</label>";
+                  $notGetDayCountAmount = $allRows[$i]['paySchedule2']['ptAmount'] * ($allRows[$i]['paySchedule2']['delaycount2'] / 365) * 0.27;
+                  echo "<label class='text-center numberComma  green mb-0'>".(int)$notGetDayCountAmount."</label>";
                 }
               } else {
-                if(strtotime($allRows[$i]['paySchedule2']['pExpectedDate']) >= $currentDate) {
-                  echo "<label class='text-center sky mb-0'>0</label>";
+                if($allRows[$i]['paySchedule2']['pExpectedDate'] >= $currentDate) {
+                  echo "<label class='text-center  sky mb-0'>0</label>";
                 } else {
                   $notGetDayCountAmount = $allRows[$i]['paySchedule2']['ptAmount'] * ($allRows[$i]['paySchedule2']['delaycount1'] / 365) * 0.27;
                   echo "<label class='text-center numberComma  pink mb-0'>".(int)$notGetDayCountAmount."</label>";

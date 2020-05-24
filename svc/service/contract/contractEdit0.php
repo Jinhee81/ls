@@ -21,8 +21,8 @@ include "contractEdit_condi.php";
 
 <div class="container jumbotron pt-3 pb-3 mb-2">
   <!-- <span><h3 class="">계약상세내용입니다.(#202)</h3></span><span><p>ㅋㅋ</p></span> -->
-  <label for="" style="font-size:32px;">계약상세(화면번호 202)</label>
-  <label class="font-italic" style="font-size:20px;color:#2E9AFE;">계약번호 <?=$filtered_id?></label>
+  <label for="" style="font-size:32px;">계약상세(#202)</label>
+  <label class="font-italic" style="font-size:20px;color:#2E9AFE;">계약번호 <?=$filtered_id?>,보증금 <?=$depositMoney?>원, 첨부파일 <?=count($fileRows)?>건, 메모작성 <?=count($memoRows)?>건</label>
 
 </div>
 <div class="container">
@@ -33,16 +33,16 @@ include "contractEdit_condi.php";
   <nav>
     <ul class="nav nav-tabs">
       <li class="nav-items">
-        <a id="navSchedule" class="nav-link <?php if($_GET['page']==='schedule'){echo "active";} ?>" href="contractEdit.php?page=schedule&id=<?=$filtered_id?>">스케쥴(<?=$row['count2']?>개월)</a>
+        <a id="navSchedule" class="nav-link <?php if($_GET['page']==='schedule'){echo "active";} ?>" href="contractEdit.php?page=schedule&id=<?=$filtered_id?>">스케쥴</a>
       </li>
       <li class="nav-items">
-        <a id="navDeposit" class="nav-link <?php if($_GET['page']==='deposit'){echo "active";} ?>" href="contractEdit.php?page=deposit&id=<?=$filtered_id?>">보증금 <span>(<?=$depositMoney?>원)</span></a>
+        <a id="navDeposit" class="nav-link <?php if($_GET['page']==='deposit'){echo "active";} ?>" href="contractEdit.php?page=deposit&id=<?=$filtered_id?>">보증금</a>
       </li>
       <li class="nav-items">
-        <a id="navFile" class="nav-link <?php if($_GET['page']==='file'){echo "active";} ?>" href="contractEdit.php?page=file&id=<?=$filtered_id?>">첨부파일(<?=count($fileRows)?>건)</a>
+        <a id="navFile" class="nav-link <?php if($_GET['page']==='file'){echo "active";} ?>" href="contractEdit.php?page=file&id=<?=$filtered_id?>">첨부파일</a>
       </li>
       <li class="nav-items">
-        <a id="navMemo" class="nav-link <?php if($_GET['page']==='memo'){echo "active";} ?>" href="contractEdit.php?page=memo&id=<?=$filtered_id?>">메모작성(<?=count($memoRows)?>건)</a>
+        <a id="navMemo" class="nav-link <?php if($_GET['page']==='memo'){echo "active";} ?>" href="contractEdit.php?page=memo&id=<?=$filtered_id?>">메모작성</a>
       </li>
     </ul>
   </nav>
@@ -103,14 +103,13 @@ var step = '<?=$step?>';
 
 $(document).on('click', '.modalAsk', function(){ //청구번호클릭하는거(모달클릭)
   var currow2 = $(this).closest('tr');
-  var payNumber = currow2.find('td:eq(7)').children('label:eq(0)').children('u').text();
+  var payNumber = currow2.find('td:eq(7)').children('label').children('u').text();
   var filtered_id = '<?=$filtered_id?>';//계약번호
-  var expectedAmount = currow2.find('td:eq(9)').children('label').text();
+  var expectedAmount = currow2.find('td:eq(10)').children().text();
   var expectedDate = currow2.find('td:eq(5)').children().text();
-  var executiveDiv = currow2.find('td:eq(6)').children().val();//입금구분
-  var executiveDate = currow2.find('td:eq(9)').children('input').val();
-  var executiveAmount = currow2.find('td:eq(9)').children('label').text();
-  var payDiv = currow2.find('td:eq(8)').children().text();
+  var executiveDiv = currow2.find('td:eq(6)').children().text();
+  var executiveDate = currow2.find('td:eq(9)').children().text();
+  var executiveAmount = currow2.find('td:eq(10)').children().text();
   var footer1 = "<button type='button' class='btn btn-secondary btn-sm mr-0' data-dismiss='modal'>닫기</button><button type='button' id='mpayBack' class='btn btn-warning btn-sm mr-0'>청구취소</button><button type='button' id='mgetExecute' class='btn btn-primary btn-sm'>입금완료</button>";
   var footer2 = "<button type='button' class='btn btn-secondary btn-sm mr-0' data-dismiss='modal'>닫기</button><button type='button' id='mExecuteBack' class='btn btn-warning btn-sm mr-0'>입금취소</button>";
 
@@ -127,19 +126,12 @@ $(document).on('click', '.modalAsk', function(){ //청구번호클릭하는거(�
     $('#executiveDiv').val('카드').prop('selected', true);
   }
 
-  if(payDiv==='완납'){
-    var expectedDate = currow2.find('td:eq(5)').children().text();
-    var expectedAmount = currow2.find('td:eq(9)').children('label:eq(1)').text();
-    var executiveDiv = currow2.find('td:eq(6)').children().text();//입금구분
-    var executiveDate = currow2.find('td:eq(9)').children('label:eq(0)').text();
-
-    $('#expectedDate').val(expectedDate).prop('disabled', true);
-    $('#expectedAmount').val(expectedAmount).prop('disabled', true);
-    $('#executiveDiv').val(executiveDiv).prop('disabled', true);
+  if(executiveDate){
+    $('#executiveDiv').prop('disabled', true);
     $('#executiveDate').val(executiveDate).prop('disabled', true);
-    $('#executiveAmount').val(expectedAmount).prop('disabled', true);
+    $('#executiveAmount').val(executiveAmount).prop('disabled', true);
     $('.modal-footer').html(footer2);
-  } else if(payDiv==='입금대기'){
+  } else {
     $('#executiveDiv').prop('disabled', false);
     $('#executiveDate').val(expectedDate).prop('disabled', false);
     $('#executiveAmount').val(expectedAmount).prop('disabled', false);
@@ -245,7 +237,7 @@ $(":checkbox:first", table).click(function(){
         var expectedDayEle = [];
         expectedDayEle.push(i);
         expectedDayEle.push(table.find("tr:eq("+i+")").find("td:eq(0)").children('input').val());
-        expectedDayEle.push(table.find("tr:eq("+i+")").find("td:eq(5)").children('input').val());
+        expectedDayEle.push(table.find("tr:eq("+i+")").find("td:eq(6)").children('input').val());
         expectedDayArray.push(expectedDayEle);
       }
       // console.log(expectedDayArray);
@@ -253,7 +245,6 @@ $(":checkbox:first", table).click(function(){
       expectedDayArray = [];
       // console.log(expectedDayArray);
     }
-    console.log(expectedDayArray);
 })
 
 // $('.table').on('click',$(':checkbox:not(:first).is(":checked")'),function()
@@ -265,7 +256,7 @@ $(":checkbox:not(:first)",table).click(function(){
     var currow = $(this).closest('tr');
     var colOrder = Number(currow.find('td:eq(1)').text());
     var colid = currow.find('td:eq(0)').children('input').val();
-    var colexpectDate = currow.find('td:eq(5)').children('input').val();
+    var colexpectDate = currow.find('td:eq(6)').children('input').val();
     expectedDayEle.push(colOrder, colid, colexpectDate);
     expectedDayArray.push(expectedDayEle);
     // console.log(expectedDayArray);
@@ -274,7 +265,7 @@ $(":checkbox:not(:first)",table).click(function(){
     var currow = $(this).closest('tr');
     var colOrder = Number(currow.find('td:eq(1)').text());
     var colid = currow.find('td:eq(0)').children('input').val();
-    var colexpectDate = currow.find('td:eq(5)').children('input').val();
+    var colexpectDate = currow.find('td:eq(6)').children('input').val();
     var dropReady = expectedDayEle.push(colOrder, colid, colexpectDate);
     // console.log(dropReady);
     // console.log('체크해제됨');
@@ -282,7 +273,6 @@ $(":checkbox:not(:first)",table).click(function(){
     expectedDayArray.splice(index, 1);
     // console.log(expectedDayArray);
   }
-  console.log(expectedDayArray);
 })
 
 $('.table').on('keyup', '.amountNumber:input[type="text"]', function(){
@@ -318,12 +308,6 @@ $('#button1').click(function(){ //청구설정버튼 클릭시
   var paySchedule = [];
 
   for (var i = 0; i < expectedDayArray.length; i++) {
-    var payDiv = table.find("tr:eq("+expectedDayArray[i][0]+")").find('td:eq(8)').children('label:eq(0)').text(); //수납구분
-    if(payDiv==='입금대기'||payDiv==='완납'){
-      alert('수납구분이 입금대기 또는 완납인 경우 청구설정이 불가합니다.(이미 청구설정이 되어있으므로 불가함)');
-      return false;
-    }
-
     table.find("tr:eq("+expectedDayArray[i][0]+")").find("td:eq(6)").text(paykind);
     // console.log(expectedDayArray[i][0], a);
     // 입금구분을 변경시키는 것
@@ -373,48 +357,45 @@ $('#button2').click(function(){ //청구취소버튼 클릭시
     return false;
   }
 
-  var payIdArray = [];
+  var contractScheduleArray = [];
 
   for (var i = 0; i < expectedDayArray.length; i++) {
 
-    var payIdArrayEle = [];
-    var payId = table.find("tr:eq("+expectedDayArray[i][0]+")").find('td:eq(7)').children('label:eq(0)').children('u').text();//청구번호
-    var csCheck = table.find("tr:eq("+expectedDayArray[i][0]+")").find('td:eq(8)').children().text();
+    var csId = table.find("tr:eq("+expectedDayArray[i][0]+")").find('td:eq(0)').children('input').val();
+    var csCheck = table.find("tr:eq("+expectedDayArray[i][0]+")").find('td:eq(7)').text();
     // console.log(csCheck);
 
-    if(payId==''){
-      alert('청구번호가 존재해야 청구취소 가능합니다.');
+    if(csCheck ==!'계좌' || csCheck ==!'현금' || csCheck ==!'카드'){
+      alert('청구설정된것만 청구취소가 가능합니다.');
       return false;
     }
 
-    if(csCheck == '완납'){
-      alert('완납상태여서 청구취소 불가합니다. 입금취소부터 해주세요.');
-      return false;
-    }
-
-    payIdArrayEle.push(payId, csCheck);
-    payIdArray.push(payIdArrayEle);
+    contractScheduleArray.push(csId, csCheck);
   }
-  // console.log(payIdArray);
+  // console.log(contractScheduleArray);
 
+  var aa = 'payScheduleDrop';
+  var bb = 'p_payScheduleDropFor.php';
+  var cc = 'scheduleArray';
+  var dd = 'contractId';
   var contractId = '<?=$filtered_id?>';
-  payIdArray = JSON.stringify(payIdArray);
 
-  goCategoryPage(payIdArray, contractId);
+  goCategoryPage(aa, bb, cc, contractScheduleArray, dd, contractId);
 
-  function goCategoryPage(a, b){
-    var frm = formCreate('payScheduleDrop', 'post', 'p_payScheduleDropFor.php','');
-    frm = formInput(frm, 'payIdArray', a);
-    frm = formInput(frm, 'contractId', b);
+  function goCategoryPage(a, b, c, d, e, f){
+    var frm = formCreate(a, 'post', b,'');
+    frm = formInput(frm, c, d);
+    frm = formInput(frm, e, f);
     formSubmit(frm);
   }
+
 
 })
 
 
 $('#button3').click(function(){ //일괄입금버튼 클릭시
 
-  var payIdArray = [];
+  var contractScheduleArray = [];
 
   // console.log(expectedDayArray);
 
@@ -424,40 +405,33 @@ $('#button3').click(function(){ //일괄입금버튼 클릭시
   }
 
   for (var i = 0; i < expectedDayArray.length; i++) {
-    var payIdArrayEle = [];
 
-    var psId = table.find("tr:eq("+expectedDayArray[i][0]+")").find('td:eq(7)').children('label').children('u').text();//청구번호
+    // var csId = table.find("tr:eq("+expectedDayArray[i][0]+")").find('td:eq(0)').children('input').val(); 계약스케줄을 가져오려다가 안가져옴, 왜냐면 필요가없음
+
+    var psId = table.find("tr:eq("+expectedDayArray[i][0]+")").find('td:eq(7)').children('label').children('u').text();
     // console.log(psId); //제이쿼리로 트림을 하니 더 이상해져서 안하기로함
+
     if(psId.trim()===""){ //trim()이거를 안넣으니 빈문자열로 인식이 안되어서 이거넣음
       alert('청구번호가 존재해야 일괄입금처리가 가능합니다.');
-      window.location.reload();
       return false;
     }
 
-    var csCheck = table.find("tr:eq("+expectedDayArray[i][0]+")").find('td:eq(8)').children().text();//수납구분
-    if(csCheck == '완납'){
-      alert('이미 입금처리가 되어있습니다.');
-      return false;
-    }
-
-    var payKind = table.find("tr:eq("+expectedDayArray[i][0]+")").find('td:eq(6)').children().val();//수납구분
-    var executiveDate = table.find("tr:eq("+expectedDayArray[i][0]+")").find('td:eq(9)').children('input').val();
-    var executiveAmount = table.find("tr:eq("+expectedDayArray[i][0]+")").find('td:eq(9)').children('label').text();
-
-    payIdArrayEle.push(psId, payKind, executiveDate, executiveAmount);
-    payIdArray.push(payIdArrayEle);
+    contractScheduleArray.push(psId);
   }
-  // console.log(payIdArray);
+  // console.log(contractScheduleArray);
 
+  var aa = 'getAmountInput';
+  var bb = 'p_payScheduleGetAmountInputFor.php';
+  var cc = 'scheduleArray';
+  var dd = 'contractId';
   var contractId = '<?=$filtered_id?>';
-  payIdArray = JSON.stringify(payIdArray);
 
-  goCategoryPage(payIdArray, contractId);
+  goCategoryPage(aa, bb, cc, contractScheduleArray, dd, contractId);
 
-  function goCategoryPage(a, b){
-    var frm = formCreate('getAmountInput', 'post', 'p_payScheduleGetAmountInputFor.php','');
-    frm = formInput(frm, 'payIdArray', a);
-    frm = formInput(frm, 'contractId', b);
+  function goCategoryPage(a, b, c, d, e, f){
+    var frm = formCreate(a, 'post', b,'');
+    frm = formInput(frm, c, d);
+    frm = formInput(frm, e, f);
     formSubmit(frm);
   }
 
@@ -465,44 +439,35 @@ $('#button3').click(function(){ //일괄입금버튼 클릭시
 
 $('#button4').click(function(){ //일괄입금취소버튼 클릭시
 
-  var payIdArray = [];
+var contractScheduleArray = [];
 
-  if(expectedDayArray.length===0){
-    alert('선택된것이 없습니다. 먼저 체크박스로 데이터를 선택해주세요.');
-    return false;
-  }
+for (var i = 0; i < expectedDayArray.length; i++) {
 
-  for (var i = 0; i < expectedDayArray.length; i++) {
+var psId = table.find("tr:eq("+expectedDayArray[i][0]+")").find('td:eq(7)').children('label').children('u').text();
 
-    var psId = table.find("tr:eq("+expectedDayArray[i][0]+")").find('td:eq(7)').children('label').children('u').text();//청구번s
+if(psId===""){ //trim()이거를 안넣으니 빈문자열로 인식이 안되어서 이거넣음
+  alert('청구번호가 존재해야 일괄입금취소 처리가 가능합니다.');
+  return false;
+}
 
-    if(psId===""){ //trim()이거를 안넣으니 빈문자열로 인식이 안되어서 이거넣음
-      alert('청구번호가 존재해야 일괄입금취소 처리가 가능합니다.');
-      window.location.reload();
-      return false;
-    }
+contractScheduleArray.push(psId);
+}
+// console.log(contractScheduleArray);
 
-    var csCheck = table.find("tr:eq("+expectedDayArray[i][0]+")").find('td:eq(8)').children().text();//수납구분
-    if(csCheck == '입금대기'){
-      alert('아직 입금처리가 되어있지 않으므로 입금취소 불가합니다.');
-      return false;
-    }
+var aa = 'getAmountDrop';
+var bb = 'p_payScheduleGetAmountCanselFor.php';
+var cc = 'scheduleArray';
+var dd = 'contractId';
+var contractId = '<?=$filtered_id?>';
 
-    payIdArray.push(psId);
-  }
-  // console.log(contractScheduleArray);
+goCategoryPage(aa, bb, cc, contractScheduleArray, dd, contractId);
 
-  var contractId = '<?=$filtered_id?>';
-  payIdArray = JSON.stringify(payIdArray);
-
-  goCategoryPage(payIdArray, contractId);
-
-  function goCategoryPage(a,b){
-    var frm = formCreate('getAmountDrop', 'post', 'p_payScheduleGetAmountCanselFor.php','');
-    frm = formInput(frm, 'payIdArray', a);
-    frm = formInput(frm, 'contractId', b);
-    formSubmit(frm);
-  }
+function goCategoryPage(a, b, c, d, e, f){
+var frm = formCreate(a, 'post', b,'');
+frm = formInput(frm, c, d);
+frm = formInput(frm, e, f);
+formSubmit(frm);
+}
 
 })
 
@@ -641,10 +606,9 @@ $('#memoButton').click(function(){
 
 $("button[name='memoEdit']").click(function(){
     var memoid = $(this).parent().parent().children().children('input:eq(1)');
-    var memoCreator = $(this).parent().parent().find('td:eq(1)').children('input');
+    var memoCreator = $(this).parent().parent().children().children('input:eq(0)');
     var memoContent = $(this).parent().parent().children().children('input:eq(2)');
     // console.log(memoid, memoCreator, memoContent);
-    console.log(memoCreator);
     var smallEditButton = "<button type='button' name='smallEditButton' class='btn btn-secondary btn-sm'>수정</button><button type='button' name='smallEditButtonCancel' class='btn btn-secondary btn-sm'>취소</button>";
 
     memoCreator.removeAttr("disabled");
@@ -660,30 +624,37 @@ $("button[name='memoEdit']").click(function(){
 
     $("button[name='smallEditButton']").click(function(){
         // console.log('작은버튼클릭');
-
+        var aa = 'memoEdit';
+        var bb = 'p_memoEdit.php';
         var contractId = '<?=$filtered_id?>';
-        var memoCreator = $(this).parent().parent().children().children('input:eq(1)').val();
-        var memoid = $(this).parent().parent().children().children('input:eq(0)').val();
+        var memoid = $(this).parent().parent().children().children('input:eq(1)').val();
+        var memoCreator = $(this).parent().parent().children().children('input:eq(0)').val();
         var memoContent = $(this).parent().parent().children().children('input:eq(2)').val();
-        console.log(contractId, memoid, memoCreator, memoContent);
+        // console.log(contractId, memoid, memoCreator, memoContent);
 
-        goCategoryPage(contractId,memoid,memoCreator,memoContent);
+        goCategoryPage(aa,bb,contractId,memoid,memoCreator,memoContent);
 
-        function goCategoryPage(a,b,c,d){
-            var frm = formCreate('memoEdit', 'post', 'p_memoEdit.php','');
-            frm = formInput(frm, 'contractId', a);
-            frm = formInput(frm, 'memoid', b);
-            frm = formInput(frm, 'memoCreator', c);
-            frm = formInput(frm, 'memoContent', d);
+        function goCategoryPage(a,b,c,d,e,f){
+            var frm = formCreate(a, 'post', b,'');
+            frm = formInput(frm, 'contractId', c);
+            frm = formInput(frm, 'memoid', d);
+            frm = formInput(frm, 'memoCreator', e);
+            frm = formInput(frm, 'memoContent', f);
             formSubmit(frm);
         }
     });
 
     $("button[name='smallEditButtonCancel']").click(function(){
+      // var memoid = $(this).parent().parent().children().children('input:eq(0)').val();
+      // var memoCreator = $(this).parent().parent().children().children('input:eq(1)').val();
+      // var memoContent = $(this).parent().parent().children().children('input:eq(2)').val();
 
       var memoid = $(this).parent().parent().children().children('input:eq(1)');
       var memoCreator = $(this).parent().parent().children().children('input:eq(0)');
       var memoContent = $(this).parent().parent().children().children('input:eq(2)');
+
+      // console.log(memoid, memoCreator, memoContent);
+      //var smallsubmitButton = "<button type='submit' name='memoEdit' class='btn btn-default grey'><i class='far fa-edit'></i></button><button type='submit' name='memoDelete' class='btn btn-default grey'><i class='far fa-trash-alt'></i></button>";
 
       memoCreator.attr("disabled", true);
       memoContent.attr("disabled", true);
@@ -698,22 +669,22 @@ $("button[name='memoEdit']").click(function(){
 });
 
 $("button[name='memoDelete']").click(function(){
+    var memoid = $(this).parent().parent().children().children('input:eq(1)').val();
 
-  var c = confirm('정말 삭제하시겠습니까?');
+    // console.log('메모삭제', memoid);
 
-  if(c){
-    var memoid = $(this).parent().parent().children().children('input:eq(0)').val();
     var contractId = '<?=$filtered_id?>';
+    var aa = 'memoDelete';
+    var bb = 'p_memoDelete.php';
+    //
+    goCategoryPage(aa,bb,contractId,memoid);
 
-    goCategoryPage(contractId,memoid);
-    function goCategoryPage(a,b){
-        var frm = formCreate('memoDelete', 'post', 'p_memoDelete.php','');
-        frm = formInput(frm, 'contractId', a);
-        frm = formInput(frm, 'memoid', b);
+    function goCategoryPage(a,b,c,d){
+        var frm = formCreate(a, 'post', b,'');
+        frm = formInput(frm, 'contractId', c);
+        frm = formInput(frm, 'memoid', d);
         formSubmit(frm);
     }
-  }
-
 });
 
 $("button[name='fileDelete']").click(function(){
@@ -735,6 +706,40 @@ $("button[name='fileDelete']").click(function(){
     }
 });
 
+
+
+
+$("input[name='depositOutAmount']").on('keyup', function(){
+    var depositInAmount = Number($("input[name='depositInAmount']").val());
+    var depositOutAmount = Number($(this).val());
+    var depositMoney = depositInAmount - depositOutAmount;
+    $("input[name='depositMoney']").val(depositMoney);
+});
+
+$("button[name='depositSaveBtn']").on('click', function(){
+    var depositInDate = $("input[name='depositInDate']").val();
+    var depositInAmount = Number($("input[name='depositInAmount']").val());
+    var depositOutDate = $("input[name='depositOutDate']").val();
+    var depositOutAmount = Number($("input[name='depositOutAmount']").val());
+    var depositMoney = Number($("input[name='depositMoney']").val());
+
+    var contractId = '<?=$filtered_id?>';
+    var aa = 'depositSave';
+    var bb = 'p_depositSave.php';
+
+    goCategoryPage(aa,bb,contractId,depositInDate,depositInAmount,depositOutDate,depositOutAmount,depositMoney);
+
+    function goCategoryPage(a,b,c,d,e,f,g,h){
+        var frm = formCreate(a, 'post', b,'');
+        frm = formInput(frm, 'contractId', c);
+        frm = formInput(frm, 'depositInDate', d);
+        frm = formInput(frm, 'depositInAmount', e);
+        frm = formInput(frm, 'depositOutDate', f);
+        frm = formInput(frm, 'depositOutAmount', g);
+        frm = formInput(frm, 'depositMoney', h);
+        formSubmit(frm);
+    }
+})
 
 $("button[name='contractDelete']").on('click', function(){
   var contractId = '<?=$filtered_id?>';
@@ -912,39 +917,10 @@ $(document).on('keyup', "input[name='depositInAmount']", function(){
     var depositOutAmount = Number($("input[name='depositOutAmount']").val());
     var depositMoney = depositInAmount - depositOutAmount;
     $("input[name='depositMoney']").val(depositMoney);
+    console.log('solmi99');
+    console.log(depositInAmount, depositOutAmount, depositMoney);
 });
 
-$(document).on('keyup', "input[name='depositOutAmount']", function(){
-    var depositInAmount = Number($("input[name='depositInAmount']").val());
-    var depositOutAmount = Number($(this).val());
-    var depositMoney = depositInAmount - depositOutAmount;
-    $("input[name='depositMoney']").val(depositMoney);
-});
-
-$("button[name='depositSaveBtn']").on('click', function(){
-    var depositInDate = $("input[name='depositInDate']").val();
-    var depositInAmount = Number($("input[name='depositInAmount']").val());
-    var depositOutDate = $("input[name='depositOutDate']").val();
-    var depositOutAmount = Number($("input[name='depositOutAmount']").val());
-    var depositMoney = Number($("input[name='depositMoney']").val());
-
-    var contractId = '<?=$filtered_id?>';
-    var aa = 'depositSave';
-    var bb = 'p_depositSave.php';
-
-    goCategoryPage(aa,bb,contractId,depositInDate,depositInAmount,depositOutDate,depositOutAmount,depositMoney);
-
-    function goCategoryPage(a,b,c,d,e,f,g,h){
-        var frm = formCreate(a, 'post', b,'');
-        frm = formInput(frm, 'contractId', c);
-        frm = formInput(frm, 'depositInDate', d);
-        frm = formInput(frm, 'depositInAmount', e);
-        frm = formInput(frm, 'depositOutDate', f);
-        frm = formInput(frm, 'depositOutAmount', g);
-        frm = formInput(frm, 'depositMoney', h);
-        formSubmit(frm);
-    }
-})
 
 </script>
 

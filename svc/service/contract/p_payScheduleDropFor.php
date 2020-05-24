@@ -9,34 +9,13 @@ include $_SERVER['DOCUMENT_ROOT']."/svc/view/conn.php";
 // print_r($_SESSION);
 $filtered_id = mysqli_real_escape_string($conn, $_POST['contractId']);
 
-$a = explode(",", $_POST['scheduleArray']);
-// var_dump($a);
-
-for ($i=0; $i < count($a)/2; $i++) {
-  $payrow[$i]=array();
-} //payrow라는 배열을 만듦
+$a = json_decode($_POST['payIdArray']);
+print_r($a);
 
 for ($i=0; $i < count($a); $i++) {
-  if($i < 2){
-    array_push($payrow[0], $a[$i]);
-  } else {
-    array_push($payrow[floor($i/2)], $a[$i]);
-  }
-} //배열에다가 청구데이터를 추가시킴
-
-// print_r($payrow);
-
-for ($i=0; $i < count($payrow); $i++) {
-  $sql = "
-          select payId from contractSchedule where idcontractSchedule={$payrow[$i][0]}";
-  // echo $sql;
-  $result = mysqli_query($conn, $sql);
-
-  if($result){
-    $row = mysqli_fetch_array($result);
     $sql_drop = "
-                delete from paySchedule2 where idpaySchedule2={$row[0]}";
-    // echo $sql_drop;
+                delete from paySchedule2 where idpaySchedule2={$a[$i][0]}";
+    echo $sql_drop;
     $result_drop = mysqli_query($conn, $sql_drop);
     if($result_drop){
       $sql2 = "
@@ -44,50 +23,46 @@ for ($i=0; $i < count($payrow); $i++) {
               set
                 payId = null,
                 payIdOrder = null
-              where idcontractSchedule = {$payrow[$i][0]}
-      "; //계약스케줄에서 청구번호와 청구순번 없애기
+              where payId = {$a[$i][0]} and realContract_id={$filtered_id}";
+              //계약스케줄에서 청구번호와 청구순번 없애기
+      echo $sql2;
+
       $result2 = mysqli_query($conn, $sql2);
 
-      $sql5 = "UPDATE realContract SET
-                 updateTime = now()
-               WHERE
-                 id = {$filtered_id}
-              ";
-      // echo $sql5;
-      $result5 = mysqli_query($conn, $sql5);
+      if($result2){
+        $sql3 = "UPDATE realContract SET
+                   updateTime = now()
+                 WHERE
+                   id = {$filtered_id}
+                ";
+        // echo $sql5;
+        $result3 = mysqli_query($conn, $sql3);
 
-      if($result5===false){
-        echo "<script>alert('취소과정에 문제가 생겼습니다. 관리자에게 문의하세요.');
-              history.back();
-              </script>";
-        error_log(mysqli_error($conn));
-        exit();
-      }
-
-      // echo "<script>alert('청구취소하였습니다.');
-      //          location.href='contractEdit.php?id=$filtered_id';
-      //       </script>";//alert 없앰
-
-      echo "<script>
-               location.href='contractEdit.php?page=schedule&id=$filtered_id';
-            </script>";
-      if($result2===false){
-        echo "<script>alert('취소 과정에 문제가 생겼습니다. 관리자에게 문의하세요.');
-                 history.back();
-           </script>";
-        error_log(mysqli_error($conn));
+        if(!$result3){
+          echo "<script>alert('취소과정에 문제가 생겼습니다. 관리자에게 문의하세요.');
+                history.back();
+                </script>";
+          error_log(mysqli_error($conn));
+          exit();
+        }
+      } else {
+        echo "<script>
+                alert('취소 과정에 문제가 생겼습니다. 관리자에게 문의하세요.(2)');
+                history.back();
+                error_log(mysqli_error($conn));
+               </script>";
       }
     } else {
-      echo "<script>alert('취소 과정에 문제가 생겼습니다. 관리자에게 문의하세요.');
-               history.back();
-         </script>";
-      error_log(mysqli_error($conn));
+      echo "<script>
+              alert('취소 과정에 문제가 생겼습니다. 관리자에게 문의하세요.(1)');
+              history.back();
+              error_log(mysqli_error($conn));
+             </script>";
     }
-  } else {
-    echo "<script>alert('취소 과정에 문제가 생겼습니다. 관리자에게 문의하세요.');
-             history.back();
+}//for end
+
+echo "<script>
+        location.href='contractEdit.php?page=schedule&id=$filtered_id';
        </script>";
-    error_log(mysqli_error($conn));
-  }
-}
+
 ?>

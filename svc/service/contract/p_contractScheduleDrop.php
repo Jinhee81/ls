@@ -57,7 +57,6 @@ if($result5===false){
 }
 
 echo "<script>
-        alert('삭제하였습니다.');
         location.href = 'contractEdit.php?page=schedule&id=$filtered_id';
       </script>";
 

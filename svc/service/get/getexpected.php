@@ -243,13 +243,13 @@ var taxDiv = 'charge'; //입금예정리스트여서 청구라는 뜻의 charge 
 
 
 function taxInfo2(bid,mun,ccid) {
-var tmps = "<iframe name='ifm_pops_21' id='ifm_pops_21' class='popup_iframe'   scrolling='no' src=''></iframe>";
-$("body").append(tmps);
-//alert( "/inc/tax_invoice2.php?chkId="+chkId+"&callnum="+subIdx );
+  var tmps = "<iframe name='ifm_pops_21' id='ifm_pops_21' class='popup_iframe'   scrolling='no' src=''></iframe>";
+  $("body").append(tmps);
+  //alert( "/inc/tax_invoice2.php?chkId="+chkId+"&callnum="+subIdx );
 
-$("#ifm_pops_21").attr("src","/svc/service/get/tax_invoice.php?building_idx="+bid+"&mun="+mun+"&id="+ccid+"&flag=expected");
-$('#ifm_pops_21').show();
-$('.pops_wrap, .pops_21').show();
+  $("#ifm_pops_21").attr("src","/svc/service/get/tax_invoice.php?building_idx="+bid+"&mun="+mun+"&id="+ccid+"&flag=expected");
+  $('#ifm_pops_21').show();
+  $('.pops_wrap, .pops_21').show();
 
 }
 
@@ -302,7 +302,7 @@ function maketable(){
           returns += '<input type="hidden" name="payid" value="'+value.idpaySchedule2+'"></td>';
           returns += '<td class="text-right pr-3 mobile"><label class="mb-0">'+value.pAmount+'</label><br>';
           returns += '<label class="mb-0">'+value.pvAmount+'</label></td>';
-          returns += '<td><a href="/svc/service/contract/contractEdit.php?id='+value.rid+'" name="ptamount" data-toggle="tooltip" data-placement="top" title="계약상세보기">'+value.ptAmount+'</a></td>';
+          returns += '<td><a href="/svc/service/contract/contractEdit.php?page=schedule&id='+value.rid+'" name="ptamount" data-toggle="tooltip" data-placement="top" title="계약상세보기">'+value.ptAmount+'</a></td>';
           returns += '<td class="mobile">'+value.payKind+'</td>';//입금구분
           returns += '<td class="mobile"><label class="mb-0">'+value.delaycount+'</label><br>';
           returns += '<label class="mb-0">' + value.delayinterest+'</label></td>';//연체일수,연체이자

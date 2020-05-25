@@ -84,7 +84,7 @@
               echo "<label class='text-center '>".$allRows[$i]['paySchedule2']['pExpectedDate']."</label>";
               // echo "exists";
             } else {
-              echo "<input type='text' size='10' class='form-control form-control-sm text-center dateType' name='expecteDay' value='".$allRows[$i]['mExpectedDate']."'>";
+              echo "<input type='text' size='10' class='form-control form-control-sm text-center' name='expecteDay' value='".$allRows[$i]['mExpectedDate']."'>";
             }
             ?>
           </td><!-- 예정일 -->
@@ -94,7 +94,7 @@
               if($allRows[$i]['paySchedule2']['executiveDate']){
                 echo "<label class='text-center'>".$allRows[$i]['paySchedule2']['payKind']."</label>";
               } else { ?>
-                <select class="form-control form-control-sm" name="payKind">
+                <select class="form-control form-control-sm grey" name="payKind">
                   <option value="계좌"<?php if($allRows[$i]['paySchedule2']['payKind']=='계좌'){echo "selected";} ?>>계좌</option>
                   <option value="현금"<?php if($allRows[$i]['paySchedule2']['payKind']=='현금'){echo "selected";} ?>>현금</option>
                   <option value="카드"<?php if($allRows[$i]['paySchedule2']['payKind']=='카드'){echo "selected";} ?>>카드</option>
@@ -132,7 +132,7 @@
               if($allRows[$i]['paySchedule2']['executiveDate']) {
                   echo "<label class='mb-0 text-center green'>".$allRows[$i]['paySchedule2']['executiveDate']."</label>";
               } else {
-                echo "<input type='text' class='form-control form-control-sm text-center' value='".$allRows[$i]['paySchedule2']['pExpectedDate']."'>";
+                echo "<input type='text' class='form-control form-control-sm text-center grey' value='".$allRows[$i]['paySchedule2']['pExpectedDate']."'>";
               }
             }
              ?><!-- 입금일 -->
@@ -175,7 +175,7 @@
                 if(strtotime($allRows[$i]['paySchedule2']['executiveDate']) <= strtotime($allRows[$i]['paySchedule2']['pExpectedDate'])) {
                   echo "<label class='text-center green mb-0'>0</label>";
                 } else {
-                  $notGetDayCountAmount = $allRows[$i]['paySchedule2']['ptAmount'] * ($allRows[$i]['paySchedule2']['delaycount2'] / 365) * 0.27;+
+                  $notGetDayCountAmount = $allRows[$i]['paySchedule2']['ptAmount'] * ($allRows[$i]['paySchedule2']['delaycount2'] / 365) * 0.27;
                   echo "<label class='text-center numberComma green mb-0'>".(int)$notGetDayCountAmount."</label>";
                 }
               } else {

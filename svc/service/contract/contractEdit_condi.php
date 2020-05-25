@@ -79,7 +79,6 @@ $original_period = array($row['monthCount'],  $row['startDate'], $row['endDate']
 
 $edited_period = array($row['count2'], $row['startDate'], $row['endDate2']);
 
-
 // print_r($edited_period);
 // print_r($original_period);
 

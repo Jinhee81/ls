@@ -150,21 +150,13 @@ $(document).on('click', '.modalAsk', function(){ //청구번호클릭하는거(�
 
 $(document).ready(function(){
 
-  $('#mgetExecute').on('click', function(){ //입금완료버튼(모달안버튼) 클릭
-    console.log('1');
-  })
-
   $(function () {
       $('[data-toggle="tooltip"]').tooltip()
   })
 
-  $('#navDeposit').on('click', function(){
-    console.log('solmi');
-    $(this).addClass('active').siblings().removeClass('active');
+  $('input[name=expecteDay]').on('click', function(){
+    $(this).select();
   })
-
-
-
 
   var allCnt = $(":checkbox:not(:first)", table).length;
 
@@ -313,7 +305,10 @@ $('#groupExpecteDay').change(function(){ //입금예정일 변경버튼 이벤�
 
 $('#button1').click(function(){ //청구설정버튼 클릭시
   var paykind = $('#paykind option:selected').text();
-  // console.log(paykind);
+
+  expectedDayArray = expectedDayArray.sort(function(a,b){
+    return a[0] - b[0];
+  })//순번대로 정렬함(오름차순), 이거 중요함, 그런데 이거하고나니 엄청 느려짐 ㅠㅠ
 
   var paySchedule = [];
 
@@ -780,14 +775,21 @@ $("input[name='modalAmount1']").on('keyup', function(){
     var changeAmount1 = Number($(this).val());
     var changeAmount2 = Number($("input[name='modalAmount2']").val());
     var changeAmount3 = changeAmount1 + changeAmount2;
+    var monthCount = Number($('input[name=addMonth]').val());
+    var executiveAmount = monthCount * changeAmount3;
+
     $("input[name='modalAmount3']").val(changeAmount3);
+    $('#mexecutiveAmount2').val(executiveAmount);
 });
 
 $("input[name='modalAmount2']").on('keyup', function(){
     var changeAmount2 = Number($(this).val());
     var changeAmount1 = Number($("input[name='modalAmount1']").val());
     var changeAmount3 = changeAmount1 + changeAmount2;
+    var monthCount = Number($('input[name=addMonth]').val());
+    var executiveAmount = monthCount * changeAmount3;
     $("input[name='modalAmount3']").val(changeAmount3);
+    $('#mexecutiveAmount2').val(executiveAmount);
 });
 
 $('#button6').click(function(){ //n개월추가 버튼, 모달클릭으로 바뀜
@@ -946,6 +948,123 @@ $("button[name='depositSaveBtn']").on('click', function(){
     }
 })
 
+//===================================
+
+$('input[name=addMonth]').on('change', function(){
+  var monthCount = Number($(this).val());
+  var changeAmount3 = Number($("input[name='modalAmount3']").val());
+  var executiveAmount = monthCount * changeAmount3;
+
+  console.log(monthCount, changeAmount3, executiveAmount);
+
+  $('#mexecutiveAmount2').val(executiveAmount);
+})
+
+$('#mpExpectedDate2').on('click', function(){
+  $(this).select();
+})
+
+$('#mexecutiveDate2').on('click', function(){
+  $(this).select();
+})
+
+$(document).on('click', '#buttonm2', function(){//n개월 추가모달에서 청구설정하는거
+
+  var allCnt = $(":checkbox:not(:first)", table).length;
+  var addMonth = Number($("input[name='addMonth']").val());
+
+  if(!addMonth){
+    alert('추가개월수가 비어있습니다. 개월수를 입력해야 합니다.');
+    return false;
+  }
+
+  if(Number(addMonth)+allCnt > 72){
+      alert('최대계약기간은 72개월(6년)입니다. 더이상 기간연장은 불가합니다.');
+      return false;
+  }
+
+  var contractId = '<?=$filtered_id?>';
+  var buildingId = $('input[name=building]').val();
+  var changeAmount1 = $("input[name='modalAmount1']").val()
+  var changeAmount2 = $("input[name='modalAmount2']").val()
+  var changeAmount3 = $("input[name='modalAmount3']").val()
+  var expectedDate = $('#mpExpectedDate2').val();
+  var payKind = $('#executiveDiv2').val();
+
+  goCategoryPage(contractId,addMonth,changeAmount1,changeAmount2,changeAmount3, expectedDate, payKind, buildingId);
+
+  function goCategoryPage(a,b,c,d,e,f,g,h){
+      var frm = formCreate('cspsAppendM', 'post', 'p_payScheduleAdd2.php','');
+      frm = formInput(frm, 'contractId', a);
+      frm = formInput(frm, 'addMonth', b);
+      frm = formInput(frm, 'changeAmount1', c);
+      frm = formInput(frm, 'changeAmount2', d);
+      frm = formInput(frm, 'changeAmount3', e);
+      frm = formInput(frm, 'expectedDate', f);
+      frm = formInput(frm, 'payKind', g);
+      frm = formInput(frm, 'buildingId', h);
+      formSubmit(frm);
+  }
+
+})
+
+$(document).on('click', '#buttonm1', function(){//n개월 추가모달에서 입금완료 하는거
+
+  var allCnt = $(":checkbox:not(:first)", table).length;
+  var addMonth = Number($("input[name='addMonth']").val());
+
+  if(!addMonth){
+    alert('추가개월수가 비어있습니다. 개월수를 입력해야 합니다.');
+    return false;
+  }
+
+  if(Number(addMonth)+allCnt > 72){
+      alert('최대계약기간은 72개월(6년)입니다. 더이상 기간연장은 불가합니다.');
+      return false;
+  }
+
+  var contractId = '<?=$filtered_id?>';
+  var buildingId = $('input[name=building]').val();
+  var changeAmount1 = $("input[name='modalAmount1']").val()
+  var changeAmount2 = $("input[name='modalAmount2']").val()
+  var changeAmount3 = $("input[name='modalAmount3']").val()
+  var expectedDate = $('#mpExpectedDate2').val();
+  var executiveDate = $('#mexecutiveDate2').val();
+  var executiveAmount = $('#mexecutiveAmount2').val();
+  var payKind = $('#executiveDiv2').val();
+
+  if(expectedDate){
+    if(!executiveDate){
+      alert('입금예정일 또는 입금완료일을 둘다 넣어주거나 아니면 둘다 넣지 않아야 합니다. 둘 중 한개만 넣으면 처리되지 않습니다.');
+      return false;
+    }
+  }
+
+  if(executiveDate){
+    if(!expectedDate){
+      alert('입금예정일 또는 입금완료일을 둘다 넣어주거나 아니면 둘다 넣지 않아야 합니다. 둘 중 한개만 넣으면 처리되지 않습니다.');
+      return false;
+    }
+  }
+
+  goCategoryPage(contractId,addMonth,changeAmount1,changeAmount2,changeAmount3, expectedDate, payKind, buildingId, executiveDate, executiveAmount);
+
+  function goCategoryPage(a,b,c,d,e,f,g,h,i,j){
+      var frm = formCreate('cspsAmountInputM', 'post', 'p_payScheduleGetAmountInputFor2.php','');
+      frm = formInput(frm, 'contractId', a);
+      frm = formInput(frm, 'addMonth', b);
+      frm = formInput(frm, 'changeAmount1', c);
+      frm = formInput(frm, 'changeAmount2', d);
+      frm = formInput(frm, 'changeAmount3', e);
+      frm = formInput(frm, 'expectedDate', f);
+      frm = formInput(frm, 'payKind', g);
+      frm = formInput(frm, 'buildingId', h);
+      frm = formInput(frm, 'executiveDate', i);
+      frm = formInput(frm, 'executiveAmount', j);
+      formSubmit(frm);
+  }
+
+})
 </script>
 
 

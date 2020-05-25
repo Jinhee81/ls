@@ -360,6 +360,12 @@ function maketable(x,y){
   return mtable;
 }
 
+// $(document).on('blur', '[data-toggle="tooltip"]', function(){
+//   $(this).tooltip();
+// })
+
+$('[data-toggle="tooltip"]').tooltip();
+
 $(document).ready(function(){
 
     $(function () {
@@ -582,37 +588,6 @@ function goCategoryPage(a, b, c){
 
 }) //rowDeleteBtn function closing
 
-
-
-$('#button6').click(function(){ //n개월추가 버튼, 모달클릭으로 바뀜
-    var allCnt = $(":checkbox:not(:first)", table).length;
-    var addMonth = Number($("input[name='addMonth']").val());
-    var changeAmount1 = $("input[name='modalAmount1']").val()
-    var changeAmount2 = $("input[name='modalAmount2']").val()
-    var changeAmount3 = $("input[name='modalAmount3']").val()
-
-
-    if(Number(addMonth) > 12){
-        alert('최대계약기간은 12개월(1년)입니다. 더이상 기간연장은 불가합니다.');
-        return false;
-    }
-
-    var aa = 'contractScheduleAppendM';
-    var bb = 'p_contractScheduleAppendM.php';
-    var contractId = '<?=$filtered_id?>';
-
-    goCategoryPage(aa,bb,contractId,addMonth,changeAmount1,changeAmount2,changeAmount3);
-
-    function goCategoryPage(a,b,c,d,e,f,g){
-        var frm = formCreate(a, 'post', b,'');
-        frm = formInput(frm, 'contractId', c);
-        frm = formInput(frm, 'addMonth', d);
-        frm = formInput(frm, 'changeAmount1', e);
-        frm = formInput(frm, 'changeAmount2', f);
-        frm = formInput(frm, 'changeAmount3', g);
-        formSubmit(frm);
-    }
-}); //n개월추가
 
 </script>
 

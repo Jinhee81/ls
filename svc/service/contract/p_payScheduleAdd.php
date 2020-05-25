@@ -2,6 +2,8 @@
 
 <?php
 header('Content-Type: text/html; charset=UTF-8');
+// ini_set('display_errors', 1);
+// ini_set('error_reporting', E_ALL);
 session_start();
 include $_SERVER['DOCUMENT_ROOT']."/svc/view/conn.php";
 
@@ -118,10 +120,9 @@ for ($i=0; $i < count($payExecutiveRow); $i++) {
   // echo $sql;
   $result = mysqli_query($conn, $sql);
   if($result === true){
-    $paySid = mysqli_insert_id($conn); //방금넣은 계약번호아이디를 가져오는거
+    $paySid = mysqli_insert_id($conn); //방금넣은 청구번호아이디를 가져오는거
     $contractScheduleIdArray2 = explode(',', $payExecutiveRow[$i][0]);
-    // echo $paySid;
-    // print_r($contractScheduleIdArray2);
+
     for ($j=0; $j < count($contractScheduleIdArray2); $j++) {
       // code...
       $sql2 = "
@@ -131,7 +132,7 @@ for ($i=0; $i < count($payExecutiveRow); $i++) {
                 payIdOrder = {$j}
               WHERE idcontractSchedule = {$contractScheduleIdArray2[$j]}
               ";
-      // echo $sql2; 청구번호를 계약스케줄번호에 넣음
+      // echo $sql2; //청구번호를 계약스케줄번호에 넣음
       $result2 = mysqli_query($conn, $sql2);
       if(!$result2){
         echo "<script>alert('저장과정에 문제가 생겼습니다. 관리자에게 문의하세요.(4)');
@@ -145,8 +146,6 @@ for ($i=0; $i < count($payExecutiveRow); $i++) {
     echo "<script>alert('저장과정에 문제가 생겼습니다. 관리자에게 문의하세요.(2)');
              location.href='contractEdit.php?page=schedule&id=$filtered_id';
        </script>";
-       // echo "<script>alert('저장과정에 문제가 생겼습니다. 관리자에게 문의하세요.(2)');
-       //    </script>";
        error_log(mysqli_error($conn));
        exit();
   }
@@ -171,10 +170,4 @@ if($result5===false){
 echo "<script>
         location.href='contractEdit.php?page=schedule&id=$filtered_id';
       </script>";
-
-// echo "<script>
-// alert('청구하였습니다.');
-//          location.href='contractEdit.php?id=$filtered_id';
-//       </script>";
-// alert가 너무 번거로워서 빼기로 함
  ?>

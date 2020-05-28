@@ -6,8 +6,8 @@ ini_set('error_reporting', E_ALL);
 session_start();
 include $_SERVER['DOCUMENT_ROOT']."/svc/view/conn.php";
 
-print_r($_POST);
-print_r($_SESSION);
+// print_r($_POST);
+// print_r($_SESSION);
 
 $filtered_id = mysqli_real_escape_string($conn, $_POST['contractId']);
 

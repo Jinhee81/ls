@@ -9,6 +9,33 @@ include $_SERVER['DOCUMENT_ROOT']."/svc/view/conn.php";
 
 $customer_id = $_POST['customerId'];
 
+$date = array($_POST['contractDate'], $_POST['startDate'], $_POST['endDate'], $_POST['executiveDate']);
+
+for ($i=0; $i < count($date); $i++) {
+  if($date[$i]){
+    if(!strtotime($date[$i])){
+      echo "<script>
+            alert('$date[$i]은 날짜형식이 아닙니다. 날짜형식에 맞추어서 입력해주세요 (날짜형식:yyyy-mm-dd)');
+            history.back();
+            </script>";
+      exit();
+    }
+
+    $b = explode('-', $date[$i]);
+
+    $c = checkdate((int)$b[1], (int)$b[2], (int)$b[0]);
+    // var_dump($b);
+
+    if(!$c){
+      echo "<script>
+            alert('$date[$i] 날짜는 존재하지 않습니다. 다시 확인해주세요.');
+            history.back();
+            </script>";
+      exit();
+    }
+  }
+}
+
 
 $currentDateTime = date('Y-m-d H:i:s');
 // echo $currentDateTime;
@@ -43,9 +70,39 @@ $sql = "
 //
 $result = mysqli_query($conn, $sql);
 
+if(!$result){
+  echo "<script>alert('저장과정에 문제가 생겼습니다. 관리자에게 문의하세요(화면캡쳐하고 관련내용을 이메일 info@leaseman.co.kr로 보내주세요).(1)');
+        history.back();
+        </script>";
+  error_log(mysqli_error($conn));
+  exit();
+}
+
 $id = mysqli_insert_id($conn); //방금넣은 계약번호아이디를 가져오는거
 
-$mStartDate = $_POST['startDate']; //초기시작일 가져오기
+$sql_deposit = "
+        INSERT INTO realContract_deposit
+          (inDate, inMoney, remainMoney, saved, realContract_id)
+        VALUES (
+          '{$_POST['depositInDate']}',
+          '{$_POST['depositInAmount']}',
+          '{$_POST['depositInAmount']}',
+          now(),
+          $id
+        )
+";
+// echo $sql_deposit;
+$result_deposit = mysqli_query($conn, $sql_deposit);
+
+if($result_deposit===false){
+  echo "<script>alert('보증금 저장과정에 문제가 생겼습니다. 관리자에게 문의하세요(화면캡쳐하고 관련내용을 이메일 info@leaseman.co.kr로 보내주세요).');
+        history.back();
+        </script>";
+  error_log(mysqli_error($conn));
+  exit();
+}
+
+$mStartDate = date("Y-n-j", strtotime($_POST['startDate'])); //초기시작일 가져오기
 
 for ($i=1; $i <= (int)$_POST['monthCount']; $i++) {
 
@@ -64,6 +121,12 @@ for ($i=1; $i <= (int)$_POST['monthCount']; $i++) {
 }
 // print_r($contractRow);
 // echo 'bbbbb';
+
+$contractScheduleIdArray = array();
+$orderedArray = array();
+$pAmountAccumulate = 0;
+$pvAmountAccumulate = 0;
+$ptAmountAccumulate = 0;
 
 for ($i=1; $i <= count($contractRow); $i++) {
   $sql2 = "
@@ -85,43 +148,109 @@ for ($i=1; $i <= count($contractRow); $i++) {
   // echo $sql2;
 
   if($result2===false){
-    echo "<script>alert('저장과정에 문제가 생겼습니다. 관리자에게 문의하세요.');
+    echo "<script>alert('저장과정에 문제가 생겼습니다. 관리자에게 문의하세요(화면캡쳐하고 관련내용을 이메일 info@leaseman.co.kr로 보내주세요).(2)');
+          history.back();
+          </script>";
+    error_log(mysqli_error($conn));
+    exit();
+  } else {
+    $id2 = mysqli_insert_id($conn);
+    array_push($contractScheduleIdArray, $id2);
+    array_push($orderedArray, $i);
+  }
+}
+
+if($_POST['executiveDate']){
+  $contractScheduleIdArray2 = array();
+  $orderedArray2 = array();
+  for ($i=0; $i < (int)$_POST['executiveCount']; $i++) {
+    array_push($contractScheduleIdArray2, $contractScheduleIdArray[$i]);
+    array_push($orderedArray2, $orderedArray[$i]);
+  }
+  $contractScheduleIdArray3=implode(',', $contractScheduleIdArray2);
+  $orderedArray3=implode(',', $orderedArray2);
+
+  $a = (int)$_POST['executiveCount'] - 1;
+
+  $sql3 = "select mEndDate
+           from contractSchedule
+           where idcontractSchedule = $contractScheduleIdArray[$a]";
+  $result3 = mysqli_query($conn, $sql3);
+
+  if(!$result3){
+    echo "<script>alert('저장과정에 문제가 생겼습니다. 관리자에게 문의하세요(화면캡쳐하고 관련내용을 이메일 info@leaseman.co.kr로 보내주세요).(3)');
           history.back();
           </script>";
     error_log(mysqli_error($conn));
     exit();
   }
+
+  $row3 = mysqli_fetch_array($result3);
+
+  $pAmount = (int)str_replace(',', '', $_POST['mAmount']) * (int)$_POST['executiveCount'];
+  $pvAmount = (int)str_replace(',', '', $_POST['mvAmount']) * (int)$_POST['executiveCount'];
+  $ptAmount = (int)str_replace(',', '', $_POST['mtAmount']) * (int)$_POST['executiveCount'];
+
+  $sql4 = "
+          INSERT INTO paySchedule2 (
+            csIdArray, orderArray, pStartDate, pEndDate, pAmount,
+            pvAmount, ptAmount, pExpectedDate, paykind, executiveDate, getAmount, realContract_id, building_id, user_id, monthCount)
+          VALUES (
+            '{$contractScheduleIdArray3}',
+            '{$orderedArray3}',
+            '{$_POST['startDate']}',
+            '{$row3[0]}',
+            '{$pAmount}',
+            '{$pvAmount}',
+            '{$ptAmount}',
+            '{$_POST['executiveDate']}',
+            '{$_POST['payKind']}',
+            '{$_POST['executiveDate']}',
+            '{$ptAmount}',
+            {$id},
+            {$_POST['building']},
+            {$_SESSION['id']},
+            {$_POST['executiveCount']}
+          )";
+  // echo $sql4;
+  $result4 = mysqli_query($conn, $sql4);
+
+  if(!$result4){
+    echo "<script>alert('저장과정에 문제가 생겼습니다. 관리자에게 문의하세요(화면캡쳐하고 관련내용을 이메일 info@leaseman.co.kr로 보내주세요).(4)');
+          history.back();
+          </script>";
+    error_log(mysqli_error($conn));
+    exit();
+  } else {
+    $id3 = mysqli_insert_id($conn);
+    for ($i=0; $i < (int)$_POST['executiveCount']; $i++) {
+      $sql5 = "
+              UPDATE contractSchedule
+              SET
+                payId = '{$id3}',
+                payIdOrder = {$i}
+              WHERE idcontractSchedule = {$contractScheduleIdArray[$i]}
+              ";
+      // echo $sql2; //청구번호를 계약스케줄번호에 넣음
+      $result5 = mysqli_query($conn, $sql5);
+      if(!$result5){
+        echo "<script>alert('저장과정에 문제가 생겼습니다. 관리자에게 문의하세요(화면캡쳐하고 관련내용을 이메일 info@leaseman.co.kr로 보내주세요).(5)');
+              history.back();
+              </script>";
+           error_log(mysqli_error($conn));
+           exit();
+      }
+    }
+  }
 }
 
-$sql_deposit = "
-        INSERT INTO realContract_deposit
-          (inDate, inMoney, remainMoney, saved, realContract_id)
-        VALUES (
-          '{$_POST['depositInDate']}',
-          '{$_POST['depositInAmount']}',
-          '{$_POST['depositInAmount']}',
-          now(),
-          $id
-        )
-";
-// echo $sql_deposit;
-$result_deposit = mysqli_query($conn, $sql_deposit);
 
-if($result_deposit===false){
-  echo "<script>alert('보증금 저장과정에 문제가 생겼습니다. 관리자에게 문의하세요.');
-        history.back();
-        </script>";
-  error_log(mysqli_error($conn));
-  exit();
-}
-
-
-echo "<script>alert('저장되었습니다.');
+echo "<script>
       location.href = 'contractEdit.php?page=schedule&id=$id';
       </script>";
 
-// // if ($_POST['endDate'] === $mEndDate){
-// //   echo '정상적으로 스케쥴 생성되었음';
-// } //우와 2020년에 윤달이 있어서 종료일자가 안맞음, 그래서 이걸로 확인체크하는것은 없애기로 함
+// if ($_POST['endDate'] === $mEndDate){
+//   echo '정상적으로 스케쥴 생성되었음';
+//} //우와 2020년에 윤달이 있어서 종료일자가 안맞음, 그래서 이걸로 확인체크하는것은 없애기로 함
 
  ?>

@@ -56,7 +56,7 @@ include "building.php";
 
       <div class="bolowButtons text-center">
         <button type='button' class='btn btn-primary' id='saveBtn'>저장</button>
-        <a href='contract.php'><button type='button' class='btn btn-secondary'>계약리스트화면으로</button></a>
+        <a href='contract.php'><button type='button' class='btn btn-secondary'><i class="fas fa-angle-double-right"></i> 계약목록</button></a>
       </div>
 </section>
 
@@ -120,7 +120,7 @@ for(var key in roomArray[groupIdx]){
     // customerSearch();
     // console.log('solmi');
 
-    var tableCol1 = "<tr><td><input type='hidden' value='"+key+"'><input type='text' class='form-control form-control-sm text-center' value='"+roomArray[groupIdx][key]+"' disabled><div class='badge badge-warning text-wrap' style='width: 3rem;' name='rowDeleteBtn'>행삭제</div></td>";
+    var tableCol1 = "<tr><td><input type='hidden' value='"+key+"'><input type='text' class='form-control form-control-sm text-center' value='"+roomArray[groupIdx][key]+"' disabled></td>";
 
     var tableRow = tableCol1 + tableCol2 + tableCol3 + tableCol4 + tableCol5 + tableCol6 + tableCol7 + tableCol8;
 
@@ -184,19 +184,13 @@ $(document).ready(function(){
 
             // customerSearch();
 
-            var tableCol1 = "<tr><td><input type='hidden' value='"+key+"'><input type='text' class='form-control form-control-sm text-center' value='"+roomArray[groupIdx][key]+"' disabled><div class='badge badge-warning text-wrap' style='width: 3rem;' name='rowDeleteBtn'>행삭제</div></td>";
+            var tableCol1 = "<tr><td><input type='hidden' value='"+key+"'><input type='text' class='form-control form-control-sm text-center' value='"+roomArray[groupIdx][key]+"' disabled></td>";
 
             var tableRow = tableCol1 + tableCol2 + tableCol3 + tableCol4 + tableCol5 + tableCol6 + tableCol7 + tableCol8;
 
             $('#table1').append(tableRow);//관리호수
 
         }
-        $('div[name="rowDeleteBtn"]').on('click', function(){
-          // console.log('삭제하기');
-          var currow = $(this).closest('tr');
-          currow.remove();
-          // alert('삭제하였습니다');
-        })
 
 
         $('.dateType').datepicker({
@@ -241,7 +235,7 @@ $(document).ready(function(){
 
             // customerSearch();
 
-            var tableCol1 = "<tr><td><input type='hidden' value='"+key+"'><input type='text' class='form-control form-control-sm text-center' value='"+roomArray[groupIdx][key]+"' disabled><div class='badge badge-warning text-wrap' style='width: 3rem;' name='rowDeleteBtn'>행삭제</div></td>";
+            var tableCol1 = "<tr><td><input type='hidden' value='"+key+"'><input type='text' class='form-control form-control-sm text-center' value='"+roomArray[groupIdx][key]+"' disabled></td>";
 
             var tableRow = tableCol1 + tableCol2 + tableCol3 + tableCol4 + tableCol5 + tableCol6 + tableCol7 + tableCol8;
 
@@ -249,15 +243,6 @@ $(document).ready(function(){
 
 
         }
-
-        $('div[name="rowDeleteBtn"]').on('click', function(){
-          // console.log('삭제하기');
-          var currow = $(this).closest('tr');
-          currow.remove();
-          // alert('삭제하였습니다');
-        })
-
-
 
         $('.dateType').datepicker({
           changeMonth: true,
@@ -292,12 +277,6 @@ $(document).ready(function(){
         })
     })
 
-    $('div[name="rowDeleteBtn"]').on('click', function(){
-      // console.log('삭제하기');
-      var currow = $(this).closest('tr');
-      currow.remove();
-      // alert('삭제하였습니다');
-    })
 
     $('.table').on('keyup', 'input[type="search"]', function(){
       var currow = $(this).closest('tr');
@@ -429,55 +408,55 @@ $('#saveBtn').on('click', function(){
     var col2 = currow.find('td:eq(1)').children('input').val();//고객정보
     var col21 = currow.find('td:eq(1)').children('input[name=customerId2]').val();
     var col22 = currow.find('td:eq(1)').children('input[name=buildingPay2]').val();//
-    if(!col2){
-      alert('세입자는 필수값입니다.');
-      return false;
-    }
 
     var col3 = currow.find('td:eq(2)').children('input').val();//계약일자
-    var col41 = currow.find('td:eq(3)').children('input:eq(0)').val();//공급가액
-    if(Number(col41) < 0){
-      alert('공급가액은 반드시 0보다 커야 합니다.');
-      return false;
-    }
-    if(Number(col41) === 0) {
-      alert('공급가액은 반드시 0보다 커야 합니다.');
-      return false;
+
+    if(col2){
+      var col41 = currow.find('td:eq(3)').children('input:eq(0)').val();//공급가액
+      if(Number(col41) <= 0){
+        alert(col1+'행의 공급가액은 반드시 0보다 커야 합니다.');
+        return false;
+      }
+
+      var col42 = currow.find('td:eq(3)').children('input:eq(1)').val();//세액
+      if(Number(col42) < 0){
+        alert(col1+'행의 세액은 반드시 0보다 커야 합니다.');
+        return false;
+      }
+
+      var col43 = Number(col41) + Number(col42);//합계
+      var col5 = currow.find('td:eq(4)').children('input').val();//기간
+      if(!col5){
+        alert(col1+'행의 기간은 필수값입니다.개월수이므로 숫자로 입력해야 합니다.');
+        return false;
+      }
+      if(col5>72){
+        alert(col1+'행의 계약기간은 72 이하여야 합니다.(72개월 즉 6년까지의 계약만 가능함)');
+        return false;
+      }
+
+      var col61 = currow.find('td:eq(5)').children('input:eq(0)').val();//시작일
+      if(!col61){
+        alert(col1+'행의 시작일은 필수값입니다.');
+        return false;
+      }
+
+      var arr1 = col61.split('-');
+      var sDate = new Date(arr1[0], arr1[1]-1, arr1[2]);
+      var eDate = new Date(sDate.getFullYear(), sDate.getMonth() + Number(col5), sDate.getDate()-1);
+
+      var col62 = dateFormat(eDate);//종료일
+      var col7 = currow.find('td:eq(6)').children('input').val();//보증금
+      if(Number(col7) < 0){
+        alert(col1+'행의 보증금은 반드시 0 이상이어야 합니다(음수불가).');
+        return false;
+      }
+
+      var col8 = currow.find('td:eq(7)').children('input').val();//보증금입금일
+      curArray.push(col1, col11, col21, col22, col3, col41, col42, col43, col5, col61, col62, col7, col8);
+      allArray.push(curArray);
     }
 
-    var col42 = currow.find('td:eq(3)').children('input:eq(1)').val();//세액
-    if(Number(col42) < 0){
-      alert('세액은 반드시 0보다 커야 합니다.');
-      return false;
-    }
-
-    var col43 = currow.find('td:eq(3)').children('input:eq(2)').val();//합계
-    var col5 = currow.find('td:eq(4)').children('input').val();//기간
-    if(!col5){
-      alert('기간은 필수값입니다.개월수이므로 숫자로 입력해야 합니다.');
-      return false;
-    }
-    if(col5>72){
-      alert('계약기간은 72 이하여야 합니다.(72개월 즉 6년까지의 계약만 가능함)');
-      return false;
-    }
-
-    var col61 = currow.find('td:eq(5)').children('input:eq(0)').val();//시작일
-    if(!col61){
-      alert('시작일은 필수값입니다.');
-      return false;
-    }
-
-    var col62 = currow.find('td:eq(5)').children('input:eq(1)').val();//종료일
-    var col7 = currow.find('td:eq(6)').children('input').val();//보증금
-    if(Number(col7) < 0){
-      alert('보증금은 반드시 0보다 커야 합니다.');
-      return false;
-    }
-
-    var col8 = currow.find('td:eq(7)').children('input').val();//보증금입금일
-    curArray.push(col1, col11, col21, col22, col3, col41, col42, col43, col5, col61, col62, col7, col8);
-    allArray.push(curArray);
   }
 
   console.log(allArray);

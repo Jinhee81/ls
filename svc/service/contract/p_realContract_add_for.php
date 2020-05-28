@@ -28,8 +28,40 @@ for ($i=0; $i < count($a); $i++) {
 }
 
 print_r($contractRow);
-//
+
+//$contractRow4,9,10,12가 날짜형식이어서 날싸 유효성체크를 해야한다.
+
 for ($i=0; $i < count($contractRow); $i++) {
+  $date = [4,9,10,12];
+  for ($j=0; $j < 4; $j++) {
+    if($contractRow[$i][$date[$j]]){
+      if(!strtotime($contractRow[$i][$date[$j]])){
+        echo "<script>
+              alert('".$contractRow[$i][0]." 행의 ".$contractRow[$i][$date[$j]]."은 날짜형식이 아닙니다. 날짜형식에 맞추어서 입력해주세요 (날짜형식:yyyy-mm-dd)');
+              history.back();
+              </script>";
+        exit();
+      }
+
+      $b = explode('-', $contractRow[$i][$date[$j]]);
+
+      $c = checkdate((int)$b[1], (int)$b[2], (int)$b[0]);
+
+      if(!$c){
+        echo "<script>
+              alert('".$contractRow[$i][0]." 행의 ".$contractRow[$i][$date[$j]]." 날짜는 존재하지 않습니다. 다시 확인해주세요.');
+              history.back();
+              </script>";
+        exit();
+      }
+    }
+  }//============날짜체크
+
+  $contractRow[$i][5] = number_format($contractRow[$i][5]);
+  $contractRow[$i][6] = number_format($contractRow[$i][6]);
+  $contractRow[$i][7] = number_format($contractRow[$i][7]);
+  $contractRow[$i][11] = number_format($contractRow[$i][11]);
+
   $sql = "
       INSERT INTO realContract (
         customer_id, building_id, group_in_building_id, r_g_in_building_id,
@@ -55,13 +87,11 @@ for ($i=0; $i < count($contractRow); $i++) {
           '{$contractRow[$i][10]}'
           )
   ";
-  // echo $sql;
-
+  echo $sql;
+//
   $result = mysqli_query($conn, $sql);
   if(!$result){
-    // echo "<script>alert('저장과정에 문제가 생겼습니다. 관리자에게 문의하세요.');
-    //       </script>";
-    echo "<script>alert('저장과정에 문제가 생겼습니다. 관리자에게 문의하세요(3).');
+    echo "<script>alert('저장과정에 문제가 생겼습니다. 화면을 캡쳐하여 관리자(info@leaseman.co.kr)에게 이메일을 보내주세요(3).');
           location.href = 'contractAll.php';
           </script>";
     error_log(mysqli_error($conn));
@@ -104,7 +134,7 @@ for ($i=0; $i < count($contractRow); $i++) {
   if($result_deposit===false){
     // echo "<script>alert('보증금 저장과정에 문제가 생겼습니다. 관리자에게 문의하세요(1).');
     //       </script>";
-    echo "<script>alert('보증금 저장과정에 문제가 생겼습니다. 관리자에게 문의하세요(1).');
+    echo "<script>alert('보증금 저장과정에 문제가 생겼습니다. 화면을 캡쳐하여 관리자(info@leaseman.co.kr)에게 이메일을 보내주세요(1).');
           history.back();
           </script>";
     error_log(mysqli_error($conn));
@@ -137,7 +167,7 @@ for ($i=0; $i < count($contractRow); $i++) {
     $result2 = mysqli_query($conn, $sql2);
 
     if($result2===false){
-      echo "<script>alert('저장과정에 문제가 생겼습니다. 관리자에게 문의하세요(2).');
+      echo "<script>alert('저장과정에 문제가 생겼습니다. 화면을 캡쳐하여 관리자(info@leaseman.co.kr)에게 이메일을 보내주세요(2).');
             history.back();
             </script>";
       error_log(mysqli_error($conn));

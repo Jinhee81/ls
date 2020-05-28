@@ -50,52 +50,56 @@ include $_SERVER['DOCUMENT_ROOT']."/svc/service/contract/building.php";
 
     <table id="centerSection" class='table table-bordered text-center'>
     </table>
-    <table class='table table-bordered text-center table-sm'>
-      <tr>
-        <td width="5%">순번</td>
-        <td width="10%"><span id='star' style='color:#F7BE81;'>* </span>성명</td>
-        <td width="10%"><span id='star' style='color:#F7BE81;'>* </span>연락처</td>
-        <td width="5%">구분</td>
-        <td width="10%">사업자명</td>
-        <td width="10%">사업자번호</td>
-        <td width="10%">이메일</td>
-        <td width="10%">특이사항</td>
-        <td width="5%"></td>
-      </tr>
-      <?php  for ($i=1; $i < 11 ; $i++) { ?>
+    <table class='table table-bordered text-center table-sm' id='table1'>
+      <thead>
         <tr>
-          <td>
-            <label class="mt-1"><?=$i?></label>
-          </td><!--순번-->
-          <td><input type='text' class='form-control form-control-sm text-center' name='name<?=$i?>' required></td><!--성명-->
-
-          <td><input type=text name='num<?=$i?>' class='form-control form-control-sm phonenumber' maxlength="13" value="010-" required></td>
-          <!--연락처-->
-          <td>
-            <select class="form-control form-control-sm" name="div3<?=$i?>">
-              <option value=""></option>
-              <option value="주식회사">주식회사</option>
-              <option value="유한회사">유한회사</option>
-              <option value="합자회사">합자회사</option>
-              <option value="기타">기타</option>
-            </select>
-          </td><!--구분-->
-          <td><input type='text' class='form-control form-control-sm text-center' name='companyname<?=$i?>'></td><!--사업자명-->
-          <!-- <td><input type='text' class='form-control form-control-sm numberonly' name='cNumber<?=$i?>'></td> -->
-          <td><input type=text name='cNumber<?=$i?>' class='form-control form-control-sm companynumber text-center' maxlength=12></td>
-          <!--사업자번호-->
-          <td><input type='email' class='form-control form-control-sm text-center' name='email<?=$i?>'></td><!--이메일-->
-          <td><input type='text' class='form-control form-control-sm text-center' name='etc<?=$i?>'></td><!--특이사항-->
-          <td class="pt-2">
-            <div class='badge badge-warning text-wrap' style='width: 3rem;' name='rowDeleteBtn'>행삭제</div>
-          </td><!--행삭제-->
+          <td width="5%">순번</td>
+          <td width="10%"><span id='star' style='color:#F7BE81;'>* </span>성명</td>
+          <td width="10%"><span id='star' style='color:#F7BE81;'>* </span>연락처</td>
+          <td width="5%">구분</td>
+          <td width="10%">사업자명</td>
+          <td width="10%">사업자번호</td>
+          <td width="10%">이메일</td>
+          <td width="10%">특이사항</td>
+          <td width="5%"></td>
         </tr>
-      <?php } ?>
+      </thead>
+      <tbody>
+        <?php  for ($i=1; $i < 11 ; $i++) { ?>
+          <tr>
+            <td>
+              <label class="mt-1"><?=$i?></label>
+            </td><!--순번-->
+            <td><input type='text' class='form-control form-control-sm text-center' name='name<?=$i?>'></td><!--성명-->
 
+            <td><input type=text name='num<?=$i?>' class='form-control form-control-sm phonenumber' maxlength="13" value="010-" ></td>
+            <!--연락처-->
+            <td>
+              <select class="form-control form-control-sm" name="div3<?=$i?>">
+                <option value=""></option>
+                <option value="주식회사">주식회사</option>
+                <option value="유한회사">유한회사</option>
+                <option value="합자회사">합자회사</option>
+                <option value="기타">기타</option>
+              </select>
+            </td><!--구분-->
+            <td><input type='text' class='form-control form-control-sm text-center' name='companyname<?=$i?>'></td><!--사업자명-->
+            <!-- <td><input type='text' class='form-control form-control-sm numberonly' name='cNumber<?=$i?>'></td> -->
+            <td><input type=text name='cNumber<?=$i?>' class='form-control form-control-sm companynumber text-center' maxlength=12></td>
+            <!--사업자번호-->
+            <td><input type='email' class='form-control form-control-sm text-center' name='email<?=$i?>'></td><!--이메일-->
+            <td><input type='text' class='form-control form-control-sm text-center' name='etc<?=$i?>'></td><!--특이사항-->
+            <td class="pt-2">
+              <div class='badge badge-warning text-wrap' style='width: 3rem;' name='rowDeleteBtn'>행삭제</div>
+            </td><!--행삭제-->
+          </tr>
+        <?php } ?>
+      </tbody>
     </table>
+
     <div class="row justify-content-center">
-      <button type='submit' class='btn btn-primary mr-1'>저장</button>
-      <a href='customer.php'><button type='button' class='btn btn-secondary'>세입자리스트화면으로</button></a>
+      <button type='button' class='btn btn-primary mr-1' id='frmSubmit'>저장</button>
+      <a href='customer.php'><button type='button' class='btn btn-secondary'><i class="fas fa-angle-double-right"></i> 관계자리스트</button></a>
     </div>
   </form>
 </section>
@@ -167,6 +171,34 @@ $('div[name="rowDeleteBtn"]').on('click', function(){
   currow.remove();
   // alert('삭제하였습니다');
 })
+
+$('#frmSubmit').on('click', function(){
+  var rows = $('#table1 tbody').length;
+  var table = $('#table1 tbody');
+
+  for (var i = 0; i < rows ; i++) {
+    var name = table.find("tr:eq("+i+")").find("td:eq(1)").children().val();
+    var contact = table.find("tr:eq("+i+")").find("td:eq(2)").children().val();
+
+    if(name){
+      if(!contact){
+        alert('성명, 연락처 중 1개만 넣으면 안됩니다. 둘다 입력 또는 둘다 입력하지 않아야 합니다.')
+        return false;
+      }
+    }
+
+    if(!name){
+      if(contact){
+        alert('성명, 연락처 중 1개만 넣으면 안됩니다. 둘다 입력 또는 둘다 입력하지 않아야 합니다.')
+        return false;
+      }
+    }
+  }
+
+  $('form').submit();
+})
+
+
 
 </script>
 

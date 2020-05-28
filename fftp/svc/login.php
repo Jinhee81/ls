@@ -1,0 +1,105 @@
+<?php include "view/header.php";
+ini_set('display_errors', 1);
+ini_set('error_reporting', E_ALL);
+
+?>
+<div class="bg-dark text-center pt-3">
+  <img class="mb-4" src="inc/img/leaseman-1.png" alt="" width="" height="">
+</div>
+<div class="text-center container mt-5">
+
+    <h1 class="h3 mb-3 font-weight-normal">임대관리시스템 리스맨 접속을 환영합니다!</h1>
+    <div class="text-center container mt-5" style="width:360px;">
+
+
+      <form method="post" action ="login_check.php" class="form-signin">
+        <div class="form-group">
+          <input type="email" name="email" class="form-control" placeholder="이메일주소" required="" autofocus="">
+          <input type="password" name="password" class="form-control" placeholder="비밀번호" required="">
+        </div>
+        <div class="check-box mb-3">
+          <input type="checkbox" name="remember-email">&nbsp;이메일 기억하기
+        </div>
+          <div class="top_margin"></div>
+        <button class="btn btn-lg btn-primary btn-block" type="submit">로그인</button>
+      </form>
+
+      <div class="form-row mt-2">
+        <div class="form-group col-md-4">
+          <a class="btn btn-sm btn-outline-success btn-block" href="#" role="button">이메일찾기</a>
+        </div>
+        <div class="form-group col-md-4">
+          <a class="btn btn-sm btn-outline-success btn-block" href="#" role="button">비밀번호찾기</a>
+        </div>
+        <div class="form-group col-md-4">
+          <a class="btn btn-sm btn-outline-success btn-block" href="../membership/membership.php" role="button">회원가입하기</a>
+        </div>
+      </div>
+    </div>
+</div>
+
+<?php
+include "view/footer.php";
+?>
+
+<script src="/svc/inc/js/jquery-3.3.1.min.js"></script>
+
+<script type="text/javascript">
+
+$(document).ready(function(){
+  var c_email = getCookie("email");
+  $('input[name=email]').val(c_email);
+
+  if($('input[name=email]').val()!=''){
+    $('input[name=remember-email]').attr("checked", true);
+  }
+
+  $('input[name=remember-email]').change(function(){
+    if($(this).is(":checked")){
+      console.log('checked');
+      setCookie("email", $('input[name=email]').val(), 60);
+    } else {
+      deleteCookie("email");
+      console.log('unchecked')
+    }
+  })
+
+  $('input[name=email]').on('keyup', function(){
+    if($('input[name=remember-email]').is(':checked')){
+      setCookie("email", $('input[name=email]').val(), 60);
+    }
+  })
+
+  function setCookie(cookieName, value, exdays){
+    var exdate = new Date();
+    exdate.setDate(exdate.getDate() + exdays);
+    var cookieValue = escape(value) + ((exdays===null)?"":"; expires="+exdate.toGMTString());
+    document.cookie = cookieName + "=" + cookieValue;
+    console.log(document.cookie);
+  }
+
+  function deleteCookie(cookieName){
+    var expireDate = new Date();
+    expireDate.setDate(expireDate.getDate()-1);
+    document.cookie = cookieName + '= ' + '; expires=' + expireDate.toGMTString();
+  }
+
+  function getCookie(cookieName){
+    cookieName = cookieName + '=';
+    var cookieData = document.cookie;
+    var start = cookieData.indexOf(cookieName);
+    var cookieValue = '';
+
+    if(start != -1){
+      start += cookieName.length;
+      var end = cookieData.indexOf(';', start);
+      if(end ==-1) end = cookieData.length;
+      cookieValue = cookieData.substring(start, end);
+    }
+
+    return unescape(cookieValue);
+  }
+
+
+})
+</script>

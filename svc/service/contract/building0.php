@@ -63,7 +63,7 @@ foreach ($roomArray as $key => $value) {
   $roomcount += count($value);
 }
 
-// print_r($roomArray);
+// print_r($roomcount);
 
 if($roomcount===0){
   echo "<script>
@@ -71,5 +71,54 @@ if($roomcount===0){
     </script>";
   echo "<meta http-equiv='refresh' content='0; url=/svc/service/setting/building.php'>";
 }
+
+foreach ($buildingArray as $key => $value) { //key는 건물아이디, value는 건물이름
+  $sql4 = "select
+            id, building_id, group_in_building_id,
+            r_g_in_building_id,
+            startDate, endDate2,
+            getStatu(startDate, endDate2) as status2
+          from realContract
+          where user_id = {$_SESSION['id']} and
+                building_id = {$key} and
+                (getStatus(startDate, endDate2)='present' or
+                 getStatus(startDate, endDate2)='waiting')
+          ";
+  echo $sql4;
+  $result4 = mysqli_query($conn, $sql4);
+  $fullrooms = array();
+  while($row4 = mysqli_fetch_array($result4)){
+    $fullrooms[]= $row4;
+  }
+}
+print_r($fullrooms);
+
+$fullrooms = array();
+
+// print_r($fullrooms);
+// echo 12;
+// $full = array();
+// $empty = array();
+//
+// foreach ($roomArray as $key => $value) {
+//   foreach ($value as $key => $value) {
+//     for ($i=0; $i < count($fullrooms); $i++) {
+//       if($key==(int)$fullrooms[$i][2]){
+//         array_push($full, $key);
+//       } else {
+//         array_push($empty, $key);
+//       }
+//     }
+//   }
+// }
+//
+// print_r($full).'<br>';
+// print_r($empty).'<br>';
+//
+// // print_r($roomArray);
+// echo 20;
+
+
+// print_r($fb);
 
  ?>

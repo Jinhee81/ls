@@ -21,6 +21,7 @@
 
     <div class="form-group col-md-6">
       <div class="row justify-content-end mr-0">
+        <button type="button" id="buttonDirect" class="btn btn-outline-danger btn-sm mr-1" data-toggle="tooltip" data-placement="top" title="체크된것을 입금예정일 날짜로 입금처리합니다(청구설정+입금처리)">즉시입금</button>
         <button type="button" id="button1" class="btn btn-outline-info btn-sm mr-1" data-toggle="tooltip" data-placement="top" title="체크된것을 청구설정합니다">청구설정</button>
         <button type="button" id="button2" class="btn btn-outline-info btn-sm mr-1" data-toggle="tooltip" data-placement="top" title="체크된것의 청구정보를 취소합니다">청구취소</button>
         <button type="button" id="button3" class="btn btn-outline-info btn-sm mobile mr-1" data-toggle="tooltip" data-placement="top" title="체크된것들을 입금처리합니다(청구번호가있어야 입금처리 가능해요.)">일괄입금처리</button>

@@ -1065,6 +1065,63 @@ $(document).on('click', '#buttonm1', function(){//n개월 추가모달에서 입
   }
 
 })
+
+$('#buttonDirect').on('click', function(){
+  var paykind = $('#paykind option:selected').text();
+
+  expectedDayArray = expectedDayArray.sort(function(a,b){
+    return a[0] - b[0];
+  })//순번대로 정렬함(오름차순), 이거 중요함, 그런데 이거하고나니 엄청 느려짐 ㅠㅠ
+
+  var paySchedule = [];
+
+  for (var i = 0; i < expectedDayArray.length; i++) {
+    var payDiv = table.find("tr:eq("+expectedDayArray[i][0]+")").find('td:eq(8)').children('label:eq(0)').text(); //수납구분
+    if(payDiv==='입금대기'||payDiv==='완납'){
+      alert('수납구분이 입금대기 또는 완납인 경우 즉시입금이 불가합니다.(이미 처리된 상태이므로)');
+      return false;
+    }
+
+    table.find("tr:eq("+expectedDayArray[i][0]+")").find("td:eq(6)").text(paykind);
+    // console.log(expectedDayArray[i][0], a);
+    // 입금구분을 변경시키는 것
+    var payScheduleEle = [];
+    payScheduleEle.push(table.find("tr:eq("+expectedDayArray[i][0]+")").find('td:eq(0)').children('input').val()); //계약번호
+    payScheduleEle.push(table.find("tr:eq("+expectedDayArray[i][0]+")").find('td:eq(1)').text()); //순번
+    payScheduleEle.push(table.find("tr:eq("+expectedDayArray[i][0]+")").find('td:eq(2)').children('label:eq(0)').text()); //시작일
+    payScheduleEle.push(table.find("tr:eq("+expectedDayArray[i][0]+")").find('td:eq(2)').children('label:eq(1)').text()); //종료일
+    payScheduleEle.push(table.find("tr:eq("+expectedDayArray[i][0]+")").find('td:eq(3)').children('input:eq(0)').val()); //공급가액
+    payScheduleEle.push(table.find("tr:eq("+expectedDayArray[i][0]+")").find('td:eq(3)').children('input:eq(1)').val()); //세액
+    payScheduleEle.push(table.find("tr:eq("+expectedDayArray[i][0]+")").find('td:eq(4)').children('input:eq(0)').val()); //합계금액
+    payScheduleEle.push(table.find("tr:eq("+expectedDayArray[i][0]+")").find('td:eq(5)').children('input:eq(0)').val()); //예정일
+
+    paySchedule.push(payScheduleEle);
+  }
+
+  var paySchedule11 = JSON.stringify(paySchedule);
+
+  var contractId = '<?=$filtered_id?>';
+  var buildingId = $('input[name=building]').val();
+
+  if(expectedDayArray.length === 0){
+    alert('한개 이상을 선택해야 즉시입금 가능합니다.');
+    return false;
+
+  } else {
+
+    goCategoryPage(paySchedule11, contractId, buildingId, paykind);
+
+    function goCategoryPage(a, b, c, d){
+      var frm = formCreate('cspsAmountInputM', 'post', 'p_payScheduleGetAmountInputFor3.php','');
+      frm = formInput(frm, 'scheduleArray', a);
+      frm = formInput(frm, 'contractId', b);
+      frm = formInput(frm, 'buildingId', c);
+      frm = formInput(frm, 'paykind', d);
+      formSubmit(frm);
+    }
+
+  }
+})
 </script>
 
 

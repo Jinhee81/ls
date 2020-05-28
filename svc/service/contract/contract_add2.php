@@ -46,14 +46,14 @@ include "building.php";
         </div>
         <div class="form-group col-md-10" id="mulgunInfo">
               <div class="form-row">
-                <!-- <div class="form-group col-md-2">
+                <div class="form-group col-md-2">
                     <label>공실구분</label>
-                    <select id="select1" name="" class="form-control" onchange="">
-                      <option value="">전체</option>
-                      <option value="" selected>공실</option>
-                      <option value="">만실</option>
+                    <select id="select1" class="form-control">
+                      <option value="all">전체</option>
+                      <option value="empty" selected>공실</option>
+                      <option value="full">만실</option>
                     </select>
-                </div> -->
+                </div>
                 <div class="form-group col-md-2"><!--물건목록-->
                     <label>물건명</label>
                     <select name="building" class="form-control">
@@ -123,6 +123,38 @@ include "building.php";
             <small class="form-text text-muted">매월 받아야하는 임대료(월세)를 입력합니다.</small>
         </div>
     </div>
+    <div class="form-row mb-2">
+        <div class="form-group col-md-2 mb-0">
+            <label><b>[1회차 입금]</b></label>
+        </div>
+        <div class="form-group col-md-10 mb-0">
+          <div class="form-row">
+              <div class="form-group col-md-2 mb-0">
+                    <label>입금개월</label>
+                    <input type="text" class="form-control text-center" name="executiveCount" value="1" numberOnly>
+              </div>
+              <div class="form-group col-md-2 mb-0">
+                    <label>입금액</label>
+                    <input type="text" class="form-control text-right amountNumber" name="executiveAmount" numberOnly readonly>
+              </div>
+              <div class="form-group col-md-2 mb-0">
+                    <label>입금일</label>
+                    <input type="text" class="form-control text-center dateType" name="executiveDate">
+              </div>
+              <div class="form-group col-md-1 mb-0">
+                    <label>입금구분</label>
+                    <select name="payKind" class="form-control">
+                      <option value="계좌">계좌</option>
+                      <option value="현금">현금</option>
+                      <option value="카드">카드</option>
+                    </select>
+              </div>
+        </div>
+        <div class="">
+          <small class="form-text text-muted">입금일을 넣으면 1회차 입금처리가 됩니다.</small>
+        </div>
+      </div>
+    </div>
     <div class="form-row">
         <div class="form-group col-md-2 mb-0">
           <label><b>[보증금정보]</b></label>
@@ -148,7 +180,7 @@ include "building.php";
         </div>
     </div>
     <div class="">
-      <button type='submit' class='btn btn-primary'>저장</button>
+      <button type='button' id='frmSubmit' class='btn btn-primary'>저장</button>
       <a href='contract.php'><button type='button' class='btn btn-secondary'><i class="fas fa-angle-double-right"></i> 계약목록</button></a>
     </div>
   </form>
@@ -276,8 +308,8 @@ $(document).on('click', 'li', function(){
   var buildingName = a.children('input[name=buildingName]').val();
   var buildingPay = a.children('input[name=buildingPay]').val();
 
-  console.log(a);
-  console.log(customerId, buildingIdx, buildingName, buildingPay);
+  // console.log(a);
+  // console.log(customerId, buildingIdx, buildingName, buildingPay);
 
   $('#customerId').val(customerId);
   $('select[name=building]').html('<option value="'+buildingIdx+'">'+buildingName+'</option>');
@@ -372,6 +404,7 @@ $("input[name='mAmount']").on('keyup', function(){
   var amount2 = Number($("input[name='mvAmount']").val());
   var amount12 = amount1 + amount2;
   $("input[name='mtAmount']").val(amount12);
+  $("input[name='executiveAmount']").val(amount12);
 })
 
 $("input[name='mvAmount']").on('keyup', function(){
@@ -379,15 +412,54 @@ $("input[name='mvAmount']").on('keyup', function(){
   var amount2 = Number($(this).val());
   var amount12 = amount1 + amount2;
   $("input[name='mtAmount']").val(amount12);
+  $("input[name='executiveAmount']").val(amount12);
+})
+
+$('input[name=executiveCount]').on('change', function(){
+  var amount12 = Number($('input[name=mtAmount]').val());
+  var executiveAmount = Number($(this).val()) * amount12;
+  $("input[name='executiveAmount']").val(executiveAmount);
 })
 
 
-$('#saveBtn').on('click', function(){
+$('#frmSubmit').on('click', function(){
+  var monthCount = $('input[name="monthCount"]').val();
+  var executiveCount = $('input[name=executiveCount]').val();
+
+  monthCount = Number(monthCount);
+  executiveCount = Number(executiveCount);
+
+  if(executiveCount > monthCount){
+    alert('입금개월이 계약기간보다 클수 없습니다.');
+    return false;
+  }
+
   var amount1 = Number($("input[name='mAmount']").val());
   if(amount1 === 0){
     alert('공급가액은 0보다 커야 저장됩니다.');
     return false;
   }
+
+  var amount1 = Number($("input[name='mAmount']").val());
+  var amount2 = Number($("input[name='mvAmount']").val());
+  var amount12 = amount1 + amount2;
+  $("input[name='mtAmount']").val(amount12);
+
+
+
+  var startDate = $('input[name=startDate]').val();
+  var monthCount = Number($('input[name=monthCount]').val());
+
+  var arr1 = startDate.split('-');
+  var sDate = new Date(arr1[0], arr1[1]-1, arr1[2]);
+  var eDate = new Date(sDate.getFullYear(), sDate.getMonth() + monthCount, sDate.getDate()-1);
+
+  var endDate = dateFormat(eDate);
+
+  $('#endDate').val(endDate);
+
+  $('form').submit();
+
 })
 
 </script>

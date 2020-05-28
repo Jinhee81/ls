@@ -1,10 +1,8 @@
 <?php
 session_start();
-
-print_r($_SESSION);
-// if(!isset($_SESSION['is_login'])){
-//   header('Location: login.php');
-// }
+if(!isset($_SESSION['is_login'])){
+  header('Location: /svc/login.php');
+}
 ?>
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
@@ -24,8 +22,8 @@ include $_SERVER['DOCUMENT_ROOT']."/svc/view/service_header1_meta.php";
 <?php
 include $_SERVER['DOCUMENT_ROOT']."/svc/view/service_header2.php";
 include $_SERVER['DOCUMENT_ROOT']."/svc/view/conn.php";
-include $_SERVER['DOCUMENT_ROOT']."/svc/main/condition.php";
-include $_SERVER['DOCUMENT_ROOT']."/svc/main/m_schedule.php";
+include "condition.php";
+include "m_schedule.php";
 ?>
 <!-- <section class="container">
   <div class="row">
@@ -59,8 +57,9 @@ include $_SERVER['DOCUMENT_ROOT']."/svc/main/m_schedule.php";
       <div class="card-body">
         <h5 class="card-title">오늘 일정 : <?=$row_today[0]?>건
           <?php
-            if(mb_strlen($todayScheduleStr) > 10){
-              echo "(".mb_substr($todayScheduleStr,0,10)."...)";
+          // print_r(mb_strlen($todayScheduleStr, 'utf-8'));
+            if(mb_strlen($todayScheduleStr,'utf-8') > 10){
+              echo "(".mb_substr($todayScheduleStr,0,10,'utf-8')."...)";
             } else {
               echo "(".$todayScheduleStr.")";
             }
@@ -69,8 +68,8 @@ include $_SERVER['DOCUMENT_ROOT']."/svc/main/m_schedule.php";
         <p class="card-text">내일 일정 : <?=$row_tomorrow[0]?>건
           <?php
             // echo mb_strlen($tomorrowScheduleStr);
-            if(mb_strlen($tomorrowScheduleStr) > 10){
-              echo "(".mb_substr($tomorrowScheduleStr,0,10)."...)";
+            if(mb_strlen($tomorrowScheduleStr,'utf-8') > 10){
+              echo "(".mb_substr($tomorrowScheduleStr,0,10,'utf-8')."...)";
             } else {
               echo "(".$tomorrowScheduleStr.")";
             }
@@ -112,3 +111,8 @@ include $_SERVER['DOCUMENT_ROOT']."/svc/main/m_schedule.php";
 </section>
 
 <?php include $_SERVER['DOCUMENT_ROOT']."/svc/view/service_footer.php";?>
+
+<script src="/svc/inc/js/jquery-3.3.1.min.js"></script>
+<script src="/svc/inc/js/bootstrap.min.js"></script>
+</body>
+</html>

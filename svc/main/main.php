@@ -1,7 +1,8 @@
 <?php
 session_start();
+
 if(!isset($_SESSION['is_login'])){
-  header('Location: /svc/login.php');
+  echo "<meta http-equiv='refresh' content='0; url=/svc/login.php'>";
 }
 ?>
 <!DOCTYPE html>

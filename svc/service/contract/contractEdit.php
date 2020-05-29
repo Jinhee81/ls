@@ -831,7 +831,7 @@ $('#button6').click(function(){ //n개월추가 버튼, 모달클릭으로 바�
 
 $(document).on('click', '#mgetExecute', function(){ //입금완료버튼(모달안버튼) 클릭
 
-  console.log('solmi');
+  // console.log('solmi');
   var aa1 = 'payScheduleInput';
   var bb1 = 'p_payScheduleGetAmountInput.php';
   var contractId = '<?=$filtered_id?>';

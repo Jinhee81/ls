@@ -47,28 +47,28 @@ include $_SERVER['DOCUMENT_ROOT']."/svc/service/contract/building.php"; //이거
                  <option value="nowYear">당년</option>
                </select>
              </td>
-             <td width="6%" class="">
+             <td width="6%" class="mobile">
                <input type="text" name="fromDate" value="" class="form-control form-control-sm text-center dateType">
              </td>
-             <td width="1%" class="">~</td>
-             <td width="6%" class="">
+             <td width="1%" class="mobile">~</td>
+             <td width="6%" class="mobile">
                <input type="text" name="toDate" value="" class="form-control form-control-sm text-center dateType">
              </td>
-             <td width="4%" class="">
+             <td width="4%" class="mobile">
                <select class="form-control form-control-sm selectCall" name="type">
                  <option value="typeAll">유형</option>
                  <option value="sms">단문</option>
                  <option value="mms">장문</option>
                </select><!--유형-->
              </td>
-             <td width="4%" class="">
+             <td width="4%" class="mobile">
                <select class="form-control form-control-sm selectCall" name="div1">
                  <option value="div1all">구분</option>
                  <option value="immediately">즉시</option>
                  <option value="reservationed">예약</option>
                </select><!--유형-->
              </td>
-             <td width="4%" class="">
+             <td width="4%" class="mobile">
                <select class="form-control form-control-sm selectCall" name="result">
                  <option value="resultall">결과</option>
                  <option value="success">전송성공</option>
@@ -104,12 +104,12 @@ include $_SERVER['DOCUMENT_ROOT']."/svc/service/contract/building.php"; //이거
       <thead>
         <tr class="table-secondary">
           <th class="fixedHeader">순번</th>
-          <th class="fixedHeader">유형</th>
-          <th class="fixedHeader">구분</th>
+          <th class="fixedHeader mobile">유형</th>
+          <th class="fixedHeader mobile">구분</th>
           <th class="fixedHeader">전송시간</th>
           <th class="fixedHeader">수신자</th>
           <th class="fixedHeader">수신번호</th>
-          <th class="fixedHeader">발신번호</th>
+          <th class="fixedHeader mobile">발신번호</th>
           <th class="fixedHeader">문자내용</th>
           <th class="fixedHeader">전송결과</th>
         </tr>
@@ -170,26 +170,26 @@ function maketable(x,y){
           returns += '<input type="hidden" name="id" value="'+value.id+'"></td>';
 
           if(value.type === 'sms'){
-            returns += '<td class=""><div class="badge badge-primary text-wrap" style="width: 3rem;">단문</div></td>';
+            returns += '<td class="mobile"><div class="badge badge-primary text-wrap" style="width: 3rem;">단문</div></td>';
           } else if(value.type === 'mms'){
-            returns += '<td class=""><div class="badge badge-danger text-wrap" style="width: 3rem;background-color:#F7819F;">장문</div></td>';
+            returns += '<td class="mobile"><div class="badge badge-danger text-wrap" style="width: 3rem;background-color:#F7819F;">장문</div></td>';
           } else {
-            returns += '<td class=""></td>';
+            returns += '<td class="mobile"></td>';
           }
 
           if(value.div1 === 'immediately'){
-            returns += '<td class="">즉시</td>';
+            returns += '<td class="mobile">즉시</td>';
           } else if(value.div1 === 'reservationed'){
-            returns += '<td class="">예약</td>';
+            returns += '<td class="mobile">예약</td>';
           } else {
-            returns += '<td class=""></td>';
+            returns += '<td class="mobile"></td>';
           }
 
           returns += '<td class="">'+value.sendtime+'<input type="hidden" name="byte" value="'+value.byte+'">';
           returns += '<input type="hidden" name="yearmonth" value="'+value.yearmonth+'"></td>';
           returns += '<td class=""><label data-toggle="tooltip" data-placement="top" title="'+value.customer+'">'+value.customermb+'</label></td>';
           returns += '<td class="">'+value.phonenumber+'<input type="hidden" name="sentnumber" value="'+value.sentnumber+'"></td>';
-          returns += '<td class="">'+value.sentnumber+'</td>';
+          returns += '<td class="mobile">'+value.sentnumber+'</td>';
           returns += '<td class=""><p class="modalDescription" data-toggle="modal" data-target="#smsDescription">'+value.descriptionmb+'</p><input type="hidden" name="description" value="'+value.description+'"></td>';
           returns += '<td class="">'+value.result2+'</td>';
 
@@ -232,7 +232,7 @@ function sql(x,y){
       'form':form, 'pagerow':x, 'getPage':y
     },
     success: function(data){
-      $('#allVals2').html(data);
+      // $('#allVals2').html(data);
     }
   });
   return msqlajax;
@@ -274,14 +274,14 @@ $(document).ready(function(){
 
     var currow2 = $(this).closest('tr');
 
-    var description = currow2.find('td:eq(6)').children('input:eq(0)').val();
+    var description = currow2.find('td:eq(7)').children('input[name=description]').val();
 
-    var customer = currow2.find('td:eq(3)').children('label').text();
-    var recievenumber = currow2.find('td:eq(4)').text();
-    var sentnumber = currow2.find('td:eq(4)').children('input').val();
-    var byte = currow2.find('td:eq(2)').children('input').val();
+    var customer = currow2.find('td:eq(4)').children('label').text();
+    var recievenumber = currow2.find('td:eq(5)').text();
+    var sentnumber = currow2.find('td:eq(6)').text();
+    var byte = currow2.find('td:eq(3)').children('input[name=byte]').val();
 
-    // console.log(description, customer, recievenumber, sentnumber);
+    console.log(description, customer, recievenumber, sentnumber);
 
     $('#modaltextarea').text(description);
     $('#mcustomer').val(customer);

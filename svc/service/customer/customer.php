@@ -315,7 +315,7 @@ function makesql(x,y){
            'getPage' : y
           },
     success: function(data){
-      $('#query').html(data);
+      // $('#query').html(data);
     }//success end}
   })
   return query;
@@ -397,7 +397,7 @@ $(document).ready(function(){
     var pagerow = 50;
     var getPage = 1;
     maketable(pagerow,getPage);
-    makesql(pagerow,getPage);
+    // makesql(pagerow,getPage);
   })
 
   $('select[name=periodDiv]').on('change', function(){

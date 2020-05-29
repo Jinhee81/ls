@@ -26,18 +26,10 @@ if($row[0] === 0){
 
 
 
-// print_r($_SESSION);
+print_r($_SESSION);
 
-// date_default_timezone_set('Asia/Seoul');
-// $currentDate = date('Y-m-d');
-// $currentDateDate = new DateTime($currentDate);
-// $startDateDate = new DateTime($_SESSION['created']);
-//
-// $fordays = date_diff($currentDateDate, $startDateDate);
-//
-// $fordays2 = $fordays->days;
-
-// var_dump($fordays2); //30일 이상이어도 계약건수가 20건이하이면 무료 사용이 있기 때문에 30일이상 이런거는 의미가 없어서 주석처리 했음
+date_default_timezone_set('Asia/Seoul');
+$currentDate = date('Y-m-d');
 
 $sql_grade = "select gradename
               from user
@@ -45,6 +37,17 @@ $sql_grade = "select gradename
 $result_grade = mysqli_query($conn, $sql_grade);
 
 $row_grade = mysqli_fetch_array($result_grade);
+
+$sql1 = "select count(*) from grade where user_id={$_SESSION['id']}";
+$result1 = mysqli_query($conn, $sql1);
+$row1 = mysqli_fetch_array($result1);
+
+$sql2 = "select enddate from grade
+         where user_id={$_SESSION['id']} and
+               ordered={$row1[0]}";
+$result2 = mysqli_query($conn, $sql2);
+$row2 = mysqli_fetch_array($result2);
+
 
 $sql_c_p = "select count(*)
         from realContract
@@ -55,9 +58,13 @@ $result_c_p = mysqli_query($conn, $sql_c_p);
 
 $row_c_p = mysqli_fetch_array($result_c_p);
 
-// var_dump($row_c_p[0]);
 
-if(($row_grade==='feefree') && ((int)$row_c_p[0] > 20)){
-  echo "<meta http-equiv='refresh' content='0; url=/main/payment.php'>";
+if(strtotime($currentDate) > strtotime($row2[0])){
+  if((int)$row_c_p[0] > 20){
+      echo "<meta http-equiv='refresh' content='0; url=/svc/main/payment.php'>";
+  }
 }
+
+//처음에 등급명으로 했다가 등급명보다 만료일이 더 중요해서 코드를 변경함
+
  ?>

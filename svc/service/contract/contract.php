@@ -379,7 +379,7 @@ $(document).ready(function(){
     var getPage = 1;
 
     maketable(pagerow, getPage);
-    sql(pagerow, getPage);
+    // sql(pagerow, getPage);
 
     $('#href_smsSetting').on('click', function(){
       var moveCheck = confirm('문자상용구설정 화면으로 이동합니다. 이동하시겠습니까?');
@@ -420,7 +420,7 @@ $(document).ready(function(){
       var getPage = $(this).text();
       console.log(getPage);
       maketable(pagerow, getPage);
-      sql(pagerow, getPage);
+      // sql(pagerow, getPage);
     })
 
 
@@ -432,7 +432,7 @@ $('select[name=dateDiv]').on('change', function(){
   var pagerow = 50;
   var getPage = 1;
   maketable(pagerow, getPage);
-  sql(pagerow, getPage);
+  // sql(pagerow, getPage);
 })
 
 $('select[name=periodDiv]').on('change', function(){
@@ -442,49 +442,49 @@ $('select[name=periodDiv]').on('change', function(){
   // console.log(periodDiv);
   dateinput2(periodDiv);
   maketable(pagerow, getPage);
-  sql(pagerow, getPage);
+  // sql(pagerow, getPage);
 })
 
 $('input[name=fromDate]').on('change', function(){
   var pagerow = 50;
   var getPage = 1;
   maketable(pagerow, getPage);
-  sql(pagerow, getPage);
+  // sql(pagerow, getPage);
 })
 
 $('input[name=toDate]').on('change', function(){
   var pagerow = 50;
   var getPage = 1;
   maketable(pagerow, getPage);
-  sql(pagerow, getPage);
+  // sql(pagerow, getPage);
 })
 
 $('select[name=progress]').on('change', function(){
   var pagerow = 50;
   var getPage = 1;
   maketable(pagerow, getPage);
-  sql(pagerow, getPage);
+  // sql(pagerow, getPage);
 })
 
 $('select[name=building]').on('change', function(){
   var pagerow = 50;
   var getPage = 1;
   maketable(pagerow, getPage);
-  sql(pagerow, getPage);
+  // sql(pagerow, getPage);
 })
 
 $('select[name=group]').on('change', function(){
   var pagerow = 50;
   var getPage = 1;
   maketable(pagerow, getPage);
-  sql(pagerow, getPage);
+  // sql(pagerow, getPage);
 })
 
 $('select[name=etcCondi]').on('change', function(){
   var pagerow = 50;
   var getPage = 1;
   maketable(pagerow, getPage);
-  sql(pagerow, getPage);
+  // sql(pagerow, getPage);
 })
 
 
@@ -492,7 +492,7 @@ $('input[name=cText]').on('keyup', function(){
   var pagerow = 50;
   var getPage = 1;
   maketable(pagerow, getPage);
-  sql(pagerow, getPage);
+  // sql(pagerow, getPage);
 })
 //---------조회버튼클릭평션 end and contractArray 펑션 시작--------------//
 

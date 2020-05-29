@@ -10,6 +10,8 @@ include $_SERVER['DOCUMENT_ROOT']."/svc/view/conn.php";
 $filtered_id = mysqli_real_escape_string($conn, $_POST['realContract_id']);
 // print_r($filtered_id);
 
+$_POST['pgetAmount'] = number_format($_POST['pgetAmount']);
+
 $sql = "
       UPDATE paySchedule2
       SET

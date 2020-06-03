@@ -1,7 +1,6 @@
 <?php
 header('Content-Type: text/html; charset=UTF-8');
-session_start();
-include $_SERVER['DOCUMENT_ROOT']."/svc/view/conn.php";
+
 include "ajax_getexpectedCondi_sql.php";
 
 $result = mysqli_query($conn, $sql);
@@ -12,6 +11,8 @@ while($row = mysqli_fetch_array($result)){
 }
 
 for ($i=0; $i < count($allRows); $i++) {
+  $allRows[$i]['count']= $row_count[0];
+
   if($allRows[$i]['div3']==='주식회사'){
     $allRows[$i]['cdiv3'] = '(주)';
   } elseif($allRows[$i]['div3']==='유한회사'){

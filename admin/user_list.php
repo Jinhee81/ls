@@ -30,7 +30,7 @@ require('view/admin_header.php');
           email,
           user_div,
           user_name,
-          damdangga_name,
+          manager_name,
           cellphone,
           lease_type,
           regist_channel,

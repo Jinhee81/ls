@@ -46,7 +46,7 @@ $signKey = array(
     'pay' =>  "djF5OHVoWjJVMWRoVWtNL3pGN0lDdz09",
     'bill' => "UjNLbnoyZEl2cVNNZDFMck4yMVNuZz09");
 
-$timestamp       = $SignatureUtil->getTimestamp();            // util에 의해서 자동생성
+// $timestamp       = $SignatureUtil->getTimestamp();            // util에 의해서 자동생성
 $orderNumber    = "leaseman_" . $timestamp;                   // 가맹점 주문번호(가맹점에서 직접 설정)
 // $price          = "1000";                                  // 상품가격(특수기호 제외, 가맹점에서 직접 설정)
 

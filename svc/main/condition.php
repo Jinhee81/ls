@@ -26,7 +26,17 @@ if($row[0] === 0){
 
 
 
-print_r($_SESSION);
+// print_r($_SESSION);
+
+$star = array(
+          array('star1', 20),
+          array('star2', 40),
+          array('star3', 60),
+          array('star4', 80),
+          array('star5', 120),
+          array('star6', 200),
+          array('star7', 300)
+        );
 
 date_default_timezone_set('Asia/Seoul');
 $currentDate = date('Y-m-d');
@@ -35,7 +45,6 @@ $sql_grade = "select gradename
               from user
               where id={$_SESSION['id']}";
 $result_grade = mysqli_query($conn, $sql_grade);
-
 $row_grade = mysqli_fetch_array($result_grade);
 
 $sql1 = "select count(*) from grade where user_id={$_SESSION['id']}";
@@ -63,8 +72,14 @@ if(strtotime($currentDate) > strtotime($row2[0])){
   if((int)$row_c_p[0] > 20){
       echo "<meta http-equiv='refresh' content='0; url=/svc/main/payment.php'>";
   }
+  for ($i=0; $i < count($star); $i++) {
+    if($row_grade[0]===$star[$i][0]){
+      if((int)$row_c_p[0] > $star[$i][1]){
+        echo "<meta http-equiv='refresh' content='0; url=/svc/main/payment.php'>";
+      }
+    }
+  }
 }
 
-//처음에 등급명으로 했다가 등급명보다 만료일이 더 중요해서 코드를 변경함
 
  ?>

@@ -1,4 +1,4 @@
-<!-- 청구설정 모달안 입금완료버튼 누르면 실행되는거 -->
+<!-- 납부예정화면에서 입금예정일 모달안 입금완료버튼 누르면 실행되는거 -->
 <?php
 header('Content-Type: text/html; charset=UTF-8');
 session_start();
@@ -53,6 +53,7 @@ if($result){
 }
 
 echo "<script>
-        location.href = 'contractEdit.php?page=schedule&id=$filtered_id';
+        alert('납부완료하였습니다.');
+        history.back();;
       </script>";
 ?>

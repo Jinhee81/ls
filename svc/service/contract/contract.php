@@ -75,7 +75,7 @@ while($row_sms = mysqli_fetch_array($result_sms)){
             <td width="8%" class="mobile">
               <input type="text" name="toDate" value="" class="form-control form-control-sm text-center dateType yyyymmdd"><!--codi4-->
             </td>
-            <td width="5%" class="mobile">
+            <td width="5%" class="">
               <select class="form-control form-control-sm selectCall" name="progress">
                 <option value="pAll">전체</option>
                 <option value="pIng" selected>현재</option>

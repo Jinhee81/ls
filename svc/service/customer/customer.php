@@ -156,7 +156,7 @@ while($row_sms = mysqli_fetch_array($result_sms)){
           <th scope="col" class="fixedHeader mobile"><input type="checkbox" id="allselect"></th>
           <th scope="col" class="fixedHeader">순번</th>
           <th scope="col" class="fixedHeader">구분</th>
-          <th scope="col" class="fixedHeader">성명</th>
+          <th scope="col" class="fixedHeader">성명/사업자명</th>
           <th scope="col" class="fixedHeader">연락처</th>
           <th scope="col" class="fixedHeader mobile">이메일</th>
           <th scope="col" class="fixedHeader mobile">특이사항</th>

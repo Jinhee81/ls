@@ -48,8 +48,8 @@ if(!$result){
       exit();
 }
 
-echo "<script>alert('저장하였습니다.');
-         location.href='smsSetting.php';
+echo "<script>
+         history.back();
       </script>";
 
 ?>

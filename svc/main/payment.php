@@ -1,4 +1,4 @@
-<!-- 도로 정기결제 가져옴-->
+<!-- 도로 정기결제 가져옴, 이 파일이 엄청 중요함, 이걸로 작업 예정, 절대 지우면 안됌 ㅠ-->
 
 <?php
 
@@ -18,9 +18,9 @@ include $_SERVER['DOCUMENT_ROOT']."/svc/view/service_header2.php";
 include $_SERVER['DOCUMENT_ROOT']."/svc/view/conn.php";
 
 
-// require_once($_SERVER['DOCUMENT_ROOT'].'/svc/main/INIStdPayUtil.php');
-// require_once($_SERVER['DOCUMENT_ROOT'].'/svc/main/sha256.inc.php');
-// $SignatureUtil = new INIStdPayUtil();
+require_once($_SERVER['DOCUMENT_ROOT'].'/svc/main/INIStdPayUtil.php');
+require_once($_SERVER['DOCUMENT_ROOT'].'/svc/main/sha256.inc.php');
+$SignatureUtil = new INIStdPayUtil();
 
 
  //############################################
@@ -46,7 +46,7 @@ $signKey = array(
     'pay' =>  "djF5OHVoWjJVMWRoVWtNL3pGN0lDdz09",
     'bill' => "UjNLbnoyZEl2cVNNZDFMck4yMVNuZz09");
 
-// $timestamp       = $SignatureUtil->getTimestamp();            // util에 의해서 자동생성
+$timestamp       = $SignatureUtil->getTimestamp();            // util에 의해서 자동생성
 $orderNumber    = "leaseman_" . $timestamp;                   // 가맹점 주문번호(가맹점에서 직접 설정)
 // $price          = "1000";                                  // 상품가격(특수기호 제외, 가맹점에서 직접 설정)
 
@@ -166,14 +166,16 @@ $pay1 = "
         &nbsp;<span class='badge badge-info monthonly'>바로가기</span>";
 $pay2 = "
         &nbsp;<span class='badge badge-danger monthly'>바로가기</span>";
+$pay3 = "
+        &nbsp;<span class='badge badge-info coin'>바로가기</span>";
 $payAmount = array(
-                array(1, 20, 0, 0),
-                array(2, 40, 14900, 11900),
-                array(3, 60, 24900, 17900),
-                array(4, 80, 29900, 23900),
-                array(5, 120, 44900, 35900),
-                array(6, 200, 59900, 47900),
-                array(7, 300, 74900, 59900)
+                array(1, 20, 0, 0, 0, 0),
+                array(2, 40, 14900, 12900, 11900, 9900),
+                array(3, 60, 24900, 19900, 17900, 14900),
+                array(4, 80, 29900, 25900, 23900, 19900),
+                array(5, 120, 44900, 38900, 35900, 29900),
+                array(6, 200, 59900, 51900, 47900, 39900),
+                array(7, 300, 74900, 59900, 49900)
             );
 
 $currentDate = date('Y-m-d');
@@ -188,6 +190,7 @@ $fordays = $currentDateDate - $startDateDate;
 $fordays2 = round($fordays / (60*60*24));
 
 $month1later = date('Y-m-d', strtotime($currentDate.'+1 month -1 days'));
+$month3later = date('Y-m-d', strtotime($currentDate.'+3 month -1 days'));
 $year1later = date('Y-m-d', strtotime($currentDate.'+1 year -1 days'));
 
 // echo 666;
@@ -199,179 +202,19 @@ $year1later = date('Y-m-d', strtotime($currentDate.'+1 year -1 days'));
   } */
 </style>
 
-<section class="container">
-  <div class="jumbotron">
-    <h1 class="display-4">이용요금입니다</h1>
-    <p class="lead">
-    (1)계약건수에 따라 등급을 선택하세요 (계약건수는 통상적으로 방 개수를 말합니다.)<br>
-    (2)<?=$_SESSION['email']?>님의 현재계약건수는 <?=$row[0]?>건 이며, 회원가입한지 <?=$fordays2?>일 되었습니다. (회원가입후 30일 및 계약건수 20건 이하까지 무료이용)
-    <hr class="my-4">
-  </div>
-</section>
 
- <section class="container text-center" style="max-width:1000px;">
-  <table class="table table-bordered text-center">
-    <tr>
-      <th rowspan="2">등급</th>
-      <th rowspan="2">건수</th>
-      <th colspan="2">이용요금</th>
-    </tr>
-    <tr>
-      <th>1개월 구매하기</th>
-      <th>1개월 구독하기</th>
-    </tr>
-    <tr>
-      <td><i class="fas fa-star"></i>(스타)1</td>
-      <td><?=$payAmount[0][1]?>건</td>
-      <td><?=$payAmount[0][2]?>원</td>
-      <td><?=$payAmount[0][3]?>원</td>
-    </tr>
-    <tr>
-      <td><i class="fas fa-star"></i>(스타)2
-        <input type="hidden" name="grade_star" value="스타2">
-        <input type="hidden" name="gradename" value="star2">
-        <input type="hidden" name="1monthAmount" value="<?=$payAmount[1][2]?>">
-        <input type="hidden" name="monthlyAmount" value="<?=$payAmount[1][3]?>">
-      </td>
-      <td><?=$payAmount[1][1]?>건</td>
-      <td><?=number_format($payAmount[1][2])?>원
-        <?php
-        if((int)$row[0]<=(int)$payAmount[1][1]){
-          echo $pay1;
-        }
-         ?>
-      </td>
-      <td><?=number_format($payAmount[1][3])?>원
-        <?php
-        if((int)$row[0]<=(int)$payAmount[1][1]){
-          echo $pay2;
-        }
-         ?>
-      </td>
-    </tr>
-    <tr>
-      <td><i class="fas fa-star"></i>(스타)3
-        <input type="hidden" name="grade_star" value="스타3">
-        <input type="hidden" name="gradename" value="star3">
-        <input type="hidden" name="1monthAmount" value="<?=$payAmount[2][2]?>">
-        <input type="hidden" name="monthlyAmount" value="<?=$payAmount[2][3]?>">
-      </td>
-      <td><?=$payAmount[2][1]?>건</td>
-      <td><?=number_format($payAmount[2][2])?>원
-        <?php
-        if((int)$row[0]<=(int)$payAmount[2][1]){
-          echo $pay1;
-        }
-         ?>
-      </td>
-      <td><?=number_format($payAmount[2][3])?>원
-        <?php
-        if((int)$row[0]<=(int)$payAmount[2][1]){
-          echo $pay2;
-        }
-         ?>
-      </td>
-    </tr>
-    <tr>
-      <td><i class="fas fa-star"></i>(스타)4
-      <input type="hidden" name="grade_star" value="스타4">
-        <input type="hidden" name="gradename" value="star4">
-        <input type="hidden" name="1monthAmount" value="<?=$payAmount[3][2]?>">
-        <input type="hidden" name="monthlyAmount" value="<?=$payAmount[3][3]?>">
-      </td>
-      <td><?=$payAmount[3][1]?>건</td>
-      <td><?=number_format($payAmount[3][2])?>원
-        <?php
-        if((int)$row[0]<=(int)$payAmount[3][1]){
-          echo $pay1;
-        }
-         ?>
-      </td>
-      <td><?=number_format($payAmount[3][3])?>원
-        <?php
-        if((int)$row[0]<=(int)$payAmount[3][1]){
-          echo $pay2;
-        }
-         ?>
-      </td>
-    </tr>
-    <tr>
-      <td><i class="fas fa-star"></i>(스타)5
-      <input type="hidden" name="grade_star" value="스타5">
-        <input type="hidden" name="gradename" value="star5">
-        <input type="hidden" name="1monthAmount" value="<?=$payAmount[4][2]?>">
-        <input type="hidden" name="monthlyAmount" value="<?=$payAmount[4][3]?>">
-      </td>
-      <td><?=$payAmount[4][1]?>건</td>
-      <td><?=number_format($payAmount[4][2])?>원
-        <?php
-        if((int)$row[0]<=(int)$payAmount[4][1]){
-          echo $pay1;
-        }
-         ?>
-      </td>
-      <td><?=number_format($payAmount[4][3])?>원
-        <?php
-        if((int)$row[0]<=(int)$payAmount[4][1]){
-          echo $pay2;
-        }
-         ?>
-      </td>
-    </tr>
-    <tr>
-      <td><i class="fas fa-star"></i>(스타)6
-        <input type="hidden" name="grade_star" value="스타6">
-        <input type="hidden" name="gradename" value="star6">
-        <input type="hidden" name="1monthAmount" value="<?=$payAmount[5][2]?>">
-        <input type="hidden" name="monthlyAmount" value="<?=$payAmount[5][3]?>">
-      </td>
-      <td><?=$payAmount[5][1]?>건</td>
-      <td><?=number_format($payAmount[5][2])?>원
-        <?php
-        if((int)$row[0]<=(int)$payAmount[5][1]){
-          echo $pay1;
-        }
-         ?>
-      </td>
-      <td><?=number_format($payAmount[5][3])?>원
-        <?php
-        if((int)$row[0]<=(int)$payAmount[5][1]){
-          echo $pay2;
-        }
-         ?>
-      </td>
-    </tr>
-    <tr>
-      <td><i class="fas fa-star"></i>(스타)7
-        <input type="hidden" name="grade_star" value="스타7">
-        <input type="hidden" name="gradename" value="star7">
-        <input type="hidden" name="1monthAmount" value="<?=$payAmount[6][2]?>">
-        <input type="hidden" name="monthlyAmount" value="<?=$payAmount[6][3]?>">
-      </td>
-      <td><?=$payAmount[6][1]?>건</td>
-      <td><?=number_format($payAmount[6][2])?>원
-        <?php
-        if((int)$row[0]<=(int)$payAmount[6][1]){
-          echo $pay1;
-        }
-         ?>
-      </td>
-      <td><?=number_format($payAmount[6][3])?>원
-        <?php
-        if((int)$row[0]<=(int)$payAmount[6][1]){
-          echo $pay2;
-        }
-         ?>
-      </td>
-    </tr>
-  </table>
-  <p>
-    · 구매하신 상품은 구매와 동시에 선과금되며 사용이력에 따라 일부 환불이 불가할 수 있습니다.<br>
-    · 구매하신 상품은 하단 문의하기 게시판에 상세내용 및 결제방법, 상품해지를 신청할 수 있습니다.<br>
-    · 자동결제 상품을 해지하신 경우 해당 서비스 만료일까지 사용하실 수 있습니다. <br>
-    <!-- · 결제 관련 문의는 하단 <span class='badge badge-warning'>결제문의</span> 또는 전화(031-879-8003)로 문의하시기 바랍니다.<br> -->
-  </p>
-</section>
+<div class="">
+  <?php if($_GET['page']==='regular'){
+    include "payment-regular.php";
+  } else if($_GET['page']==='coin'){
+    include "payment-coin.php";
+  } else {
+    include "payment-regular.php";
+  }
+  ?>
+</div>
+
+
 
 <?php include $_SERVER['DOCUMENT_ROOT']."/svc/view/service_footer.php";?>
 
@@ -405,12 +248,13 @@ var g_price = $("#price").val();
 var signKey = $("#signKey").val();
 var today = <?=json_encode($currentDate)?>;
 var month1later = <?=json_encode($month1later)?>;
+var month3later = <?=json_encode($month3later)?>;
+var year1later = <?=json_encode($year1later)?>;
 var weekDate = <?=json_encode($weekDate)?>;
 // 현재 host
 var http_host = document.location.hostname;
 // console.log(http_host);
 
-// var year1later = <?=json_encode($year1later)?>;
 
 function goCategoryPage(a, b, c, d, e, f){
     var frm = formCreate('gradeAdd', 'post', 'p_gradeAdd.php','');
@@ -439,11 +283,26 @@ function isMobile() {
 $('.monthonly').on('click', function(){
 
     var curTr = $(this).closest('tr');
-    var amount = curTr.children('td:eq(0)').children('input[name=1monthAmount]').val();
+    var amount = $(this).parent().children('input[name=amount]').val();
+    var month = $(this).parent().children('input[name=month]').val();
     var gradename = curTr.children('td:eq(0)').children('input[name=gradename]').val();
     var grade_star   = curTr.children('td:eq(0)').children('input[name=grade_star]').val();
+
+    var pay, laterdate;
+
+    if(month==='1'){
+      laterdate = month1later;
+      pay = confirm(laterdate + '까지 1개월 이용 가능합니다. 결제 진행하시겠습니까?');
+    } else if(month==='3'){
+      amount = Number(amount)*3;
+      laterdate = month3later;
+      pay = confirm(laterdate + '까지 이용 가능합니다. 결제 금액은 3개월치 '+amount.format()+'원입니다. 결제 진행하시겠습니까?');
+    } else if(month==='12'){
+      amount = Number(amount)*12;
+      laterdate = year1later;
+      pay = confirm(laterdate + '까지 이용 가능합니다. 결제 금액은 12개월치 '+amount.format()+'원입니다. 결제 진행하시겠습니까?');
+    }
     var paydiv = 'monthonly';
-    var pay = confirm(month1later + '까지 1개월 이용 가능합니다. 결제 진행하시겠습니까?');
     var goodsName = grade_star;
     var merchantData = $('#merchantData').val();
     var gopaymethod = $('#gopaymethod').val();
@@ -457,7 +316,7 @@ $('.monthonly').on('click', function(){
         data    : "orderNumber="+orderNumber+"&timestamp="+timestamp+"&price="+amount,
         success : function(data) {
             console.log(gopaymethod);
-            merchantData += '&paydiv=' + paydiv + '&today='+today + '&month1later='+month1later +'&amount='+amount + '&gradename='+gradename;
+            merchantData += '&paydiv=' + paydiv + '&today='+today + '&laterdate='+laterdate +'&amount='+amount + '&gradename='+gradename + '&month='+month;
 
             // merchantData = '&today='+today;
             // merchantData = '&month1later='+month1later;
@@ -506,16 +365,19 @@ $('.monthonly').on('click', function(){
 
 $('.monthly').on('click', function(){
     var curTr = $(this).closest('tr');
-    var amount = curTr.children('td:eq(0)').children('input[name=monthlyAmount]').val();
+    var amount = $(this).parent().children('input[name=amount]').val();
     var paydiv = 'monthly'
     // console.log(monthAmount);
 
     var gradename = curTr.children('td:eq(0)').children('input[name=gradename]').val();
     var grade_star   = curTr.children('td:eq(0)').children('input[name=grade_star]').val();
     var pay = confirm('정기결제를 클릭하시면 30일 간격으로 '+ amount.format() +'원이 카드자동결제(구독)가 됩니다. 결제 진행하시겠습니까?');
+
     var goodsName = grade_star;
     // var buyername = "노양후";
     var merchantData = $('#merchantData').val();
+    var laterdate = month1later;
+    var month = 1;
 
     if(!pay) return;
 
@@ -526,7 +388,7 @@ $('.monthly').on('click', function(){
         success : function(data) {
             console.log(data);
             // merchantData += '&paydiv=' + paydiv + '&today='+today + '&month1later='+month1later +'&amount='+amount + '&gradename='+gradename + '&buyername='+buyername;
-            merchantData += '&paydiv=' + paydiv + '&today='+today + '&month1later='+month1later +'&amount='+amount + '&gradename='+gradename;
+            merchantData += '&paydiv=' + paydiv + '&today='+today + '&laterdate='+laterdate +'&amount='+amount + '&gradename='+gradename + '&month='+month;
 
             // merchantData += '&paydiv'=paydiv;
             // merchantData += '&today'=today;
@@ -565,6 +427,67 @@ $('.monthly').on('click', function(){
 })
       //alert("goods_type="+g_type+"&goods_price="+g_price+"&goods_name="+g_name+"&goods_level="+g_level+"&oid="+orderNumber);
 
+
+$('.coin').on('click', function(){
+
+    var curTr = $(this).closest('tr');
+    var amount = curTr.children('td:eq(0)').children('input[name=coinamount]').val();
+    var gradename = 'coin';
+    var grade_star = 'coin';
+    var paydiv = 'coin';
+    var goodsName = coin;
+    var merchantData = $('#merchantData').val();
+    var gopaymethod = $('#gopaymethod').val();
+
+   // alert(http_host);
+
+
+    $.ajax({
+        url     : "https://" + http_host + "/svc/main/stdpay3/INIStdPaySample/get_sign2.php",
+        data    : "orderNumber="+orderNumber+"&timestamp="+timestamp+"&price="+amount,
+        success : function(data) {
+            console.log(gopaymethod);
+            merchantData += '&paydiv=' + paydiv + '&today='+today + '&month1later='+month1later +'&amount='+amount + '&gradename='+gradename;
+
+            // merchantData = '&today='+today;
+            // merchantData = '&month1later='+month1later;
+            // merchantData = '&amount='+amount;
+            // merchantData = '&gradename='+gradename;
+
+            //alert(merchantData);
+
+            $("#mid").val("<?=$mid['pay']?>");
+            $("#mKey").val("<?=$mKey['pay']?>");
+            $("#merchantData").val(merchantData);
+            $("#signature").val(data);
+            $("#price").val(amount);
+            $("#goods_name").val(goodsName);
+            $("#goodsname").val(goodsName);
+            $("#gradename").val(gradename);
+            $("#paydiv").val(paydiv);
+            $("#month1later").val(month1later);
+            $("#today").val(today);
+            $("#buyername").val("<?=$_SESSION['user_name']?>");
+
+            $("#acceptmethod").val("hpp(1):vbank(" + weekDate + ")");   // 결제수단 추가
+
+            cardShow();
+             paybtn();
+
+        },
+
+        error:function(request,status,error){
+             alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+          }
+
+        //  error   : function() {
+        //  alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+        // }
+    });
+  // if(pay){
+  //   goCategoryPage(paydiv, today, month1later, year1later, amount, gradename);
+  // }
+})
 
 </script>
 </body>

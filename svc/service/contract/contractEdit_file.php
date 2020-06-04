@@ -58,6 +58,7 @@
     </table>
     <small>(1)파일등록할수 있는 확장자는 'hwp', 'xls', 'xlsx', 'doc', 'docx', 'pdf', 'jpg', 'jpeg', 'gif', 'png', 'txt', 'ppt', 'pptx', 'tiff'입니다. <br>
       (2)파일은 5MB까지만 업로드 가능합니다.<br>
+      (3)아이폰의 사진은 파일에서 jpg확장자로 변환후 등록하여주세요.
     </small>
   </div>
 </div>

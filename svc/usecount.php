@@ -87,9 +87,11 @@ $row_tax = mysqli_fetch_array($result_tax);
 
 $sql_grade = "select
                 gradename, executivedate, startdate, enddate, formonth, payamount,
-                ordered
+                ordered,
+                paydiv, payhow
               from grade
               where user_id={$filtered_id}
+              order by ordered desc
               ";
 // echo $sql_grade;
 
@@ -110,6 +112,18 @@ for ($i=0; $i < count($gradeArray); $i++) {
   } else {
     $gradeArray[$i]['gradename'] = str_replace("star", $replaceStar, $gradeArray[$i]['gradename']);
     $gradeArray[$i]['gradename'] = str_replace("(s)", $replaceSubscription, $gradeArray[$i]['gradename']);
+  }
+
+  if($gradeArray[$i]['payhow']==='Card'){
+    $gradeArray[$i]['payhow'] = '신용카드';
+  } else if($gradeArray[$i]['payhow']==='VBank'){
+    $gradeArray[$i]['payhow'] = '가상계좌';
+  } else if($gradeArray[$i]['payhow']==='DirectBank'){
+    $gradeArray[$i]['payhow'] = '계좌이체';
+  } else if($gradeArray[$i]['payhow']==='Auth'){
+    $gradeArray[$i]['payhow'] = '신용카드';
+  } else {
+    $gradeArray[$i]['payhow'];
   }
 }
 
@@ -150,7 +164,7 @@ for ($i=0; $i < count($gradeArray); $i++) {
       </tr>
   </table>
 
-  <table class="table mt-5 table-bordered text-center">
+  <table class="table mt-5 table-bordered text-center table-sm">
       <tr class="table-danger">
         <td>등급명</td>
         <td>결제일</td>
@@ -158,6 +172,7 @@ for ($i=0; $i < count($gradeArray); $i++) {
         <td>종료일</td>
         <td>개월수</td>
         <td>결제금액</td>
+        <td>결제방법</td>
         <td>회차</td>
       </tr>
       <?php
@@ -171,6 +186,7 @@ for ($i=0; $i < count($gradeArray); $i++) {
           <td><?=$gradeArray[$i]['enddate']?></td>
           <td><?=$gradeArray[$i]['formonth'].'개월'?></td>
           <td><?=number_format($gradeArray[$i]['payamount']).'원'?></td>
+          <td><?=$gradeArray[$i]['payhow']?></td>
           <td><?=$gradeArray[$i]['ordered'].'회차'?></td>
         </tr>
       <?php

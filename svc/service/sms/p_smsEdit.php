@@ -29,8 +29,8 @@ if(!$result){
       exit();
 }
 
-echo "<script>alert('수정하였습니다.');
-         location.href='smsSetting.php';
+echo "<script>
+         history.back();
       </script>";
 
 ?>

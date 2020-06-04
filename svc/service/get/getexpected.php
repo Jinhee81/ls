@@ -72,6 +72,7 @@ while($row_sms = mysqli_fetch_array($result_sms)){
             <td width="6%" class="mobile">
               <select class="form-control form-control-sm selectCall" name="periodDiv">
                 <option value="allDate">--</option>
+                <option value="untilNowMonth" selected>당월까지</option>
                 <option value="nowMonth">당월</option>
                 <option value="pastMonth">전월</option>
                 <option value="1pastMonth">1개월전</option>
@@ -329,7 +330,7 @@ function maketable(x,y){
           returns += '<td class="mobile">'+value.monthCount+'</td>';
           returns += '<td class="mobile"><label class="mb-0">' + value.pStartDate+'</label><br>';
           returns += '<label class="mb-0">' + value.pEndDate+'</label></td>';
-          returns += '<td><p class="mb-0 pink">'+value.pExpectedDate+'</p>';
+          returns += '<td><p class="modalAsk mb-0" data-toggle="modal" data-target="#pPay">'+value.pExpectedDate+'</p>';
           returns += '<input type="text" name="executiveDate" class="form-control form-control-sm grey text-center" value="'+value.pExpectedDate+'">';
           returns += '<td class="text-right pr-3 mobile"><label class="mb-0">'+value.pAmount+'</label><br>';
           returns += '<label class="mb-0">'+value.pvAmount+'</label></td>';
@@ -464,6 +465,88 @@ $(document).ready(function(){
       if(moveCheck){
         location.href='/svc/service/sms/smsSetting.php';
       }
+    })
+
+    $(document).on('click', '.modalAsk', function(){ //청구번호클릭하는거(모달클릭)
+
+      var currow2 = $(this).closest('tr');
+      var payid = currow2.find('td:eq(0)').children('input[name=psid]').val();
+      // console.log(payNumber);
+      var rid = currow2.find('td:eq(0)').children('input[name=rid]').val();
+
+      var payamount = currow2.find('td:eq(10)').children('a').text();
+      var paykind = currow2.find('td:eq(11)').children().val();
+      var pExpectedDate = $(this).text();
+
+      // console.log(payid, payamount, paykind, pExpectedDate);
+
+      $('.payid').html(payid);
+      $('input[name=modalpaydate]').val(pExpectedDate);
+      $('input[name=modalexecutivedate]').val(pExpectedDate);
+      $('input[name=modalpayamount]').val(payamount);
+      $('input[name=modalexecutiveamount]').val(payamount);
+
+      if(paykind==='계좌'){
+        $('option[name=kind1]').attr('selected',true);
+      } else if(paykind==='현금'){
+        $('option[name=kind2]').attr('selected',true);
+      } else if(paykind==='카드'){
+        $('option[name=kind3]').attr('selected',true);
+      }
+
+
+      $('.getExecute').on('click', function(){ //납부완료버튼(모달안버튼) 클릭
+
+        var aa1 = 'payScheduleInput';
+        var bb1 = 'p_getPayScheduleGetAmountInput.php';
+
+
+        var ppayKind = $('#payKind').val(); //납부구분
+
+        var pgetDate = $('input[name=modalexecutivedate]').val(); //납부일
+
+        var pgetAmount = $('input[name=modalexecutiveamount]').val(); //납부액
+
+        var pExpectedAmount = $('input[name=modalpayamount]').val(); //예정금액
+
+        // console.log(pExpectedAmount);
+
+        if(pgetAmount != pExpectedAmount){
+          alert('납부액과 예정금액은 같아야 합니다.');
+          return false;
+        }
+
+        goCategoryPage(aa1, bb1, payid, ppayKind, pgetDate, pgetAmount, rid);
+
+        function goCategoryPage(a, b, c, d, e, f, g){
+          var frm = formCreate(a, 'post', b,'');
+          frm = formInput(frm, 'realContract_id', g);
+          frm = formInput(frm, 'payid', c);
+          frm = formInput(frm, 'paykind', d);
+          frm = formInput(frm, 'pgetdate', e);
+          frm = formInput(frm, 'pgetAmount', f);
+          formSubmit(frm);
+        }
+      })
+
+
+      // $('.getExecuteBack').on('click', function(){ //청구취소(삭제)버튼(모달안버튼) 클릭
+      //   var aa1 = 'payScheduleDrop';
+      //   var bb1 = '/svc/service/contract/p_payScheduleDrop.php';
+      //
+      //   // console.log(pid, contractId);
+      //
+      //   goCategoryPage(aa1, bb1, rid, payid);
+      //
+      //   function goCategoryPage(a, b, c, d){
+      //     var frm = formCreate(a, 'post', b,'');
+      //     frm = formInput(frm, 'realContract_id', c);
+      //     frm = formInput(frm, 'payid', d);
+      //     formSubmit(frm);
+      //   }
+      //
+      // })//납부예정화면에서는 청구취소는 일단 없애자, 햇깔리니깐
+
     })
 
 })//---------document.ready function end & 각종 조회 펑션 시작--------------//

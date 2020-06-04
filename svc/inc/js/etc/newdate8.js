@@ -71,5 +71,10 @@ function dateinput2(x){ //from, to date 입력()
     $('input[name="toDate"]').val(today);
   }
 
+  if(x === 'untilNowMonth'){
+    var fromdate = $('input[name="fromDate"]').val('');
+    var todate = $('input[name="toDate"]').val(todayMonthLast);
+  }
+
   return fromdate, todate;
 }

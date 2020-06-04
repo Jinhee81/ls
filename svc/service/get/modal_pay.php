@@ -68,7 +68,7 @@
       </div>
       <div class="modal-footer">
         <button type='button' class='btn btn-secondary btn-sm mr-0' data-dismiss='modal'>닫기</button>
-        <button type='button' class='btn btn-warning btn-sm mr-0 getExecuteBack'>청구취소</button>
+        <!-- <button type='button' class='btn btn-warning btn-sm mr-0 getExecuteBack'>청구취소</button> -->
         <button type='button' class='btn btn-primary btn-sm getExecute'>납부완료</button>
       </div>
     </div>

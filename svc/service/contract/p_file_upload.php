@@ -46,7 +46,6 @@ if(isset($_FILES['upfile']) && $_FILES['upfile']['name'] !== ""){
     // mysqli_stmt_close($stmt);
     if($result){
       echo "<script>
-              alert('파일저장에 성공하였습니다.');
               location.href='contractEdit.php?page=file&id=".$filtered_id."';
             </script>";
     } else {

@@ -28,7 +28,7 @@ $sql = "
 $result = mysqli_query($conn, $sql);
 
 if(!$result){
-  echo "<script>alert('저장과정에 문제가 생겼습니다. 관리자에게 문의하세요.(1)');
+  echo "<script>alert('저장과정에 문제가 생겼습니다. 하단에 표시된 이메일 info@leaseman.co.kr로 에러내용을 화면 캡쳐하여 보내주세요.(1)');
         history.back();
         </script>";
   error_log(mysqli_error($conn));
@@ -64,6 +64,7 @@ if(!$result){
              set paySchedule2_id = {$payid}
              where id = {$id}
             ";
+    // echo $sql3;
     $result3 = mysqli_query($conn, $sql3);
 
     if($result3){
@@ -72,14 +73,14 @@ if(!$result){
             </script>";
       exit();
     } else {
-      echo "<script>alert('저장과정에 문제가 생겼습니다. 관리자에게 문의하세요.(2)');
+      echo "<script>alert('저장과정에 문제가 생겼습니다. 하단에 표시된 이메일 info@leaseman.co.kr로 에러내용을 화면 캡쳐하여 보내주세요.(3)');
             history.back();
             </script>";
       error_log(mysqli_error($conn));
       exit();
     }
   } else {
-    echo "<script>alert('저장과정에 문제가 생겼습니다. 관리자에게 문의하세요.(2)');
+    echo "<script>alert('저장과정에 문제가 생겼습니다. 하단에 표시된 이메일 info@leaseman.co.kr로 에러내용을 화면 캡쳐하여 보내주세요.(2)');
           history.back();
           </script>";
     error_log(mysqli_error($conn));

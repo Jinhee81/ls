@@ -80,6 +80,8 @@ var taxArrayEle = [];
 
       if(contractDiv==='room'){
         comment = "기간 ("+startdate+"~"+enddate+", "+monthcount+"개월 이용료)";//비고
+      } else {
+        comment = '';
       }
 
       var acceptdiv = currow.find("td:eq(6)").text().trim();//입금구분

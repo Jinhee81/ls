@@ -17,7 +17,7 @@ WHERE (taxselect != ''
 	OR taxselect != NULL)
 	AND taxDATE = '".$tdate."'";
 
-echo $sql2;
+// echo $sql2;
 
 $result2 = mysqli_query($conn, $sql2);
 $row2 = mysqli_fetch_array($result2);
@@ -28,20 +28,24 @@ a.bName,
 a.cnumber1,
 a.cnumber2,
 a.cnumber3,
+a.popbillid,
 b.email,
 b.user_name,
 b.cellphone,
+
 CURDATE() AS today
 FROM building a,
 user b
 WHERE a.user_id = b.id
 AND a.user_id = ".$_SESSION['id']."";
 
-echo $sql3;
+// echo "<br><br><br>";
+//  echo $sql3;
 
 $result3 = mysqli_query($conn, $sql3);
 $row3 = mysqli_fetch_array($result3);
 
+// print_r($row3);
 //사업자 번호
 $sa = str_replace('-','',$a[0][2]->사업자번호);
 
@@ -52,7 +56,7 @@ $tel = str_replace('-','',$a[0][8]->연락처);
 $count = $row2['count'];
 
 //회사번호
-$cnum = $row3['cnum'];
+$cnum = $row3['cnumber1'].$row3['cnumber2'].$row3['cnumber3'];
 
 //선택한 날짜
 $idate = str_replace('-','', $_POST['taxDate']);
@@ -66,21 +70,49 @@ $bname = $row3['bName'];
 //이메일
 $bemail = $row3['email'];
 
+//팝빌아이디
+$popbillid = $row3['popbillid'];
+
 //이름
 $username = $row3['user_name'];
 
 //휴대폰번호
 $phone = $row3['cellphone'];
 
-//주소
-$addr = $TaxinvoiceService->GetCorpInfo($cnum,null);
+//아이디 체크
+$checkId = $TaxinvoiceService->CheckID($popbillid);
+// print_r($checkId);
+
+if($checkId->code == 0){
+    echo "<script>alert('팝빌 아이디를 확인해 주세요.');history.back();</script>";
+    exit();
+}
+
+//공급자 정보
+$corpinfo = $TaxinvoiceService->GetCorpInfo($cnum,$popbillid);
+
+if($corpinfo->corpName == null || $corpinfo->corpName == ''){
+    echo "<script>alert('사업자 번호와 팝빌 아이디를 확인해 주세요.');history.back();</script>";
+    exit();
+}
+
+// 공인인증서 유효성 확인
+$gong = $TaxinvoiceService->checkCertValidation($cnum);
+
+if (!$gong) {
+	// 팝빌 공인인증서가 등록이 되어있지 않을 경우
+	if(strpos($gong, '-99910004')){
+		echo "<script>alert('팝빌 사이트에 공인인증서를 등록해야 전자세금계산서 발행이 가능합니다.');history.back();</script>";
+		exit();
+	}
+}
 
 
 for ($i=0; $i < count($a); $i++) {
 
     $GLOBALS['count'] += 1;
     // 팝빌회원 사업자번호, '-' 제외 10자리
-    $testCorpNum = $cnum;
+    // $testCorpNum = $cnum;
 
     // 팝빌회원 아이디
     $testUserID = '';
@@ -139,31 +171,31 @@ for ($i=0; $i < count($a); $i++) {
      ************************************************************/
 
     // [필수] 공급자 사업자번호
-    $Taxinvoice->invoicerCorpNum = $testCorpNum;
+    $Taxinvoice->invoicerCorpNum = $cnum;
 
     // 공급자 종사업장 식별번호, 4자리 숫자 문자열
     $Taxinvoice->invoicerTaxRegID = '';
 
     // [필수] 공급자 상호
-    $Taxinvoice->invoicerCorpName = $bname;
+    $Taxinvoice->invoicerCorpName = $corpinfo->corpName;
 
     // [필수] 공급자 문서관리번호, 최대 24자리 숫자, 영문, '-', '_' 조합으로 사업자별로 중복되지 않도록 구성
     $Taxinvoice->invoicerMgtKey = $invoicerMgtKey;
 
     // [필수] 공급자 대표자성명
-    $Taxinvoice->invoicerCEOName = $username;
+    $Taxinvoice->invoicerCEOName = $corpinfo->ceoname;
 
     // 공급자 주소
-    $Taxinvoice->invoicerAddr = $addr->addr;
+    $Taxinvoice->invoicerAddr = $corpinfo->addr;
 
     // 공급자 종목
-    $Taxinvoice->invoicerBizClass = $addr->bizClass;
+    $Taxinvoice->invoicerBizClass = $corpinfo->bizClass;
 
     // 공급자 업태
-    $Taxinvoice->invoicerBizType = $addr->bizType;
+    $Taxinvoice->invoicerBizType = $corpinfo->bizType;
 
     // 공급자 담당자 성명
-    $Taxinvoice->invoicerContactName = $username;
+    $Taxinvoice->invoicerContactName = $corpinfo->ceoname;
 
     // 공급자 담당자 메일주소
     $Taxinvoice->invoicerEmail = $bemail;
@@ -332,10 +364,10 @@ for ($i=0; $i < count($a); $i++) {
     // $Taxinvoice->addContactList[1]->email = 'test@test.com';  // 이메일주소
     // $Taxinvoice->addContactList[1]->contactName	= '링크허브'; // 담당자명
 //Issue('1908600646', 'SELL', '20200324-01', '', null, false, null);
-//RegistIssue($testCorpNum, $Taxinvoice, $testUserID,
+//RegistIssue($cnum, $Taxinvoice, $testUserID,
 //$writeSpecification, $forceIssue, $memo, $emailSubject, $dealInvoiceMgtKey);
     try {
-        $result = $TaxinvoiceService->RegistIssue($testCorpNum, $Taxinvoice, $testUserID,
+        $result = $TaxinvoiceService->RegistIssue($cnum, $Taxinvoice, $testUserID,
         $writeSpecification, $forceIssue, $memo, $emailSubject, $dealInvoiceMgtKey);
         $code = $result->code;
         $message = $result->message;
@@ -347,8 +379,8 @@ for ($i=0; $i < count($a); $i++) {
     }
 ?>
 
-코드 : <?php echo $code ?>
-에러 메세지 : <?php echo $message ?>
+<!-- 코드 : php echo $code
+에러 메세지 : php echo $message -->
 
 <!-- 세금계산서일자 또는 현금영수증 일자 넣는거 -->
 <!-- 팝빌 연동 api가 들어가는데, 여기서 중요한것은 공극받는자(세입자)의 사업자번호가 오류일 경우에 그것에 대한 반응 (alert, 사업자번호가 올바르지 않습니다) 및
@@ -389,9 +421,12 @@ if ($code == 1) {
   }
 
   echo "<script>alert('발행완료하였습니다.');
+  history.back();
   </script>";
+  exit();
 } else {
 echo "<script>alert('" . $message . "');
+history.back();
   </script>";
 error_log(mysqli_error($conn));
 exit();

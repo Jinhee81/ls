@@ -197,9 +197,9 @@ while($row_sms = mysqli_fetch_array($result_sms)){
 
 </section>
 
-<section class="container" id="sql">
+<!-- <section class="container" id="sql">
 
-</section>
+</section> -->
 
 <?php
 include $_SERVER['DOCUMENT_ROOT']."/svc/service/sms/modal_sms1.php";
@@ -240,8 +240,18 @@ include $_SERVER['DOCUMENT_ROOT']."/svc/service/sms/modal_sms2.php";
 
 function sql(x,y){
   var form = $('form').serialize();
-  var getCid = window.location.search.match(/customerId=([^&]*)/)[1];
-  var getProgress = window.location.search.match(/progress=([^&]*)/)[1];
+  var getCid, getProgress;
+
+  var a = location.search.split('customerId=');
+  var b = location.search.split('progress=');
+  // console.log(a);
+
+  if(a!=''){
+    getCid = window.location.search.match(/customerId=([^&]*)/)[1];
+  }
+  if(b!=''){
+    getProgress = window.location.search.match(/progress=([^&]*)/)[1];
+  }
 
   if(getProgress==='pAll'){
     $('select[name=progress]').val('pAll').prop('selected', true);
@@ -264,11 +274,18 @@ function sql(x,y){
 
 function maketable(x,y){
   var form = $('form').serialize();
-  // var getCid = location.search.split('customerId=')[1];
-  // var getProgress = location.search.split('progress=')[1];
-var getCid = window.location.search.match(/customerId=([^&]*)/)[1];
-var getProgress = window.location.search.match(/progress=([^&]*)/)[1];
-  console.log(getCid, getProgress);
+  var getCid, getProgress;
+
+  var a = location.search.split('customerId=');
+  var b = location.search.split('progress=');
+  // console.log(a);
+
+  if(a!=''){
+    getCid = window.location.search.match(/customerId=([^&]*)/)[1];
+  }
+  if(b!=''){
+    getProgress = window.location.search.match(/progress=([^&]*)/)[1];
+  }
 
   if(getProgress==='pAll'){
     $('select[name=progress]').val('pAll').prop('selected', true);

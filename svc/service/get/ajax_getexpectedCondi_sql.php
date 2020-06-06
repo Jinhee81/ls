@@ -66,7 +66,7 @@ if($_POST['getPage']=='1'){
   $start = ((int)$_POST['getPage']-1) * (int)$_POST['pagerow'];
 }
 
-$firstOrder = $row_count[0] + 1;
+$firstOrder = $row_count[0];
 
 $sql_common = "
   select

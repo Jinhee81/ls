@@ -1,12 +1,16 @@
 <?php
 session_start();
 
-error_reporting(E_ALL);
+ini_set('display_errors', 1);
+ini_set('error_reporting', E_ALL);
+
 include $_SERVER['DOCUMENT_ROOT']."/svc/view/conn.php";
-$a = json_decode($_POST['taxArray']);
+//$a = json_decode($_POST['taxArray']);
 $sql4 = "SELECT a.user_id,
 a.bName,
-replace(a.companynumber,'-','') AS cnum,
+a.cnumber1,
+a.cnumber2,
+a.cnumber3,
 b.email,
 b.user_name,
 b.cellphone,
@@ -17,11 +21,17 @@ WHERE a.user_id = b.id
 AND a.user_id = ".$_SESSION['id']."
 AND a.id = ".$_GET['building_idx']."";
 
+
+
 $result4 = mysqli_query($conn, $sql4);
 $row4 = mysqli_fetch_array($result4);
 
+// echo "<br><br><br><br><br><br><br>";
+// echo $sql4;
+// echo  $_GET['mun'];
+// exit();
 //회사 번호
-$cnum = $row4['cnum'];
+$cnum = $row4['cnumber1'].$row4['cnumber2'].$row4['cnumber3'];
 
 $sql5 = "SELECT *
 FROM customer
@@ -35,11 +45,24 @@ header("Content-Type: text/html; charset=UTF-8");
 include $_SERVER['DOCUMENT_ROOT']."/svc/view/service_header1_meta.php";
 require_once $_SERVER['DOCUMENT_ROOT'].'/svc/popbill_common.php';
 $result = $TaxinvoiceService->GetDetailInfo($cnum, 'SELL', $_GET['mun']);
-
+// echo "<br><br><br><br><br><br>";
+// print_r($result);
+?>
+<script type="text/javascript" src="/admin/js/jquery-3.3.1.min.js"></script>
+<script type="text/javascript" src="/admin/js/jquery-ui.min.js"></script>
+<?php
+if($result->invoicerMgtKey == null || $result->invoicerMgtKey == ''){
+    if($_GET['flag']=='finished'){
+        echo "<script>alert('요청한 고유번호에 해당하는 사용자정보가 존재하지 않습니다.');$('.pops_wrap,.pops_box,.popup_iframe',parent.document).hide();</script>";
+        exit();
+    }
+    if($_GET['flag']=='expected'){
+        echo "<script>alert('요청한 고유번호에 해당하는 사용자정보가 존재하지 않습니다.');$('.pops_wrap,.pops_box,.popup_iframe',parent.document).hide();</script>";
+        exit();
+    }
+}
 
 ?>
- <script type="text/javascript" src="/admin/js/jquery-3.3.1.min.js"></script>
- <script type="text/javascript" src="/admin/js/jquery-ui.min.js"></script>
 <style type="text/css">
 	.j_w1{
 		width:35px;
@@ -305,23 +328,23 @@ $result = $TaxinvoiceService->GetDetailInfo($cnum, 'SELL', $_GET['mun']);
 <script type="text/javascript">
 
 
-function fn_submit(){
+// function fn_submit(){
 
-	var frm = document.billa;
+// 	var frm = document.billa;
 
-	if(frm.callnum.value == ""){
-		alert("주문번호가 누락되었습니다.");
-		return false;
-	}
+// 	if(frm.callnum.value == ""){
+// 		alert("주문번호가 누락되었습니다.");
+// 		return false;
+// 	}
 
-	if(frm.WriteDate.value == ""){
-		alert("작성일자가 누락되었습니다.");
-		return false;
-	}
+// 	if(frm.WriteDate.value == ""){
+// 		alert("작성일자가 누락되었습니다.");
+// 		return false;
+// 	}
 
-	frm.submit();
+// 	frm.submit();
 
-}
+// }
 
 $(function(){
     $('.pops_close_sub').click(function(){

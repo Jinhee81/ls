@@ -294,7 +294,7 @@ function maketable(){
       } else {
         $.each(data, function(key, value){
           returns += '<tr>';
-          returns += '<td class=""><input type="checkbox" value="'+value.idpaySchedule2+'" class="tbodycheckbox"></td>';
+          returns += '<td class=""><input type="checkbox" name="pid" value="'+value.idpaySchedule2+'" class="tbodycheckbox"><input type="hidden" name="rid" value="'+value.rid+'"></td>';
           returns += '<td>'+datacount+'</td>';
 
           returns += '<td class="">';
@@ -325,7 +325,7 @@ function maketable(){
           returns += '<input type="hidden" name="mun" id="mun" value="'+value.mun+'">';
           returns += '<input type="hidden" name="ccid" id="ccid" value="'+value.ccid+'">';
           returns += '<input type="hidden" name="companynumber" value="'+value.companynumber+'">';
-          returns += '<input type="hidden" name="companyname" value="'+value.companyname+'">';
+          returns += '<input type="hidden" name="companyname" value="'+value.companyname2+'">';
           returns += '<input type="hidden" name="address" value="'+value.address+'">';
           returns += '<input type="hidden" name="div4" value="'+value.div4+'">';
           returns += '<input type="hidden" name="div5" value="'+value.div5+'">';
@@ -336,7 +336,7 @@ function maketable(){
           if(value.roomdiv==='room'){
             returns += '<td class="">'+'임대계약'+'('+value.groupname+','+value.roomname+')'+'<input type="hidden" name="roomdiv" value="'+value.roomdiv+'"><input type="hidden" name="groupname" value="'+value.groupname+'"><input type="hidden" name="roomname" value="'+value.roomname+'"></td>';
           } else if(value.roomdiv==='good'){
-            returns += '<td class="">'+'기타계약'+'('+value.goodname2+')'+'<input type="hidden" name="roomdiv" value="'+value.roomdiv+'"><input type="hidden" name="groupname" value="'+value.goodname2+'"><input type="hidden" name="roomname" value=""></td>';
+            returns += '<td class="">'+'기타계약'+'('+value.groupname+')'+'<input type="hidden" name="roomdiv" value="'+value.roomdiv+'"><input type="hidden" name="groupname" value="'+value.groupname+'"><input type="hidden" name="roomname" value=""></td>';
           }
           var mun = value.mun;
           var bid = value.bid;

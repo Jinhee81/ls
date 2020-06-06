@@ -88,7 +88,7 @@ include "good.php";
 <section class="container mb-2">
   <div class="row justify-content-end mr-0">
     <a href="contractetc_add.php" role="button" class="btn btn-sm btn-primary mr-1">신규등록</a>
-    <button type="button" class="btn btn-sm btn-danger mr-1" name="rowDeleteBtn" data-toggle="tooltip" data-placement="top" title="'c'표시된것만 삭제 가능합니다">선택삭제</button>
+    <button type="button" class="btn btn-sm btn-danger mr-1" name="rowDeleteBtn">선택삭제</button>
     <button type="button" class="btn btn-info btn-sm" name="button" data-toggle="tooltip" data-placement="top" title="작업준비중입니다."><i class="far fa-file-excel"></i>엑셀저장</button>
   </div>
 </section>
@@ -134,6 +134,7 @@ include "good.php";
 <script src="/svc/inc/js/datepicker-ko.js"></script>
 <script src="/svc/inc/js/etc/newdate8.js?<?=date('YmdHis')?>"></script>
 <script src="/svc/inc/js/etc/checkboxtable.js?<?=date('YmdHis')?>"></script>
+<script src="/svc/inc/js/etc/form.js?<?=date('YmdHis')?>"></script>
 
 <script type="text/javascript">
   var buildingArray = <?php echo json_encode($buildingArray); ?>;
@@ -281,9 +282,74 @@ $('input[name=cText]').on('keyup', function(){
     maketable();
     msql();
 })
-//---------조회버튼클릭평션 end and 증빙일자 펑션 시작--------------//
+//---------조회버튼클릭평션 end and contractArray 펑션 시작--------------//
+
+var contractArray = [];
+
+$(document).on('change', '#allselect', function(){
+
+    var allCnt = $(".tbodycheckbox", table).length;
+    contractArray = [];
+
+    if($("#allselect").is(":checked")){
+      for (var i = 1; i <= allCnt; i++) {
+        var contractArrayEle = [];
+        var colOrder = table.find("tr:eq("+i+")").find("td:eq(1)").text().trim();
+        var colid = table.find("tr:eq("+i+")").find("td:eq(0)").children('input[name=eid]').val();
+        contractArrayEle.push(colOrder, colid);
+        contractArray.push(contractArrayEle);
+      }
+    } else {
+      contractArray = [];
+    }
+  console.log(contractArray);
+})
+
+$(document).on('change', '.tbodycheckbox', function(){
+    var contractArrayEle = [];
+
+    if($(this).is(":checked")){
+      var currow = $(this).closest('tr');
+      var colOrder = Number(currow.find('td:eq(1)').text());
+      var colid = currow.find('td:eq(0)').children('input[name=eid]').val();
+      contractArrayEle.push(colOrder, colid);
+      contractArray.push(contractArrayEle);
+    } else {
+      var currow = $(this).closest('tr');
+      var colOrder = Number(currow.find('td:eq(1)').text());
+
+      for (var i = 0; i < contractArray.length; i++) {
+        if(contractArray[i][0]===colOrder){
+          var index = i;
+          break;
+        }
+      }
+      contractArray.splice(index, 1);
+    }
+    console.log(contractArray);
+    // console.log(typeof(contractArray[3]));
+})
 
 
+
+//---------contractArray펑션 end 삭제버튼펑션 시작--------------//
+
+$('button[name=rowDeleteBtn]').on('click', function(){
+  if(contractArray.length === 0){
+    alert('1개 이상을 선택하여 주세요.');
+    return false;
+  }
+
+  var cc = JSON.stringify(contractArray);
+
+  goCategoryPage(cc);
+
+  function goCategoryPage(a){
+    var frm = formCreate('etcContractDelete', 'post', 'p_etcContract_delete.php','');
+    frm = formInput(frm, 'contractArray', a);
+    formSubmit(frm);
+  }
+})
 </script>
 
 </body>

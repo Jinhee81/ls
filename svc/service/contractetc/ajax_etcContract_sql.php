@@ -46,7 +46,7 @@ $sql = "
   select
       etcContract.id as eid,
       customer.id as cid,
-      customer.name as customer_name,
+      customer.name as cname,
       customer.companyname,
       customer.div2,
       customer.div3,
@@ -75,7 +75,7 @@ $sql = "
         etcContract.building_id = {$_POST['building']}
         $goodCondi $etcCondi $etcDate
   order by
-      executiveDate desc";
+      paySchedule2.executiveDate desc";
 // echo $sql;
 
 ?>

@@ -35,7 +35,7 @@ include "contractetc_edit_condi.php";
         </div>
         <div class="form-group col-md-10 inputWithIcon">
               <a href="/svc/service/customer/m_c_edit.php?id=<?=$row['cid']?>">
-                <input type="text" class="form-control form-control-sm" name="" value="<?php if($row['etc']) {
+                <input type="text" class="form-control" name="" value="<?php if($row['etc']) {
                   echo $cName.', '.$cContact.', ('.$row['etc'].')';
                 } else {
                   echo $cName.', '.$cContact;

@@ -21,18 +21,18 @@ for ($i=0; $i < count($allRows); $i++) {
   }
 
   if($allRows[$i]['div2']==='개인사업자'){
-    $allRows[$i]['cname'] = $allRows[$i]['customer_name'].'('.$allRows[$i]['companyname'].')';
+    $allRows[$i]['ccname'] = $allRows[$i]['cname'].'('.$allRows[$i]['companyname'].')';
   } else if($allRows[$i]['div2']==='법인사업자'){
-    $allRows[$i]['cname'] = $allRows[$i]['cdiv3'].$allRows[$i]['companyname'].'('.$allRows[$i]['customer_name'].')';
+    $allRows[$i]['ccname'] = $allRows[$i]['cdiv3'].$allRows[$i]['companyname'].'('.$allRows[$i]['cname'].')';
   } else if($allRows[$i]['div2']==='개인'){
-    $allRows[$i]['cname'] = $allRows[$i]['customer_name'];
+    $allRows[$i]['ccname'] = $allRows[$i]['cname'];
   }
 
-  $allRows[$i]['cnamemb'] = mb_substr($allRows[$i]['cname'],0,10);
+  $allRows[$i]['cnamemb'] = mb_substr($allRows[$i]['ccname'],0,10, 'utf-8');
 
   $allRows[$i]['contact'] = $allRows[$i]['contact1'].'-'.$allRows[$i]['contact2'].'-'.$allRows[$i]['contact3'];
 
-  $allRows[$i]['etcmb'] = mb_substr($allRows[$i]['eetc'],0,10);
+  $allRows[$i]['etcmb'] = mb_substr($allRows[$i]['eetc'],0,10,'utf-8');
 
 
 } //for문closing

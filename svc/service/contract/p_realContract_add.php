@@ -4,7 +4,7 @@ header('Content-Type: text/html; charset=UTF-8');
 session_start();
 include $_SERVER['DOCUMENT_ROOT']."/svc/view/conn.php";
 
-// print_r($_POST);
+print_r($_POST);
 // print_r($_SESSION);
 
 $customer_id = $_POST['customerId'];
@@ -160,7 +160,7 @@ for ($i=1; $i <= count($contractRow); $i++) {
   }
 }
 
-if($_POST['executiveDate']){
+if($_POST['executiveDate']){//입금일이 있을때
   $contractScheduleIdArray2 = array();
   $orderedArray2 = array();
   for ($i=0; $i < (int)$_POST['executiveCount']; $i++) {
@@ -187,9 +187,25 @@ if($_POST['executiveDate']){
 
   $row3 = mysqli_fetch_array($result3);
 
-  $pAmount = (int)str_replace(',', '', $_POST['mAmount']) * (int)$_POST['executiveCount'];
-  $pvAmount = (int)str_replace(',', '', $_POST['mvAmount']) * (int)$_POST['executiveCount'];
-  $ptAmount = (int)str_replace(',', '', $_POST['mtAmount']) * (int)$_POST['executiveCount'];
+  // $pAmount = (int)str_replace(',', '', $_POST['mAmount']) * (int)$_POST['executiveCount'];
+  // $pvAmount = (int)str_replace(',', '', $_POST['mvAmount']) * (int)$_POST['executiveCount'];
+  // $ptAmount = (int)str_replace(',', '', $_POST['mtAmount']) * (int)$_POST['executiveCount'];
+
+  // $pAmount = $_POST['mAmount'] * 3;
+  // $pvAmount = $_POST['mvAmount'] * 3;
+  // $ptAmount = $_POST['mtAmount'] * 3;
+
+  $pAmount = (int)str_replace(',', '', $_POST['mAmount']);
+  $pvAmount = (int)str_replace(',', '', $_POST['mvAmount']);
+  $ptAmount = (int)str_replace(',', '', $_POST['mtAmount']);
+
+  $pAmount = $pAmount * (int)$_POST['executiveCount'];
+  $pvAmount = $pvAmount * (int)$_POST['executiveCount'];
+  $ptAmount = $ptAmount * (int)$_POST['executiveCount'];
+
+  $pAmount = number_format($pAmount);
+  $pvAmount = number_format($pvAmount);
+  $ptAmount = number_format($ptAmount);
 
   $sql4 = "
           INSERT INTO paySchedule2 (
@@ -243,7 +259,6 @@ if($_POST['executiveDate']){
     }
   }
 }
-
 
 echo "<script>
       location.href = 'contractEdit.php?page=schedule&id=$id';

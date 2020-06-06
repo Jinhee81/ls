@@ -7,12 +7,16 @@ include $_SERVER['DOCUMENT_ROOT']."/svc/view/conn.php";
 // print_r($_SESSION);
 $filtered_id = mysqli_real_escape_string($conn, $_POST['contractId']);
 
+$_POST['depositInAmount'] = number_format($_POST['depositInAmount']);
+$_POST['depositOutAmount'] = number_format($_POST['depositOutAmount']);
+$_POST['depositMoney'] = number_format($_POST['depositMoney']);
 $sql = "update
           realContract_deposit set
             inDate = '{$_POST['depositInDate']}',
             inMoney = '{$_POST['depositInAmount']}',
             outDate = '{$_POST['depositOutDate']}',
             outMoney = '{$_POST['depositOutAmount']}',
+            remainMoney = '{$_POST['depositMoney']}',
             saved = now()
           where realContract_id = {$filtered_id}
        ";

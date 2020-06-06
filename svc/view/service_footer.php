@@ -10,7 +10,7 @@
 
       <div class="footer-above">
         <p class="mb-2">
-          리스맨소프트 &nbsp;|&nbsp; 경기도 의정부시 동일로 119-1 &nbsp;|&nbsp; 대표 유진희 &nbsp;|&nbsp;E-Mail info@leaseman.co.kr
+          리스맨소프트 &nbsp;|&nbsp; 경기도 의정부시 동일로 119-1 &nbsp;|&nbsp; 대표 유진희 &nbsp;|&nbsp;이메일 info@leaseman.co.kr &nbsp;|&nbsp;팩스 031-879-5053
         </p>
         <p class="mb-2">
           사업자등록번호 745-06-01064 &nbsp;|&nbsp; 통신판매업신고번호 제2020-의정부신곡-0073호

@@ -49,7 +49,6 @@ include "building.php";
                 <div class="form-group col-md-2"><!--물건목록-->
                     <label>물건명</label>
                     <select name="building" class="form-control">
-                      <option value="<?=$row_c['bid']?>"><?=$row_c['bName']?></option>
                     </select>
                 </div>
                 <div class="form-group col-md-2"><!--그룹목록-->
@@ -266,6 +265,14 @@ $(document).ready(function(){
   })
 
   $('.amountNumber').on('click keyup', function(){
+    $(this).select();
+  })
+
+  $('input[name=monthCount]').on('click', function(){
+    $(this).select();
+  })
+
+  $('input[name=executiveCount]').on('click', function(){
     $(this).select();
   })
 

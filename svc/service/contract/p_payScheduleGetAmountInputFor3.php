@@ -1,4 +1,4 @@
-<!-- n개월추가모달에서 입금완료버튼 누르면 실행되는거 -->
+<!-- 즉시입금버튼 누르면 실행되는거 -->
 <?php
 header('Content-Type: text/html; charset=UTF-8');
 // ini_set('display_errors', 1);
@@ -72,9 +72,9 @@ for ($i=0; $i < count($expectedDateArray2); $i++) {
       $pvAmountAccumulate += $a[$j][5];
       $ptAmountAccumulate += $a[$j][6];
 
-      $payExecutiveRow[$i][4]=$pAmountAccumulate;//공급가액
-      $payExecutiveRow[$i][5]=$pvAmountAccumulate;//세액
-      $payExecutiveRow[$i][6]=$ptAmountAccumulate;//합계
+      $payExecutiveRow[$i][4]=number_format($pAmountAccumulate);//공급가액
+      $payExecutiveRow[$i][5]=number_format($pvAmountAccumulate);//세액
+      $payExecutiveRow[$i][6]=number_format($ptAmountAccumulate);//합계
 
       $payExecutiveRow[$i][7]=$a[$j][7];//예정일
       $payExecutiveRow[$i][8]=$_POST['paykind'];//수납구분

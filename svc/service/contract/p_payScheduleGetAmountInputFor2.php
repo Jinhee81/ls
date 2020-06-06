@@ -259,6 +259,9 @@ if(!$_POST['expectedDate']){//예정일이 없이 넘어온 경우
 
   $contractScheduleIdArray2=implode(',', $contractScheduleIdArray);
   $orderedArray2=implode(',', $orderedArray);
+  $pAmountAccumulate = number_format($pAmountAccumulate);
+  $pvAmountAccumulate = number_format($pvAmountAccumulate);
+  $ptAmountAccumulate = number_format($ptAmountAccumulate);
 
   $sql5 = "
         INSERT INTO paySchedule2 (

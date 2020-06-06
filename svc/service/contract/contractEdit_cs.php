@@ -62,7 +62,7 @@
           <td class="">
             <?php
             if($allRows[$i]['payId']){
-              echo "<label class='text-right  numberComma mb-0'>".$allRows[$i]['mMamount']."</label><br><label class='text-right  numberComma mb-0'>".$allRows[$i]['mVmAmount']."</label>";
+              echo "<label class='text-right numberComma mb-0'>".$allRows[$i]['mMamount']."</label><br><label class='text-right numberComma mb-0'>".$allRows[$i]['mVmAmount']."</label>";
               // echo "exists";
             } else {
               echo "<input type='text' size='10' class='form-control form-control-sm text-right amountNumber mb-0' name='mAmount' value='".$allRows[$i]['mMamount']."' numberOnly><input type='text' size='10' class='form-control form-control-sm text-right amountNumber mb-0' name='mAmount' value='".$allRows[$i]['mVmAmount']."' numberOnly>";
@@ -146,7 +146,7 @@
                  if($row3['pExpectedDate'] >= $currentDate){
                    echo "<label class='mb-0 text-center numberComma  sky'>"."&#40;".$allRows[$i]['paySchedule2']['ptAmount'].")"."</label>";
                  } else {
-                   echo "<label class='mb-0 text-center  pink'>"."(".number_format($allRows[$i]['paySchedule2']['ptAmount']).")"."</label>";
+                   echo "<label class='mb-0 text-center  pink'>"."(".$allRows[$i]['paySchedule2']['ptAmount'].")"."</label>";
                  }
                }
              }

@@ -32,10 +32,6 @@ for ($i=0; $i < count($allRows); $i++) {
 
   $allRows[$i]['contact'] = $allRows[$i]['contact1'].'-'.$allRows[$i]['contact2'].'-'.$allRows[$i]['contact3'];
 
-  $allRows[$i]['pAmount'] = number_format($allRows[$i]['pAmount']);
-  $allRows[$i]['pvAmount'] = number_format($allRows[$i]['pvAmount']);
-  $allRows[$i]['ptAmount'] = number_format($allRows[$i]['ptAmount']);
-
   $allRows[$i]['etcmb'] = mb_substr($allRows[$i]['eetc'],0,10);
 
 

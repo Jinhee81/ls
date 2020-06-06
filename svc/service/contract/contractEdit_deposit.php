@@ -24,7 +24,7 @@
         <input type="text" name="depositOutAmount" class="form-control form-control-sm amountNumber text-center" value="<?=$row_deposit['outMoney']?>" numberOnly>
       </td>
       <td class="">
-        <input type="text" name="depositMoney" class="form-control form-control-sm amountNumber text-center" value="<?=$depositMoney?>" readonly numberOnly>
+        <input type="text" name="depositMoney" class="form-control form-control-sm amountNumber text-center" value="<?=$row_deposit['remainMoney']?>" readonly numberOnly>
       </td>
       <td class="mobile"><?=$row_deposit['saved']?></td>
     </tr>

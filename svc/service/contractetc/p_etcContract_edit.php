@@ -15,18 +15,13 @@ $filtered_id = mysqli_real_escape_string($conn, $_POST['etcContract_id']); //기
 $sql = "
   UPDATE etcContract
   SET
-    building_id = {$_POST['building_id']},
-    good_in_building_id = {$_POST['good_in_building_id']},
+    building_id = {$_POST['building']},
+    good_in_building_id = {$_POST['good']},
     startTime = '{$_POST['startTime']}',
     endTime = '{$_POST['endTime']}',
-    payKind = '{$_POST['payKind']}',
-    pAmount = '{$_POST['pAmount']}',
-    pvAmount = '{$_POST['pvAmount']}',
-    ptAmount = '{$_POST['ptAmount']}',
-    executiveDate = '{$_POST['executiveDate']}',
     etc = '{$fil['etc']}',
     updateTime = now(),
-    updatePerson = {$_SESSION['id']}
+    updatePerson = '{$_SESSION['manager_name']}'
   WHERE id = {$filtered_id}
 ";
 
@@ -54,7 +49,7 @@ $sql2 = "
   WHERE
     etcContract_id = {$filtered_id}";
 // echo $sql2;//청구테이블에다가 입력하는거
-
+//
 $result2 = mysqli_query($conn, $sql2);
 //
 if(!$result2){

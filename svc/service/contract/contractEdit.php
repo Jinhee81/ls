@@ -1,6 +1,6 @@
 <?php
-ini_set('display_errors', 1);
-ini_set('error_reporting', E_ALL);
+// ini_set('display_errors', 1);
+// ini_set('error_reporting', E_ALL);
 session_start();
 if(!isset($_SESSION['is_login'])){
   header('Location: /svc/login.php');
@@ -36,7 +36,7 @@ include "contractEdit_condi.php";
         <a id="navSchedule" class="nav-link <?php if($_GET['page']==='schedule'){echo "active";} ?>" href="contractEdit.php?page=schedule&id=<?=$filtered_id?>">스케쥴(<?=$row['count2']?>개월)</a>
       </li>
       <li class="nav-items">
-        <a id="navDeposit" class="nav-link <?php if($_GET['page']==='deposit'){echo "active";} ?>" href="contractEdit.php?page=deposit&id=<?=$filtered_id?>">보증금 <span>(<?=$depositMoney?>원)</span></a>
+        <a id="navDeposit" class="nav-link <?php if($_GET['page']==='deposit'){echo "active";} ?>" href="contractEdit.php?page=deposit&id=<?=$filtered_id?>">보증금 <span>(<?=$row_deposit['remainMoney']?>원)</span></a>
       </li>
       <li class="nav-items">
         <a id="navFile" class="nav-link <?php if($_GET['page']==='file'){echo "active";} ?>" href="contractEdit.php?page=file&id=<?=$filtered_id?>">첨부파일(<?=count($fileRows)?>건)</a>

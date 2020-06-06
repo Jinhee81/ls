@@ -90,6 +90,7 @@ $sql = "
     customer.add1,
     customer.add2,
     customer.add3,
+    customer.id as ccid,
     idpaySchedule2,
     paySchedule2.monthCount,
     paySchedule2.pStartDate,
@@ -102,7 +103,9 @@ $sql = "
     paySchedule2.executiveDate,
     paySchedule2.getAmount,
     paySchedule2.taxSelect,
-    paySchedule2.taxDate
+    paySchedule2.taxDate,
+    paySchedule2.building_id as bid,
+    paySchedule2.invoicerMgtKey as mun
 from
     (select @roomdiv:='room')a,
     paySchedule2
@@ -147,6 +150,7 @@ union
     customer.add1,
     customer.add2,
     customer.add3,
+    customer.id as ccid,
     idpaySchedule2,
     paySchedule2.monthCount,
     paySchedule2.pStartDate,
@@ -159,7 +163,9 @@ union
     paySchedule2.executiveDate,
     paySchedule2.getAmount,
     paySchedule2.taxSelect,
-    paySchedule2.taxDate
+    paySchedule2.taxDate,
+    paySchedule2.building_id as bid,
+    paySchedule2.invoicerMgtKey as mun
 from
     (select @gooddiv:='good')a,
     paySchedule2
@@ -175,7 +181,7 @@ where paySchedule2.user_id={$_SESSION['id']} and
       etcContract.building_id = {$_POST['building']} and
       paySchedule2.executiveDate is not null
       $etcDate $taxCondi $payCondi $etcCondi2)
-order by roomdiv desc, executiveDate desc
+order by executiveDate desc
 ";
 
 

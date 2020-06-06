@@ -35,7 +35,7 @@ include "good.php";
               <i class="fas fa-search fa-lg fa-fw" aria-hidden="true"></i>
               <div class="" id="customerList">
               </div>
-              <!-- <input type="hidden" name="customerId" id="customerId" value=""> 원래는 ajax로 별도로 고객번호를 가져오고싶었는데 방법을 몰라서 못한거고 별도로 가져올때 다시 수정할거2-->
+              <input type="hidden" name="customer" id="customerId" value="">
         </div>
     </div>
     <div class="form-row">
@@ -46,7 +46,7 @@ include "good.php";
               <div class="form-row">
                 <div class="form-group col-md-3"><!--물건목록-->
                     <label>물건명</label>
-                    <select name="building" class="form-control" required>
+                    <select name="building" class="form-control">
                     </select>
                 </div>
                 <div class="form-group col-md-2"><!--그룹목록-->
@@ -78,7 +78,7 @@ include "good.php";
           <div class="form-row">
               <div class="form-group col-md-2 mb-10">
                     <label><span id='star' style='color:#F7BE81;'>* </span>입금일자</label>
-                    <input type="text" class="form-control dateType" name="executiveDate" value="" placeholder="" required>
+                    <input type="text" class="form-control dateType yyyymmdd" name="executiveDate" value="" placeholder="" required>
               </div>
               <div class="form-group col-md-2 mb-10">
                     <label>입금구분</label>
@@ -105,7 +105,7 @@ include "good.php";
             <label><b>[특이사항]</b></label>
         </div>
         <div class="form-group col-md-10 mb-0">
-          <input type="text" id="" class="form-control" name="etc">
+          <input type="text" class="form-control" name="etc">
       </div>
     </div>
 
@@ -135,26 +135,52 @@ include "good.php";
   console.log(goodBuildingArray);
 </script>
 
-<script type="text/javascript" src="js_building_good.js">
-</script>
-
 
 <script>
+var customerId, buildingId, buidlingName;
+
+function customersearch(){
+  var query = $('#customer').val();
+  // console.log(query);
+  var customerlist;
+
+  customerlist = $.ajax({
+    url: 'ajax_customer_search2.php',
+    method: 'post',
+    data: {query : query},
+    success: function(data){
+      data = JSON.parse(data);
+      datacount = data.length;
+
+      var returns = '';
+      var buildingoption = '';
+      //
+      if(datacount===0){
+        returns ="<ul><li>조회값이 없어요. 조회조건을 다시 확인하거나 서둘러 입력해주세요.</li></ul>";
+      } else {
+        returns += '<ul class="list-unstyled">';
+        $.each(data, function(key, value){
+          returns += '<li>'+value.ccnn;
+          returns += '<input type="hidden" name="customerId" value="'+value.cid+'">';
+          returns += '<input type="hidden" name="buildingId" value="'+value.bid+'">';
+          returns += '<input type="hidden" name="buildingName" value="'+value.bName+'"></li>';
+        })
+        returns += '</ul>';
+      }
+
+      $('#customerList').fadeIn();
+      $('#customerList').html(returns);
+    }//success}
+  })
+  return customerlist;
+}
+
 $(document).ready(function(){
-  $('#customer').keyup(function(){
-    var query = $(this).val();
-    // console.log(query);
-    if(query != ''){
-      $.ajax({
-        url: 'p_customer_search2.php',
-        method: 'post',
-        data: {query : query},
-        success: function(data){
-          $('#customerList').fadeIn();
-          $('#customerList').html(data);
-        }
-      })
-    }
+  // $('#customer').keyup(function(){
+  // })
+
+  $('#customer').on('click keyup', function(){
+    customersearch();
   })
 
   $('.timeType').datetimepicker({
@@ -177,21 +203,53 @@ $(document).ready(function(){
     closeText: '닫기'
   })
 
-  $(".amountNumber").click(function(){
+  $('.amountNumber').on('click keyup', function(){
     $(this).select();
-  });
+  })
 
   $("input:text[numberOnly]").number(true);
 
+  $('.yyyymmdd').keydown(function (event) {
+   var key = event.charCode || event.keyCode || 0;
+   $text = $(this);
+   if (key !== 8 && key !== 9) {
+       if ($text.val().length === 4) {
+           $text.val($text.val() + '-');
+       }
+       if ($text.val().length === 7) {
+           $text.val($text.val() + '-');
+       }
+   }
 
+   return (key == 8 || key == 9 || key == 46 || (key >= 48 && key <= 57) || (key >= 96 && key <= 105));
+  // Key 8번 백스페이스, Key 9번 탭, Key 46번 Delete 부터 0 ~ 9까지, Key 96 ~ 105까지 넘버패트
+  // 한마디로 JQuery 0 ~~~ 9 숫자 백스페이스, 탭, Delete 키 넘버패드외에는 입력못함
+  })
 })
 
 $(document).on('click', 'li', function(){
   $('#customer').val($(this).text());
   $('#customerList').fadeOut();
+
+  var a = $(this);
+  var customerId = a.children('input[name=customerId]').val();
+  var buildingIdx = a.children('input[name=buildingId]').val();
+  var buildingName = a.children('input[name=buildingName]').val();
+
+  console.log(customerId, buildingIdx, buildingName);
+  var buildingoption = '<option value="'+buildingIdx+'">'+buildingName+'</option>';
+  var goodoption;
+
+
+  $('#customerId').val(customerId);
+  $('select[name=building]').html(buildingoption);
+
+  for(var key2 in goodBuildingArray[buildingIdx]){ //그룹목록출력(상주,비상주)
+    goodoption = "<option value='"+key2+"'>"+goodBuildingArray[buildingIdx][key2]+"</option>";
+    // console.log(groupoption);
+    $('select[name=good]').append(goodoption);
+  }
 })
-
-
 
 $("input[name='pAmount']").on('keyup', function(){
   var amount1 = Number($(this).val());
@@ -209,6 +267,10 @@ $("input[name='pvAmount']").on('keyup', function(){
 
 $('#saveBtn').on('click', function(){
   var amount1 = Number($("input[name='pAmount']").val());
+  var amount2 = Number($("input[name='pvAmount']").val());
+  var amount12 = amount1 + amount2;
+  $("input[name='ptAmount']").val(amount12);
+
   if(amount1 === 0){
     alert('공급가액은 0보다 커야 저장됩니다.');
     return false;

@@ -120,14 +120,12 @@ if((int)$row_step[0]===0){
 $sql_deposit = "
       select
             inDate, inMoney,
-            outDate, outMoney,
+            outDate, outMoney, remainMoney,
             saved
       from realContract_deposit where realContract_id={$filtered_id}";
 // echo $sql_deposit;
 $result_deposit = mysqli_query($conn, $sql_deposit);
 $row_deposit = mysqli_fetch_array($result_deposit);
-
-$depositMoney = number_format((int)$row_deposit['inMoney']-(int)$row_deposit['outMoney']);
 
 $sql_file = "
     select

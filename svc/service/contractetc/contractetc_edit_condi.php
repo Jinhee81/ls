@@ -3,8 +3,8 @@ settype($filtered_id, 'integer');
 
 $sql = "
     select
-      etcContract.id,
-      customer.id,
+      etcContract.id as eid,
+      customer.id as cid,
       customer.name,
       customer.companyname,
       customer.div2,
@@ -13,35 +13,35 @@ $sql = "
       customer.contact2,
       customer.contact3,
       customer.etc,
-      building_id,
-      (select bName from building where id=building_id),
+      etcContract.building_id,
+      (select bName from building where id=etcContract.building_id),
       good_in_building_id,
       (select name from good_in_building where
       id=good_in_building_id),
-      startTime,
-      endTime,
-      payKind,
-      executiveDate,
-      pAmount,
-      pvAmount,
-      ptAmount,
+      etcContract.startTime,
+      etcContract.endTime,
+      paySchedule2.payKind,
+      paySchedule2.executiveDate,
+      paySchedule2.pAmount,
+      paySchedule2.pvAmount,
+      paySchedule2.ptAmount,
       etcContract.etc,
       etcContract.createTime,
       etcContract.createPerson,
-      (select damdangga_name from user where id=etcContract.createPerson),
       etcContract.updateTime,
       etcContract.updatePerson,
-      (select damdangga_name from user where id=etcContract.updatePerson),
       etcContract.user_id
     from etcContract
     left join customer
         on etcContract.customer_id = customer.id
+    left join paySchedule2
+        on etcContract.paySchedule2_id = paySchedule2.idpaySchedule2
     where
       etcContract.id = {$filtered_id} and
       etcContract.user_id = {$_SESSION['id']}
     ";
 
-echo $sql;
+// echo $sql;
 $result = mysqli_query($conn, $sql);
 $row = mysqli_fetch_array($result);
 // print_r($row);

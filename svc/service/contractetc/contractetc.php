@@ -19,7 +19,7 @@ include "good.php";
 <!-- 제목섹션 -->
 <section class="container">
   <div class="jumbotron pt-3 pb-3">
-    <h2 class="">기타계약 목록이에요.</h2>
+    <h3 class="">기타계약 목록이에요.</h3>
     <p class="lead">
 
     </p>
@@ -120,9 +120,9 @@ include "good.php";
 </section>
 
 <!-- sql -->
-<section class="container" id="allVals2">
+<!-- <section class="container" id="allVals2">
 
-</section>
+</section> -->
 
 <?php include $_SERVER['DOCUMENT_ROOT']."/svc/view/service_footer.php"; ?>
 
@@ -163,7 +163,7 @@ function maketable(){
       } else {
         $.each(data, function(key, value){
           returns += '<tr>';
-          returns += '<td class="mobile"><input type="checkbox" value="'+value.eid+'" class="tbodycheckbox"></td>';
+          returns += '<td class="mobile"><input type="checkbox" name="eid" value="'+value.eid+'" class="tbodycheckbox"></td>';
           returns += '<td class="">'+datacount+'</td>';
           returns += '<td class="">'+value.goodname+'</td>';
           returns += '<td class=""><a href="/svc/service/customer/m_c_edit.php?id='+value.cid+'" data-toggle="tooltip" data-placement="top" title="'+value.cname+'">'+value.cnamemb+'</a></td>';

@@ -15,9 +15,9 @@ include "contractetc_edit_condi.php";
 ?>
 
 <!-- 제목섹션 -->
-<section class="container pt-3 pb-3">
-  <div class="jumbotron">
-    <h2 class="display-4">기타계약 수정 화면입니다!</h2>
+<section class="container">
+  <div class="jumbotron pt-3 pb-3">
+    <h3 class="">기타계약 수정 화면입니다!</h3>
     <!-- <p class="lead">고객이란 입주한 세입자 및 문의하는 문의고객, 거래처 등을 포함합니다. 고객등록이 되어야 임대계약 등록이 가능합니다!</p> -->
     <!-- <small>(1)<span id='star' style='color:#F7BE81;'> * </span>표시는 필수 입력값입니다. (2)<b>[세입자정보]</b>에는 세입자만 등록 가능합니다. (거래처 및 문의고객은 검색결과가 없다고 표시되니 주의하세요!) <b>[세입자정보]</b>의 제일우측 숫자는 고객번호로써 시스템데이터임을 참고하여주세요. (3)<b>[기간정보]</b>의 기간(개월수)에는 최대 72개월(6년)까지 등록 가능합니다.</small> -->
     <hr class="my-4">
@@ -34,9 +34,9 @@ include "contractetc_edit_condi.php";
               <label><b>[성명]</b></label>
         </div>
         <div class="form-group col-md-10 inputWithIcon">
-              <a href="/service/customer/m_c_edit.php?id=<?=$row[1]?>">
-                <input type="text" class="form-control form-control-sm" name="" value="<?php if($row[9]) {
-                  echo $cName.', '.$cContact.', ('.$row[9].')';
+              <a href="/svc/service/customer/m_c_edit.php?id=<?=$row['cid']?>">
+                <input type="text" class="form-control form-control-sm" name="" value="<?php if($row['etc']) {
+                  echo $cName.', '.$cContact.', ('.$row['etc'].')';
                 } else {
                   echo $cName.', '.$cContact;
                 }?>" disabled>
@@ -111,9 +111,9 @@ include "contractetc_edit_condi.php";
               <div class="form-group col-md-2 mb-10">
                     <label>입금구분</label>
                     <select class="form-control" name="payKind">
-                      <option value="계좌">계좌</option>
-                      <option value="현금">현금</option>
-                      <option value="카드">카드</option>
+                      <option value="계좌"<?php if($row['payKind']==='계좌'){echo 'selected';} ?>>계좌</option>
+                      <option value="현금"<?php if($row['payKind']==='현금'){echo 'selected';} ?>>현금</option>
+                      <option value="카드"<?php if($row['payKind']==='카드'){echo 'selected';} ?>>카드</option>
                     </select>
               </div>
               <div class="form-group col-md-4 mb-0">
@@ -133,33 +133,21 @@ include "contractetc_edit_condi.php";
             <label><b>[특이사항]</b></label>
         </div>
         <div class="form-group col-md-10 mb-0">
-          <input type="text" id="" class="form-control" name="etc" value="<?=$row[21]?>">
+          <input type="text" id="" class="form-control" name="etc" value="<?=$row['etc']?>">
       </div>
     </div>
 
-    <div class="form-row mt-3">
-      <div class="form-group col-md-2">
-        <label>등록자명</label>
-        <input type="text" class="form-control form-control-sm" name="" value="<?=$row[24]?>" disabled>
-      </div>
-      <div class="form-group col-md-4">
-        <label>등록일시</label>
-        <input type="text" class="form-control form-control-sm" name="" value="<?=$row['createTime']?>" disabled>
-      </div>
-      <div class="form-group col-md-2">
-        <label>수정자명</label>
-        <input type="text" class="form-control form-control-sm" name="" value="<?=$row[27]?>" disabled>
-      </div>
-      <div class="form-group col-md-4">
-        <label>수정일시</label>
-        <input type="text" class="form-control form-control-sm" name="" value="<?=$row['updateTime']?>" disabled>
-      </div>
+    <!-- 기타계약정보 -->
+    <div class="mb-3">
+      <section class="d-flex justify-content-center">
+         <small class="form-text text-muted text-center">기타계약번호[<?=$row['eid']?>] 등록일시[<?=$row['createTime']?>] 수정일시[<?=$row['updateTime']?>] </small>
+      </section>
     </div>
 
 
     <div class="mt-3">
       <button type='submit' class='btn btn-primary' id='saveBtn'>수정</button>
-      <a href='contractetc.php'><button type='button' class='btn btn-secondary'>기타계약리스트화면으로</button></a>
+      <a href='contractetc.php'><button type='button' class='btn btn-secondary'><i class="fas fa-angle-double-right"></i> 기타계약목록</button></a>
     </div>
   </form>
 </section>

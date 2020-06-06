@@ -56,9 +56,9 @@ for ($i=0; $i < count($allRows); $i++) {
     $allRows[$i]['delayinterest'] = $allRows[$i]['pAmount'] * ($allRows[$i]['delaycount'] / 365) * 0.27; //연체일수 생기니 이자 생
   }
 
-  $allRows[$i]['pAmount'] = number_format($allRows[$i]['pAmount']);
-  $allRows[$i]['pvAmount'] = number_format($allRows[$i]['pvAmount']);
-  $allRows[$i]['ptAmount'] = number_format($allRows[$i]['ptAmount']);
+  // $allRows[$i]['pAmount'] = number_format($allRows[$i]['pAmount']);
+  // $allRows[$i]['pvAmount'] = number_format($allRows[$i]['pvAmount']);
+  // $allRows[$i]['ptAmount'] = number_format($allRows[$i]['ptAmount']);
   $allRows[$i]['delayinterest'] = number_format($allRows[$i]['delayinterest']);
 
   $allRows[$i]['cnamecontactmb'] = mb_substr($allRows[$i]['cnamecontact'],0,5,"utf-8");

@@ -72,9 +72,9 @@ for ($i=0; $i < count($expectedDateArray2); $i++) {
       $pvAmountAccumulate += $a[$j][5];
       $ptAmountAccumulate += $a[$j][6];
 
-      $payExecutiveRow[$i][4]=$pAmountAccumulate;//공급가액
-      $payExecutiveRow[$i][5]=$pvAmountAccumulate;//세액
-      $payExecutiveRow[$i][6]=$ptAmountAccumulate;//합계
+      $payExecutiveRow[$i][4]=number_format($pAmountAccumulate);//공급가액
+      $payExecutiveRow[$i][5]=number_format($pvAmountAccumulate);//세액
+      $payExecutiveRow[$i][6]=number_format($ptAmountAccumulate);//합계
 
       $payExecutiveRow[$i][7]=$a[$j][7];//예정일
       $payExecutiveRow[$i][8]=$a[$j][8];//입금구분

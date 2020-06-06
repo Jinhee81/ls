@@ -240,20 +240,14 @@ include $_SERVER['DOCUMENT_ROOT']."/svc/service/sms/modal_sms2.php";
 
 function sql(x,y){
   var form = $('form').serialize();
-  var getCid = window.location.search.match(/customerId=([^&]*)/)[1];
-  var getProgress = window.location.search.match(/progress=([^&]*)/)[1];
-
-  if(getProgress==='pAll'){
-    $('select[name=progress]').val('pAll').prop('selected', true);
-  }
+  var getCid = location.search.split('customerId=')[1];
   var sql = $.ajax({
     url: 'ajax_realContractSql2.php',
     method: 'post',
     data: {'form' : form,
            'pagerow' : x,
            'getPage' : y,
-           'customerId' : getCid,
-           'progress' : getProgress
+           'customerId' : getCid
           },
     success: function(data){
       $('#sql').html(data);
@@ -264,23 +258,14 @@ function sql(x,y){
 
 function maketable(x,y){
   var form = $('form').serialize();
-  // var getCid = location.search.split('customerId=')[1];
-  // var getProgress = location.search.split('progress=')[1];
-var getCid = window.location.search.match(/customerId=([^&]*)/)[1];
-var getProgress = window.location.search.match(/progress=([^&]*)/)[1];
-  console.log(getCid, getProgress);
-
-  if(getProgress==='pAll'){
-    $('select[name=progress]').val('pAll').prop('selected', true);
-  }
+  var getCid = location.search.split('customerId=')[1];
   var mtable = $.ajax({
     url: 'ajax_realContractLoad.php',
     method: 'post',
     data: {'form' : form,
            'pagerow' : x,
            'getPage' : y,
-           'customerId' : getCid,
-           'progress' : getProgress
+           'customerId' : getCid
           },
     success: function(data){
       data = JSON.parse(data);
@@ -294,7 +279,6 @@ var getProgress = window.location.search.match(/progress=([^&]*)/)[1];
 
       if(datacount===0){
         returns ="<tr><td colspan='12'>조회값이 없어요. 조회조건을 다시 확인하거나 서둘러 입력해주세요!</td></tr>";
-        countall = 0;
       } else {
         $.each(data, function(key, value){
           countall = value.count;
@@ -395,7 +379,7 @@ $(document).ready(function(){
     var getPage = 1;
 
     maketable(pagerow, getPage);
-    sql(pagerow, getPage);
+    // sql(pagerow, getPage);
 
     $('#href_smsSetting').on('click', function(){
       var moveCheck = confirm('문자상용구설정 화면으로 이동합니다. 이동하시겠습니까?');

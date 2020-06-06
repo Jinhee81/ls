@@ -250,7 +250,7 @@ function maketable(x,y){
           returns += '<input type="hidden" name="companyname" value="'+value.companyname+'">';
 
           if(value.contractCount >= 1){
-            returns += '<a href="/svc/service/contract/contract.php?customerId='+value.id+'" class="badge badge-pill badge-warning">'+value.contractCount+'</a></td>';
+            returns += '<a href="/svc/service/contract/contract.php?customerId='+value.id+'&progress=pAll" class="badge badge-pill badge-warning">'+value.contractCount+'</a></td>';
           } else {
             returns += '</td>';
           }

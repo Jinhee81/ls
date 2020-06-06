@@ -181,7 +181,7 @@ where paySchedule2.user_id={$_SESSION['id']} and
       etcContract.building_id = {$_POST['building']} and
       paySchedule2.executiveDate is not null
       $etcDate $taxCondi $payCondi $etcCondi2)
-order by executiveDate desc
+order by date_format(executiveDate, '%Y-%m-%d') desc
 ";
 
 

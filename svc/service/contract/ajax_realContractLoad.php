@@ -8,6 +8,10 @@ while($row = mysqli_fetch_array($result)){
   $allRows[] = $row;
 }
 
+// echo $sql;
+//
+// print_r($allRows);
+
 
 for ($i=0; $i < count($allRows); $i++) {
 

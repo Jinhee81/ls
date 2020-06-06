@@ -11,5 +11,9 @@ include "ajax_realContractSql.php";
 echo $sql_count;
 echo $sql;
 
+print_r($_POST['form']).'<br>';
+
+print_r($a);
+
 
 ?>

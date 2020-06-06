@@ -1,6 +1,9 @@
 <?php
 header('Content-Type: text/html; charset=UTF-8');
 session_start();
+// ini_set('display_errors', 1);
+// ini_set('error_reporting', E_ALL);
+
 include $_SERVER['DOCUMENT_ROOT']."/svc/view/conn.php";
 
 // print_r($_SESSION);
@@ -34,17 +37,22 @@ if($a['fromDate'] && $a['toDate']){
   $etcDate = " and (DATE($dateDiv) <= '{$a['toDate']}')";
 }
 
-if($a['progress']==='pIng'){
-  $etcIng = " and getStatus(startDate, endDate2) = 'present'";
-} elseif($a['progress']==='pWaiting'){
-  $etcIng = " and getStatus(startDate, endDate2) = 'waiting'";
-} elseif($a['progress']==='pEnd'){
-  $etcIng = " and getStatus(startDate, endDate2) = 'the_end'";
-} elseif($a['progress']==='pAll'){
+if(isset($_POST['progress'])){
   $etcIng = "";
-} elseif($a['progress']==='clear'){
-  $etcIng = " and (select count(*) from paySchedule2 where realContract_id=realContract.id)=0";
+} else {
+  if($a['progress']==='pIng'){
+    $etcIng = " and getStatus(startDate, endDate2) = 'present'";
+  } elseif($a['progress']==='pWaiting'){
+    $etcIng = " and getStatus(startDate, endDate2) = 'waiting'";
+  } elseif($a['progress']==='pEnd'){
+    $etcIng = " and getStatus(startDate, endDate2) = 'the_end'";
+  } elseif($a['progress']==='pAll'){
+    $etcIng = "";
+  } elseif($a['progress']==='clear'){
+    $etcIng = " and (select count(*) from paySchedule2 where realContract_id=realContract.id)=0";
+  }
 }
+
 
 if($a['group']==='groupAll'){
   $groupCondi = "";

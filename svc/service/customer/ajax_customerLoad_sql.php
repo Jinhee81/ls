@@ -60,16 +60,18 @@ if($_POST['getPage']=='1'){
   $start = ((int)$_POST['getPage']-1) * (int)$_POST['pagerow'];
 }
 
+$firstOrder = $row_count[0] + 1;
+
 
 $sql = "select
-          @num := @num + 1 as num,
+          @num := @num - 1 as num,
           id, div1, div2, name, div3, companyname, cNumber1, cNumber2, cNumber3, contact1, contact2, contact3, email, etc, created, updated
         from
-          (select @num := 0)a,
+          (select @num := {$firstOrder})a,
           customer
         where user_id={$_SESSION['id']} and building_id={$a['building']}
               $etcDate $div1 $etcCondi
-        order by num desc
+        order by created desc
         LIMIT {$start}, {$_POST['pagerow']}";
 
 ?>

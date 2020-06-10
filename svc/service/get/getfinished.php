@@ -310,7 +310,7 @@ function maketable(){
           if(value.roomdiv==='room'){
             returns += '<td class="text-right pr-3"><a class="" href="/svc/service/contract/contractEdit.php?page=schedule&id='+value.rid+'">'+value.ptAmount+'</a></td>';
           } else if(value.roomdiv==='good'){
-            returns += '<td class="text-right pr-3"><a class="" href="/svc/service/contractetc/contractetc_Edit.php?id='+value.eid+'">'+value.ptAmount+'</a></td>';
+            returns += '<td class="text-right pr-3"><a class="" href="/svc/service/contractetc/contractetc_edit.php?id='+value.rid+'">'+value.ptAmount+'</a></td>';
           }
 
           returns += '<td class="mobile">'+value.payKind+'</td>';

@@ -41,14 +41,12 @@ for ($i=0; $i < count($allRows); $i++) {
     $allRows[$i]['cName'] = $allRows[$i]['cdiv3'].$allRows[$i]['companyname'].'('.$allRows[$i]['name'].','.$allRows[$i]['cNumber'].')';
   } else if($allRows[$i]['div2']==='개인'){
     $allRows[$i]['cName'] = $allRows[$i]['name'];
+  } else {
+    $allRows[$i]['cName'] = $allRows[$i]['name'];
   }
 
   $allRows[$i]['companyname'] = $allRows[$i]['cdiv3'].$allRows[$i]['companyname'];
 
-
-  if($allRows[$i]['div1']==='문의'){
-    $allRows[$i]['cName'] = 'ㅇㅇㅇ';
-  }
 
   if($allRows[$i]['div1']==='입주자'){
     $allRows[$i]['gothere'] = '임대계약';

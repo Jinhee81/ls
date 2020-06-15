@@ -28,7 +28,6 @@ include $_SERVER['DOCUMENT_ROOT']."/svc/service/contract/building.php";
     <hr class="my-4">
     <a class="btn btn-primary btn-sm mobile" href="m_c_adds.php" role="button">일괄등록</a>
     <a class="btn btn-primary btn-sm mobile" href="m_c_add_csv1.php" role="button">csv등록</a>
-    <button type="button" class="btn btn-primary btn-sm mobile" href="#" data-toggle="tooltip" data-placement="top" title="곧 구현할예정입니다">문의고객등록</button>
   </div>
 </section>
 

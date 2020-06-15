@@ -133,7 +133,6 @@ while($row_sms = mysqli_fetch_array($result_sms)){
     </div>
     <div class="col col-md-5 mobile">
       <div class="row justify-content-end mr-0">
-        <a href="m_c_add_question.php" role="button" class="btn btn-outline-primary btn-sm mr-1" name="button">문의등록</a>
         <a href="m_c_add.php" role="button" class="btn btn-primary btn-sm mr-1" name="button">신규등록</a>
         <button type="button" class="btn btn-danger btn-sm mr-1" name="rowDeleteBtn">선택삭제</button>
         <button type="button" class="btn btn-info btn-sm" name="button" data-toggle="tooltip" data-placement="top" title="작업준비중입니다."><i class="far fa-file-excel"></i>엑셀저장</button>
@@ -191,9 +190,9 @@ include $_SERVER['DOCUMENT_ROOT']."/svc/service/sms/modal_sms2.php";
 <?php include $_SERVER['DOCUMENT_ROOT']."/svc/view/service_footer.php"; ?>
 
 <script src="/svc/inc/js/jquery-3.3.1.min.js"></script>
-<script src="/svc/inc/js/jquery-ui.min.js"></script>
-<script src="/svc/inc/js/popper.min.js"></script>
-<script src="/svc/inc/js/bootstrap.min.js"></script>
+<script src="/svc/inc/js/jquery-ui.min.js"></script><!-- datepicker에 필요한 js file -->
+<script src="/svc/inc/js/popper.min.js"></script><!--툴팁함수호출에필요함-->
+<script src="/svc/inc/js/bootstrap.min.js"></script><!--툴팁함수호출하면 예쁘게부트스트랩표시가 됨-->
 <script src="/svc/inc/js/datepicker-ko.js"></script>
 <script src="/svc/inc/js/jquery-ui-timepicker-addon.js"></script>
 <script src="/svc/inc/js/etc/newdate8.js?<?=date('YmdHis')?>"></script>
@@ -245,11 +244,7 @@ function maketable(x,y){
           returns += '<td class="mobile"><input type="checkbox" value="'+value.id+'" class="tbodycheckbox"></td>';
           returns += '<td class="">'+value.num+'</td>';
           returns += '<td class="">'+value.div1+'</td>';
-          if(value.div1==='문의'){
-            returns += '<td class=""><a href="m_c_edit_question.php?id='+value.id+'" data-toggle="tooltip" data-placement="top" title="'+value.cName+'" class="green">'+value.cNamemb+'</a>';
-          } else {
-            returns += '<td class=""><a href="m_c_edit.php?id='+value.id+'" data-toggle="tooltip" data-placement="top" title="'+value.cName+'" class="green">'+value.cNamemb+'</a>';
-          }
+          returns += '<td class=""><a href="m_c_edit.php?id='+value.id+'" data-toggle="tooltip" data-placement="top" title="'+value.cName+'">'+value.cNamemb+'</a>';
 
           returns += '<input type="hidden" name="name" value="'+value.name+'">';
           returns += '<input type="hidden" name="companyname" value="'+value.companyname+'">';

@@ -75,31 +75,37 @@ include "contractEdit_condi.php";
   </section>
 </div>
 
- <?php include $_SERVER['DOCUMENT_ROOT']."/svc/view/service_footer.php"; ?>
+ <?php
+ include $_SERVER['DOCUMENT_ROOT']."/svc/service/sms/modal_sms3.php";
+ include $_SERVER['DOCUMENT_ROOT']."/svc/view/service_footer.php"; ?>
 
 
- <script src="/svc/inc/js/jquery-3.3.1.min.js"></script>
- <script src="/svc/inc/js/jquery-ui.min.js"></script>
- <script src="/svc/inc/js/popper.min.js"></script>
- <script src="/svc/inc/js/bootstrap.min.js"></script>
- <script src="/svc/inc/js/datepicker-ko.js"></script>
- <script src="/svc/inc/js/jquery.number.min.js"></script>
- <script src="/svc/inc/js/etc/checkboxtable.js?<?=date('YmdHis')?>"></script>
- <script src="/svc/inc/js/etc/form.js?<?=date('YmdHis')?>"></script>
- <script src="/svc/inc/js/etc/uploadfile.js?<?=date('YmdHis')?>"></script>
+<script src="/svc/inc/js/jquery-3.3.1.min.js"></script>
+<script src="/svc/inc/js/jquery-ui.min.js"></script>
+<script src="/svc/inc/js/popper.min.js"></script>
+<script src="/svc/inc/js/bootstrap.min.js"></script>
+<script src="/svc/inc/js/datepicker-ko.js"></script>
+<script src="/svc/inc/js/jquery-ui-timepicker-addon.js"></script>
+<script src="/svc/inc/js/etc/newdate8.js?<?=date('YmdHis')?>"></script>
+<script src="/svc/inc/js/jquery.number.min.js"></script>
+<script src="/svc/inc/js/etc/checkboxtable.js?<?=date('YmdHis')?>"></script>
+<script src="/svc/inc/js/etc/form.js?<?=date('YmdHis')?>"></script>
+<script src="/svc/inc/js/etc/uploadfile.js?<?=date('YmdHis')?>"></script>
+<script src="/svc/inc/js/etc/sms_noneparase4.js?<?=date('YmdHis')?>"></script>
 
- <script type="text/javascript">
+<script type="text/javascript">
    var buildingArray = <?php echo json_encode($buildingArray); ?>;
    var groupBuildingArray = <?php echo json_encode($groupBuildingArray); ?>;
    var roomArray = <?php echo json_encode($roomArray); ?>;
 //    console.log(buildingArray);
 //    console.log(groupBuildingArray);
 //    console.log(roomArray);
- </script>
+</script>
 
 <script>
 
 var step = '<?=$step?>';
+var customerId = <?=$row[1]?>;
 
 $(document).on('click', '.modalAsk', function(){ //청구번호클릭하는거(모달클릭)
   var currow2 = $(this).closest('tr');
@@ -217,6 +223,24 @@ $(document).ready(function(){
     showButtonPanel: true,
     currentText: '오늘', // 오늘 날짜로 이동하는 버튼 패널
     closeText: '닫기'  // 닫기 버튼 패널
+  })
+
+  $('#smsBtn').on('click', function(){
+    var buildingkey = $('input[name=building]').val();
+    console.log(buildingkey);
+    var recievephonenumber = '<?=$cContact?>';
+    var cname = '<?=$row[2]?>';
+
+    //문자발송번호
+    var sendphonenumber = buildingArray[buildingkey][3] + buildingArray[buildingkey][4] + buildingArray[buildingkey][5];
+    $('input[name=sendphonenumber]').val(sendphonenumber);
+
+    //문자수신번호
+    $('#recievephonenumber').text(recievephonenumber);
+    $('#mcid').val(customerId);
+    $('#mcname').text(cname);
+
+    sms_noneparase();
   })
 
 }) //document.ready function closing}

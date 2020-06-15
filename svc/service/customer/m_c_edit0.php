@@ -27,7 +27,7 @@ $sql = "select
           div1, qDate, div2, name, contact1, contact2, contact3,
           gender, customer.email, div3, div4, div5, companyname,
           cNumber1, cNumber2, cNumber3,
-          zipcode, add1, add2, add3, etc, created, updated, building_id, birthday
+          zipcode, add1, add2, add3, etc, created, updated, building_id
       from customer
       where id = {$filtered_id}";
 
@@ -53,7 +53,6 @@ $clist['zipcode'] = htmlspecialchars($row['zipcode']);
 $clist['add1'] = htmlspecialchars($row['add1']);
 $clist['add2'] = htmlspecialchars($row['add2']);
 $clist['add3'] = htmlspecialchars($row['add3']);
-$clist['birthday'] = htmlspecialchars($row['birthday']);
 
 $sql2 = "select count(*)
          from realContract
@@ -73,7 +72,7 @@ $row2 = mysqli_fetch_array($result2);
 <section class="container" style="max-width:700px;">
   <form method="post" action ="p_m_c_edit.php">
     <div class="form-row">
-      <div class="form-group col-md-3 mb-2">
+      <div class="form-group col-md-3">
         <p class="mb-1"><span id='star' style='color:#F7BE81;'>* </span>구분1</p>
         <select name="div1" class="form-control">
           <option value="입주자" <?php if($clist['div1']==='입주자'){echo "selected";}?>>입주자</option>
@@ -81,7 +80,7 @@ $row2 = mysqli_fetch_array($result2);
           <option value="기타" <?php if($clist['div1']==='기타'){echo "selected";}?>>기타</option>
         </select>
       </div>
-      <div class="form-group col-md-3 mb-1">
+      <div class="form-group col-md-3">
         <p class="mb-1"><span id='star' style='color:#F7BE81;'>* </span>구분2</p>
         <select name="div2" class="form-control">
           <option value="개인" <?php if($clist['div2']==='개인'){echo "selected";}?>>개인</option>
@@ -89,7 +88,7 @@ $row2 = mysqli_fetch_array($result2);
           <option value="법인사업자" <?php if($clist['div2']==='법인사업자'){echo "selected";}?>>법인사업자</option>
         </select>
       </div>
-      <div class="form-group col-md-3 mb-1">
+      <div class="form-group col-md-3">
         <p class="mb-1"><span id='star' style='color:#F7BE81;'>* </span>물건</p>
         <select name="building" class="form-control">
         <?php
@@ -133,16 +132,15 @@ $row2 = mysqli_fetch_array($result2);
             <label class='form-check-label'>남</label>
           </div>
           <div class='form-check form-check-inline'>
-            <input class='form-check-input' type='radio' name='gender' id='inlineRadio2' value='여'<?php if($row['gender']==='여'){echo "checked";}?>>
+            <input class='form-check-input' type='radio' name='gender' id='inlineRadio2' value='여'<?php if($row['gender']==='남'){echo "checked";}?>>
             <label class='form-check-label'>여</label>
           </div>
         </div>
       </div>
-      <hr class="mt-0 mb-2">
       <div class="form-row">
-        <div class="form-group col-md-3 mb-1">
+        <div class="form-group col-md-3">
           <p class="mb-1">사업자구분</p>
-          <select name="div3" class="form-control form-control-sm">
+          <select name="div3" class="form-control">
             <option value=""<?php if($row['div3']==''){
               echo "selected";
             } ?>></option>
@@ -157,66 +155,62 @@ $row2 = mysqli_fetch_array($result2);
             } ?>>합자회사</option>
           </select>
         </div>
-        <div class="form-group col-md-4 mb-1">
+        <div class="form-group col-md-4">
           <p class="mb-1">사업자명</p>
-          <input type='text' name='companyname' class='form-control form-control-sm' maxlength='14' value="<?=$clist['companyname']?>">
+          <input type='text' name='companyname' class='form-control' maxlength='14' value="<?=$clist['companyname']?>">
         </div>
-        <div class="form-group col-md-5 mb-1">
+        <div class="form-group col-md-5">
           <p class="mb-1">사업자번호</p>
           <div class='form-row'>
             <div class='form group col-md-4'>
-              <input type='text' name='cNumber1' class='form-control form-control-sm' maxlength='3' oninput='maxlengthCheck(this);' value="<?=$clist['cNumber1']?>" numberOnly>
+              <input type='text' name='cNumber1' class='form-control' maxlength='3' oninput='maxlengthCheck(this);' value="<?=$clist['cNumber1']?>" numberOnly>
             </div>
             <div class='form group col-md-3'>
-              <input type='text' name='cNumber2' class='form-control form-control-sm' maxlength='2' oninput='maxlengthCheck(this);' value="<?=$clist['cNumber2']?>" numberOnly>
+              <input type='text' name='cNumber2' class='form-control' maxlength='2' oninput='maxlengthCheck(this);' value="<?=$clist['cNumber2']?>" numberOnly>
             </div>
             <div class='form group col-md-5'>
-              <input type='text' name='cNumber3' class='form-control form-control-sm' maxlength='5' oninput='maxlengthCheck(this);' value="<?=$clist['cNumber3']?>" numberOnly>
+              <input type='text' name='cNumber3' class='form-control' maxlength='5' oninput='maxlengthCheck(this);' value="<?=$clist['cNumber3']?>" numberOnly>
             </div>
           </div>
         </div>
       </div>
-
       <div class="form-row">
         <div class="form-group col-md-3">
           <p class="mb-1">업태</p>
-          <input type='text' name='div4' class='form-control form-control-sm' maxlength='9' value="<?=$clist['div4']?>">
+          <input type='text' name='div4' class='form-control' maxlength='9' value="<?=$clist['div4']?>">
         </div>
         <div class="form-group col-md-3">
           <p class="mb-1">종목</p>
-          <input type='text' name='div5' class='form-control form-control-sm' maxlength='9' value="<?=$clist['div5']?>">
+          <input type='text' name='div5' class='form-control' maxlength='9' value="<?=$clist['div5']?>">
         </div>
         <div class="form-group col-md-6">
           <p class="mb-1">이메일</p>
-          <input type='email' name='email' class='form-control form-control-sm' maxlength='40' value="<?=$clist['email']?>">
+          <input type='email' name='email' class='form-control' maxlength='40' value="<?=$clist['email']?>">
         </div>
       </div>
-
-      <hr class="mt-0 mb-2">
-
       <div class='form-group'>
         <div class='form-row'>
           <p class="mb-1">주소</p>
         </div>
         <div class='form-row'>
-          <div class='form-group col-md-3 mb-1'>
-            <input type='text' id='sample2_postcode' name='zipcode' placeholder='우편번호' class='form-control form-control-sm' disabled value="<?=$clist['zipcode']?>">
+          <div class='form-group col-md-3'>
+            <input type='text' id='sample2_postcode' name='zipcode' placeholder='우편번호' class='form-control' disabled value="<?=$clist['zipcode']?>">
           </div>
-          <div class='form-group col-md-3 mb-0'>
+          <div class='form-group col-md-3'>
             <input type='button' onclick='sample2_execDaumPostcode()' value='우편번호 찾기' class='btn btn-outline-secondary btn-sm'><br>
           </div>
         </div>
-        <div class='form-row mb-1'>
-          <div class='form-group col-md-6 mb-0'>
-            <input type='text' id='sample2_address' name='add1' class='form-control form-control-sm' value="<?=$clist['add1']?>">
+        <div class='form-row'>
+          <div class='form-group col-md-6'>
+            <input type='text' id='sample2_address' name='add1' class='form-control' value="<?=$clist['add1']?>">
           </div>
-          <div class='form-group col-md-6 mb-0'>
-            <input type='text' id='sample2_detailAddress' name='add2' class='form-control form-control-sm' value="<?=$clist['add2']?>">
+          <div class='form-group col-md-6'>
+            <input type='text' id='sample2_detailAddress' name='add2' class='form-control' value="<?=$clist['add2']?>">
           </div>
         </div>
         <div class='form-row'>
-          <div class='form-group col mb-0'>
-            <input type='text' id='sample2_extraAddress' name='add3' class='form-control form-control-sm' value="<?=$clist['add3']?>">
+          <div class='form-group col'>
+            <input type='text' id='sample2_extraAddress' name='add3' class='form-control' value="<?=$clist['add3']?>">
           </div>
         </div>
       </div>
@@ -225,16 +219,8 @@ $row2 = mysqli_fetch_array($result2);
       </div>
       <div class='form-group'>
         <div class='form-row'>
-          <div class="form-group col-md-9">
-            <p class="mb-1">특이사항</p>
-            <textarea name="etc" rows="2" cols="80" class="form-control form-control-sm">
-              <?=$clist['etc']?>
-            </textarea>
-          </div>
-          <div class="form-group col-md-3">
-            <p class="mb-1">생년월일</p>
-            <input type='text' name='birthday' class='form-control form-control-sm dateType' value="<?=$clist['birthday']?>">
-          </div>
+          <p class="mb-1">특이사항</p>
+          <input type='text' name='etc' class='form-control' maxlength='47' value="<?=$clist['etc']?>">
         </div>
       </div>
     </div>
@@ -247,26 +233,17 @@ $row2 = mysqli_fetch_array($result2);
     </div>
 
 
-    <div class="row">
-      <div class="col col-md-3">
-        <button type='button' class='btn btn-sm btn-outline-primary' data-toggle="modal" data-target="#smsModal1" id="smsBtn"><i class="far fa-envelope"></i> 보내기</button>
-      </div>
-      <div class="col">
-        <div class="row justify-content-end mr-0">
-          <button type='button' class='btn btn-danger mr-1' name='btnDelete'>삭제하기</button>
-          <button type='submit' class='btn btn-primary mr-1'>수정하기</button>
-          <a href='customer.php'><button type='button' class='btn btn-secondary mr-1'><i class="fas fa-angle-double-right"></i> 관계자목록</button></a>
-          <a href="/svc/service/contract/contract_add1.php?id=<?=$filtered_id?>"><button type='button' class='btn btn-secondary mr-1'><i class="fas fa-angle-double-right"></i> 신규계약</button></a>
-          <a href="/svc/service/contract/contract.php?customerId=<?=$filtered_id?>&progress=pAll"><button type='button' class='btn btn-secondary mr-1 <?php if((int)$row2[0]===0){echo "disabled";} ?>'><i class="fas fa-angle-double-right"></i> 계약보기</button></a>
-        </div>
-      </div>
+    <div class="row justify-content-md-center">
+      <button type='button' class='btn btn-danger mr-1' name='btnDelete'>삭제하기</button>
+      <button type='submit' class='btn btn-primary mr-1'>수정하기</button>
+      <a href='customer.php'><button type='button' class='btn btn-secondary mr-1'><i class="fas fa-angle-double-right"></i> 관계자목록</button></a>
+      <a href="/svc/service/contract/contract_add1.php?id=<?=$filtered_id?>"><button type='button' class='btn btn-secondary mr-1'><i class="fas fa-angle-double-right"></i> 신규계약</button></a>
+      <a href="/svc/service/contract/contract.php?customerId=<?=$filtered_id?>&progress=pAll"><button type='button' class='btn btn-secondary mr-1 <?php if((int)$row2[0]===0){echo "disabled";} ?>'><i class="fas fa-angle-double-right"></i> 계약보기</button></a>
     </div>
   </form>
 </section>
 
-<?php
-include $_SERVER['DOCUMENT_ROOT']."/svc/service/sms/modal_sms3.php";
-include $_SERVER['DOCUMENT_ROOT']."/svc/view/service_footer.php";?>
+<?php include $_SERVER['DOCUMENT_ROOT']."/svc/view/service_footer.php";?>
 
 
 <script src="/svc/inc/js/jquery-3.3.1.min.js"></script>
@@ -274,57 +251,34 @@ include $_SERVER['DOCUMENT_ROOT']."/svc/view/service_footer.php";?>
 <script src="/svc/inc/js/popper.min.js"></script>
 <script src="/svc/inc/js/bootstrap.min.js"></script>
 <script src="/svc/inc/js/datepicker-ko.js"></script>
-<script src="/svc/inc/js/jquery-ui-timepicker-addon.js"></script>
-<script src="/svc/inc/js/etc/newdate8.js?<?=date('YmdHis')?>"></script>
 <script src="/svc/inc/js/jquery.number.min.js"></script>
 <script src="/svc/inc/js/etc/form.js?<?=date('YmdHis')?>"></script>
-<script src="/svc/inc/js/etc/sms_noneparase4.js?<?=date('YmdHis')?>"></script>
-
 
 
 <script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <script src="/svc/inc/js/daumAddressAPI3.js?<?=date('YmdHis')?>"></script>
 
 <script type="text/javascript">
-var buildingArray = <?php echo json_encode($buildingArray); ?>;
-var customerId = <?=$filtered_id?>;
+  $(document).ready(function(){
+    $(function () {
+        $('[data-toggle="tooltip"]').tooltip();
+    })
 
-$(document).ready(function(){
-  $(function () {
-      $('[data-toggle="tooltip"]').tooltip();
-  })
+    $('button[name=btnDelete]').on('click', function(){
+      var a = confirm('정말 삭제하시겠습니까?');
+      if(a){
+        var cid = <?=$filtered_id?>;
 
-  $('button[name=btnDelete]').on('click', function(){
-    var a = confirm('정말 삭제하시겠습니까?');
-    if(a){
-      goCategoryPage(customerId);
+        goCategoryPage(cid);
 
-      function goCategoryPage(x){
-        var frm = formCreate('customerDelete', 'post', 'p_m_c_delete.php','');
-        frm = formInput(frm, 'cid', x);
-        formSubmit(frm);
+        function goCategoryPage(x){
+          var frm = formCreate('customerDelete', 'post', 'p_m_c_delete.php','');
+          frm = formInput(frm, 'cid', x);
+          formSubmit(frm);
+        }
       }
-    }
+    })
   })
-
-  $('#smsBtn').on('click', function(){
-    var buildingkey = $('select[name=building]').val();
-    // console.log(buildingkey);
-    var recievephonenumber = $('input[name=contact1]').val()+'-'+$('input[name=contact2]').val()+'-'+$('input[name=contact3]').val();
-    var cname = $('input[name=name]').val();
-
-    //문자발송번호
-    var sendphonenumber = buildingArray[buildingkey][3] + buildingArray[buildingkey][4] + buildingArray[buildingkey][5];
-    $('input[name=sendphonenumber]').val(sendphonenumber);
-
-    //문자수신번호
-    $('#recievephonenumber').text(recievephonenumber);
-    $('#mcid').val(customerId);
-    $('#mcname').text(cname);
-
-    sms_noneparase();
-  })
-})
 
   function maxlengthCheck(object){
     if(object.value.length > object.maxLength){

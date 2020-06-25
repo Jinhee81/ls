@@ -10,6 +10,7 @@ header("Content-Type: text/html; charset=UTF-8");
 
 
 $a = json_decode($_POST['taxArray']);
+print_r($a);
 $tdate = $_POST['taxDate'];
 $sql2 = "SELECT COUNT(*) AS count
 FROM paySchedule2

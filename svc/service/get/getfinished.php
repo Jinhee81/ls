@@ -222,6 +222,7 @@ while($row_sms = mysqli_fetch_array($result_sms)){
 
 
 <?php
+include "modal_pay2.php";
 include $_SERVER['DOCUMENT_ROOT']."/svc/service/sms/modal_sms1.php";
 include $_SERVER['DOCUMENT_ROOT']."/svc/service/sms/modal_sms2.php";
  ?>
@@ -298,19 +299,35 @@ function maketable(){
           returns += '<td>'+datacount+'</td>';
 
           returns += '<td class="">';
-          returns += '<p class="mb-0">'+value.executiveDate+'</p>';
+
+          if(value.roomdiv==='room'){
+            returns += '<p class="mb-0 modalAsk" data-toggle="modal" data-target="#pPay2">'+value.executiveDate+'</p>';
+          } else {
+            returns += '<p class="mb-0">'+value.executiveDate+'</p>';
+          }
+
           returns += '<input type="hidden" name="pStartDate" value="'+value.pStartDate+'">';
           returns += '<input type="hidden" name="pEndDate" value="'+value.pEndDate+'">';
-          returns += '<input type="hidden" name="monthCount" value="'+value.monthCount+'">';
+          returns += '<input type="hidden" name="pMonthCount" value="'+value.monthCount+'">';
+
+          if(value.roomdiv==='room'){
+            returns += '<input type="hidden" name="startDate" value="'+value.startDate+'">';
+            returns += '<input type="hidden" name="endDate" value="'+value.endDate2+'">';
+            returns += '<input type="hidden" name="monthCount" value="'+value.count2+'">';
+          } else {
+            returns += '<input type="hidden" name="startTime" value="'+value.startDate+'">';
+            returns += '<input type="hidden" name="endTime" value="'+value.endDate2+'">';
+          }
+
           returns += '</td>';
 
           returns += '<td class="text-right pr-3 mobile">'+value.pAmount+'</td>';
           returns += '<td class="text-right pr-3 mobile">'+value.pvAmount+'</td>';
 
           if(value.roomdiv==='room'){
-            returns += '<td class="text-right pr-3"><a class="" href="/svc/service/contract/contractEdit.php?page=schedule&id='+value.rid+'">'+value.ptAmount+'</a></td>';
+            returns += '<td class="text-right pr-3"><a class="green" href="/svc/service/contract/contractEdit.php?page=schedule&id='+value.rid+'">'+value.ptAmount+'</a></td>';
           } else if(value.roomdiv==='good'){
-            returns += '<td class="text-right pr-3"><a class="" href="/svc/service/contractetc/contractetc_edit.php?id='+value.rid+'">'+value.ptAmount+'</a></td>';
+            returns += '<td class="text-right pr-3"><a class="green" href="/svc/service/contractetc/contractetc_edit.php?id='+value.rid+'">'+value.ptAmount+'</a></td>';
           }
 
           returns += '<td class="mobile">'+value.payKind+'</td>';
@@ -412,6 +429,31 @@ $(document).ready(function(){
    return (key == 8 || key == 9 || key == 46 || (key >= 48 && key <= 57) || (key >= 96 && key <= 105));
   // Key 8번 백스페이스, Key 9번 탭, Key 46번 Delete 부터 0 ~ 9까지, Key 96 ~ 105까지 넘버패트
   // 한마디로 JQuery 0 ~~~ 9 숫자 백스페이스, 탭, Delete 키 넘버패드외에는 입력못함
+  })
+
+  $(document).on('click', '.modalAsk', function(){ //입금일 클릭하는거(모달클릭)
+
+    var currow2 = $(this).closest('tr');
+    var payid = currow2.find('td:eq(0)').children('input[name=pid]').val();
+    // console.log(payNumber);
+    var rid = currow2.find('td:eq(0)').children('input[name=rid]').val();
+
+    var startDate = $(this).siblings('input[name=startDate]').val();
+    var endDate = $(this).siblings('input[name=endDate]').val();
+    var monthCount = $(this).siblings('input[name=monthCount]').val();
+    var pStartDate = $(this).siblings('input[name=pStartDate]').val();
+    var pEndDate = $(this).siblings('input[name=pEndDate]').val();
+    var pMonthCount = $(this).siblings('input[name=pMonthCount]').val();
+
+    // console.log(payid, rid, startDate);
+
+    $('input[name=m2startDate]').val(startDate);
+    $('input[name=m2endDate]').val(endDate);
+    $('input[name=m2duration]').val(monthCount);
+    $('input[name=m2pStartDate]').val(pStartDate);
+    $('input[name=m2pEndDate]').val(pEndDate);
+    $('input[name=m2pDuration]').val(pMonthCount);
+
   })
 
 

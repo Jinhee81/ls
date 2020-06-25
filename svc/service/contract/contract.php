@@ -341,7 +341,7 @@ function maketable(x,y){
           returns += '<td class="mobile">'+value.startDate+'</td>';
           returns += '<td class="mobile">'+value.endDate2+'</td>';
           returns += '<td class="mobile">'+value.count2+'</td>';
-          returns += '<td class=""><a href="contractEdit.php?page=schedule&id='+value.rid+'" >'+value.mtAmount+'</a>';
+          returns += '<td class=""><a href="contractEdit.php?page=schedule&id='+value.rid+'" class="green">'+value.mtAmount+'</a>';
 
           returns += '<input type="hidden" name="mAmount" value="'+value.mAmount+'">';
           returns += '<input type="hidden" name="mvAmount" value="'+value.mvAmount+'">';

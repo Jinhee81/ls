@@ -76,6 +76,7 @@ while($row_sms = mysqli_fetch_array($result_sms)){
                 <option value="nowMonth">당월</option>
                 <option value="pastMonth">전월</option>
                 <option value="1pastMonth">1개월전</option>
+                <option value="nextMonth">익월</option>
                 <option value="nowYear">당년</option>
               </select><!--시간구분-->
             </td>
@@ -334,7 +335,7 @@ function maketable(x,y){
           returns += '<input type="text" name="executiveDate" class="form-control form-control-sm grey text-center" value="'+value.pExpectedDate+'">';
           returns += '<td class="text-right pr-3 mobile"><label class="mb-0">'+value.pAmount+'</label><br>';
           returns += '<label class="mb-0">'+value.pvAmount+'</label></td>';
-          returns += '<td><a href="/svc/service/contract/contractEdit.php?page=schedule&id='+value.rid+'" name="ptamount" data-toggle="tooltip" data-placement="top" title="계약상세보기">'+value.ptAmount+'</a></td>';
+          returns += '<td><a href="/svc/service/contract/contractEdit.php?page=schedule&id='+value.rid+'" name="ptamount" data-toggle="tooltip" data-placement="top" title="계약상세보기" class="green">'+value.ptAmount+'</a></td>';
           returns += '<td class="mobile">';
           if(value.payKind==='계좌'){
             returns += '<select class="form-control form-control-sm" name="payKind"><option value="계좌" selected>계좌</option><option value="현금">현금</option><option value="카드">카드</option></select>';

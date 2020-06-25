@@ -95,6 +95,7 @@ $sql_common = "
       customer.add2,
       customer.add3,
       customer.email,
+      customer.id as ccid,
       idpaySchedule2,
       paySchedule2.monthCount,
       paySchedule2.pStartDate,
@@ -106,6 +107,8 @@ $sql_common = "
       paySchedule2.payKind,
       paySchedule2.taxSelect,
       paySchedule2.taxDate,
+      paySchedule2.building_id as bid,
+      paySchedule2.invoicerMgtKey as mun,
       TIMESTAMPDIFF(day, pExpectedDate, curdate()) as delaycount
   from
       (select @num := {$firstOrder})a,

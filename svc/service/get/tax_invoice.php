@@ -1,8 +1,8 @@
 <?php
 session_start();
 
-ini_set('display_errors', 1);
-ini_set('error_reporting', E_ALL);
+// ini_set('display_errors', 1);
+// ini_set('error_reporting', E_ALL);
 
 include $_SERVER['DOCUMENT_ROOT']."/svc/view/conn.php";
 //$a = json_decode($_POST['taxArray']);
@@ -13,9 +13,10 @@ a.cnumber2,
 a.cnumber3,
 b.email,
 b.user_name,
+b.manager_name,
 b.cellphone,
 CURDATE() AS today
-FROM building a, 
+FROM building a,
 user b
 WHERE a.user_id = b.id
 AND a.user_id = ".$_SESSION['id']."
@@ -48,8 +49,8 @@ $result = $TaxinvoiceService->GetDetailInfo($cnum, 'SELL', $_GET['mun']);
 // echo "<br><br><br><br><br><br>";
 // print_r($result);
 ?>
-<script type="text/javascript" src="/admin/js/jquery-3.3.1.min.js"></script>
-<script type="text/javascript" src="/admin/js/jquery-ui.min.js"></script>
+<script type="text/javascript" src="/svc/inc/js/jquery-3.3.1.min.js"></script>
+<script type="text/javascript" src="/svc/inc/js/jquery-ui.min.js"></script>
 <?php
 if($result->invoicerMgtKey == null || $result->invoicerMgtKey == ''){
     if($_GET['flag']=='finished'){
@@ -90,7 +91,7 @@ if($result->invoicerMgtKey == null || $result->invoicerMgtKey == ''){
 
 					<div id="etax_area_form" class="border_red">
 
-						<table class="etax_table table_border_red" summary="세금계산서" style="border-bottom:none;">
+						<table class="etax_table table_border_red text-center" summary="세금계산서" style="border-bottom:none;">
 							<thead>
 								<tr>
 									<th class="al_c" colspan="46">
@@ -130,15 +131,15 @@ if($result->invoicerMgtKey == null || $result->invoicerMgtKey == ''){
 									<th class="al_c bold" colspan="8"><span>상</span><span class="mgl_20">호</span></th>
 									<td class="al_l pdl_3" colspan="23"><?= $result->invoicerCorpName ?></td>
 
-									<th class="al_c bold lh_14" colspan="4"><p>성</p><p>명</p></th>
-									<td class="al_l pdl_3" colspan="12"><?= $row4['user_name'] ?></td>
+									<th class="al_c bold lh_14" colspan="4">성명</th>
+									<td class="al_l pdl_3" colspan="12"><?= $row4['manager_name'] ?></td>
 
 
 									<!-- 공급받는 자 -->
 									<th class="al_c bold" colspan="8"><span>상</span><span class="mgl_20">호</span></th>
 									<td class="al_l pdl_3" colspan="23"><?= $result->invoiceeCorpName ?></td>
 
-									<th class="al_c bold lh_14" colspan="4">성<br>명</th>
+									<th class="al_c bold lh_14" colspan="4">성명</th>
 									<td class="al_l pdl_3" colspan="12"><?= $row5['name'] ?></td>
 
 								</tr>
@@ -146,12 +147,12 @@ if($result->invoicerMgtKey == null || $result->invoicerMgtKey == ''){
 								<!-- 사업장 주소 -->
 								<tr>
 									<!-- 공급자 -->
-									<th class="al_c  lh_14" colspan="8"><p><span>사</span><span class="mgl_4">업</span><span class="mgl_4">장</span></p><p><span>주</span><span class="mgl_20">소</span></p></th>
+									<th class="al_c  lh_14" colspan="8"><p>주소</p></th>
 
 									<td class="al_l pdl_3" colspan="39"><?= $result->invoicerAddr ?></td>
 
 									<!-- 공급받는 자 -->
-									<th class="al_c lh_14" colspan="8"><p><span>사</span><span class="mgl_4">업</span><span class="mgl_4">장</span></p><p><span>주</span><span class="mgl_20">소</span></p></th>
+									<th class="al_c lh_14" colspan="8"><p>주소</p></th>
 
 									<td class="al_l pdl_3" colspan="39"><?= $result->invoiceeAddr ?></td>
 
@@ -163,15 +164,15 @@ if($result->invoicerMgtKey == null || $result->invoicerMgtKey == ''){
 									<th class="al_c" colspan="8"><span>업</span><span class="mgl_20">태</span></th>
 									<td class="al_l pdl_3" colspan="17"><?= $result->invoicerBizType ?></td>
 
-									<th class="al_c lh_14" colspan="4"><p>종</p><p>목</p></th>
-									<td class="al_l pdl_3" colspan="18"><?= $result->invoicerBizClass ?></td>
+									<th class="al_c lh_14" colspan="6">종목</th>
+									<td class="al_l pdl_3" colspan="16"><?= $result->invoicerBizClass ?></td>
 
 									<!-- 공급받는 자 -->
 									<th class="al_c" colspan="8"><span>업</span><span class="mgl_20">태</span></th>
 									<td class="al_l pdl_3" colspan="17"></td>
 
-									<th class="al_c lh_14" colspan="4"><p>종</p><p>목</p></th>
-									<td class="al_l pdl_3" colspan="18"></td>
+									<th class="al_c lh_14" colspan="6">종목</th>
+									<td class="al_l pdl_3" colspan="16"></td>
 
 								</tr>
 
@@ -179,7 +180,7 @@ if($result->invoicerMgtKey == null || $result->invoicerMgtKey == ''){
 								<tr>
 									<!-- 공급자 -->
 									<th class="al_c" colspan="8"><span>담</span><span class="mgl_4">당</span><span class="mgl_4">자</span></th>
-									<td class="al_l pdl_3" colspan="17"><?= $row4['user_name'] ?></td>
+									<td class="al_l pdl_3" colspan="17"><?= $row4['manager_name'] ?></td>
 
 									<th class="al_c" colspan="6">연락처</th>
 									<td class="al_l pdl_3" colspan="16"><?= $row4['cellphone'] ?></td>
@@ -207,7 +208,7 @@ if($result->invoicerMgtKey == null || $result->invoicerMgtKey == ''){
 								</tr>
 							</tbody>
 						</table>
-						<table class="etax_table table_border_red" summary="세금계산서" style="border-top:none;">
+						<table class="etax_table table_border_red text-center" summary="세금계산서" style="border-top:none;">
 
 							<tbody id="TotalList">
 								<tr>
@@ -221,12 +222,13 @@ if($result->invoicerMgtKey == null || $result->invoicerMgtKey == ''){
 								</tr>
 								<tr>
 									<td class="al_c noborder_l gray_border_t" colspan="11">
-										<input type="text" class="in_txt al_c dtpicker dp-applied calendar2" maxlength="10" style="width:85%;" tabindex="25" id="WriteDate" name="WriteDate" value="<?=date("Y-m-d");?>">
+										<input type="text" class="in_txt al_c dtpicker dp-applied calendar2 text-center" maxlength="10" style="width:85%;" tabindex="25" id="WriteDate" name="WriteDate" value="<?=date('Y-m-d', strtotime($result->writeDate)); //date("Y-m-d");?>">
 									</td>
 
-									<td class="al_l pet0 pdl_3 gray_border_t gray_border_l" colspan="47"><?= $result->supplyCostTotal ?></td>
+									<!-- <td class="al_l pet0 pdl_3 gray_border_t gray_border_l" colspan="47"><?= $result->supplyCostTotal ?></td> -->
+                  <td class="al_l pet0 pdl_3 gray_border_t gray_border_l" colspan="47"><?= number_format($result->supplyCostTotal) ?></td>
 
-									<td class="al_l pet1 pdl_3 gray_border_t gray_border_l" colspan="42"><?= $result->taxTotal ?></td>
+									<td class="al_l pet1 pdl_3 gray_border_t gray_border_l" colspan="42"><?= number_format($result->taxTotal) ?></td>
 								</tr>
 							</tbody>
 							<tbody id="remarkList">
@@ -236,13 +238,13 @@ if($result->invoicerMgtKey == null || $result->invoicerMgtKey == ''){
 								</tr>
 								<tr>
 									<th class="al_c noborder_l" colspan="11"><span class="bold">비고</span></th>
-									<td class="al_l pdl_3 gray_border_l" colspan="85"><?= $result->remark1 ?></td>
-									<td class="al_c item_l_border gray_border_l" colspan="4"></td>
+									<td class="al_l pdl_3 gray_border_l" colspan="47"><?= $result->remark1 ?></td>
+									<td class="al_c item_l_border gray_border_l" colspan="42"></td>
 								</tr>
 
 							</tbody>
 
-							<tbody id="taxList">
+							<!-- <tbody id="taxList">
 
 								<tr>
 									<th class="al_c noborder_l" colspan="4"><span class="bold">월</span></th>
@@ -262,11 +264,11 @@ if($result->invoicerMgtKey == null || $result->invoicerMgtKey == ''){
 								<tr id="item_0">
 									<td class="al_l pdl_3 noborder_l item_t_border" colspan="4">
 
-										<input class="in_txt al_c in_detail" maxlength="2" style="width:67%; height:25px;" tabindex="50" type="text" name="sss_month" id="detailList0.PurchaseDT1" value="<?=date('m')?>">
+										<input class="in_txt al_c in_detail" maxlength="2" style="width:67%; height:25px;" tabindex="50" type="text" name="sss_month" id="detailList0.PurchaseDT1" value="<?=date('m', strtotime($result->writeDate)); //date('m')?>">
 									</td>
 
 									<td class="al_l pdl_3 item_border" colspan="4">
-										<input class="in_txt al_c in_detail" maxlength="2" style="width:67%; height:25px;" tabindex="50" type="text" name="sss_day" id="detailList0.PurchaseDT2" value="<?=date('d')?>">
+										<input class="in_txt al_c in_detail" maxlength="2" style="width:67%; height:25px;" tabindex="50" type="text" name="sss_day" id="detailList0.PurchaseDT2" value="<?=date('d', strtotime($result->writeDate)); //date('d')?>">
 									</td>
 
 									<td class="al_l pdl_3 item_border" colspan="24"></td>
@@ -288,7 +290,7 @@ if($result->invoicerMgtKey == null || $result->invoicerMgtKey == ''){
 
 
 
-							</tbody>
+							</tbody> -->
 							<tbody id="taxTotalList">
 								<tr>
 									<th class="splitline noborder_t" colspan="50"></th>
@@ -304,7 +306,8 @@ if($result->invoicerMgtKey == null || $result->invoicerMgtKey == ''){
 									</th>
 								</tr>
 								<tr>
-									<td class="al_l pdl_3 noborder_l" colspan="74"><?= $result->supplyCostTotal + $result->taxTotal ?></td>
+									<!-- <td class="al_l pdl_3 noborder_l" colspan="74"><?= $result->supplyCostTotal + $result->taxTotal ?></td> -->
+                  <td class="al_l pdl_3 noborder_l" colspan="74"><?= number_format($result->supplyCostTotal + $result->taxTotal) ?></td>
 								</tr>
 							</tbody>
 						</table>

@@ -97,9 +97,9 @@ include "contractEdit_condi.php";
    var buildingArray = <?php echo json_encode($buildingArray); ?>;
    var groupBuildingArray = <?php echo json_encode($groupBuildingArray); ?>;
    var roomArray = <?php echo json_encode($roomArray); ?>;
-//    console.log(buildingArray);
-//    console.log(groupBuildingArray);
-//    console.log(roomArray);
+   console.log(buildingArray);
+   console.log(groupBuildingArray);
+   console.log(roomArray);
 </script>
 
 <script>
@@ -226,7 +226,8 @@ $(document).ready(function(){
   })
 
   $('#smsBtn').on('click', function(){
-    var buildingkey = $('input[name=building]').val();
+    // var buildingkey = $('input[name=building]').val();
+    var buildingkey = '<?=$row['building_id']?>';
     console.log(buildingkey);
     var recievephonenumber = '<?=$cContact?>';
     var cname = '<?=$row[2]?>';

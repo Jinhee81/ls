@@ -26,7 +26,7 @@ include $_SERVER['DOCUMENT_ROOT']."/svc/view/conn.php";
 include "condition.php";
 include "m_customer.php";
 // include "m_schedule.php"; 이건 변경되서 빼기로함
-include "m_building.php";
+include "m_building0.php";
 ?>
 <!-- <section class="container">
   <div class="row">

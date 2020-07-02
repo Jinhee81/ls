@@ -8,10 +8,19 @@ include $_SERVER['DOCUMENT_ROOT']."/svc/view/conn.php";
 require_once $_SERVER['DOCUMENT_ROOT'].'/svc/popbill_common.php';
 header("Content-Type: text/html; charset=UTF-8");
 
-
+// print_r($_POST);
 $a = json_decode($_POST['taxArray']);
-print_r($a);
-$tdate = $_POST['taxDate'];
+// print_r($a);
+$tdate = date('Y-m-d', strtotime($_POST['taxDate']));
+// print_r($tdate);
+
+
+if($_POST['taxDiv']==='charge'){
+	$tdiv = '청구';
+} else {
+	$tdiv = '영수';
+}//에러를 최소화하려고 일부러 else만 했음, 원래 accept인 경우로 했어야 함.
+
 $sql2 = "SELECT COUNT(*) AS count
 FROM paySchedule2
 WHERE (taxselect != ''
@@ -60,7 +69,8 @@ $count = $row2['count'];
 $cnum = $row3['cnumber1'].$row3['cnumber2'].$row3['cnumber3'];
 
 //선택한 날짜
-$idate = str_replace('-','', $_POST['taxDate']);
+// $idate = str_replace('-','', $_POST['taxDate']);
+$idate = str_replace('-','', $tdate);
 
 //오늘날짜
 $today = str_replace('-','',$row3['today']);
@@ -158,7 +168,8 @@ for ($i=0; $i < count($a); $i++) {
     $Taxinvoice->chargeDirection = '정과금';
 
     // [필수] '영수', '청구' 중 기재
-    $Taxinvoice->purposeType = '영수';
+    // $Taxinvoice->purposeType = '영수';
+		$Taxinvoice->purposeType = $tdiv;
 
     // [필수] 과세형태, '과세', '영세', '면세' 중 기재
     $Taxinvoice->taxType = '과세';
@@ -325,8 +336,9 @@ for ($i=0; $i < count($a); $i++) {
 
     $Taxinvoice->detailList[] = new TaxinvoiceDetail();
     $Taxinvoice->detailList[0]->serialNum = 1;  // [상세항목 배열이 있는 경우 필수] 일련번호 1~99까지 순차기재,
-    $Taxinvoice->detailList[0]->purchaseDT = '20200325';  // 거래일자
-    $Taxinvoice->detailList[0]->itemName = '품목명1번';	// 품명
+    // $Taxinvoice->detailList[0]->purchaseDT = '20200325';  // 거래일자
+		$Taxinvoice->detailList[0]->purchaseDT = $idate;  // 거래일자
+    $Taxinvoice->detailList[0]->itemName = '임대료';	// 품명
     $Taxinvoice->detailList[0]->spec = '';  // 규격
     $Taxinvoice->detailList[0]->qty = ''; // 수량
     $Taxinvoice->detailList[0]->unitCost = '';  // 단가
@@ -426,12 +438,12 @@ if ($code == 1) {
   </script>";
   exit();
 } else {
-echo "<script>alert('" . $message . "');
-history.back();
-  </script>";
-error_log(mysqli_error($conn));
-exit();
+	echo "<script>alert('" . $message . "');
+	history.back();
+	  </script>";
+	error_log(mysqli_error($conn));
+	exit();
 }
-}
+}//for end}
 
 ?>

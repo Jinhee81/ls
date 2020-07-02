@@ -18,7 +18,7 @@
     <link rel="stylesheet" href="/admin/inc/css/custom.css">
     <script type="text/javascript" src="/admin/inc/js/jquery-3.3.1.min.js"></script>
   </head>
-  <body>
+  
     <!-- <nav class="navbar bg-dark">
       <a class="navbar-brand" href="/index.php">
         <img src="/img/leaseman_logo.png" width="20%">
@@ -35,5 +35,3 @@
         </li>
       </ul>
     </nav> -->
-  </body>
-</html>

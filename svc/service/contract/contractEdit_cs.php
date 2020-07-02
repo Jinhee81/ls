@@ -162,7 +162,7 @@
                   echo "<label class='text-center numberComma green mb-0'>".$allRows[$i]['paySchedule2']['delaycount2']."</label><br>";
                 }
               } else {
-                if(strtotime($allRows[$i]['paySchedule2']['pExpectedDate']) >= $currentDate) {
+                if(strtotime($allRows[$i]['paySchedule2']['pExpectedDate']) >= strtotime($currentDate)) {
                   echo "<label class='text-center  sky mb-0'>0</label><br>";
                 } else {
                   echo "<label class='text-center numberComma  pink mb-0'>";echo $allRows[$i]['paySchedule2']['delaycount1']."</label><br>";
@@ -180,7 +180,7 @@
                   echo "<label class='text-center numberComma green mb-0'>".(int)$notGetDayCountAmount."</label>";
                 }
               } else {
-                if(strtotime($allRows[$i]['paySchedule2']['pExpectedDate']) >= $currentDate) {
+                if(strtotime($allRows[$i]['paySchedule2']['pExpectedDate']) >= strtotime($currentDate)) {
                   echo "<label class='text-center sky mb-0'>0</label>";
                 } else {
                   $notGetDayCountAmount = $allRows[$i]['paySchedule2']['ptAmount'] * ($allRows[$i]['paySchedule2']['delaycount1'] / 365) * 0.27;
@@ -190,7 +190,15 @@
             }
             ?><!--연체이자-->
           </td><!-- 연체일수/이자 -->
-          <td class="mobile"></td><!-- 증빙 -->
+          <td class="mobile">
+            <?php
+            if($allRows[$i]['payId'] && $allRows[$i]['payIdOrder']==='0'){
+              if($allRows[$i]['paySchedule2']['taxDate']) {
+                echo '<a onclick="taxInfo2('.$allRows[$i]['paySchedule2']['bid'].',\''.$allRows[$i]['paySchedule2']['mun'].'\',\''.$row['id'].'\');"><span class="badge badge-warning text-light" style="width: 1.5rem;">세</span>'.$allRows[$i]['paySchedule2']['taxDate'].'</a><input type="hidden" name="taxMun" value="'.$allRows[$i]['paySchedule2']['mun'].'">';
+              }
+            }
+            ?>
+          </td><!-- 증빙 -->
         </tr>
         <?php
         }

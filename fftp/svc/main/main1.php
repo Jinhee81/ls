@@ -10,7 +10,7 @@ if(!isset($_SESSION['is_login'])){
   <head>
     <title>리스맨홈</title>
 <?php
-include $_SERVER['DOCUMENT_ROOT']."/svc/view/service_header1_meta.php";
+include $_SERVER['DOCUMENT_ROOT']."/svc/view/service_header1_meta0.php";
 ?>
 
 <div class="alert alert-primary alert-dismissible fade show" role="alert">
@@ -26,7 +26,7 @@ include $_SERVER['DOCUMENT_ROOT']."/svc/view/conn.php";
 include "condition.php";
 include "m_customer.php";
 // include "m_schedule.php"; 이건 변경되서 빼기로함
-include "m_building.php";
+include "m_building0.php";
 ?>
 <!-- <section class="container">
   <div class="row">
@@ -165,23 +165,18 @@ include "m_building.php";
 
 <script src="/svc/inc/js/jquery-3.3.1.min.js"></script>
 <script src="/svc/inc/js/moment.min.js"></script>
-<script src="/svc/inc/js/fullcalendar.min.js"></script>
+<script src="/svc/inc/js/fullcalendar-5.0.1.min.js"></script>
 <script src="/svc/inc/js/bootstrap.min.js"></script>
 
 <script type="text/javascript">
 $(document).ready(function(){
-  var calendar = $('#calendar').fullCalendar({
+  var calendar = $('#calendar').FullCalendar({
     editable:true,
     header:{
       left:'prevYear,prev,next,nextYear today',
       center:'title',
       right:'month,agendaWeek'
     },
-    // titleFormat: {
-    //   month: "yyyy년 mmmm",
-    //   week: "[yyyy] mmm dd일 {[yyyy] mmm dd일}",
-    //   day: "yyyy년 mmm d일 dddd"
-    // }, //이게 잘 안되서 주석처리함
     monthNames: ["1월", "2월", "3월", "4월", "5월", "6월", "7월", "8월", "9월", "10월", "11월", "12월"],
     monthNamesShort: ["1월", "2월", "3월", "4월", "5월", "6월", "7월", "8월", "9월", "10월", "11월", "12월"],
     dayNames: ['일요일', '월요일', '화요일', '수요일', '목요일', '금요일', '토요일'],

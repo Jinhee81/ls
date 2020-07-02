@@ -301,7 +301,8 @@ if($result->invoicerMgtKey == null || $result->invoicerMgtKey == ''){
 									<th class="al_c" colspan="26" rowspan="2">
 										<div class="PT fl_l" style="width:100%;">
 											<span class="pt1 c_333">이 금액을</span>
-											<span class="pt2 c_333">영수함</span>
+											<!-- <span class="pt2 c_333">영수함</span> -->
+                      <span class="pt2 c_333"><?=$result->purposeType?>함</span>
 										</div>
 									</th>
 								</tr>

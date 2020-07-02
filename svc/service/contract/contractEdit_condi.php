@@ -223,7 +223,11 @@ for ($i=0; $i < count($allRows); $i++) {
                 getAmount,
                 monthCount,
                 TIMESTAMPDIFF(day, pExpectedDate, curdate()) as delaycount1,
-                TIMESTAMPDIFF(day, pExpectedDate, executiveDate) as delaycount2
+                TIMESTAMPDIFF(day, pExpectedDate, executiveDate) as delaycount2,
+                taxSelect,
+                taxDate,
+                building_id as bid,
+                invoicerMgtKey as mun
             from paySchedule2
             where
                 idpaySchedule2={$allRows[$i]['payId']}";

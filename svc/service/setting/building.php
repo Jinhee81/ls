@@ -3,6 +3,12 @@ session_start();
 if(!isset($_SESSION['is_login'])){
   header('Location: /svc/login.php');
 }
+?>
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <title>환경설정</title>
+<?php
 include $_SERVER['DOCUMENT_ROOT']."/svc/view/service_header1_meta.php";
 include $_SERVER['DOCUMENT_ROOT']."/svc/view/service_header2.php";
 include $_SERVER['DOCUMENT_ROOT']."/svc/view/conn.php";
@@ -17,7 +23,9 @@ include $_SERVER['DOCUMENT_ROOT']."/svc/view/conn.php";
     <!-- (2) 직원이 있는 경우 계정추가하여 직원을 등록하세요.  -->
     </p>
     <hr class="my-4">
-    <p>리스맨 회원가입후 30일동안 무료이용 가능합니다. 30일 이후 요금은 <a href="../../main/payment.php" class="badge badge-warning">요금안내</a> 페이지를 참조하세요.</p>
+    <p>리스맨 회원가입후 30일동안 무료이용 가능합니다. 30일 이후 요금은 <a href="../../main/payment.php" class="badge badge-warning">요금안내</a> 페이지를 참조하세요.<br>
+      <label class="red">반드시 물건등록을 해야 리스맨 사용 및 화면보기가 가능해요 ^__^</label>
+    </p>
     <a class="btn btn-primary btn-lg mr-1" href="building_add.php" role="button">물건등록</a>
     <!-- <a class="btn btn-outline-primary btn-lg" href="account.php" role="button">계정추가</a> -->
   </div>

@@ -7,7 +7,7 @@ require('view/aconn.php');
 require('view/admin_header.php');
 ?>
 
-<section class="container-fluid mt-3">
+<section class="container mt-3">
   <div class="text-center">
     <h1>회원리스트</h1>
     <table class="table mt-5">
@@ -24,8 +24,14 @@ require('view/admin_header.php');
           <th>건물수</th>
         </tr>
         <?php
+        $sql_c = "select count(*) from user";
+        $result_c = mysqli_query($conn, $sql_c);
+        $row_c = mysqli_fetch_array($result_c);
+
+        $count = $row_c[0] + 1;
+
         $sql = "SELECT
-          @num := @num + 1 as num,
+          @num := @num - 1 as num,
           user.id,
           email,
           user_div,
@@ -39,10 +45,10 @@ require('view/admin_header.php');
           (select count(*) from building where user.id = building.user_id) as building_count,
           gradename
          from
-          (select @num :=0)a,
+          (select @num :={$count})a,
           user
          order by
-          num desc";
+          user.created desc";
 
         echo $sql;
         $result = mysqli_query($conn, $sql);
@@ -70,7 +76,13 @@ require('view/admin_header.php');
           </td>
           <td><?=$filtered['email']?></td>
           <td><?=$filtered['lease_type'].'('.$filtered['user_name'].')'?></td>
-          <td><?=$filtered['cellphone']?></td>
+          <td>
+            <?php
+$phone2 = substr($filtered['cellphone'],0,3).'-'.substr($filtered['cellphone'],3,4).'-'.substr($filtered['cellphone'],7,4)
+             ?>
+            <?=$phone2?>
+          </td>
+
           <td><?=$filtered['regist_channel']?></td>
           <td><?=$filtered['created']?></td>
           <td>

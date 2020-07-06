@@ -151,7 +151,9 @@ include "m_building.php";
 <section class="container">
   <div class="card">
   <div class="card-header">
-    <a href="../service/schedule/schedule.php"><h4 class="my-0 font-weight-normal">스케쥴</h4></a>
+    <!-- <a href="../service/schedule/schedule.php"> -->
+      <h4 class="my-0 font-weight-normal">일정보기</h4>
+    <!-- </a> -->
   </div>
   <div class="card-body">
     <div id="calendar">
@@ -175,7 +177,8 @@ $(document).ready(function(){
     header:{
       left:'prevYear,prev,next,nextYear today',
       center:'title',
-      right:'month,agendaWeek'
+      right:'month'
+      // right:'month,agendaWeek'//주별일정은 일단 빼기로함
     },
     // titleFormat: {
     //   month: "yyyy년 mmmm",

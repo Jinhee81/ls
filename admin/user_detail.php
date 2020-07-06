@@ -1,4 +1,6 @@
 <?php
+ini_set('display_errors', 1);
+ini_set('error_reporting', E_ALL);
 session_start();
 if(!isset($_SESSION['ais_login'])){
   header('Location: /admin/main/alogin.php');
@@ -12,7 +14,7 @@ settype($filtered_id, 'integer');
 
 $sql = "select
           id, email, user_div, user_name,
-          damdangga_name, cellphone,
+          manager_name, cellphone,
           lease_type, regist_channel, regist_etc,
           created, updated,
           (select count(*) from building where user_id = {$filtered_id}) as building_count
@@ -65,17 +67,21 @@ $row_waiting = mysqli_fetch_array($result_waiting);
 
 date_default_timezone_set('Asia/Seoul');
 $currentDate = date('Y-m-d');
-$currentDateDate = new DateTime($currentDate);
-$startDateDate = new DateTime($row['created']);
 
-echo "currentdate : "; print_r($currentDate);
-echo "currentDateDate : "; print_r($currentDateDate);
-echo "startDateDate : "; print_r($startDateDate);
+$date1 = $currentDate;
+$date2 = $row['created'];
 
-$fordays = date_diff($currentDateDate, $startDateDate);
+function diffdate($date1, $date2){
+  $diff = abs(strtotime($date2) - strtotime($date1));
+  $years = floor($diff / (365*60*60*24));
+  $months = floor(($diff - $years * 365*60*60*24) / (30*60*60*24));
+  $days = floor(($diff - $years * 365*60*60*24 - $months*30*60*60*24)/ (60*60*24));
 
-$fordays2 = $fordays->days;
+  // return array('year'=>$years, 'month'=>$months, 'day'=>$days);
+  return $days;
+}
 
+$fordays2 = diffdate($date1, $date2);
 $sql_grade = "select
                 gradename, executivedate, startdate, enddate, formonth, payamount,
                 ordered
@@ -91,6 +97,27 @@ $gradeArray = array();
 while($row_grade = mysqli_fetch_array($result_grage)){
   $gradeArray[] = $row_grade;
 }
+
+$div1 = array('입주자', '거래처', '기타', '문의');
+
+$customerRows = array();
+
+$sql1 = "select count(*) from customer where user_id={$filtered_id}";
+$result1 = mysqli_query($conn, $sql1);
+$row1 = mysqli_fetch_array($result1);
+
+for ($i=0; $i < count($div1); $i++) {
+  $sql2 = "select count(*)
+          from customer
+          where user_id={$filtered_id} and
+                div1='{$div1[$i]}'";
+  // echo $sql2."<br>";
+
+  $result2 = mysqli_query($conn, $sql2);
+  $row2 = mysqli_fetch_array($result2);
+  array_push($customerRows, $row2[0]);
+}
+
  ?>
 <section class="container mt-3">
   <div class="text-center">
@@ -132,6 +159,22 @@ while($row_grade = mysqli_fetch_array($result_grage)){
           <td><b><?=$row_present[0]?></b></td>
           <td><?=$row_waiting[0]?></td>
           <td><?=$row_end[0]?></td>
+        </tr>
+    </table>
+    <table class="table mt-5 table-bordered">
+        <tr class="table-success">
+          <td>전체</td>
+          <td><b>입주자</b></td>
+          <td>문의</td>
+          <td>거래처</td>
+          <td>기타</td>
+        </tr>
+        <tr>
+          <td><?=$row1[0]?></td>
+          <td><?=$customerRows[0]?></td>
+          <td><?=$customerRows[1]?></td>
+          <td><?=$customerRows[2]?></td>
+          <td><?=$customerRows[3]?></td>
         </tr>
     </table>
     <table class="table mt-5 table-bordered">

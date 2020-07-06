@@ -131,12 +131,12 @@ while($row_sms = mysqli_fetch_array($result_sms)){
         </table>
       </div>
     </div>
-    <div class="col col-md-5 mobile">
+    <div class="col col-md-5">
       <div class="row justify-content-end mr-0">
         <a href="m_c_add_question.php" role="button" class="btn btn-outline-primary btn-sm mr-1" name="button">문의등록</a>
         <a href="m_c_add.php" role="button" class="btn btn-primary btn-sm mr-1" name="button">신규등록</a>
-        <button type="button" class="btn btn-danger btn-sm mr-1" name="rowDeleteBtn">선택삭제</button>
-        <button type="button" class="btn btn-info btn-sm" name="button" data-toggle="tooltip" data-placement="top" title="작업준비중입니다."><i class="far fa-file-excel"></i>엑셀저장</button>
+        <button type="button" class="btn btn-danger btn-sm mr-1 mobile" name="rowDeleteBtn">선택삭제</button>
+        <button type="button" class="btn btn-info btn-sm mobile" name="button" data-toggle="tooltip" data-placement="top" title="작업준비중입니다."><i class="far fa-file-excel"></i>엑셀저장</button>
       </div>
     </div>
   </div>
@@ -154,7 +154,7 @@ while($row_sms = mysqli_fetch_array($result_sms)){
     <table class="table table-hover table-bordered table-sm text-center" id="checkboxTestTbl">
       <thead>
         <tr class="table-secondary">
-          <th scope="col" class="fixedHeader mobile"><input type="checkbox" id="allselect"></th>
+          <th scope="col" class="fixedHeader"><input type="checkbox" id="allselect"></th>
           <th scope="col" class="fixedHeader">순번</th>
           <th scope="col" class="fixedHeader">구분</th>
           <th scope="col" class="fixedHeader">성명/사업자명</th>
@@ -242,7 +242,7 @@ function maketable(x,y){
         $.each(data, function(key, value){
           countall = value.count;//원래의 전체길이를 구하는  (pagenation하기 위한 전체길이)
           returns += '<tr>';
-          returns += '<td class="mobile"><input type="checkbox" value="'+value.id+'" class="tbodycheckbox"></td>';
+          returns += '<td class=""><input type="checkbox" value="'+value.id+'" class="tbodycheckbox"></td>';
           returns += '<td class="">'+value.num+'</td>';
           returns += '<td class="">'+value.div1+'</td>';
           if(value.div1==='문의'){

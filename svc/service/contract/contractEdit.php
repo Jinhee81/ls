@@ -45,7 +45,7 @@ include "contractEdit_condi.php";
   <nav>
     <ul class="nav nav-tabs">
       <li class="nav-items">
-        <a id="navSchedule" class="nav-link <?php if($_GET['page']==='schedule'){echo "active";} ?>" href="contractEdit.php?page=schedule&id=<?=$filtered_id?>">스케쥴(<?=$row['count2']?>개월)</a>
+        <a id="navSchedule" class="nav-link <?php if($_GET['page']==='schedule'){echo "active";} ?>" href="contractEdit.php?page=schedule&id=<?=$filtered_id?>">청구스케쥴(<?=$row['count2']?>개월)</a>
       </li>
       <li class="nav-items">
         <a id="navDeposit" class="nav-link <?php if($_GET['page']==='deposit'){echo "active";} ?>" href="contractEdit.php?page=deposit&id=<?=$filtered_id?>">보증금 <span>(<?=$row_deposit['remainMoney']?>원)</span></a>

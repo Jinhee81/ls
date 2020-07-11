@@ -89,11 +89,12 @@ $row = mysqli_fetch_array($result);
       <input type='text' name='etc' class='form-control' maxlength='47' value="<?=$row['etc']?>">
     </div>
     <div class="row">
-      <div class="col">
+      <div class="col col-md-3">
         <button type='button' class='btn btn-sm btn-outline-primary' data-toggle="modal" data-target="#smsModal1" id="smsBtn"><i class="far fa-envelope"></i> 보내기</button>
       </div>
-      <div class="col">
+      <div class="col col-md-9">
         <div class="row justify-content-end mr-0">
+          <a href='m_c_edit.php?id=<?=$filtered_id?>'><button type='button' class='btn btn-warning mr-1'><i class="fas fa-angle-double-right"></i> 전환</button></a>
           <button type='button' class='btn btn-primary mr-1' name="editBtn">수정</button>
           <button type='button' class='btn btn-danger mr-1' name="deleteBtn">삭제</button>
           <a href='customer.php'><button type='button' class='btn btn-secondary'><i class="fas fa-angle-double-right"></i> 관계자목록</button></a>
@@ -116,16 +117,6 @@ include $_SERVER['DOCUMENT_ROOT']."/svc/view/service_footer.php";?>
 <script src="/svc/inc/js/etc/newdate8.js?<?=date('YmdHis')?>"></script>
 <script src="/svc/inc/js/etc/form.js?<?=date('YmdHis')?>"></script>
 <script src="/svc/inc/js/etc/sms_noneparase4.js?<?=date('YmdHis')?>"></script>
-
-<script type="text/javascript">
-  var buildingArray = <?php echo json_encode($buildingArray); ?>;
-  // console.log(buildingArray);
-  var groupoption;
-  for(var key in buildingArray){ //건물목록출력(비즈피스장암,비즈피스구로)
-    groupoption = "<option value='"+key+"'>"+buildingArray[key][0]+"</option>";
-    $('select[name=building]').append(groupoption);
-  }
-</script>
 
 <script type="text/javascript">
 var customerId = <?=$filtered_id?>;

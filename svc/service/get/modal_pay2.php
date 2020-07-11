@@ -5,7 +5,7 @@
     <div class="modal-content">
 
       <div class="modal-header">
-        <h6 class="modal-title" id="exampleModalLabel">기간정보</h6>
+        <h6 class="modal-title" id="exampleModalLabel">계약정보</h6>
 
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
@@ -14,6 +14,22 @@
 
       <div class="modal-body">
         <div class="container">
+          <div class="form-row">
+            <div class="form-group col-md-5 mb-0">
+              <p class="text-left">계약번호</p>
+            </div>
+            <div class="form-group col-md-7 mb-0">
+              <input type="text" id="modalrid" class="form-control form-control-sm" disabled>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group col-md-5 mb-0">
+              <p class="text-left">청구번호</p>
+            </div>
+            <div class="form-group col-md-7 mb-0">
+              <input type="text" id="modalpid" class="form-control form-control-sm" disabled>
+            </div>
+          </div>
           <div class="form-row">
             <div class="form-group col-md-5 mb-0">
               <p class="text-left">계약시작일</p>

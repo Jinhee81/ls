@@ -11,7 +11,7 @@ header("Content-Type: text/html; charset=UTF-8");
 // print_r($_POST);
 $a = json_decode($_POST['taxArray']);
 // print_r($a);
-$tdate = date('Y-m-d', strtotime($_POST['taxDate']));
+// $tdate = date('Y-m-d', strtotime($_POST['taxDate']));
 // print_r($tdate);
 
 
@@ -30,7 +30,8 @@ WHERE (taxselect != ''
 // echo $sql2;
 
 $result2 = mysqli_query($conn, $sql2);
-$row2 = mysqli_fetch_array($result2);
+$row2 = mysqli_fetch_array($result2); //이게 왜 있지?
+
 
 
 $sql3 = "SELECT a.user_id,
@@ -70,10 +71,11 @@ $cnum = $row3['cnumber1'].$row3['cnumber2'].$row3['cnumber3'];
 
 //선택한 날짜
 // $idate = str_replace('-','', $_POST['taxDate']);
-$idate = str_replace('-','', $tdate);
+// $idate = str_replace('-','', $tdate);
 
 //오늘날짜
 $today = str_replace('-','',$row3['today']);
+$tdate = date('Y-n-j', strtotime($row3['today']));
 
 //회사명
 $bname = $row3['bName'];
@@ -337,7 +339,7 @@ for ($i=0; $i < count($a); $i++) {
     $Taxinvoice->detailList[] = new TaxinvoiceDetail();
     $Taxinvoice->detailList[0]->serialNum = 1;  // [상세항목 배열이 있는 경우 필수] 일련번호 1~99까지 순차기재,
     // $Taxinvoice->detailList[0]->purchaseDT = '20200325';  // 거래일자
-		$Taxinvoice->detailList[0]->purchaseDT = $idate;  // 거래일자
+		$Taxinvoice->detailList[0]->purchaseDT = $today;  // 거래일자
     $Taxinvoice->detailList[0]->itemName = '임대료';	// 품명
     $Taxinvoice->detailList[0]->spec = '';  // 규격
     $Taxinvoice->detailList[0]->qty = ''; // 수량
@@ -390,60 +392,55 @@ for ($i=0; $i < count($a); $i++) {
         $code = $pe->getCode();
         $message = $pe->getMessage();
     }
-?>
-
-<!-- 코드 : php echo $code
-에러 메세지 : php echo $message -->
-
-<!-- 세금계산서일자 또는 현금영수증 일자 넣는거 -->
-<!-- 팝빌 연동 api가 들어가는데, 여기서 중요한것은 공극받는자(세입자)의 사업자번호가 오류일 경우에 그것에 대한 반응 (alert, 사업자번호가 올바르지 않습니다) 및
-
-공급가액/세액에서 세액이 공급가액의 10%여야 하는데 공급가액 10,000원 / 세액 5,000원으로 들어간 경우 공급가액의 10%를 찾아내는 반응이 추가되어야 할것 같습니다. 또는 팝빌에서 이거는 잡아주는 함수같은것이 있을것 같은데 확인 요청드립니다~
-
-
-(이건 제가 넣어도 될것같은데 딱 떨어지게 10%를 하면 1원차이의 단수차이가 발생하거든요. 이럴때 어떻게 하질요??)-->
-
-<?php
 
 
 // print_r($_POST);
 // print_r($_SESSION);
 
-
-
 // print_r($a);
 
-if ($code == 1) {
-  $sql = "update paySchedule2
-          set
-              taxSelect = '{$_POST['taxSelect']}',
-              taxDate = '{$_POST['taxDate']}',
-              invoicerMgtKey = '{$invoicerMgtKey}'
-          WHERE
-              idpaySchedule2 = {$a[$i][1]->청구번호}";
-  // echo $sql;
+	if ($code == 1) {
+	  $sql = "update paySchedule2
+	          set
+	              taxSelect = '{$_POST['taxSelect']}',
+	              taxDate = '{$tdate}',
+	              invoicerMgtKey = '{$invoicerMgtKey}'
+	          WHERE
+	              idpaySchedule2 = {$a[$i][1]->청구번호}";
+	  // echo $sql;
 
 
-  $result = mysqli_query($conn, $sql);
-  if(!$result){
-    echo "<script>alert('발행과정에 문제가 생겼습니다. 관리자에게 문의하세요.');
-                  history.back();
-            </script>";
-    error_log(mysqli_error($conn));
-    exit();
-  }
+	  $result = mysqli_query($conn, $sql);
+	  if(!$result){
+	    echo "<script>alert('발행과정에 문제가 생겼습니다. 관리자에게 문의하세요.');
+	                  history.back();
+	            </script>";
+	    error_log(mysqli_error($conn));
+	    exit();
+	  }
 
-  echo "<script>alert('발행완료하였습니다.');
-  history.back();
-  </script>";
-  exit();
-} else {
-	echo "<script>alert('" . $message . "');
-	history.back();
+	  echo "<script>alert('발행완료하였습니다.');
+	  history.back();
 	  </script>";
-	error_log(mysqli_error($conn));
-	exit();
-}
+	  exit();
+	} else {
+		echo "<script>alert('" . $message . "');
+		history.back();
+		  </script>";
+		error_log(mysqli_error($conn));
+		exit();
+	}
 }//for end}
 
 ?>
+
+// <!-- 코드 : php echo $code
+// 에러 메세지 : php echo $message -->
+//
+// <!-- 세금계산서일자 또는 현금영수증 일자 넣는거 -->
+// <!-- 팝빌 연동 api가 들어가는데, 여기서 중요한것은 공극받는자(세입자)의 사업자번호가 오류일 경우에 그것에 대한 반응 (alert, 사업자번호가 올바르지 않습니다) 및
+//
+// 공급가액/세액에서 세액이 공급가액의 10%여야 하는데 공급가액 10,000원 / 세액 5,000원으로 들어간 경우 공급가액의 10%를 찾아내는 반응이 추가되어야 할것 같습니다. 또는 팝빌에서 이거는 잡아주는 함수같은것이 있을것 같은데 확인 요청드립니다~
+//
+//
+// (이건 제가 넣어도 될것같은데 딱 떨어지게 10%를 하면 1원차이의 단수차이가 발생하거든요. 이럴때 어떻게 하질요??)-->

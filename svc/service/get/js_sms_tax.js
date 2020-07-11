@@ -45,8 +45,7 @@ function taxInfo(idx,mun) {
 
 
 $('#btnTaxDateInput').on('click', function(){
-  var taxDate = $('input[name="taxDate"]').val();
-  var taxSelect = $('select[name="taxSelect"]').val(); //세금계산서인지 현금영수증인지 구분
+
 
   var buildingkey = $('select[name=building]').val();
   // console.log(buildingkey);
@@ -81,10 +80,12 @@ $('#btnTaxDateInput').on('click', function(){
     return false;
   }
 
-  if(taxDate.length===0){
-    alert('세금계산서 발행일자가 입력되어야합니다.');
-    return false;
-  }
+  // if(taxSelect==='현금영수증'){
+  //   alert('현금영수증발행은 불가합니다.대신 현금영수증 발행하는것을 입력하는것은 가능합니다.');
+  //   return false;
+  // }
+  //이건 나중에 현금영수증 api도 구현할때 사용할거임
+
 
   if(taxArray.length >= 1) {
     for (var i in taxArray) {
@@ -119,19 +120,64 @@ $('#btnTaxDateInput').on('click', function(){
   var aa = 'taxSave';
   var bb = 'p_payScheduleTaxInput.php';
 
-  goCategoryPage(aa, bb, buildingkey, buildingText, buildingPopbillid, buildingCompanynumber, taxArrayTo, taxDate, taxSelect, taxDiv);
+  goCategoryPage(buildingkey, buildingText, buildingPopbillid, buildingCompanynumber, taxArrayTo, taxSelect, taxDiv);
 
   function goCategoryPage(a,b,c,d,e,f,g,h,i,j){
-      var frm = formCreate(a, 'post', b,'');
-      frm = formInput(frm, 'buildingId', c);
-      frm = formInput(frm, 'buildingText', d);
-      frm = formInput(frm, 'buildingPopbill', e);
-      frm = formInput(frm, 'buildingCompanynumber', f);
-      frm = formInput(frm, 'taxArray', g);
-      frm = formInput(frm, 'taxDate', h);
-      frm = formInput(frm, 'taxSelect', i);
-      frm = formInput(frm, 'taxDiv', j);
+      var frm = formCreate('taxSave', 'post', 'p_payScheduleTaxInput0.php','');
+      frm = formInput(frm, 'buildingId', a);
+      frm = formInput(frm, 'buildingText', b);
+      frm = formInput(frm, 'buildingPopbill', c);
+      frm = formInput(frm, 'buildingCompanynumber', d);
+      frm = formInput(frm, 'taxArray', e);
+      frm = formInput(frm, 'taxSelect', f);
+      frm = formInput(frm, 'taxDiv', g);
       formSubmit(frm);
   }
 
+})
+
+$('#btnTaxDateInput2').on('click', function(){
+  var taxDate = $('input[name="taxDate"]').val();
+  var taxSelect = $('select[name="taxSelect"]').val(); //세금계산서인지 현금영수증인지 구분
+
+  if(taxArray.length===0){
+    alert('세금계산서 발행할 것들을 먼저 체크박스로 선택해주세요.');
+    return false;
+  }
+
+  if(taxDate.length===0){
+    alert('날짜가 입력되어야합니다.');
+    return false;
+  }
+
+  if(taxArray.length >= 1) {
+    for (var i in taxArray) {
+      if(taxArray[i][14]['입금구분']==='카드'){
+        alert("입금구분이 '카드'이면 증빙 발행이 불가합니다.");
+        return false;
+      }
+
+      if(taxArray[i][11]['세액']==='0'){
+            alert("세액이 '0'원이면 증빙 발행이 불가합니다.");
+            return false;
+      }
+
+      if(taxArray[i][15]['증빙일자']){
+            alert("이미 증빙일자가 존재하므로 증빙 입력이 불가합니다.");
+            return false;
+      }
+    }
+  }
+
+  var taxArrayTo = JSON.stringify(taxArray);
+
+  goCategoryPage(taxArrayTo, taxSelect, taxDate);
+
+  function goCategoryPage(a,b,c){
+      var frm = formCreate('taxSave2', 'post', 'p_payScheduleTaxInput2.php','');
+      frm = formInput(frm, 'taxArray', a);
+      frm = formInput(frm, 'taxSelect', b);
+      frm = formInput(frm, 'taxDate', c);
+      formSubmit(frm);
+  }
 })

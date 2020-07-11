@@ -55,11 +55,21 @@ $clist['add2'] = htmlspecialchars($row['add2']);
 $clist['add3'] = htmlspecialchars($row['add3']);
 $clist['birthday'] = htmlspecialchars($row['birthday']);
 
-$sql2 = "select count(*)
-         from realContract
-         where customer_id={$filtered_id}";
-$result2 = mysqli_query($conn, $sql2);
-$row2 = mysqli_fetch_array($result2);
+if($clist['div1']==='입주자'){
+  $sql2 = "select count(*)
+           from realContract
+           where customer_id={$filtered_id}";
+  $result2 = mysqli_query($conn, $sql2);
+  $row2 = mysqli_fetch_array($result2);
+} else {
+  $sql2 = "select count(*)
+           from etcContract
+           where customer_id={$filtered_id}";
+  $result2 = mysqli_query($conn, $sql2);
+  $row2 = mysqli_fetch_array($result2);
+}
+
+
 
  ?>
 <section class="container">
@@ -256,8 +266,22 @@ $row2 = mysqli_fetch_array($result2);
           <button type='button' class='btn btn-danger mr-1' name='btnDelete'>삭제하기</button>
           <button type='submit' class='btn btn-primary mr-1'>수정하기</button>
           <a href='customer.php'><button type='button' class='btn btn-secondary mr-1'><i class="fas fa-angle-double-right"></i> 관계자목록</button></a>
-          <a href="/svc/service/contract/contract_add1.php?id=<?=$filtered_id?>"><button type='button' class='btn btn-secondary mr-1'><i class="fas fa-angle-double-right"></i> 신규계약</button></a>
-          <a href="/svc/service/contract/contract.php?customerId=<?=$filtered_id?>&progress=pAll"><button type='button' class='btn btn-secondary mr-1 <?php if((int)$row2[0]===0){echo "disabled";} ?>'><i class="fas fa-angle-double-right"></i> 계약보기</button></a>
+          <?php
+          if($clist['div1']==='입주자'){
+            echo "<a href='/svc/service/contract/contract_add1.php?id=".$filtered_id."'><button type='button' class='btn btn-secondary mr-1'><i class='fas fa-angle-double-right'></i> 신규계약</button></a>";
+          } elseif($clist['div1']==='기타'){
+            echo "<a href='/svc/service/contractetc/contractetc_add1.php?id=".$filtered_id."'><button type='button' class='btn btn-secondary mr-1'><i class='fas fa-angle-double-right'></i> 신규계약</button></a>";
+          }
+           ?>
+          <?php
+            if($clist['div1']==='입주자' && (int)$row2[0] > 0){
+              echo "<a href='/svc/service/contract/contract.php?customerId=".$filtered_id."&progress=pAll'><button type='button' class='btn btn-secondary'><i class='fas fa-angle-double-right'></i> 계약보기</button></a>";
+            }
+            // elseif($clist['div1']==='기타' && (int)$row2[0] > 0) {
+            //   echo "<a href='/svc/service/contractetc/contractetc.php?customerId=".$filtered_id."'><button type='button' class='btn btn-secondary'><i class='fas fa-angle-double-right'></i> 계약보기</button></a>";
+            // }
+            //기타계약은 건수가 많이 없어서 계약보기 버튼을 일단 안보이게하기로 함
+           ?>
         </div>
       </div>
     </div>

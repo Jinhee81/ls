@@ -259,6 +259,8 @@ if(!$_POST['expectedDate']){//예정일이 없이 넘어온 경우
 
   $contractScheduleIdArray2=implode(',', $contractScheduleIdArray);
   $orderedArray2=implode(',', $orderedArray);
+  $_POST['expectedDate'] = date("Y-n-j", strtotime($_POST['expectedDate']));
+  $_POST['executiveDate'] = date("Y-n-j", strtotime($_POST['executiveDate']));
   $pAmountAccumulate = number_format($pAmountAccumulate);
   $pvAmountAccumulate = number_format($pvAmountAccumulate);
   $ptAmountAccumulate = number_format($ptAmountAccumulate);

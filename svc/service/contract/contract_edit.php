@@ -145,7 +145,7 @@ if((int)$row_step[0]===0){
 </section>
 
 <section class="container">
-  <form method="post" action="p_realContract_edit0.php">
+  <form method="post" action="p_realContract_edit.php">
     <div class="form-row">
         <div class="form-group col-md-2">
               <label><b>[세입자정보]</b></label>
@@ -229,11 +229,11 @@ if((int)$row_step[0]===0){
               </div>
               <div class="form-group col-md-2 mb-0">
                     <label><span id='star' style='color:#F7BE81;'>* </span>시작일자</label>
-                    <input type="text" id="startDate" class="form-control dateType" name="startDate" value="<?=$row_main['startDate']?>" placeholder="" required <?php if($step!='clear'){ echo "disabled";} ?>>
+                    <input type="text" class="form-control dateType" name="startDate" value="<?=$row_main['startDate']?>" placeholder="" required <?php if($step!='clear'){ echo "disabled";} ?>>
               </div>
               <div class="form-group col-md-2 mb-0">
                     <label>종료일자</label>
-                    <input type="text" id="endDate" class="form-control" name="endDate" value="<?=$row_main['endDate']?>" readonly>
+                    <input type="text" id="endDate" class="form-control" value="<?=$row_main['endDate']?>" readonly>
               </div>
         </div>
       </div>
@@ -355,7 +355,7 @@ function dateFormat(x){
 
 $('#contractDate').on('change', function(){
   var startDate = $(this).val();
-  $('#startDate').val(startDate);
+  $('input[name=startDate]').val(startDate);
   $('#depositInDate').val(startDate);
 
   var monthCount = Number($('input[name=monthCount]').val());
@@ -371,10 +371,8 @@ $('#contractDate').on('change', function(){
 }) //contractDate on change closing괄호, 최초계약일자=시작일자
 
 
-$('#startDate').on('change', function(event){
-  var startDate = $(input[name=startDate]).val();
-  $('#startDate').val(startDate);
-
+$('input[name=startDate]').on('change', function(event){
+  var startDate = $(this).val();
   var monthCount = Number($('input[name=monthCount]').val());
 
   var arr1 = startDate.split('-');

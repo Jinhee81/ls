@@ -53,7 +53,9 @@ while($row_sms = mysqli_fetch_array($result_sms)){
   <div class="jumbotron pt-3 pb-3">
     <h2 class=""><span id="screenName">납부완료 목록이에요.(#501)</h2>
     <p class="lead">
-
+(1) 세금계산서 발행은 오늘 날짜 발행만 가능해요.<br>
+(2) 만일 홈택스에서 세금계산서 또는 현금영수증을 발행한 것을 입력하고 싶을때, 입력버튼을 클릭하세요.<br>
+(3) 만일 세금계산서 취소를 원하면 <a href="https://www.popbill.com" target="_blank">팝빌사이트</a>에 로그인하여 발행취소처리해주세요 (단, 데이터 정정은 리스맨고객센터(이메일 info@leaseman.co.kr)로 연락주세요.)
     </p>
   </div>
 </section>
@@ -169,16 +171,19 @@ while($row_sms = mysqli_fetch_array($result_sms)){
         <div class="col col-md-5 mobile">
           <div class="row justify-content-end">
             <div class="col col-md-3 pl-0 pr-1">
-              <input type="text" name="taxDate" value="" class="form-control form-control-sm dateType text-center">
+              <input type="text" name="taxDate" placeholder="날짜선택" class="form-control form-control-sm dateType text-center">
             </div>
             <div class="col col-md-3 pl-0 pr-1">
               <select class="form-control form-control-sm" name="taxSelect">
                 <option value="세금계산서">세금계산서</option>
-                <!-- <option value="현금영수증">현금영수증</option> 이건 지금당장 구축하는게 아니어서 주석처리, 곧 할거라서 코드는 냅둠-->
+                <option value="현금영수증">현금영수증</option>
               </select>
             </div>
-            <div class="col col-md-2 pl-0">
-              <button type="button" class="btn btn-primary btn-sm btn-block" id="btnTaxDateInput">발행</button>
+            <div class="col col-md-2 pl-0 pr-1">
+              <button type="button" class="btn btn-warning btn-sm btn-block" id="btnTaxDateInput2">입력</button>
+            </div>
+            <div class="col col-md-4 pl-0">
+              <button type="button" class="btn btn-primary btn-sm btn-block" id="btnTaxDateInput">세금계산서발행</button>
             </div>
           </div>
         </div>
@@ -358,14 +363,30 @@ function maketable(){
           var mun = value.mun;
           var bid = value.bid;
           var ccid = value.ccid;
+          var mun = value.mun;
+          //
+          // console.log(typeof(mun));
+          // console.log(mun);
 
-          if(value.taxSelect==='세금계산서'){
-            returns += '<td class="mobile"><a onclick="taxInfo2('+bid+',\''+mun+'\',\''+ccid+'\');"><span class="badge badge-warning text-light" style="width: 1.5rem;">세</span>'+value.taxDate+'</a></td>';
-          } else if(value.taxSelect==='현금영수증'){
-            returns += '<td class="mobile"><span class="badge badge-info text-light" style="width: 1.5rem;">현</span>'+value.taxDate+'</td>';
+          if(mun){
+            if(value.taxSelect==='세금계산서'){
+              returns += '<td class="mobile"><a onclick="taxInfo2('+bid+',\''+mun+'\',\''+ccid+'\');"><span class="badge badge-warning text-light" style="width: 1.5rem;">세</span><label class="green mb-0"><u>'+value.taxDate+'</u></label></a></td>';
+            } else if(value.taxSelect==='현금영수증'){
+              returns += '<td class="mobile"><span class="badge badge-info text-light" style="width: 1.5rem;">현</span>'+value.taxDate+'</td>';
+            } else {
+              returns += '<td class="mobile"></td>';
+            }
           } else {
-            returns += '<td class="mobile"></td>';
+            if(value.taxSelect==='세금계산서'){
+              returns += '<td class="mobile"><span class="badge badge-warning text-light" style="width: 1.5rem;">세</span>'+value.taxDate+'</td>';
+            } else if(value.taxSelect==='현금영수증'){
+              returns += '<td class="mobile"><span class="badge badge-info text-light" style="width: 1.5rem;">현</span>'+value.taxDate+'</td>';
+            } else {
+              returns += '<td class="mobile"></td>';
+            }
           }
+
+
 
           returns += '</tr>';
 
@@ -447,6 +468,8 @@ $(document).ready(function(){
 
     // console.log(payid, rid, startDate);
 
+    $('#modalrid').val(rid);
+    $('#modalpid').val(payid);
     $('input[name=m2startDate]').val(startDate);
     $('input[name=m2endDate]').val(endDate);
     $('input[name=m2duration]').val(monthCount);

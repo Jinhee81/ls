@@ -132,10 +132,10 @@ $(document).on('click', '.modalAsk', function(){ //청구번호클릭하는거(�
   var taxMun = currow2.find('td:eq(11)').children('input[name=taxMun]').val();
   // alert(taxMun);
 
-  var footer1 = "<button type='button' class='btn btn-secondary btn-sm mr-0' data-dismiss='modal'>닫기</button><button type='button' id='mpayBack' class='btn btn-warning btn-sm mr-0'>청구취소</button><button type='button' id='mgetExecute' class='btn btn-primary btn-sm'>입금완료</button>";
-  var footer11 = "<button type='button' class='btn btn-secondary btn-sm mr-0' data-dismiss='modal'>닫기</button><button type='button' id='mpayBack' class='btn btn-warning btn-sm mr-0' disabled>청구취소</button><button type='button' id='mgetExecute' class='btn btn-primary btn-sm'>입금완료</button>";
-  var footer2 = "<button type='button' class='btn btn-secondary btn-sm mr-0' data-dismiss='modal'>닫기</button><button type='button' id='mExecuteBack' class='btn btn-warning btn-sm mr-0'>입금취소</button>";
-  var footer22 = "<button type='button' class='btn btn-secondary btn-sm mr-0' data-dismiss='modal'>닫기</button><button type='button' id='mExecuteBack' class='btn btn-warning btn-sm mr-0' disabled>입금취소</button>";
+  var footer1 = "<button type='button' class='btn btn-secondary btn-sm mr-0' data-dismiss='modal'>닫기</button><button type='button' id='mpayBack' class='btn btn-warning btn-sm mr-0'>청구취소</button><button type='button' id='mgetExecute' class='btn btn-primary btn-sm'>입금완료</button>";//입금대기이고 증빙이 없을때
+  var footer11 = "<button type='button' class='btn btn-secondary btn-sm mr-0' data-dismiss='modal'>닫기</button><button type='button' id='mpayBack' class='btn btn-warning btn-sm mr-0' disabled>청구취소</button><button type='button' id='mgetExecute' class='btn btn-primary btn-sm'>입금완료</button>";//입금대기이고 증빙있을때
+  var footer2 = "<button type='button' class='btn btn-secondary btn-sm mr-0' data-dismiss='modal'>닫기</button><button type='button' id='mModify' class='btn btn-warning btn-sm mr-0'>수정</button><button type='button' id='mExecuteBack' class='btn btn-warning btn-sm mr-0'>입금취소</button>";//입금완료이고 증빙일자 없을때
+  var footer22 = "<button type='button' class='btn btn-secondary btn-sm mr-0' data-dismiss='modal'>닫기</button><button type='button' id='mExecuteBack' class='btn btn-warning btn-sm mr-0' disabled>입금취소</button>";//입금완료이고 증빙일자 있을때
 
   // console.log(expectedAmount, expectedDate, executiveDiv, executiveDate, executiveAmount);
 
@@ -158,9 +158,11 @@ $(document).on('click', '.modalAsk', function(){ //청구번호클릭하는거(�
 
     $('#expectedDate').val(expectedDate).prop('disabled', true);
     $('#expectedAmount').val(expectedAmount).prop('disabled', true);
-    $('#executiveDiv').val(executiveDiv).prop('disabled', true);
-    $('#executiveDate').val(executiveDate).prop('disabled', true);
-    $('#executiveAmount').val(expectedAmount).prop('disabled', true);
+    // $('#executiveDiv').val(executiveDiv).prop('disabled', true);
+    // $('#executiveDate').val(executiveDate).prop('disabled', true);
+    $('#executiveAmount').val(expectedAmount).prop('disabled', true);//하다보니 입금수단과 입금일은 좀 수정을 하고싶어짐
+    $('#executiveDiv').val(executiveDiv);
+    $('#executiveDate').val(executiveDate);
     if(taxMun){
       $('.modal-footer').html(footer22);
     } else {
@@ -348,6 +350,16 @@ $('#groupExpecteDay').change(function(){ //입금예정일 변경버튼 이벤�
   if(expectedDayArray.length >= 1) {
     for (var i in expectedDayArray) {
        table.find("tr:eq("+expectedDayArray[i][0]+")").find("td:eq(5)").children('input').val(expectedDayGroup);
+      // console.log(expectedDayArray[i][0], a);
+    }
+  }
+})
+
+$('#paykind').change(function(){ //입금수단 변경버튼 이벤트
+  var a = $(this).val();
+  if(expectedDayArray.length >= 1) {
+    for (var i in expectedDayArray) {
+       table.find("tr:eq("+expectedDayArray[i][0]+")").find("td:eq(6)").children('select').val(a).prop('selected', true);
       // console.log(expectedDayArray[i][0], a);
     }
   }
@@ -948,6 +960,29 @@ $(document).on('click', '#mExecuteBack', function(){ //입금취소버튼(모달
   }
 
 })
+
+//=======================
+$(document).on('click', '#mModify', function(){ //수정버튼(모달안버튼) 클릭
+
+  var pid = $(this).parent().parent().children(':eq(0)').children(':eq(0)').children(':eq(0)').text(); //청구번호
+  var contractId = '<?=$filtered_id?>';
+  var payDiv = $('#executiveDiv').val(); //입금수단, 계좌/현금/카드
+  var executiveDate = $('#executiveDate').val(); //입금금액
+
+
+  goCategoryPage(pid, payDiv, executiveDate, contractId);
+
+  function goCategoryPage(a, b, c, d){
+    var frm = formCreate('payScheduleGetAmountModify', 'post', 'p_payScheduleGetAmountModify.php', '');
+    frm = formInput(frm, 'payid', a);
+    frm = formInput(frm, 'payKind', b);
+    frm = formInput(frm, 'executiveDate', c);
+    frm = formInput(frm, 'realContract_id', d);
+    formSubmit(frm);
+  }
+
+})
+
 //=======================
 
 $(document).on('click', '#mpayBack', function(){ //청구취소(삭제)버튼(모달안버튼) 클릭

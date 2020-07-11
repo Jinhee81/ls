@@ -142,7 +142,7 @@ if(!$_POST['expectedDate']){//예정일이 없이 넘어온 경우
             '{$_POST['changeAmount2']}',
             '{$_POST['changeAmount3']}',
             '{$newArray[$i][3]}',
-            '{$_POST['paykind']}',
+            '{$_POST['payKind']}',
             0,
             {$filtered_id},
             {$_POST['buildingId']},

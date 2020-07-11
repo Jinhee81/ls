@@ -10,7 +10,7 @@
           <td width="6%"><button type="button" id="button7" class="btn btn-outline-info btn-sm mobile btn-block">삭제</button></td>
           <td width="6%"></td>
           <td width="10%"><input type="text" class="form-control form-control-sm dateType text-center" name="" value="" placeholder="입금예정일변경" id="groupExpecteDay" data-toggle="tooltip" data-placement="left" title="체크된것의 입금예정일을 변경합니다"></td>
-          <td width="6%"><select class="form-control form-control-sm" id="paykind">
+          <td width="6%"><select class="form-control form-control-sm" id="paykind" data-toggle="tooltip" data-placement="top" title="체크된것의 입금수단을 변경합니다">
             <option value="계좌">계좌</option>
             <option value="현금">현금</option>
             <option value="카드">카드</option>

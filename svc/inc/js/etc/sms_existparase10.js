@@ -13,8 +13,9 @@ function sms_existparase(){
   var trAccu;
   for (var i = 0; i < smsReadyArray.length; i++) {
       // smsDescription.replace(/{받는사람}/gi,smsReadyArray[i][4]['받는사람']);
-      var result = smsDescription.replace(/{받는사람}|{이메일}|{납부일}|{증빙일}|{공급가액}|{세액}|{합계}|{예정일}|{시작일}|{종료일}|{개월수}|{연체일수}|{연체이자}|{사업자명}/g, function(v){
+      var result = smsDescription.replace(/{방번호}|{받는사람}|{이메일}|{납부일}|{증빙일}|{공급가액}|{세액}|{합계}|{예정일}|{시작일}|{종료일}|{개월수}|{연체일수}|{연체이자}|{사업자명}/g, function(v){
         switch (v) {
+          case "{방번호}":return smsReadyArray[i][3]['방번호'];
           case "{받는사람}":return smsReadyArray[i][4]['받는사람'];
           case "{이메일}":return smsReadyArray[i][6]['이메일'];
           case "{납부일}":return smsReadyArray[i][7]['납부일'];
@@ -34,7 +35,7 @@ function sms_existparase(){
       // console.log(result);
 
 
-      var tr = "<tr><td><input type='checkbox' name='chk' value='"+smsReadyArray[i][12]['받는사람id']+"'><input type='hidden' name='roomNumber' value='"+smsReadyArray[i][3]['방번호']+"'></td><td><textarea class='form-control textareaMany' rows='4' style='background-color: #FAFAFA;'>"+result+"</textarea></td><td style='line-height:15px;'><small><span>"+smsReadyArray[i][4]['받는사람']+"</span><br><span class='phonenumber'>"+smsReadyArray[i][5]['연락처']+"</span><br><span class='getByte'></span> / 80 bytes <span class='bytediv'></span></small></td></tr>";
+      var tr = "<tr><td><input type='checkbox' name='chk' value='"+smsReadyArray[i][12]['받는사람id']+"' checked><input type='hidden' name='roomNumber' value='"+smsReadyArray[i][3]['방번호']+"'></td><td><textarea class='form-control textareaMany' rows='4' style='background-color: #FAFAFA;'>"+result+"</textarea></td><td style='line-height:15px;'><small><span>"+smsReadyArray[i][4]['받는사람']+"</span><br><span class='phonenumber'>"+smsReadyArray[i][5]['연락처']+"</span><br><span class='getByte'></span> / 80 bytes <span class='bytediv'></span></small></td></tr>";
       trAccu += tr;
   }//for end
 
@@ -86,7 +87,7 @@ function sms_existparase(){
   }
 
   for (var i = 0; i < allCnt; i++) {
-      var textareaValue = $("#tbody2").find("tr:eq("+i+")").find("td:eq(1)").children('textarea').text();
+      var textareaValue = $("#tbody2").find("tr:eq("+i+")").children("td:eq(1)").children('textarea').val();
       // console.log(textareaValue);
 
       var getByte = byteLength(textareaValue);
@@ -107,14 +108,9 @@ function sms_existparase(){
       var getByte = byteLength(textareaValue);
       // console.log(getByte);
       $(this).parent().parent().find("td:eq(2)").children().children("span:eq(2)").text(getByte);
-  })
 
-  $('.textareaMany').on('change', function(){
-      var textareaValue = $(this).val();
-      var getByte = byteLength(textareaValue);
-      // console.log(getByte);
       if(getByte > 80){
-        $(this).parent().parent().find("td:eq(2)").children().children("span:eq(3)").attr('class','badge badge-primary');
+        $(this).parent().parent().find("td:eq(2)").children().children("span:eq(3)").attr('class','badge badge-danger');
         $(this).parent().parent().find("td:eq(2)").children().children("span:eq(3)").text('mms');
       } else {
         $(this).parent().parent().find("td:eq(2)").children().children("span:eq(3)").attr('class','badge badge-primary');
@@ -205,13 +201,12 @@ function sms_existparase(){
       return false;
     }
 
-    function goCategoryPage(a,b,c,d,e,f,g){
+    function goCategoryPage(a,b,c,d,e,f){
         var frm = formCreate(a, 'post', b,'');
         frm = formInput(frm, 'sendedArray2', c);
         frm = formInput(frm, 'timeDiv', d);
         frm = formInput(frm, 'smsTime', e);
-        frm = formInput(frm, 'getByte', f);
-        frm = formInput(frm, 'sendphonenumber', g);
+        frm = formInput(frm, 'sendphonenumber',f);
         formSubmit(frm);
     }
 
@@ -219,12 +214,10 @@ function sms_existparase(){
     var aa = 'sendedArray2';
     var bb = '/svc/service/sms/p_sendedsms2.php';
     var smsTime = $('#smsTime2').val();
-    var textareaValue = $('.textareaMany').val();
-    var getBytee = byteLength(textareaValue);
     var smsTimeValue = $('#timeSetVal2').val();
     var sendphonenumber = $('input[name=sendphonenumber]').val();
 
-    goCategoryPage(aa, bb, sendedArray2json, smsTime, smsTimeValue,getBytee,sendphonenumber);
+    goCategoryPage(aa, bb, sendedArray2json, smsTime, smsTimeValue,sendphonenumber);
 
 
 

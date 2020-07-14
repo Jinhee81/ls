@@ -18,7 +18,7 @@
   <div class="col col-md-9">
     <div class="row justify-content-end mr-0">
       <a class="btn btn-dark btn-sm mr-1" href="contract.php" role="button"><i class="fas fa-angle-double-right"></i> 계약목록</a>
-      <a class="btn btn-dark btn-sm mr-1" href="/service/account/deposit.php" role="button"><i class="fas fa-angle-double-right"></i> 보증금목록</a>
+      <!-- <a class="btn btn-dark btn-sm mr-1" href="../account/deposit/deposit.php" role="button"><i class="fas fa-angle-double-right"></i> 보증금목록</a> -->
       <a href="contract_edit.php?id=<?=$filtered_id?>">
         <button name="contractEdit" class="btn btn-dark btn-sm mr-1">계약수정</button>
       </a>

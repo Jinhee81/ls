@@ -17,7 +17,7 @@
         <table class="table table-borderless" id="checkboxTestTbl2">
           <thead id="thead2">
             <tr>
-              <td><input type="checkbox"></td>
+              <td><input type="checkbox" checked></td>
               <td colspan="3">
                 <div class="row" style="padding-left:12px;">
                   <select class="form-control form-control-sm mr-1" style="width: 10rem;" id="smsTime2">

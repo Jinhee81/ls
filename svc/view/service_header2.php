@@ -36,7 +36,7 @@
           <div class="dropdown-divider"></div>
           <a class="dropdown-item" href="/svc/service/account/monthAccount/monthAccount.php">월별회계조회</a>
           <a class="dropdown-item" href="/svc/service/account/yearAccount/yearAccount.php">연도별회계조회</a>
-          <a class="dropdown-item" href="/svc/service/account/deposit/deposit.php">보증금조회</a>
+          <!-- <a class="dropdown-item" href="/svc/service/account/deposit/deposit.php">보증금조회</a> -->
         </div>
       </li>
     </ul>

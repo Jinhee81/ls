@@ -102,7 +102,8 @@ if($_POST['getPage']=='1'){
 
 $firstOrder = $row_count[0] + 1;
 
-$sql = "
+//페이징하기전 sql을 따로 빼야함
+$sql_before = "
 select
     @num := @num - 1 as num,
     realContract.id as rid,
@@ -148,8 +149,17 @@ where realContract.user_id = {$_SESSION['id']} and
       $getCondi
 order by
     realContract.group_in_building_id asc, realContract.r_g_in_building_id asc
-LIMIT {$start}, {$_POST['pagerow']}";
+";
+
+//페이징하고나서의 sql문...
+$sql = $sql_before. "LIMIT {$start}, {$_POST['pagerow']}";
 // echo $sql;
 
+$result = mysqli_query($conn, $sql);
+
+$allRows = array();
+while($row = mysqli_fetch_array($result)){
+  $allRows[] = $row;
+}
 
 ?>

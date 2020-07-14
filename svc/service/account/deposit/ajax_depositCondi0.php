@@ -1,11 +1,6 @@
 <?php
-session_start();
-ini_set('display_errors', 1);
-ini_set('error_reporting', E_ALL);
+// 조회조건에 대한 파일
 
-include $_SERVER['DOCUMENT_ROOT']."/svc/view/conn.php";
-
-// print_r($_POST);
 parse_str($_POST['form'], $a);
 
 if($a['dateDiv']==='startDate'){
@@ -27,20 +22,16 @@ if($a['fromDate'] && $a['toDate']){
   $etcDate = " and (DATE($dateDiv) <= '{$a['toDate']}')";
 }
 
-if(isset($a['progress'])){
+if($a['progress']==='pIng'){
+  $etcIng = " and getStatus(startDate, endDate2) = 'present'";
+} elseif($a['progress']==='pWaiting'){
+  $etcIng = " and getStatus(startDate, endDate2) = 'waiting'";
+} elseif($a['progress']==='pEnd'){
+  $etcIng = " and getStatus(startDate, endDate2) = 'the_end'";
+} elseif($a['progress']==='pAll'){
   $etcIng = "";
-} else {
-  if($a['progress']==='pIng'){
-    $etcIng = " and getStatus(startDate, endDate2) = 'present'";
-  } elseif($a['progress']==='pWaiting'){
-    $etcIng = " and getStatus(startDate, endDate2) = 'waiting'";
-  } elseif($a['progress']==='pEnd'){
-    $etcIng = " and getStatus(startDate, endDate2) = 'the_end'";
-  } elseif($a['progress']==='pAll'){
-    $etcIng = "";
-  } elseif($a['progress']==='clear'){
-    $etcIng = " and (select count(*) from paySchedule2 where realContract_id=realContract.id)=0";
-  }
+} elseif($a['progress']==='clear'){
+  $etcIng = " and (select count(*) from paySchedule2 where realContract_id=realContract.id)=0";
 }
 
 if($a['group']==='groupAll'){
@@ -62,24 +53,6 @@ if($a['cText']){
   }
 }
 
-$sql_count = "select count(*)
-              from realContract
-              where realContract.user_id = {$_SESSION['id']} and
-                    realContract.building_id = {$a['building']} and
-                    realContract.group_in_building_id = {$a['group']}
-                    $etcCondi $etcDate
-             ";
-$result_count = mysqli_query($conn, $sql_count);
-$row_count = mysqli_fetch_array($result_count);
-
-if($_POST['getPage']=='1'){
- $start = 0;
-} else {
- $start = ((int)$_POST['getPage']-1) * (int)$_POST['pagerow'];
-}
-
-$firstOrder = $row_count[0] + 1;
-
 $sql = "
   select
       @num := @num + 1 as num,
@@ -95,11 +68,13 @@ $sql = "
       building.bName,
       group_in_building.gName,
       r_g_in_building.rName,
+      mtAmount,
       realContract_deposit.inDate,
       realContract_deposit.inMoney,
       realContract_deposit.outDate,
       realContract_deposit.outMoney,
-      realContract_deposit.remainMoney
+      realContract_deposit.remainMoney,
+      getStatus(startDate, endDate2) as status2
   from
       (select @num :=0)a,realContract
   left join customer
@@ -115,10 +90,11 @@ $sql = "
   where realContract.user_id = {$_SESSION['id']} and
         realContract.building_id = {$a['building']} and
         realContract.group_in_building_id = {$a['group']}
-        $etcCondi $etcDate
+        $etcCondi $etcDate $etcIng
   order by
-      num desc";
+      realContract.r_g_in_building_id asc";
 // echo $sql;
+
 $result = mysqli_query($conn, $sql);
 // $total_rows = mysqli_num_rows($result);
 $allRows = array();

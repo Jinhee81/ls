@@ -1,6 +1,6 @@
 <?php
-ini_set('display_errors', 1);
-ini_set('error_reporting', E_ALL);
+// ini_set('display_errors', 1);
+// ini_set('error_reporting', E_ALL);
 session_start();
 if(!isset($_SESSION['is_login'])){
   header('Location: /svc/login.php');
@@ -53,7 +53,7 @@ while($row_sms = mysqli_fetch_array($result_sms)){
   <div class="jumbotron pt-3 pb-3">
     <h2 class=""><span id="screenName">납부완료 목록이에요.(#501)</h2>
     <p class="lead">
-(1) 세금계산서 발행은 오늘 날짜 발행만 가능해요.<br>
+(1) 세금계산서 발행은 오늘 날짜 발행만 가능해요.<a href="https://blog.naver.com/leaseman_ad/221970487609" target="_blank">발행방법 바로가기</a><br>
 (2) 만일 홈택스에서 세금계산서 또는 현금영수증을 발행한 것을 입력하고 싶을때, 입력버튼을 클릭하세요.<br>
 (3) 만일 세금계산서 취소를 원하면 <a href="https://www.popbill.com" target="_blank">팝빌사이트</a>에 로그인하여 발행취소처리해주세요 (단, 데이터 정정은 리스맨고객센터(이메일 info@leaseman.co.kr)로 연락주세요.)
     </p>

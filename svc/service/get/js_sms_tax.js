@@ -46,7 +46,7 @@ function taxInfo(idx,mun) {
 
 $('#btnTaxDateInput').on('click', function(){
 
-
+  var taxSelect = '세금계산서';
   var buildingkey = $('select[name=building]').val();
   // console.log(buildingkey);
 
@@ -117,13 +117,11 @@ $('#btnTaxDateInput').on('click', function(){
   }
 
   var taxArrayTo = JSON.stringify(taxArray);
-  var aa = 'taxSave';
-  var bb = 'p_payScheduleTaxInput.php';
 
   goCategoryPage(buildingkey, buildingText, buildingPopbillid, buildingCompanynumber, taxArrayTo, taxSelect, taxDiv);
 
   function goCategoryPage(a,b,c,d,e,f,g,h,i,j){
-      var frm = formCreate('taxSave', 'post', 'p_payScheduleTaxInput0.php','');
+      var frm = formCreate('taxSave', 'post', 'p_payScheduleTaxInput.php','');
       frm = formInput(frm, 'buildingId', a);
       frm = formInput(frm, 'buildingText', b);
       frm = formInput(frm, 'buildingPopbill', c);

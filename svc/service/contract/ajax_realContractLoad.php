@@ -1,12 +1,7 @@
 <?php
+// ini_set('display_errors', 1);
+// ini_set('error_reporting', E_ALL);
 include "ajax_realContractSql.php";
-
-$result = mysqli_query($conn, $sql);
-
-$allRows = array();
-while($row = mysqli_fetch_array($result)){
-  $allRows[] = $row;
-}
 
 // echo $sql;
 //
@@ -82,6 +77,11 @@ for ($i=0; $i < count($allRows); $i++) {
 
   $allRows[$i]['memocount'] = (int)$row_memo_c[0];
 
+  $sql_deposit = "select remainMoney from realContract_deposit where realContract_id={$allRows[$i]['rid']}";
+  $result_deposit = mysqli_query($conn, $sql_deposit);
+  $row_deposit = mysqli_fetch_array($result_deposit);
+
+  $allRows[$i]['deposit'] = $row_deposit[0];
 
 } //for문closing
 

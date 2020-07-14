@@ -151,13 +151,14 @@ while($row_sms = mysqli_fetch_array($result_sms)){
           </div>
         </div>
     </div>
+    <div class="row justify-content-end mr-0 mobile">
+        <label class="mb-0" style=""><span id="aa"></span></label><!--글자 기본&-->
+    </div>
+    <div class="row justify-content-end mr-0 mobile">
+      <label class="mb-0" style="color:#007bff;"> 체크 : <span id="countchecked">0</span>건, 임대료 <span id="aa1">0</span>원, 보증금 <span id="bb1">0</span>원</label><!--글자 파란색-->
+    </div>
 </section>
 
-<section class="container">
-  <div class="row ml-0">
-    <label for=""> 총 <span id="countall"></span>건</label>
-  </div>
-</section>
 
 <!-- 표내용 -->
 <section class="container">
@@ -178,7 +179,7 @@ while($row_sms = mysqli_fetch_array($result_sms)){
           <th class="mobile fixedHeader">종료일</th>
           <th class="mobile fixedHeader">기간</th>
           <th class="fixedHeader">임대료</th>
-          <!-- <th scope="col" class="mobile">단계<i class="fas fa-sort"></i></th> -->
+          <th class="fixedHeader">보증금</th>
           <th class="mobile fixedHeader">
             <span class="badge badge-light">파일</span>
             <span class="badge badge-dark">메모</span>
@@ -213,6 +214,7 @@ include $_SERVER['DOCUMENT_ROOT']."/svc/service/sms/modal_sms2.php";
 <script src="/svc/inc/js/jquery-ui.min.js"></script>
 <script src="/svc/inc/js/popper.min.js"></script>
 <script src="/svc/inc/js/bootstrap.min.js"></script>
+<script src="/svc/inc/js/jquery.number.min.js"></script>
 <script src="/svc/inc/js/datepicker-ko.js"></script>
 <script src="/svc/inc/js/jquery-ui-timepicker-addon.js"></script>
 <script src="/svc/inc/js/etc/newdate8.js?<?=date('YmdHis')?>"></script>
@@ -234,6 +236,7 @@ include $_SERVER['DOCUMENT_ROOT']."/svc/service/sms/modal_sms2.php";
 <script src="/svc/inc/js/etc/building.js?<?=date('YmdHis')?>"></script>
 
 <script type="text/javascript" src="js_sms_array_rcontract.js?<?=date('YmdHis')?>"></script>
+<script type="text/javascript" src="j_checksum_c.js?<?=date('YmdHis')?>"></script>
 
 
 <script>
@@ -305,12 +308,14 @@ function maketable(x,y){
 
       var returns = '';
       var countall;
+      var monthlyAmount = 0;
+      var depositAmount = 0;
 
       // console.log(typeof(x), x);
       // console.log(typeof(y), y);
 
       if(datacount===0){
-        returns ="<tr><td colspan='12'>조회값이 없어요. 조회조건을 다시 확인하거나 서둘러 입력해주세요!</td></tr>";
+        returns ="<tr><td colspan='13'>조회값이 없어요. 조회조건을 다시 확인하거나 서둘러 입력해주세요!</td></tr>";
         countall = 0;
       } else {
         $.each(data, function(key, value){
@@ -352,24 +357,39 @@ function maketable(x,y){
             returns += '</td>';
           }
 
+          returns += '<td><a href="contractEdit.php?page=deposit&id='+value.rid+'" class="green">'+value.deposit+'</a></td>';
+
           returns += '<td class="mobile">';
 
           if(value.filecount > 0){
-            returns += '<a href="contractEdit.php?id='+value.rid+'" class="badge badge-light">'+value.filecount+'</a>';
+            returns += '<a href="contractEdit.php?page=file&id='+value.rid+'" class="badge badge-light">'+value.filecount+'</a>';
           }
 
           if(value.memocount > 0){
-            returns += '<a href="contractEdit.php?id='+value.rid+'" class="badge badge-dark">'+value.memocount+'</a>';
+            returns += '<a href="contractEdit.php?page=memo&id='+value.rid+'" class="badge badge-dark">'+value.memocount+'</a>';
           }
 
           // returns += value.stepped + '</td>';
           returns += '</td>';
           returns += '</tr>';
 
+          var pMonthlyAmount = value.mtAmount.replace(/,/gi,'');
+          var pDepositAmount = value.deposit.replace(/,/gi,'');
+
+          // monthlyAmount += Number(pMonthlyAmount);
+          // depositAmount += Number(pDepositAmount);
+          var monthlyAmount = value.amount1;
+          var depositAmount = value.amount2;
+
         })
       }
       $('#allVals').html(returns);
       $('#countall').text(countall);
+      $('#aa').text(monthlyAmount);
+      $('#aa').number(true);
+      $('#bb').text(depositAmount);
+      $('#bb').number(true);
+
       var totalpage = Math.ceil(Number(countall)/Number(x));
 
       var totalpageArray = [];
@@ -387,10 +407,46 @@ function maketable(x,y){
       paging += '</ul></nav>';
 
       $('#page').html(paging);
+    }//success}
+  })//ajax }
+
+  return mtable;
+}//function }
+
+function makesum(x,y){
+  var form = $('form').serialize();
+  var getCid, getProgress;
+
+  var a = location.search.split('customerId=');
+  var b = location.search.split('progress=');
+  // console.log(a);
+
+  if(a!=''){
+    getCid = window.location.search.match(/customerId=([^&]*)/)[1];
+  }
+  if(b!=''){
+    getProgress = window.location.search.match(/progress=([^&]*)/)[1];
+  }
+
+  if(getProgress==='pAll'){
+    $('select[name=progress]').val('pAll').prop('selected', true);
+  }
+
+  var sumvalue = $.ajax({
+    url: 'ajax_realContractLoad_sum.php',
+    method: 'post',
+    data: {'form' : form,
+           'pagerow' : x,
+           'getPage' : y,
+           'customerId' : getCid,
+           'progress' : getProgress
+          },
+    success: function(data){
+      $('#aa').html(data);
     }
   })
 
-  return mtable;
+  return sumvalue;
 }
 
 // $(document).on('blur', '[data-toggle="tooltip"]', function(){
@@ -413,6 +469,7 @@ $(document).ready(function(){
 
     maketable(pagerow, getPage);
     sql(pagerow, getPage);
+    makesum(pagerow, getPage);
 
     $('#href_smsSetting').on('click', function(){
       var moveCheck = confirm('문자상용구설정 화면으로 이동합니다. 이동하시겠습니까?');
@@ -451,8 +508,9 @@ $(document).ready(function(){
       // $(this).parent('li').attr('class','active');
       var pagerow = 50;
       var getPage = $(this).text();
-      console.log(getPage);
+      // console.log(getPage);
       maketable(pagerow, getPage);
+      makesum(pagerow, getPage);
       // sql(pagerow, getPage);
     })
 
@@ -465,6 +523,7 @@ $('select[name=dateDiv]').on('change', function(){
   var pagerow = 50;
   var getPage = 1;
   maketable(pagerow, getPage);
+  makesum(pagerow, getPage);
   // sql(pagerow, getPage);
 })
 
@@ -475,6 +534,7 @@ $('select[name=periodDiv]').on('change', function(){
   // console.log(periodDiv);
   dateinput2(periodDiv);
   maketable(pagerow, getPage);
+  makesum(pagerow, getPage);
   // sql(pagerow, getPage);
 })
 
@@ -482,6 +542,7 @@ $('input[name=fromDate]').on('change', function(){
   var pagerow = 50;
   var getPage = 1;
   maketable(pagerow, getPage);
+  makesum(pagerow, getPage);
   // sql(pagerow, getPage);
 })
 
@@ -489,6 +550,7 @@ $('input[name=toDate]').on('change', function(){
   var pagerow = 50;
   var getPage = 1;
   maketable(pagerow, getPage);
+  makesum(pagerow, getPage);
   // sql(pagerow, getPage);
 })
 
@@ -496,6 +558,7 @@ $('select[name=progress]').on('change', function(){
   var pagerow = 50;
   var getPage = 1;
   maketable(pagerow, getPage);
+  makesum(pagerow, getPage);
   // sql(pagerow, getPage);
 })
 
@@ -503,6 +566,7 @@ $('select[name=building]').on('change', function(){
   var pagerow = 50;
   var getPage = 1;
   maketable(pagerow, getPage);
+  makesum(pagerow, getPage);
   // sql(pagerow, getPage);
 })
 
@@ -510,6 +574,7 @@ $('select[name=group]').on('change', function(){
   var pagerow = 50;
   var getPage = 1;
   maketable(pagerow, getPage);
+  makesum(pagerow, getPage);
   // sql(pagerow, getPage);
 })
 
@@ -517,6 +582,7 @@ $('select[name=etcCondi]').on('change', function(){
   var pagerow = 50;
   var getPage = 1;
   maketable(pagerow, getPage);
+  makesum(pagerow, getPage);
   // sql(pagerow, getPage);
 })
 
@@ -525,6 +591,7 @@ $('input[name=cText]').on('keyup', function(){
   var pagerow = 50;
   var getPage = 1;
   maketable(pagerow, getPage);
+  makesum(pagerow, getPage);
   // sql(pagerow, getPage);
 })
 //---------조회버튼클릭평션 end and contractArray 펑션 시작--------------//
@@ -550,7 +617,7 @@ $(document).on('change', '#allselect', function(){
     } else {
       contractArray = [];
     }
-  console.log(contractArray);
+  // console.log(contractArray);
 })
 
 $(document).on('change', '.tbodycheckbox', function(){
@@ -577,7 +644,7 @@ $(document).on('change', '.tbodycheckbox', function(){
       }
       contractArray.splice(index, 1);
     }
-    console.log(contractArray);
+    // console.log(contractArray);
     // console.log(typeof(contractArray[3]));
 })
 

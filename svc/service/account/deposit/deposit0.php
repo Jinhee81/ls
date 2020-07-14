@@ -10,9 +10,10 @@ include $_SERVER['DOCUMENT_ROOT']."/svc/main/condition.php";
 include $_SERVER['DOCUMENT_ROOT']."/svc/service/contract/building.php";
 ?>
 
+<!-- 제목 -->
 <section class="container">
   <div class="jumbotron pt-3 pb-3">
-    <h2 class="">보증금조회 화면입니다!</h2>
+    <h3 class="">보증금목록이에요.(#605)</h3>
     <p class="lead">
       <!-- (1) 상태(진행 - 현재 계약 진행 중), (대기 - 곧 계약시작임), (종료 - 종료된 계약)로 구분합니다.<br>
       (2) 월이용료를 클릭하면 해당 계약의 상세페이지가 나옵니다.<br>
@@ -21,7 +22,7 @@ include $_SERVER['DOCUMENT_ROOT']."/svc/service/contract/building.php";
   </div>
 </section>
 
-
+<!-- 조회조건 -->
 <section class="container">
   <div class="p-3 mb-2 bg-light text-dark border border-info rounded">
     <!-- <div class="row justify-content-md-center"> -->
@@ -45,29 +46,29 @@ include $_SERVER['DOCUMENT_ROOT']."/svc/service/contract/building.php";
             </select><!--codi2-->
           </div>
           <div class="col-sm-1 pl-0 pr-0">
-            <input type="text" name="fromDate" value="" class="form-control form-control-sm text-center dateType" id=""><!--codi3-->
+            <input type="text" name="fromDate" value="" class="form-control form-control-sm text-center dateType"><!--codi3-->
           </div>
           <div class="col-sm-1 pl-0 pr-0">
-            <input type="text" name="toDate" value="" class="form-control form-control-sm text-center dateType" id=""><!--codi4-->
+            <input type="text" name="toDate" value="" class="form-control form-control-sm text-center dateType"><!--codi4-->
           </div>
           <div class="col-sm-1 pl-0 pr-0">
-            <select class="form-control form-control-sm selectCall" id="progress" name="progress">
+            <select class="form-control form-control-sm selectCall" name="progress">
               <option value="pAll">전체</option>
-              <option value="pIng" selected>진행</option>
+              <option value="pIng" selected>현재</option>
               <option value="pEnd">종료</option>
               <option value="pWaiting">대기</option>
             </select><!--codi5-->
           </div>
           <div class="col-sm-1 pl-0 pr-0">
-            <select class="form-control form-control-sm selectCall" id="select1" name="select1">
+            <select class="form-control form-control-sm selectCall" name="building">
             </select><!--codi6-->
           </div>
           <div class="col-sm-1 pl-0 pr-0">
-            <select class="form-control form-control-sm selectCall" id="select2" name="select2">
+            <select class="form-control form-control-sm selectCall" name="group">
             </select><!--codi7-->
           </div>
           <div class="col-sm-1 pl-0 pr-0">
-            <select class="form-control form-control-sm selectCall" id="etcCondi" name="etcCondi">
+            <select class="form-control form-control-sm selectCall" name="etcCondi">
               <option value="customer">성명/사업자명</option>
               <option value="contact">연락처</option>
               <option value="contractId">계약번호</option>
@@ -77,9 +78,6 @@ include $_SERVER['DOCUMENT_ROOT']."/svc/service/contract/building.php";
           <div class="col-sm-1 pl-0 pr-0">
             <input type="text" name="cText" value="" class="form-control form-control-sm text-center"><!--codi9-->
           </div>
-          <div class="col-sm-1 pl-0 pr-0">
-            <button type="button" name="btnLoad" class="btn btn-info btn-sm">조회</button>
-          </div>
         </div>
       </form>
 
@@ -88,7 +86,9 @@ include $_SERVER['DOCUMENT_ROOT']."/svc/service/contract/building.php";
 </div>
 </section>
 
+<!-- 금액요약 -->
 <section class="container">
+  <div class="row justify-content-end mr-0">
     <div class="d-flex-reverse flex-row">
         <div class="float-right">
           <!-- <button type="button" class="btn btn-secondary" name="rowDeleteBtn" data-toggle="tooltip" data-placement="top" title="단계가 clear인 것들만 삭제가 가능합니다">삭제</button>
@@ -97,11 +97,46 @@ include $_SERVER['DOCUMENT_ROOT']."/svc/service/contract/building.php";
           <label style="color:#007bff;font-style:italic;"> 체크 : <span id="depositSelectCount" class="numberComma">0</span>건, <span id="depositSelectAmount" class="numberComma">0</span>원</label>
         </div>
     </div>
-
-    <div class="" id="allVals">
-    <!-- isright 6666? -->
-    </div>
+  </div>
 </section>
+
+<!-- 표내용 -->
+<section class="container">
+  <div class="mainTable">
+    <table class="table table-hover table-bordered table-sm text-center" id="checkboxTestTbl">
+      <thead>
+        <tr class="table-secondary">
+          <th class="mobile fixedHeader">
+            <input type="checkbox" id="allselect">
+          </th>
+          <th class="fixedHeader">순번</th>
+          <th class="fixedHeader">상태</th>
+          <th class="fixedHeader">입주자</th>
+          <th class="fixedHeader">연락처</th>
+          <th class="mobile fixedHeader">그룹명</th>
+          <th class="fixedHeader">방번호</th>
+          <th class="mobile fixedHeader">입금일</th>
+          <th class="mobile fixedHeader">입금액</th>
+          <th class="mobile fixedHeader">출금일</th>
+          <th class="fixedHeader">출금액</th>
+          <th class="fixedHeader">잔액</th>
+        </tr>
+      </thead>
+      <tbody id="allVals">
+
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- 페이지 -->
+<section class="container mt-2" id="page">
+
+</section>
+
+<!-- <section class="container" id="sql">
+
+</section> -->
 
 <?php include $_SERVER['DOCUMENT_ROOT']."/svc/view/service_footer.php"; ?>
 
@@ -109,6 +144,7 @@ include $_SERVER['DOCUMENT_ROOT']."/svc/service/contract/building.php";
 <script src="/svc/inc/js/jquery-3.3.1.min.js"></script>
 <script src="/svc/inc/js/jquery-ui.min.js"></script>
 <script src="/svc/inc/js/popper.min.js"></script>
+<script src="/svc/inc/js/jquery.number.min.js"></script>
 <script src="/svc/inc/js/bootstrap.min.js"></script>
 <script src="/svc/inc/js/datepicker-ko.js"></script>
 <script src="/svc/inc/js/etc/newdate8.js?<?=date('YmdHis')?>"></script>
@@ -128,108 +164,188 @@ include $_SERVER['DOCUMENT_ROOT']."/svc/service/contract/building.php";
 
 <script>
 
+function maketable(x,y){
+  var form = $('form').serialize();
+
+  var mtable = $.ajax({
+    url: 'ajax_depositLoad0.php',
+    method: 'post',
+    data: {'form' : form,
+           'pagerow' : x,
+           'getPage' : y
+          },
+    success: function(data){
+      data = JSON.parse(data);
+      datacount = data.length;
+
+      var returns = '';
+      var countall;
+
+      // console.log(typeof(x), x);
+      // console.log(typeof(y), y);
+
+      if(datacount===0){
+        returns ="<tr><td colspan='12'>조회조건에 맞는 값이 없습니다.</td></tr>";
+        countall = 0;
+      } else {
+        $.each(data, function(key, value){
+          countall = value.count;
+          var ordered = Number(value.num) - ((y-1)*x);
+          returns += '<tr>';
+          returns += '<td class="mobile"><input type="checkbox" name="rid" value="'+value.rid+'" class="tbodycheckbox"></td>';
+          returns += '<td class="" data-toggle="tooltip" data-placement="top" title="'+value.rid+'">'+ordered+'</td>';
+
+          if(value.status2==='present'){
+            returns += '<td class=""><div class="badge badge-info text-wrap" style="width: 3rem;">현재</div></td>';
+          } if(value.status2==='waiting'){
+            returns += '<td class=""><div class="badge badge-warning text-wrap" style="width: 3rem;">대기</div></td>';
+          } if(value.status2==='the_end'){
+            returns += '<td class=""><div class="badge badge-danger text-wrap" style="width: 3rem;">종료</div></td>';
+          }
+
+          returns += '<td class=""><a href="/svc/service/customer/m_c_edit.php?id='+value.cid+'" data-toggle="tooltip" data-placement="top" title="'+value.ccnn+'">'+value.cname+'</a>';
+
+          returns += '<input type="hidden" name="customername" value="'+value.cname+'">';
+          returns += '<input type="hidden" name="customercompanyname" value="'+value.ccomname+'">';
+          returns += '<input type="hidden" name="email" value="'+value.email+'">';
+          returns += '<input type="hidden" name="customerId" value="'+value.cid+'"></td>';
+
+          returns += '<td class=""><a href="tel:'+value.contact+'">'+value.contact+'</a></td>';
+          returns += '<td class="mobile">'+value.gName+'</td>';
+          returns += '<td class="">'+value.rName+'</td>';
+          returns += '<td class="mobile">'+value.inDate+'</td>';
+          returns += '<td class="mobile">'+value.inMoney+'</td>';
+          if(value.outDate===null){
+            returns += '<td class="mobile"></td>';
+          } else {
+            returns += '<td class="mobile">'+value.outDate+'</td>';
+          }
+
+          if(value.outMoney===null || value.outMoney==='0'){
+            returns += '<td class="mobile"></td>';
+          } else {
+            returns += '<td class="">'+value.outMoney;
+          }
+
+
+
+          if(value.step==='clear'){
+            returns += '<div class="badge badge-warning text-light" style="width: 1rem;">c</div></td>';
+          } else {
+            returns += '</td>';
+          }
+
+          returns += '<td class="mobile"><a href="../../contract/contractEdit.php?page=deposit&id='+value.rid+'" class="green">'+value.remainMoney+'</a></td>';
+
+          returns += '</tr>';
+
+        })
+      }
+      $('#allVals').html(returns);
+      $('#countall').text(countall);
+      var totalpage = Math.ceil(Number(countall)/Number(x));
+
+      var totalpageArray = [];
+
+      for (var i = 1; i <= totalpage; i++) {
+        totalpageArray.push(i);
+      }
+
+      var paging = '<nav aria-label="..."><ul class="pagination pagination-sm justify-content-center">';
+
+      for (var i = 1; i <= totalpageArray.length; i++) {
+        paging += '<li class="page-item"><a class="page-link">'+i+'</a></li>';
+      }
+
+      paging += '</ul></nav>';
+
+      $('#page').html(paging);
+    }
+  })
+
+  return mtable;
+}
+
 $(document).ready(function(){
-    $(function () {
-        $('[data-toggle="tooltip"]').tooltip()
-    })
+  var periodDiv = $('select[name=periodDiv]').val();
+  dateinput2(periodDiv);
 
-    $.ajax({
-      url: 'ajax_depositLoad.php',
-      method: 'post',
-      data: $('form').serialize(),
-      success: function(data){
-        $('#allVals').html(data);
-      }
-    })
+  var pagerow = 50;
+  var getPage = 1;
 
-    $.ajax({
-      url: 'ajax_depositAmount.php',
-      method: 'post',
-      data: $('form').serialize(),
-      success: function(data){
-        $('#depositTotal').html(data);
-      }
-    })
+  maketable(pagerow, getPage);
 })
 
-$('button[name="btnLoad"]').on('click', function(){
-    $.ajax({
-      url: 'ajax_depositLoad.php',
-      method: 'post',
-      data: $('form').serialize(),
-      success: function(data){
-        $('#allVals').html(data);
-      }
-    })
+//===========document.ready function end and the other load start!
 
-    $.ajax({
-      url: 'ajax_depositAmount.php',
-      method: 'post',
-      data: $('form').serialize(),
-      success: function(data){
-        $('#depositTotal').html(data);
-      }
-    })
+
+$('select[name=dateDiv]').on('change', function(){
+  var pagerow = 50;
+  var getPage = 1;
+  maketable(pagerow, getPage);
+  // sql(pagerow, getPage);
 })
 
-$('select[name="periodDiv"]').on('change', function(){
+$('select[name=periodDiv]').on('change', function(){
+  var pagerow = 50;
+  var getPage = 1;
+  var periodDiv = $('select[name=periodDiv]').val();
+  // console.log(periodDiv);
+  dateinput2(periodDiv);
+  maketable(pagerow, getPage);
+  // sql(pagerow, getPage);
+})
 
-    var periodVal = $(this).val();
-    // console.log(periodVal);
-    if(periodVal === 'allDate'){
-      $('input[name="fromDate"]').val("");
-      $('input[name="toDate"]').val("");
-    }
-    if(periodVal === 'nowMonth'){
-      var fromDate = yyyy + '-' + mm + '-01';
-      $('input[name="fromDate"]').val(fromDate);
-      $('input[name="toDate"]').val(today);
-    }
-    if(periodVal === 'pastMonth'){
-      var pastMonth = Number(mm)-1;
-      // console.log(pastMonth);
-      var pastMonthDate = new Date(yyyy,pastMonth,0).getDate();
-      if(pastMonth<10){
-        pastMonth = '0' + pastMonth;
-      }
-      if(pastMonthDate<10){
-        pastMonthDate = '0' + pastMonthDate;
-      }
-      var fromDate = yyyy + '-' + pastMonth + '-01';
-      var toDate = yyyy + '-' + pastMonth + '-' + pastMonthDate;
-      $('input[name="fromDate"]').val(fromDate);
-      $('input[name="toDate"]').val(toDate);
-    }
-    if(periodVal === '1pastMonth'){
-      var pastMonth = Number(mm)-1;
-      // console.log(pastMonth);
-      var pastMonthDate = Number(dd);
-      if(pastMonth<10){
-        pastMonth = '0' + pastMonth;
-      }
-      if(pastMonthDate<10){
-        pastMonthDate = '0' + pastMonthDate;
-      }
-      var fromDate = yyyy + '-' + pastMonth + '-' + pastMonthDate;
-      $('input[name="fromDate"]').val(fromDate);
-      $('input[name="toDate"]').val(today);
-    }
-    if(periodVal === '3pastMonth'){
-      var pastMonth = Number(mm)-3;
-      // console.log(pastMonth);
-      var pastMonthDate = Number(dd);
-      if(pastMonth<10){
-        pastMonth = '0' + pastMonth;
-      }
-      if(pastMonthDate<10){
-        pastMonthDate = '0' + pastMonthDate;
-      }
-      var fromDate = yyyy + '-' + pastMonth + '-' + pastMonthDate;
-      $('input[name="fromDate"]').val(fromDate);
-      $('input[name="toDate"]').val(today);
-    }
+$('input[name=fromDate]').on('change', function(){
+  var pagerow = 50;
+  var getPage = 1;
+  maketable(pagerow, getPage);
+  // sql(pagerow, getPage);
+})
 
-}) ////select periodDiv function closing
+$('input[name=toDate]').on('change', function(){
+  var pagerow = 50;
+  var getPage = 1;
+  maketable(pagerow, getPage);
+  // sql(pagerow, getPage);
+})
+
+$('select[name=progress]').on('change', function(){
+  var pagerow = 50;
+  var getPage = 1;
+  maketable(pagerow, getPage);
+  // sql(pagerow, getPage);
+})
+
+$('select[name=building]').on('change', function(){
+  var pagerow = 50;
+  var getPage = 1;
+  maketable(pagerow, getPage);
+  // sql(pagerow, getPage);
+})
+
+$('select[name=group]').on('change', function(){
+  var pagerow = 50;
+  var getPage = 1;
+  maketable(pagerow, getPage);
+  // sql(pagerow, getPage);
+})
+
+$('select[name=etcCondi]').on('change', function(){
+  var pagerow = 50;
+  var getPage = 1;
+  maketable(pagerow, getPage);
+  // sql(pagerow, getPage);
+})
+
+
+$('input[name=cText]').on('keyup', function(){
+  var pagerow = 50;
+  var getPage = 1;
+  maketable(pagerow, getPage);
+  // sql(pagerow, getPage);
+})
+//---------조회버튼클릭평션 end and contractArray 펑션 시작--------------//
 
 </script>
 

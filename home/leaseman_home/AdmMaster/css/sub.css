@@ -1,0 +1,88 @@
+@charset "utf-8";
+
+
+/*///////////////////// header /////////////////////*/
+
+
+/*///////////////////// header End /////////////////////*/
+
+
+
+
+
+
+/*///////////////////// container /////////////////////*/
+
+
+/*///////////////////// container End /////////////////////*/
+
+
+
+
+
+
+/*///////////////////// footer /////////////////////*/
+
+
+/*///////////////////// footer End /////////////////////*/
+
+
+
+
+
+
+/*///////////////////// common /////////////////////*/
+
+
+/*단방향 일반 게시판_답변하기X*/
+.wrap_table_section{}
+.list01{text-align: center; width: 100%;}
+.list01 th{background-color: #f3f3f3; line-height: 31px; border-top:3px solid #ff6960; border-bottom:1px solid #dfdfdf; font-weight: 700;}
+.list01 td{background-color: white; height: 31px; line-height: 31px; border-bottom: 1px solid #d4d4d4;}
+.list01 td a{color: #666; text-decoration: none;}
+.list01 .subject{text-align: left;}
+.list01 .subject a:hover{color:#ff6960;}
+.list01 .num a{color: #bbb;}
+.list01 .name a{color: #bbb;}
+.list01 .datetime a{color: #bbb;}
+.list01 .hit a{color: #bbb;}
+
+
+/*쌍방향 비밀 게시판_답변하기*/
+.list_secret{text-align: center; width: 100%;}
+.list_secret th{background-color: #f3f3f3; line-height: 31px; border-top:3px solid #ff6960; border-bottom:1px solid #dfdfdf; font-weight: 700;}
+.list_secret td{background-color: white; height: 31px; line-height: 31px; border-bottom: 1px solid #d4d4d4;}
+.list_secret td a{color: #666; text-decoration: none;}
+.list_secret .subject{text-align: left;}
+.list_secret .subject .comment{font-size: 10px; color: red;}
+.list_secret .subject .lock{display: inline-block; width: 9px; height: 11px; vertical-align: middle; background: url('../img/common/board_secret.gif')top center;}
+.list_secret .subject a:hover{color:#ff6960;}
+.list_secret .num a{color: #bbb;}
+.list_secret .name a{color: #bbb;}
+.list_secret .datetime a{color: #bbb;}
+.list_secret .hit a{color: #bbb;}
+
+
+/*게시판_뷰*/
+.view01{text-align: left; width: 100%;}
+.view01 th{background-color: #f3f3f3; padding-left: 10px; line-height: 31px; border-top:3px solid #ff6960; border-bottom:1px solid #dfdfdf; font-weight: 700; color: bbb;}
+.view01 td{background-color: white; height: 31px; line-height: 31px; border-bottom: 1px solid #d4d4d4; color: #666;}
+.view01 td span{color: #666;}
+.view01 td a{ color: #666; text-decoration: none;}
+.view01 td span{ color: #666;}
+.view01 td p{ color: #666;}
+
+/*게시판_버튼*/
+.board_button {width: 100%; margin: 6px 0;}
+.btnArr {display: block; width: 50px; line-height: 21px; text-align: center; border-radius: 4px; background-color: #ff6960; color: white; font-weight: bold;} /* btnArr : a tag */
+.left_button a{float: left;	margin-right: 6px;}
+.right_button a{float: right; margin-left: 6px;}
+
+/*게시판_검색*/
+.board_search{text-align: center;}
+.sfl{}
+.stx{height: 18px;}
+.btnSearch{display: inline-block; width: 50px; line-height: 21px; text-align: center; border-radius: 4px; background-color: #ff6960; color: white; font-weight: bold;}
+
+
+/*///////////////////// common End /////////////////////*/

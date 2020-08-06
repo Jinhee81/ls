@@ -52,17 +52,17 @@ for ($i=0; $i < count($allRows); $i++) {
                  and tbl_contract.b_idx=84
            ";
 
-  echo $sql2;
+  // echo $sql2."<br>";
 
-  // $result2 = mysqli_query($conn, $sql2);
-  //
-  //
-  // while($row2 = mysqli_fetch_array($result2)){
-  //   $allRows2[] = $row2;
-  // }
+  $result2 = mysqli_query($conn, $sql2);
+
+
+  while($row2 = mysqli_fetch_array($result2)){
+    $allRows2[] = $row2;
+  }
 
 }
 
-// print_r($allRows2);
+print_r($allRows2);
 
  ?>

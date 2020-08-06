@@ -1,7 +1,6 @@
 <?php
 header('Content-Type: text/html; charset=UTF-8');
-session_start();
-include $_SERVER['DOCUMENT_ROOT']."/svc/view/conn.php";
+
 include "ajax_getexpectedCondi_sql.php";
 
 $result = mysqli_query($conn, $sql);
@@ -12,6 +11,8 @@ while($row = mysqli_fetch_array($result)){
 }
 
 for ($i=0; $i < count($allRows); $i++) {
+  $allRows[$i]['count']= $row_count[0];
+
   if($allRows[$i]['div3']==='주식회사'){
     $allRows[$i]['cdiv3'] = '(주)';
   } elseif($allRows[$i]['div3']==='유한회사'){
@@ -32,12 +33,17 @@ for ($i=0; $i < count($allRows); $i++) {
     $allRows[$i]['cname'] = $allRows[$i]['ccname'];
   }
 
+  if($allRows[$i]['div2']==='개인사업자'){
+    $allRows[$i]['ccompanyname'] = $allRows[$i]['companyname'];
+  } else if($allRows[$i]['div2']==='법인사업자'){
+    $allRows[$i]['ccompanyname'] = $allRows[$i]['cdiv3'].$allRows[$i]['companyname'];
+  } else if($allRows[$i]['div2']==='개인'){
+    $allRows[$i]['ccompanyname'] = '';
+  }
+
   $allRows[$i]['cnamemb'] = mb_substr($allRows[$i]['cname'],0,5,"utf-8");
 
   $allRows[$i]['contact'] = $allRows[$i]['contact1'].'-'.$allRows[$i]['contact2'].'-'.$allRows[$i]['contact3'];
-
-  $allRows[$i]['cnamecontact'] = $allRows[$i]['cname'] .','. $allRows[$i]['contact'];
-
 
 
   $allRows[$i]['address'] = $allRows[$i]['add1'].', '.$allRows[$i]['add2'].' '.$allRows[$i]['add3'];
@@ -50,9 +56,9 @@ for ($i=0; $i < count($allRows); $i++) {
     $allRows[$i]['delayinterest'] = $allRows[$i]['pAmount'] * ($allRows[$i]['delaycount'] / 365) * 0.27; //연체일수 생기니 이자 생
   }
 
-  $allRows[$i]['pAmount'] = number_format($allRows[$i]['pAmount']);
-  $allRows[$i]['pvAmount'] = number_format($allRows[$i]['pvAmount']);
-  $allRows[$i]['ptAmount'] = number_format($allRows[$i]['ptAmount']);
+  // $allRows[$i]['pAmount'] = number_format($allRows[$i]['pAmount']);
+  // $allRows[$i]['pvAmount'] = number_format($allRows[$i]['pvAmount']);
+  // $allRows[$i]['ptAmount'] = number_format($allRows[$i]['ptAmount']);
   $allRows[$i]['delayinterest'] = number_format($allRows[$i]['delayinterest']);
 
   $allRows[$i]['cnamecontactmb'] = mb_substr($allRows[$i]['cnamecontact'],0,5,"utf-8");
@@ -72,6 +78,9 @@ for ($i=0; $i < count($allRows); $i++) {
   if($allRows[$i]['div5']===null){
     $allRows[$i]['div5'] = '';
   }
+  $allRows[$i]['pStartDate'] = date('Y-n-j', strtotime($allRows[$i]['pStartDate']));
+  $allRows[$i]['pEndDate'] = date('Y-n-j', strtotime($allRows[$i]['pEndDate']));
+  $allRows[$i]['pExpectedDate'] = date('Y-n-j', strtotime($allRows[$i]['pExpectedDate']));
 } //for문closing
 
 // print_r($allRows);

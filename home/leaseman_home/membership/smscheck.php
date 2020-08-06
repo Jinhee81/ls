@@ -25,19 +25,19 @@ $row = mysqli_fetch_array($result);
 //                             SUBJECT,
 //                             PHONE,
 //                             CALLBACK,
-//                             REQDATE, 
-//                             MSG, 
-//                             FILE_CNT, 
-//                             FILE_PATH1, 
-//                             FILE_PATH1_SIZ, 
-//                             ETC1, 
-//                             ETC2, 
-//                             ETC3, 
+//                             REQDATE,
+//                             MSG,
+//                             FILE_CNT,
+//                             FILE_PATH1,
+//                             FILE_PATH1_SIZ,
+//                             ETC1,
+//                             ETC2,
+//                             ETC3,
 //                             ETC4
 
-//                             ) value ( 
+//                             ) value (
 
-//                             '', 
+//                             '',
 //                             '01041075293',
 //                             '01041075293',
 //                             now(),
@@ -64,18 +64,18 @@ $row = mysqli_fetch_array($result);
 //TR_MSGTYPE 0
 
 $sql3 = "insert into SC_TRAN (
-                            TR_SENDDATE, 
-                            TR_ETC1, 
-                            TR_ETC4, 
-                            TR_ETC5, 
-                            TR_ETC6, 
-                            TR_PHONE, 
-                            TR_CALLBACK, 
-                            TR_MSG, 
-                            TR_SENDSTAT, 
+                            TR_SENDDATE,
+                            TR_ETC1,
+                            TR_ETC4,
+                            TR_ETC5,
+                            TR_ETC6,
+                            TR_PHONE,
+                            TR_CALLBACK,
+                            TR_MSG,
+                            TR_SENDSTAT,
                             TR_MSGTYPE
 
-                            ) value ( 
+                            ) value (
 
                             now(),
                             'p',
@@ -83,7 +83,7 @@ $sql3 = "insert into SC_TRAN (
                             '11',
                             '9',
                             '".$phone."',
-                            '01068135825',
+                            '0318798003',
                             '인증번호 [".$rand."]를 입력해주시길 바랍니다. -리스맨-',
                             '0',
                             '0'

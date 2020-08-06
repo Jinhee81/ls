@@ -1,6 +1,6 @@
 <?php
-ini_set('display_errors', 1);
-ini_set('error_reporting', E_ALL);
+// ini_set('display_errors', 1);
+// ini_set('error_reporting', E_ALL);
 session_start();
 if(!isset($_SESSION['is_login'])){
   header('Location: /svc/login.php');
@@ -53,7 +53,9 @@ while($row_sms = mysqli_fetch_array($result_sms)){
   <div class="jumbotron pt-3 pb-3">
     <h2 class=""><span id="screenName">납부완료 목록이에요.(#501)</h2>
     <p class="lead">
-
+(1) 세금계산서 발행은 오늘 날짜 발행만 가능해요.<a href="https://blog.naver.com/leaseman_ad/221970487609" target="_blank">발행방법 바로가기</a><br>
+(2) 만일 홈택스에서 세금계산서 또는 현금영수증을 발행한 것을 입력하고 싶을때, 입력버튼을 클릭하세요.<br>
+(3) 만일 세금계산서 취소를 원하면 <a href="https://www.popbill.com" target="_blank">팝빌사이트</a>에 로그인하여 발행취소처리해주세요 (단, 데이터 정정은 리스맨고객센터(이메일 info@leaseman.co.kr)로 연락주세요.)
     </p>
   </div>
 </section>
@@ -79,14 +81,33 @@ while($row_sms = mysqli_fetch_array($result_sms)){
                 <option value="1pastMonth">1개월전</option>
                 <!-- <option value="3pastMonth">3개월전</option> -->
                 <option value="nowYear">당년</option>
+                <option value="today">오늘</option>
+                <option value="janu">1월</option>
+                <option value="feb">2월</option>
+                <option value="march">3월</option>
+                <option value="april">4월</option>
+                <option value="may">5월</option>
+                <option value="june">6월</option>
+                <option value="july">7월</option>
+                <option value="august">8월</option>
+                <option value="september">9월</option>
+                <option value="october">10월</option>
+                <option value="november">11월</option>
+                <option value="december">12월</option>
+                <option value="1quater">1분기</option>
+                <option value="2quater">2분기</option>
+                <option value="3quater">3분기</option>
+                <option value="4quater">4분기</option>
+                <option value="sangbangi">상반기</option>
+                <option value="habangi">하반기</option>
               </select>
             </td><!--당월,전월 등-->
             <td width="6%" class="">
-              <input type="text" name="fromDate" value="" class="form-control form-control-sm text-center dateType">
+              <input type="text" name="fromDate" value="" class="form-control form-control-sm text-center dateType yyyymmdd">
             </td><!--fromdate-->
             <td width="1%" class="">~</td><!-- ~ -->
             <td width="6%" class="">
-              <input type="text" name="toDate" value="" class="form-control form-control-sm text-center dateType">
+              <input type="text" name="toDate" value="" class="form-control form-control-sm text-center dateType yyyymmdd">
             </td><!--todate-->
             <td width="6%" class="mobile">
               <select class="form-control form-control-sm selectCall" name="building">
@@ -136,7 +157,7 @@ while($row_sms = mysqli_fetch_array($result_sms)){
 
 <!-- 문자 및 세금계산서발행 섹션 -->
 <section class="container">
-    <div class="row mobile">
+    <div class="row">
         <div class="col col-md-7">
           <div class="row ml-0">
             <table>
@@ -152,33 +173,36 @@ while($row_sms = mysqli_fetch_array($result_sms)){
                 <td>
                   <button class="btn btn-sm btn-block btn-outline-primary" id="smsBtn" data-toggle="modal" data-target="#smsModal1"><i class="far fa-envelope"></i> 보내기</button>
                 </td>
-                <td>
-                  <a href="/svc/service/sms/smsSetting.php" target="_blank">
+                <td class="mobile">
+                  <a href="/svc/service/sms/smsSetting.php">
                   <button class="btn btn-sm btn-block btn-dark" id="smsSettingBtn"><i class="fas fa-angle-double-right"></i> 상용구설정</button></a>
                 </td>
                 <td>
-                  <a href="/svc/service/sms/sent.php" target="_blank">
+                  <a href="/svc/service/sms/sent.php">
                   <button class="btn btn-sm btn-block btn-dark" id="smsSettingBtn"><i class="fas fa-angle-double-right"></i> 보낸문자목록</button></a>
                 </td>
                 <!-- <td><button class="btn btn-sm btn-block btn-danger" name="button1" data-toggle="tooltip" data-placement="top" title="작업중입니다^^;">납부취소</button></td> 이거 하려다가 안했음, 이유는 기타계약이 있어서 납부취소를 하면 안됌-->
-                <td><button type="button" class="btn btn-info btn-sm" name="button2" data-toggle="tooltip" data-placement="top" title="작업준비중입니다."><i class="far fa-file-excel"></i>엑셀저장</button></td>
+                <td class="mobile"><button type="button" class="btn btn-info btn-sm" id="excelbtn"><i class="far fa-file-excel"></i>엑셀양식</button></td>
               </tr>
             </table>
           </div>
         </div>
-        <div class="col col-md-5">
+        <div class="col col-md-5 mobile">
           <div class="row justify-content-end">
             <div class="col col-md-3 pl-0 pr-1">
-              <input type="text" name="taxDate" value="" class="form-control form-control-sm dateType text-center">
+              <input type="text" name="taxDate" placeholder="날짜선택" class="form-control form-control-sm dateType text-center">
             </div>
             <div class="col col-md-3 pl-0 pr-1">
               <select class="form-control form-control-sm" name="taxSelect">
                 <option value="세금계산서">세금계산서</option>
-                <!-- <option value="현금영수증">현금영수증</option> 이건 지금당장 구축하는게 아니어서 주석처리, 곧 할거라서 코드는 냅둠-->
+                <option value="현금영수증">현금영수증</option>
               </select>
             </div>
-            <div class="col col-md-2 pl-0">
-              <button type="button" class="btn btn-primary btn-sm btn-block" id="btnTaxDateInput">발행</button>
+            <div class="col col-md-2 pl-0 pr-1">
+              <button type="button" class="btn btn-warning btn-sm btn-block" id="btnTaxDateInput2">입력</button>
+            </div>
+            <div class="col col-md-4 pl-0">
+              <button type="button" class="btn btn-primary btn-sm btn-block" id="btnTaxDateInput">세금계산서발행</button>
             </div>
           </div>
         </div>
@@ -217,11 +241,12 @@ while($row_sms = mysqli_fetch_array($result_sms)){
 </section>
 
 <!-- sql 섹션 -->
-<section id="allVals2">
+<section id="allVals2" class="container">
 </section>
 
 
 <?php
+include "modal_pay2.php";
 include $_SERVER['DOCUMENT_ROOT']."/svc/service/sms/modal_sms1.php";
 include $_SERVER['DOCUMENT_ROOT']."/svc/service/sms/modal_sms2.php";
  ?>
@@ -244,6 +269,16 @@ include $_SERVER['DOCUMENT_ROOT']."/svc/service/sms/modal_sms2.php";
 <script src="/svc/inc/js/etc/form.js?<?=date('YmdHis')?>"></script>
 
 <script type="text/javascript">
+function taxInfo2(bid,mun,ccid) {
+    var tmps = "<iframe name='ifm_pops_21' id='ifm_pops_21' class='popup_iframe'   scrolling='no' src=''></iframe>";
+    $("body").append(tmps);
+    //alert( "/inc/tax_invoice2.php?chkId="+chkId+"&callnum="+subIdx );
+
+    $("#ifm_pops_21").attr("src","/svc/service/get/tax_invoice.php?building_idx="+bid+"&mun="+mun+"&id="+ccid+"&flag=finished");
+    $('#ifm_pops_21').show();
+    $('.pops_wrap, .pops_21').show();
+
+}
  var buildingArray = <?php echo json_encode($buildingArray); ?>;
  var groupBuildingArray = <?php echo json_encode($groupBuildingArray); ?>;
  var roomArray = <?php echo json_encode($roomArray); ?>;
@@ -271,6 +306,7 @@ function maketable(){
     data: $('form').serialize(),
     success: function(data){
       data = JSON.parse(data);
+      // console.log(data);
       datacount = data.length;
 
       var returns = '';
@@ -283,56 +319,93 @@ function maketable(){
       } else {
         $.each(data, function(key, value){
           returns += '<tr>';
-          returns += '<td class=""><input type="checkbox" value="'+value.idpaySchedule2+'" class="tbodycheckbox"></td>';
+          returns += '<td class=""><input type="checkbox" name="pid" value="'+value.idpaySchedule2+'" class="tbodycheckbox"><input type="hidden" name="rid" value="'+value.rid+'"></td>';
           returns += '<td>'+datacount+'</td>';
 
           returns += '<td class="">';
-          returns += '<p class="mb-0">'+value.executiveDate+'</p>';
+
+          if(value.roomdiv==='room'){
+            returns += '<p class="mb-0 modalAsk" data-toggle="modal" data-target="#pPay2">'+value.executiveDate+'</p>';
+          } else {
+            returns += '<p class="mb-0">'+value.executiveDate+'</p>';
+          }
+
           returns += '<input type="hidden" name="pStartDate" value="'+value.pStartDate+'">';
           returns += '<input type="hidden" name="pEndDate" value="'+value.pEndDate+'">';
-          returns += '<input type="hidden" name="monthCount" value="'+value.monthCount+'">';
+          returns += '<input type="hidden" name="pMonthCount" value="'+value.monthCount+'">';
+
+          if(value.roomdiv==='room'){
+            returns += '<input type="hidden" name="startDate" value="'+value.startDate+'">';
+            returns += '<input type="hidden" name="endDate" value="'+value.endDate2+'">';
+            returns += '<input type="hidden" name="monthCount" value="'+value.count2+'">';
+          } else {
+            returns += '<input type="hidden" name="startTime" value="'+value.startDate+'">';
+            returns += '<input type="hidden" name="endTime" value="'+value.endDate2+'">';
+          }
+
           returns += '</td>';
 
           returns += '<td class="text-right pr-3 mobile">'+value.pAmount+'</td>';
           returns += '<td class="text-right pr-3 mobile">'+value.pvAmount+'</td>';
 
-          if(value.roomdiv==='임대계약'){
-            returns += '<td class="text-right pr-3"><a class="" href="/svc/service/contract/contractEdit.php?id='+value.rid+'">'+value.ptAmount+'</a></td>';
-          } else if(value.roomdiv==='기타계약'){
-            returns += '<td class="text-right pr-3"><a class="" href="/svc/service/contractetc/contractetc_Edit.php?id='+value.eid+'">'+value.ptAmount+'</a></td>';
+          if(value.roomdiv==='room'){
+            returns += '<td class="text-right pr-3"><a class="green" href="/svc/service/contract/contractEdit.php?page=schedule&id='+value.rid+'">'+value.ptAmount+'</a></td>';
+          } else if(value.roomdiv==='good'){
+            returns += '<td class="text-right pr-3"><a class="green" href="/svc/service/contractetc/contractetc_edit.php?id='+value.rid+'">'+value.ptAmount+'</a></td>';
           }
 
           returns += '<td class="mobile">'+value.payKind+'</td>';
 
           returns += '<td class=""><a href="/svc/service/customer/m_c_edit.php?id='+value.customer_id+'" data-toggle="tooltip" data-placement="top" title="'+value.cname+'" class="cnameclass">'+value.cnamemb+'</a>';
 
-          returns += '<input type="hidden" name="contact" value="'+value.contact+'">';
           returns += '<input type="hidden" name="email" value="'+value.email+'">';
           returns += '<input type="hidden" name="customer_id" value="'+value.customer_id+'">';
           returns += '<input type="hidden" name="cname" value="'+value.cname+'">';
           returns += '<input type="hidden" name="name" value="'+value.name+'">';
+          returns += '<input type="hidden" name="bid" id="bid" value="'+value.bid+'">';
+          returns += '<input type="hidden" name="mun" id="mun" value="'+value.mun+'">';
+          returns += '<input type="hidden" name="ccid" id="ccid" value="'+value.ccid+'">';
           returns += '<input type="hidden" name="companynumber" value="'+value.companynumber+'">';
-          returns += '<input type="hidden" name="companyname" value="'+value.companyname+'">';
+          returns += '<input type="hidden" name="companyname" value="'+value.companyname2+'">';
           returns += '<input type="hidden" name="address" value="'+value.address+'">';
           returns += '<input type="hidden" name="div4" value="'+value.div4+'">';
           returns += '<input type="hidden" name="div5" value="'+value.div5+'">';
           returns += '</td>';
 
-          returns += '<td class="">'+value.contact+'</td>';
+          returns += '<td class=""><a href="tel:'+value.contact+'">'+value.contact+'</td>';
 
-          if(value.roomdiv==='임대계약'){
-            returns += '<td class="">'+value.roomdiv+'('+value.groupname+','+value.roomname+')'+'<input type="hidden" name="roomdiv" value="'+value.roomdiv+'"><input type="hidden" name="groupname" value="'+value.groupname+'"><input type="hidden" name="roomname" value="'+value.roomname+'"></td>';
-          } else if(value.roomdiv==='기타계약'){
-            returns += '<td class="">'+value.roomdiv+'('+value.goodname2+')'+'<input type="hidden" name="roomdiv" value="'+value.roomdiv+'"><input type="hidden" name="groupname" value="'+value.goodname2+'"><input type="hidden" name="roomname" value=""></td>';
+          if(value.roomdiv==='room'){
+            returns += '<td class="">'+'임대계약'+'('+value.groupname+','+value.roomname+')'+'<input type="hidden" name="roomdiv" value="'+value.roomdiv+'"><input type="hidden" name="groupname" value="'+value.groupname+'"><input type="hidden" name="roomname" value="'+value.roomname+'"></td>';
+          } else if(value.roomdiv==='good'){
+            returns += '<td class="">'+'기타계약'+'('+value.groupname+')'+'<input type="hidden" name="roomdiv" value="'+value.roomdiv+'"><input type="hidden" name="groupname" value="'+value.groupname+'"><input type="hidden" name="roomname" value=""></td>';
           }
+          var mun = value.mun;
+          var bid = value.bid;
+          var ccid = value.ccid;
+          var mun = value.mun;
+          //
+          // console.log(typeof(mun));
+          // console.log(mun);
 
-          if(value.taxSelect==='세금계산서'){
-            returns += '<td class="mobile"><span class="badge badge-warning text-light" style="width: 1.5rem;">세</span>'+value.taxDate+'</td>';
-          } else if(value.taxSelect==='현금영수증'){
-            returns += '<td class="mobile"><span class="badge badge-info text-light" style="width: 1.5rem;">현</span>'+value.taxDate+'</td>';
+          if(mun){
+            if(value.taxSelect==='세금계산서'){
+              returns += '<td class="mobile"><a onclick="taxInfo2('+bid+',\''+mun+'\',\''+ccid+'\');"><span class="badge badge-warning text-light" style="width: 1.5rem;">세</span><label class="green mb-0"><u>'+value.taxDate+'</u></label></a></td>';
+            } else if(value.taxSelect==='현금영수증'){
+              returns += '<td class="mobile"><span class="badge badge-info text-light" style="width: 1.5rem;">현</span>'+value.taxDate+'</td>';
+            } else {
+              returns += '<td class="mobile"></td>';
+            }
           } else {
-            returns += '<td class="mobile"></td>';
+            if(value.taxSelect==='세금계산서'){
+              returns += '<td class="mobile"><span class="badge badge-warning text-light" style="width: 1.5rem;">세</span>'+value.taxDate+'</td>';
+            } else if(value.taxSelect==='현금영수증'){
+              returns += '<td class="mobile"><span class="badge badge-info text-light" style="width: 1.5rem;">현</span>'+value.taxDate+'</td>';
+            } else {
+              returns += '<td class="mobile"></td>';
+            }
           }
+
+
 
           returns += '</tr>';
 
@@ -381,20 +454,55 @@ $(document).ready(function(){
     closeText: '닫기'
   })
 
+  $('.yyyymmdd').keydown(function (event) {
+   var key = event.charCode || event.keyCode || 0;
+   $text = $(this);
+   if (key !== 8 && key !== 9) {
+       if ($text.val().length === 4) {
+           $text.val($text.val() + '-');
+       }
+       if ($text.val().length === 7) {
+           $text.val($text.val() + '-');
+       }
+   }
+
+   return (key == 8 || key == 9 || key == 46 || (key >= 48 && key <= 57) || (key >= 96 && key <= 105));
+  // Key 8번 백스페이스, Key 9번 탭, Key 46번 Delete 부터 0 ~ 9까지, Key 96 ~ 105까지 넘버패트
+  // 한마디로 JQuery 0 ~~~ 9 숫자 백스페이스, 탭, Delete 키 넘버패드외에는 입력못함
+  })
+
+  $(document).on('click', '.modalAsk', function(){ //입금일 클릭하는거(모달클릭)
+
+    var currow2 = $(this).closest('tr');
+    var payid = currow2.find('td:eq(0)').children('input[name=pid]').val();
+    // console.log(payNumber);
+    var rid = currow2.find('td:eq(0)').children('input[name=rid]').val();
+
+    var startDate = $(this).siblings('input[name=startDate]').val();
+    var endDate = $(this).siblings('input[name=endDate]').val();
+    var monthCount = $(this).siblings('input[name=monthCount]').val();
+    var pStartDate = $(this).siblings('input[name=pStartDate]').val();
+    var pEndDate = $(this).siblings('input[name=pEndDate]').val();
+    var pMonthCount = $(this).siblings('input[name=pMonthCount]').val();
+
+    // console.log(payid, rid, startDate);
+
+    $('#modalrid').val(rid);
+    $('#modalpid').val(payid);
+    $('input[name=m2startDate]').val(startDate);
+    $('input[name=m2endDate]').val(endDate);
+    $('input[name=m2duration]').val(monthCount);
+    $('input[name=m2pStartDate]').val(pStartDate);
+    $('input[name=m2pEndDate]').val(pEndDate);
+    $('input[name=m2pDuration]').val(pMonthCount);
+
+  })
+
 
 })//---------document.ready function end & 각종 조회 펑션 시작--------------//
 
 $('select[name=dateDiv]').on('change', function(){
     maketable();
-
-    // $.ajax({
-    //     url: 'ajax_getfinishedCondi_sql2.php',
-    //     method: 'post',
-    //     data: $('form').serialize(),
-    //     success: function(data){
-    //       $('#allVals2').html(data);
-    //     }
-    // })
 })
 
 $('select[name=periodDiv]').on('change', function(){
@@ -426,28 +534,22 @@ $('select[name=payKind]').on('change', function(){
 
 $('select[name=etcCondi]').on('change', function(){
     maketable();
-
-    // $.ajax({
-    //     url: 'ajax_getfinishedCondi_sql2.php',
-    //     method: 'post',
-    //     data: $('form').serialize(),
-    //     success: function(data){
-    //       $('#allVals2').html(data);
-    //     }
-    // })
 })
 
 $('input[name=cText]').on('keyup', function(){
     maketable();
+})
 
-    // $.ajax({
-    //     url: 'ajax_getfinishedCondi_sql2.php',
-    //     method: 'post',
-    //     data: $('form').serialize(),
-    //     success: function(data){
-    //       $('#allVals2').html(data);
-    //     }
-    // })
+$('#excelbtn').on('click', function(){
+  var a = $('form').serialize();
+
+  goCategoryPage(a);
+
+  function goCategoryPage(a){
+    var frm = formCreate('exceldown', 'post', 'p_exceldown.php','');
+    frm = formInput(frm, 'formArray', a);
+    formSubmit(frm);
+  }
 })
 
 

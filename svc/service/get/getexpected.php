@@ -1,5 +1,4 @@
 <?php
-//이거가 서버에 있는 파일. 관리 매우 중요함...
 session_start();
 if(!isset($_SESSION['is_login'])){
   header('Location: /svc/login.php');
@@ -15,7 +14,7 @@ include $_SERVER['DOCUMENT_ROOT']."/svc/view/service_header2.php";
 include $_SERVER['DOCUMENT_ROOT']."/svc/view/conn.php";
 include $_SERVER['DOCUMENT_ROOT']."/svc/main/condition.php";
 include $_SERVER['DOCUMENT_ROOT']."/svc/service/contract/building.php";
-// header("Content-Type: text/html; charset=UTF-8");
+
 $sql_sms = "select
           screen, title, description
         from sms
@@ -51,8 +50,7 @@ while($row_sms = mysqli_fetch_array($result_sms)){
   <div class="jumbotron pt-3 pb-3">
     <h2 class="">납부예정 목록이에요.(#401)</h2>
     <p class="warningg">
-      <i class="fas fa-exclamation-circle"></i> 문자메시지 발송후 반드시 보낸문자목록에서 확인하세요. 가끔 발송이 안되는 경우가 있어요(상대방 전화해지, 또는 해외 출국 등 사유)<br>
-      <i class="fas fa-exclamation-circle"></i> 전자세금계산서를 발행할 수 있습니다. <a href="https://blog.naver.com/leaseman_ad/221970487609" target="_blank">발행방법 바로가기</a>
+      <i class="fas fa-exclamation-circle"></i> 문자메시지 발송후 반드시 보낸문자목록에서 확인하세요. 가끔 발송이 안되는 경우가 있어요(상대방 전화해지, 또는 해외 출국 등 사유)
     </p>
   </div>
 </section>
@@ -64,39 +62,37 @@ while($row_sms = mysqli_fetch_array($result_sms)){
       <div class="row justify-content-md-center">
         <table>
           <tr>
-            <td width="6%" class="mobile">
+            <td width="6%">
               <select class="form-control form-control-sm selectCall" name="dateDiv">
                 <option value="pExpectedDate">예정일자</option>
               </select><!--codi1-->
             </td>
-            <td width="6%" class="mobile">
+            <td width="6%">
               <select class="form-control form-control-sm selectCall" name="periodDiv">
                 <option value="allDate">--</option>
-                <option value="untilNowMonth" selected>당월까지</option>
                 <option value="nowMonth">당월</option>
                 <option value="pastMonth">전월</option>
                 <option value="1pastMonth">1개월전</option>
-                <option value="nextMonth">익월</option>
                 <option value="nowYear">당년</option>
               </select><!--시간구분-->
             </td>
-            <td width="8%" class="mobile">
+            <td width="8%">
               <input type="text" name="fromDate" value="" class="form-control form-control-sm text-center dateType yyyymmdd"><!--codi3-->
             </td>
-            <td width="1%" class="mobile">~</td>
-            <td width="8%" class="mobile">
+            <td width="1%">~</td>
+            <td width="8%">
               <input type="text" name="toDate" value="" class="form-control form-control-sm text-center dateType yyyymmdd"><!--codi4-->
             </td>
-            <td width="7%" class="">
+            <td width="7%">
               <select class="form-control form-control-sm selectCall" name="building">
               </select><!--건물-->
             </td>
-            <td width="7%" class="mobile">
+            <td width="7%">
               <select class="form-control form-control-sm selectCall" name="group">
                 <option value="groupAll">그룹전체</option>
               </select><!--그룹-->
             </td>
-            <td width="7%" class="">
+            <td width="7%">
               <select class="form-control form-control-sm selectCall" name="etcCondi">
                 <option value="customer">성명/사업자명</option>
                 <option value="contact">연락처</option>
@@ -104,7 +100,7 @@ while($row_sms = mysqli_fetch_array($result_sms)){
                 <option value="roomId">방번호</option>
               </select><!--codi8-->
             </td>
-            <td width="12%" class="">
+            <td width="12%">
               <input type="text" name="cText" value="" class="form-control form-control-sm text-center"><!--codi9-->
             </td>
           </tr>
@@ -116,7 +112,7 @@ while($row_sms = mysqli_fetch_array($result_sms)){
 
 <!-- 문자 및 세금계산서발행 섹션 -->
 <section class="container">
-    <div class="row">
+    <div class="row mobile">
         <div class="col col-md-7">
           <div class="row ml-0">
             <table>
@@ -133,19 +129,20 @@ while($row_sms = mysqli_fetch_array($result_sms)){
                   <button class="btn btn-sm btn-block btn-outline-primary" id="smsBtn" data-toggle="modal" data-target="#smsModal1"><i class="far fa-envelope"></i> 보내기</button>
                 </td>
                 <td>
-                  <a href="/svc/service/sms/smsSetting.php">
-                  <button class="btn btn-sm btn-block btn-dark mobile" id="smsSettingBtn"><i class="fas fa-angle-double-right"></i> 상용구설정</button></a>
+                  <a href="/svc/service/sms/smsSetting.php" target="_blank">
+                  <button class="btn btn-sm btn-block btn-dark" id="smsSettingBtn"><i class="fas fa-angle-double-right"></i> 상용구설정</button></a>
                 </td>
                 <td>
-                  <a href="/svc/service/sms/sent.php">
+                  <a href="/svc/service/sms/sent.php" target="_blank">
                   <button class="btn btn-sm btn-block btn-dark" id="smsSettingBtn"><i class="fas fa-angle-double-right"></i> 보낸문자목록</button></a>
                 </td>
-                <td><button class="btn btn-sm btn-block btn-danger mobile" id="button1">입금처리</button></td>
+                <td><button class="btn btn-sm btn-block btn-danger" name="button1" data-toggle="tooltip" data-placement="top" title="작업중입니다^^;">청구취소</button></td>
+                <td><button class="btn btn-sm btn-block btn-warning" name="button2" data-toggle="tooltip" data-placement="top" title="작업중입니다^^;">납부처리</button></td>
               </tr>
             </table>
           </div>
         </div>
-        <div class="col col-md-5 mobile">
+        <div class="col col-md-5">
           <div class="row justify-content-end">
             <div class="col col-md-3 pl-0 pr-1">
               <input type="text" name="taxDate" value="" class="form-control form-control-sm dateType text-center">
@@ -173,39 +170,33 @@ while($row_sms = mysqli_fetch_array($result_sms)){
 
 <!-- 표 섹션 -->
 <section class="container">
-  <div class="mainTable">
-    <table class="table table-sm table-bordered table-hover text-center mt-2 table-sm" id="checkboxTestTbl">
-      <thead>
-        <tr class="table-secondary">
-          <th width="2%" class="fixedHeader"><input type="checkbox" id="allselect"></th>
-          <th width="4%" class="fixedHeader">순번</th>
-          <th width="5%" class="mobile fixedHeader">그룹명</th>
-          <th width="5%" class="fixedHeader">방번호</th>
-          <th width="8%" class="fixedHeader">세입자</th>
-          <th width="11%" class="fixedHeader">연락처</th>
-          <th width="4%" class="mobile fixedHeader">개월</th>
-          <th width="10%" class="mobile fixedHeader">시작일/종료일</th>
-          <th width="10%" class="fixedHeader">예정일/입금일</th>
-          <th width="10%" class="mobile fixedHeader">공급가액/세액</th>
-          <th width="8%" class="fixedHeader">합계</th>
-          <th width="5%" class="mobile fixedHeader">구분</th>
-          <th width="6%" class="mobile fixedHeader">연체일수/이자</th>
-          <th width="8%" class="mobile fixedHeader">증빙</th>
-        </tr>
-      </thead>
-      <tbody id="allVals">
+  <table class="table table-sm table-bordered table-hover text-center mt-2 table-sm" id="checkboxTestTbl">
+    <thead>
+      <tr class="table-secondary">
+        <th scope="col"><input type="checkbox" id="allselect"></th>
+        <th scope="col">순번</th>
+        <th scope="col" class="mobile">그룹명</th>
+        <th scope="col">방번호</th>
+        <th scope="col">입주자</th>
+        <th scope="col">연락처</th>
+        <th scope="col" class="mobile">개월</th>
+        <th scope="col" class="mobile">시작일/종료일</th>
+        <th scope="col">예정일</th>
+        <th scope="col" class="mobile">공급가액/세액</th>
+        <th scope="col">합계</th>
+        <th scope="col" class="mobile">구분</th>
+        <th scope="col" class="mobile">연체일수/이자</th>
+        <th scope="col" class="mobile">증빙</th>
+      </tr>
+    </thead>
+    <tbody id="allVals">
 
-      </tbody>
-    </table>
-  </div>
-</section>
-
-<!-- 페이지 -->
-<section class="container mt-2" id="page">
+    </tbody>
+  </table>
 </section>
 
 <!-- sql 섹션 -->
-<section class="container mt-2" id="sql">
+<section id="allVals2">
 </section>
 
 
@@ -215,7 +206,8 @@ include $_SERVER['DOCUMENT_ROOT']."/svc/service/sms/modal_sms1.php";
 include $_SERVER['DOCUMENT_ROOT']."/svc/service/sms/modal_sms2.php";
  ?>
 
- <?php include $_SERVER['DOCUMENT_ROOT']."/svc/view/service_footer.php"; ?>
+<?php include $_SERVER['DOCUMENT_ROOT']."/svc/view/service_footer.php"; ?>
+
 
 <script src="/svc/inc/js/jquery-3.3.1.min.js"></script>
 <script src="/svc/inc/js/popper.min.js"></script>
@@ -247,49 +239,13 @@ include $_SERVER['DOCUMENT_ROOT']."/svc/service/sms/modal_sms2.php";
 <script type="text/javascript" src="j_taxarray.js?<?=date('YmdHis')?>"></script>
 
 <script>
-$(function () {
-  $('[data-toggle="tooltip"]').tooltip()
-})
-
 var taxDiv = 'charge'; //입금예정리스트여서 청구라는 뜻의 charge 사용, 입금완료리스트에서는 영수라는 뜻의 accept 사용 예정
 
-
-function taxInfo2(bid,mun,ccid) {
-  var tmps = "<iframe name='ifm_pops_21' id='ifm_pops_21' class='popup_iframe'   scrolling='no' src=''></iframe>";
-  $("body").append(tmps);
-  //alert( "/inc/tax_invoice2.php?chkId="+chkId+"&callnum="+subIdx );
-
-  $("#ifm_pops_21").attr("src","/svc/service/get/tax_invoice.php?building_idx="+bid+"&mun="+mun+"&id="+ccid+"&flag=expected");
-  $('#ifm_pops_21').show();
-  $('.pops_wrap, .pops_21').show();
-
-}
-
-function sql(x,y){
-  var form = $('form').serialize();
-  var sql = $.ajax({
-    url: 'ajax_getexpectedCondi_sql2.php',
-    method: 'post',
-    data: {'form' : form,
-           'pagerow' : x,
-           'getPage' : y
-          },
-    success: function(data){
-      $('#sql').html(data);
-    }
-  })
-  return sql;
-}
-
-function maketable(x,y){
-  var form = $('form').serialize();
+function maketable(){
   var mtable = $.ajax({
     url: 'ajax_getexpectedCondi_value.php',
     method: 'post',
-    data: {'form' : form,
-           'pagerow' : x,
-           'getPage' : y
-          },
+    data: $('form').serialize(),
     success: function(data){
       data = JSON.parse(data);
       datacount = data.length;
@@ -300,16 +256,12 @@ function maketable(x,y){
       var totalptAmount = 0;
 
       if(datacount===0){
-        returns ="<tr><td colspan='14'>아직 임대료를 청구한 데이터가 없네요. 임대계약에서 청구하기를 실행하세요!</td></tr>";
+        returns ="<tr><td colspan='14'>조회값이 없어요. 조회조건을 다시 확인하거나 서둘러 입력해주세요!</td></tr>";
       } else {
         $.each(data, function(key, value){
-          countall = value.count;
-          var ordered = Number(value.num) - ((y-1)*x);
-
           returns += '<tr>';
-          returns += '<td><input type="checkbox" name="psid" value="'+value.idpaySchedule2+'" class="tbodycheckbox">';
-          returns += '<input type="hidden" name="rid" value="'+value.rid+'"></td>';
-          returns += '<td>'+ordered+'</td>';
+          returns += '<td><input type="checkbox" value="'+value.idpaySchedule2+'" class="tbodycheckbox"></td>';
+          returns += '<td>'+datacount+'</td>';
           returns += '<td class="mobile">'+value.gname+'</td>';
           returns += '<td>'+value.roomname+'</td>';
           returns += '<td><a href="/svc/service/customer/m_c_edit.php?id='+value.cid+'" data-toggle="tooltip" data-placement="top" title="'+value.cname+'" class="cnameclass">'+value.cnamemb+'</a>';
@@ -319,39 +271,27 @@ function maketable(x,y){
           returns += '<input type="hidden" name="customer_id" value="'+value.cid+'">';
           returns += '<input type="hidden" name="name" value="'+value.ccname+'">';
           returns += '<input type="hidden" name="companynumber" value="'+value.companynumber+'">';
-          returns += '<input type="hidden" name="companyname" value="'+value.ccompanyname+'">';
+          returns += '<input type="hidden" name="companyname" value="'+value.companyname+'">';
           returns += '<input type="hidden" name="address" value="'+value.address+'">';
           returns += '<input type="hidden" name="div4" value="'+value.div4+'">';
           returns += '<input type="hidden" name="div5" value="'+value.div5+'">';
-          returns += '<input type="hidden" name="bid" id="bid" value="'+value.bid+'">';
-          returns += '<input type="hidden" name="mun" id="mun" value="'+value.mun+'">';
-          returns += '<input type="hidden" name="ccid" id="ccid" value="'+value.ccid+'">';
           returns += '</td>';
-          returns += '<td><a href="tel:'+value.contact+'">'+value.contact+'</a></td>';
+          returns += '<td>'+value.contact+'</td>';
           returns += '<td class="mobile">'+value.monthCount+'</td>';
           returns += '<td class="mobile"><label class="mb-0">' + value.pStartDate+'</label><br>';
           returns += '<label class="mb-0">' + value.pEndDate+'</label></td>';
-          returns += '<td><p class="modalAsk mb-0" data-toggle="modal" data-target="#pPay">'+value.pExpectedDate+'</p>';
-          returns += '<input type="text" name="executiveDate" class="form-control form-control-sm grey text-center" value="'+value.pExpectedDate+'">';
+          returns += '<td><p class="modalAsk" data-toggle="modal" data-target="#pPay">'+value.pExpectedDate+'</p>';
+          returns += '<input type="hidden" name="rid" value="'+value.rid+'">';
+          returns += '<input type="hidden" name="payid" value="'+value.idpaySchedule2+'"></td>';
           returns += '<td class="text-right pr-3 mobile"><label class="mb-0">'+value.pAmount+'</label><br>';
           returns += '<label class="mb-0">'+value.pvAmount+'</label></td>';
-          returns += '<td><a href="/svc/service/contract/contractEdit.php?page=schedule&id='+value.rid+'" name="ptamount" data-toggle="tooltip" data-placement="top" title="계약상세보기" class="green">'+value.ptAmount+'</a></td>';
-          returns += '<td class="mobile">';
-          if(value.payKind==='계좌'){
-            returns += '<select class="form-control form-control-sm" name="payKind"><option value="계좌" selected>계좌</option><option value="현금">현금</option><option value="카드">카드</option></select>';
-          } else if(value.payKind==='현금'){
-            returns += '<select class="form-control form-control-sm" name="payKind"><option value="계좌">계좌</option><option value="현금" selected>현금</option><option value="카드">카드</option></select>';
-          } else if(value.payKind==='카드'){
-            returns += '<select class="form-control form-control-sm" name="payKind"><option value="계좌">계좌</option><option value="현금">현금</option><option value="카드" selected>카드</option></select>';
-          }
-          returns += '</td>';//입금구분
+          returns += '<td><a href="/svc/service/contract/contractEdit.php?id='+value.rid+'" name="ptamount" data-toggle="tooltip" data-placement="top" title="계약상세보기">'+value.ptAmount+'</a></td>';
+          returns += '<td class="mobile">'+value.payKind+'</td>';//입금구분
           returns += '<td class="mobile"><label class="mb-0">'+value.delaycount+'</label><br>';
           returns += '<label class="mb-0">' + value.delayinterest+'</label></td>';//연체일수,연체이자
-          var mun = value.mun;
-          var bid = value.bid;
-          var ccid = value.ccid;
+
           if(value.taxSelect==='세금계산서'){
-            returns += '<td class="mobile"><a onclick="taxInfo2('+bid+',\''+mun+'\',\''+ccid+'\');"><span class="badge badge-warning text-light" style="width: 1.5rem;">세</span>'+value.taxDate+'</a></td>';
+            returns += '<td class="mobile"><span class="badge badge-warning text-light" style="width: 1.5rem;">세</span>'+value.taxDate+'</td>';
           } else if(value.taxSelect==='현금영수증'){
             returns += '<td class="mobile"><span class="badge badge-info text-light" style="width: 1.5rem;">현</span>'+value.taxDate+'</td>';
           } else {
@@ -378,24 +318,6 @@ function maketable(x,y){
       $('#pvAmountTotalAmount').number(true);
       $('#ptAmountTotalAmount').text(totalptAmount);
       $('#ptAmountTotalAmount').number(true);
-
-      var totalpage = Math.ceil(Number(countall)/Number(x));
-
-      var totalpageArray = [];
-
-      for (var i = 1; i <= totalpage; i++) {
-        totalpageArray.push(i);
-      }
-
-      var paging = '<nav aria-label="..."><ul class="pagination pagination-sm justify-content-center">';
-
-      for (var i = 1; i <= totalpageArray.length; i++) {
-        paging += '<li class="page-item"><a class="page-link">'+i+'</a></li>';
-      }
-
-      paging += '</ul></nav>';
-
-      $('#page').html(paging);
   }//ajax success closing}
 
 })//ajax closing }
@@ -428,11 +350,7 @@ $(document).ready(function(){
     var periodDiv = $('select[name=periodDiv]').val();
     dateinput2(periodDiv);
 
-    var pagerow = 50;
-    var getPage = 1;
-
-    maketable(pagerow, getPage);
-    sql(pagerow, getPage);
+    maketable();
 
     $('.dateType').datepicker({
       changeMonth: true,
@@ -471,15 +389,15 @@ $(document).ready(function(){
     $(document).on('click', '.modalAsk', function(){ //청구번호클릭하는거(모달클릭)
 
       var currow2 = $(this).closest('tr');
-      var payid = currow2.find('td:eq(0)').children('input[name=psid]').val();
+      var payid = currow2.find('td:eq(8)').children('input:eq(1)').val();
       // console.log(payNumber);
-      var rid = currow2.find('td:eq(0)').children('input[name=rid]').val();
+      var rid = currow2.find('td:eq(8)').children('input:eq(0)').val();
 
       var payamount = currow2.find('td:eq(10)').children('a').text();
-      var paykind = currow2.find('td:eq(11)').children().val();
+      var paykind = currow2.find('td:eq(11)').text();
       var pExpectedDate = $(this).text();
 
-      // console.log(payid, payamount, paykind, pExpectedDate);
+      console.log(payid, payamount, paykind, pExpectedDate);
 
       $('.payid').html(payid);
       $('input[name=modalpaydate]').val(pExpectedDate);
@@ -499,7 +417,7 @@ $(document).ready(function(){
       $('.getExecute').on('click', function(){ //납부완료버튼(모달안버튼) 클릭
 
         var aa1 = 'payScheduleInput';
-        var bb1 = 'p_getPayScheduleGetAmountInput.php';
+        var bb1 = '/svc/service/contract/p_payScheduleGetAmountInput.php';
 
 
         var ppayKind = $('#payKind').val(); //납부구분
@@ -531,55 +449,44 @@ $(document).ready(function(){
       })
 
 
-      // $('.getExecuteBack').on('click', function(){ //청구취소(삭제)버튼(모달안버튼) 클릭
-      //   var aa1 = 'payScheduleDrop';
-      //   var bb1 = '/svc/service/contract/p_payScheduleDrop.php';
-      //
-      //   // console.log(pid, contractId);
-      //
-      //   goCategoryPage(aa1, bb1, rid, payid);
-      //
-      //   function goCategoryPage(a, b, c, d){
-      //     var frm = formCreate(a, 'post', b,'');
-      //     frm = formInput(frm, 'realContract_id', c);
-      //     frm = formInput(frm, 'payid', d);
-      //     formSubmit(frm);
-      //   }
-      //
-      // })//납부예정화면에서는 청구취소는 일단 없애자, 햇깔리니깐
+      $('.getExecuteBack').on('click', function(){ //청구취소(삭제)버튼(모달안버튼) 클릭
+        var aa1 = 'payScheduleDrop';
+        var bb1 = '/svc/service/contract/p_payScheduleDrop.php';
+
+        // console.log(pid, contractId);
+
+        goCategoryPage(aa1, bb1, rid, payid);
+
+        function goCategoryPage(a, b, c, d){
+          var frm = formCreate(a, 'post', b,'');
+          frm = formInput(frm, 'realContract_id', c);
+          frm = formInput(frm, 'payid', d);
+          formSubmit(frm);
+        }
+
+      })
 
     })
 
+
 })//---------document.ready function end & 각종 조회 펑션 시작--------------//
 $('select[name=dateDiv]').on('change', function(){
-  var pagerow = 50;
-  var getPage = 1;
-  maketable(pagerow, getPage);
-  sql(pagerow, getPage);
+    maketable();
 })
 
 $('select[name=periodDiv]').on('change', function(){
   var periodDiv = $('select[name=periodDiv]').val();
   // console.log(periodDiv);
   dateinput2(periodDiv);
-  var pagerow = 50;
-  var getPage = 1;
-  maketable(pagerow, getPage);
-  sql(pagerow, getPage);
+  maketable();
 })
 
 $('input[name=fromDate]').on('change', function(){
-  var pagerow = 50;
-  var getPage = 1;
-  maketable(pagerow, getPage);
-  sql(pagerow, getPage);
+    maketable();
 })
 
 $('input[name=toDate]').on('change', function(){
-  var pagerow = 50;
-  var getPage = 1;
-  maketable(pagerow, getPage);
-  sql(pagerow, getPage);
+    maketable();
 })
 
 $('select[name=building]').on('change', function(){
@@ -592,24 +499,16 @@ $('select[name=building]').on('change', function(){
 
     $('input[name=sendphonenumber]').val(sendphonenumber);
 
-    var pagerow = 50;
-    var getPage = 1;
-    maketable(pagerow, getPage);
-    sql(pagerow, getPage);
+    $('input[name=sendphonenumber]').val(sendphonenumber);
+    maketable();
 })
 
 $('select[name=group]').on('change', function(){
-  var pagerow = 50;
-  var getPage = 1;
-  maketable(pagerow, getPage);
-  sql(pagerow, getPage);
+    maketable();
 })
 
 $('select[name=etcCondi]').on('change', function(){
-  var pagerow = 50;
-  var getPage = 1;
-  maketable(pagerow, getPage);
-  sql(pagerow, getPage);
+    maketable();
 
     // $.ajax({
     //     url: 'ajax_getexpectedCondi_sql2.php',
@@ -622,10 +521,7 @@ $('select[name=etcCondi]').on('change', function(){
 })
 
 $('input[name=cText]').on('keyup', function(){
-  var pagerow = 50;
-  var getPage = 1;
-  maketable(pagerow, getPage);
-  sql(pagerow, getPage);
+    maketable();
 
     // $.ajax({
     //     url: 'ajax_getexpectedCondi_sql2.php',
@@ -635,87 +531,6 @@ $('input[name=cText]').on('keyup', function(){
     //       $('#allVals2').html(data);
     //     }
     // })
-})
-
-//==================입금처리 시$작
-
-var psArray = [];
-
-$('#allselect').click(function(){
-
-  var allCnt = $(".tbodycheckbox").length;
-  if($("#allselect").is(":checked")){
-    for (var i = 1; i <= allCnt; i++) {
-      var psArrayEle = [];
-      var colOrder = Number(table.find("tr:eq("+i+")").find("td:eq(1)").text());;
-      var psId = Number(table.find("tr:eq("+i+")").find("td:eq(0)").children('input[name=psid]').val());
-      var executiveDate = table.find("tr:eq("+i+")").find("td:eq(8)").children('input[name=executiveDate]').val();
-      var executiveAmount = table.find("tr:eq("+i+")").find("td:eq(10)").children('a').text();
-      var payKind = table.find("tr:eq("+i+")").find("td:eq(11)").children('select').val();
-      var rid = table.find("tr:eq("+i+")").find("td:eq(0)").children('input[name=rid]').val();
-
-      psArrayEle.push(colOrder, psId, executiveDate, executiveAmount, payKind, rid);
-      psArray.push(psArrayEle);
-    }
-  } else {
-    psArray = [];
-  }
-  console.log(psArray);
-})
-
-$(document).on('click', '.tbodycheckbox', function(){
-  var psArrayEle = [];
-
-  if($(this).is(':checked')){
-    var currow = $(this).closest('tr');
-    var colOrder = Number(currow.find('td:eq(1)').text());
-    var psId = Number(currow.find("td:eq(0)").children('input[name=psid]').val());
-    var executiveDate = currow.find("td:eq(8)").children('input[name=executiveDate]').val();
-    var executiveAmount = currow.find("td:eq(10)").children('a').text();
-    var payKind = currow.find("td:eq(11)").children('select').val();
-    var rid = currow.find("td:eq(0)").children('input[name=rid]').val();
-
-    psArrayEle.push(colOrder, psId, executiveDate, executiveAmount, payKind, rid);
-    psArray.push(psArrayEle);
-  } else {
-    var currow = $(this).closest('tr');
-    var colOrder = Number(currow.find('td:eq(1)').text());
-
-    for (var i = 0; i < psArray.length; i++) {
-      if(psArray[i][0]===colOrder){
-        // console.log(smsReadyArray[i][0]['순번'])
-        var index = i;
-        break;
-      }
-    }
-    // console.log(index);
-    psArray.splice(index, 1);
-  }
-  // console.log(psArray);
-})
-
-$('#button1').on('click', function(){
-  console.log(psArray);
-  if(psArray.length===0){
-    alert('입금처리 할 것을 선택해야 합니다.');
-    return false;
-  }
-
-  for (var i = 0; i < psArray.length; i++) {
-    if(!psArray[i][2]){
-      alert('입금일 날짜가 입력되어야 합니다.');
-      return false;
-    }
-  }
-
-  psArray = JSON.stringify(psArray);
-  goCategoryPage(psArray);
-
-  function goCategoryPage(a){
-    var frm = formCreate('p_payScheduleGetAmountInputFor', 'post', '../contract/p_payScheduleGetAmountInputFor4.php','');
-    frm = formInput(frm, 'psArray', a);
-    formSubmit(frm);
-  }
 })
 </script>
 

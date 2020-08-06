@@ -1,28 +1,7 @@
-<!-- <style>
-#invoice-popup-wrapper {
-    position: relative;
-    z-index: 999999;
-    width: 100%;
-}
-
-#invoice-ifr-wrapper {
-    position: absolute;
-    width: 100%;
-}
-
-
-.popup_iframe {
-    width: 100%;
-    height: 100%;
-}
-</style> -->
-
 <body>
-<!-- <div id="invoice-popup-wrapper">
-    <div id="invoice-ifr-wrapper"></div>
-</div> -->
+
 <nav class="navbar navbar-expand-lg navbar-dark" style="background-color:#0B173B;">
-<a class="navbar-brand" href="../svc/main/main.php"><img src="../admin/img/h1b.png" width="100" height="30" class="d-inline-block align-top" alt=""></a>
+  <a class="navbar-brand" href="/svc/main/main.php"><img src="/svc/inc/img/h1b.png" width="100" height="30" class="d-inline-block align-top" alt=""></a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
@@ -30,10 +9,10 @@
   <div class="collapse navbar-collapse" id="navbarSupportedContent">
     <ul class="navbar-nav mr-auto">
       <li class="nav-item active">
-        <a class="nav-link" href="../svc/main/main.php">Home <span class="sr-only">(current)</span></a>
+        <a class="nav-link" href="/svc/main/main.php">Home <span class="sr-only">(current)</span></a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="/svc/service/customer/customer.php">세입자</a>
+        <a class="nav-link" href="/svc/service/customer/customer.php">관계자</a>
       </li>
       <li class="nav-item">
         <a class="nav-link" href="/svc/service/contract/contract.php">임대계약</a>
@@ -42,31 +21,27 @@
         <a class="nav-link" href="/svc/service/contractetc/contractetc.php">기타계약</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="/svc/service/get/getexpected.php">입금예정</a>
+        <a class="nav-link" href="/svc/service/get/getexpected.php">납부예정</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="/svc/service/get/getfinished.php">입금완료</a>
+        <a class="nav-link" href="/svc/service/get/getfinished.php">납부완료</a>
       </li>
       <li class="nav-item dropdown">
         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
           회계관리
         </a>
         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-          <a class="dropdown-item" href="/svc/service/account/fixcost.php">고정비설정</a>
+          <a class="dropdown-item" href="/svc/service/account/fixcost/fixcost.php">고정비설정</a>
           <a class="dropdown-item" href="/svc/service/account/flexCost/flexCost.php">지출입력</a>
           <div class="dropdown-divider"></div>
           <a class="dropdown-item" href="/svc/service/account/monthAccount/monthAccount.php">월별회계조회</a>
           <a class="dropdown-item" href="/svc/service/account/yearAccount/yearAccount.php">연도별회계조회</a>
-          <a class="dropdown-item" href="/svc/service/account/deposit.php">보증금조회</a>
+          <!-- <a class="dropdown-item" href="/svc/service/account/deposit/deposit.php">보증금조회</a> -->
         </div>
       </li>
     </ul>
 
     <form class="form-inline my-2 my-lg-0">
-      <span class="navbar-text">
-        <a href="/svc/main/payment.php">
-        <i class="fas fa-won-sign"></i>&nbsp;요금안내</a>
-      </span>&nbsp;
       <span class="navbar-text">
         <a href="/svc/service/setting/building.php">
         <i class="fas fa-cog"></i>&nbsp;환경설정</a>
@@ -74,6 +49,10 @@
       <span class="navbar-text" data-toggle="tooltip" data-placement="bottom" title="<?=$_SESSION['gradename']?>">
         <a href="/svc/myinfo.php">
         <i class="fas fa-user"></i>&nbsp;나의정보</a>
+      </span>&nbsp;
+      <span class="navbar-text">
+        <a href="/svc/main/payment.php">
+        <i class="fas fa-won-sign"></i>&nbsp;요금안내</a>
       </span>&nbsp;&nbsp;
       <span class="navbar-text">
       &nbsp;<?=$_SESSION['email']?>님, 안녕하세요.

@@ -16,8 +16,8 @@ $row = mysqli_fetch_array($result);
 ?>
 
 <section class="container">
-  <div class="jumbotron">
-    <h1 class="display-4"> >> 그룹 및 관리번호 생성 화면입니다!</h1>
+  <div class="jumbotron pt-3 pb-3">
+    <h3 class=""> >> 그룹 및 관리번호 생성 화면입니다!</h3>
     <hr class="my-4">
     <p class="lead">(1) 그룹명에는 '1층', '2층' 등의 명칭을 적어주세요. 만약 그룹명이 생각나지 않으면 '기본'이라고 적어주세요. 추후 언제든 수정가능합니다.<br>
     (2) 관리개수에는 1~100사이 숫자를 입력해주세요.<br>
@@ -33,29 +33,37 @@ $row = mysqli_fetch_array($result);
     <input type="hidden" name="id" value="<?=$row['id']?>">
     <table class="table table-bordered text-center">
       <tr>
-        <td scope="col col-md-4">물건명</td>
-        <td scope="col col-md-8"><input class="form-control text-center" type="text" name="building_name" value="<?=$row['bName'].'('.$filtered_id.')'?>" disabled></td>
+        <td width="30%">물건명</td>
+        <td width="70%"><input class="form-control text-center" type="text" name="building_name" value="<?=$row['bName'].'('.$filtered_id.')'?>" disabled></td>
       </tr>
       <tr>
-        <td scope="col col-md-4">그룹명</td>
-        <td scope="col col-md-8"><input class="form-control text-center" type="text" name="gName" value="기본" required=""></td>
+        <td>그룹명</td>
+        <td><input class="form-control text-center" type="text" name="gName" value="1층" required=""></td>
       </tr>
       <tr>
-        <td scope="col col-md-4">관리개수(숫자)</td>
-        <td scope="col col-md-8"><input class="form-control text-center" type="number" min="1" max="100" name="count"  onmouseout="button_value_count(this.value);" required=""></td>
+        <td>관리개수(숫자)</td>
+        <td><input class="form-control text-center" type="number" min="1" max="100" name="count" required=""></td>
       </tr>
       <tr>
-        <td scope="col col-md-4">시작번호(숫자)</td>
-        <td scope="col col-md-8">
+        <td>시작번호</td>
+        <td>
           <div class="form-row">
-            <div class="form-group col-md-6">
-              <input class="form-control text-center" type="number" name="room_start_number" onmouseout="button_value_startNumber(this.value);">
+            <div class="form-group col-md-4">
+              <input class="form-control text-center" type="text" name="ahead" placeholder="문자입력">
             </div>
-            <div class="form-group col-md-3">
-              <button class="btn btn-outline-success btn-block" type="button" onclick="button_room_make();">생성</button>
+            <div class="form-group col-md-4">
+              <input class="form-control text-center" type="number" name="sNumber" placeholder="숫자입력">
             </div>
-            <div class="form-group col-md-3">
-              <button class="btn btn-outline-success btn-block" type="button" onclick="button_room_cansel();">취소</button>
+            <div class="form-group col-md-4">
+              <input class="form-control text-center" type="text" name="tail" value="호">
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group col-md-4">
+              <button class="btn btn-outline-success btn-block" type="button" name="btnroomMake">생성</button>
+            </div>
+            <div class="form-group col-md-4">
+              <button class="btn btn-outline-success btn-block" type="button" name="btnCansel">취소</button>
             </div>
           </div>
           </td>
@@ -69,36 +77,43 @@ $row = mysqli_fetch_array($result);
 
 
 <?php include $_SERVER['DOCUMENT_ROOT']."/svc/view/service_footer.php";?>
-<?php include $_SERVER['DOCUMENT_ROOT']."/svc/view/service_footer_script.php"; ?>
+
+<script src="/svc/inc/js/jquery-3.3.1.min.js"></script>
+<script src="/svc/inc/js/popper.min.js"></script>
+<script src="/svc/inc/js/bootstrap.min.js"></script>
+<script src="/svc/inc/js/jquery.number.min.js"></script>
 
 <script>
-var count;
-var startNumber;
-var rooms = [];
-function button_value_count(c){ //방갯수 가져오는 함수
-  count = c;
-  return count;
-}
-function button_value_startNumber(s){ //방시작번호 가져오는 함수
-  startNumber = s;
-  return startNumber;
-}
 
-function button_room_make(){ //방들을 만드는 함수, 생성하기버튼 누르면 실행되는거
-  var iCount = Number(count);
-  console.log(iCount, typeof(iCount));
-  if((iCount === 0) || (iCount > 100)){
+var rooms = [];
+
+$('input[name=gName]').on('click', function(){
+  $(this).select();
+})
+
+$('input[name=count]').on('click', function(){
+  $(this).select();
+})
+
+$('button[name=btnroomMake]').on('click', function(){
+  var count = Number($('input[name=count]').val());
+  var ahead = $('input[name=ahead]').val();
+  var startNumber = Number($('input[name=sNumber]').val());
+  var tail = $('input[name=tail]').val();
+
+  if((count === 0) || (count > 100)){
     alert('관리개수 항목에 1~100 사이 숫자를 입력해야 합니다!')
     return false;
   }
   if(!startNumber){
-    for (var i=0; i < iCount; i++){
-      rooms.push("");
+    for (var i=0; i < count; i++){
+      var eachname = ahead + "" + tail;
+      rooms.push(eachname);
     }
   } else {
-    var iStartNumber = Number(startNumber);
-    for(var i = iStartNumber; i < (iStartNumber+iCount); i++){
-      rooms.push(i);
+    for(var i = startNumber; i < (startNumber+count); i++){
+      var eachname = ahead + i + tail;
+      rooms.push(eachname);
     }
   }
 
@@ -122,25 +137,30 @@ function button_room_make(){ //방들을 만드는 함수, 생성하기버튼 �
      table = table + "<td>"+ "<input type='text' name='rName" + i + "' class='form-control text-center' value ='" + rooms[i] + "' required></td>";
    }
   }
-  table = table + "</table><div class='mt-7'><button type='submit' class='btn btn-primary mr-1'>추가</button><a class='btn btn-secondary' href='building.php' role='button'>취소/돌아가기</a></div>";
+  table = table + "</table><div class='mt-7'><button type='submit' class='btn btn-primary mr-1'>저장</button><a class='btn btn-secondary' href='building.php' role='button'>취소/돌아가기</a></div>";
 
   $tweet.append(table);
 
   $('#below_rooms').html($tweet);
-}
+})
 
-function button_room_cansel(){
+$('button[name=btnCansel]').on('click', function(){
   rooms = [];
   $('#below_rooms').empty();
-}
+})
 
-function closePopup(){
-  // window.opener.location.reload();
-  // window.close();
-  var iCount = null;
-  var iStartNumber = null;
-  var rooms = null;
- }
+// function button_room_cansel(){
+//   rooms = [];
+//   $('#below_rooms').empty();
+// }
+//
+// function closePopup(){
+//   // window.opener.location.reload();
+//   // window.close();
+//   var iCount = null;
+//   var iStartNumber = null;
+//   var rooms = null;
+//  }
 
 </script>
 

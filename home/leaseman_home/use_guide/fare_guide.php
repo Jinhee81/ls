@@ -34,7 +34,8 @@
 					<br />더욱 쉽게 임대관리를 시작하세요!</b>
 				</div>
 				<h3 class="sub_tit fare_guide">언제나 합리적인 가격, 리스맨</h3>
-				<b class="sub_title">30일 무료 이용 가능합니다!</b>
+				<b class="sub_title">30일 무료 이용 가능합니다!(단, 계약건수 20건이하는 쭉~~ 무료이용 가능합니다^__^)</b>
+				<b class="sub_title">현재 베타서비스 오픈가 적용 중입니다. 상세 금액은 로그인 후 확인하세요!</b>
 				<div class="fare_guide">
 					<span>(단위:원,부가세 포함)</span>
 					<legend>리스맨 요금안내</legend>
@@ -45,7 +46,7 @@
 								<th>건수</th>
 								<th>1개월구매하기</th>
 								<th>1개월구독하기</th>
-								<th>이벤트가(~5/31)</th>
+								<th>12개월구매(월요금)</th>
 								<th>결제하기</th>
 							</tr>
 						</thead>
@@ -347,7 +348,7 @@ $(document).ready(function(){
 	<div id="pop_up">
 		<b>로그인 후 요금 결제가 가능합니다</b>
 		<div class="button_box">
-			<a href="http://www.leaseman.co.kr/membership/login.php"><button type="button" class="gray">로그인 바로가기</button></a>
+			<a href="../svc/login.php"><button type="button" class="gray">로그인 바로가기</button></a>
 			<button type="button" class="cancle_btn">취소</button>
 		</div>
 	</div>

@@ -90,6 +90,10 @@ $sql = "
     customer.add1,
     customer.add2,
     customer.add3,
+    customer.id as ccid,
+    realContract.startDate,
+    realContract.endDate2,
+    realContract.count2,
     idpaySchedule2,
     paySchedule2.monthCount,
     paySchedule2.pStartDate,
@@ -103,7 +107,8 @@ $sql = "
     paySchedule2.getAmount,
     paySchedule2.taxSelect,
     paySchedule2.taxDate,
-    paySchedule2.building_id
+    paySchedule2.building_id as bid,
+    paySchedule2.invoicerMgtKey as mun
 from
     (select @roomdiv:='room')a,
     paySchedule2
@@ -112,13 +117,13 @@ join realContract
 join customer
     on realContract.customer_id = customer.id
 join building
-    on paySchedule2.building_id = building.id
+    on realContract.building_id = building.id
 join group_in_building
     on realContract.group_in_building_id = group_in_building.id
 join r_g_in_building
     on realContract.r_g_in_building_id = r_g_in_building.id
 where paySchedule2.user_id={$_SESSION['id']} and
-      paySchedule2.building_id = {$_POST['building']} and
+      realContract.building_id = {$_POST['building']} and
       paySchedule2.executiveDate is not null
       $etcDate $taxCondi $payCondi $etcCondi1)
 union
@@ -148,6 +153,10 @@ union
     customer.add1,
     customer.add2,
     customer.add3,
+    customer.id as ccid,
+    etcContract.startTime,
+    etcContract.endTime,
+    etcContract.endTime,
     idpaySchedule2,
     paySchedule2.monthCount,
     paySchedule2.pStartDate,
@@ -161,7 +170,8 @@ union
     paySchedule2.getAmount,
     paySchedule2.taxSelect,
     paySchedule2.taxDate,
-    paySchedule2.building_id
+    paySchedule2.building_id as bid,
+    paySchedule2.invoicerMgtKey as mun
 from
     (select @gooddiv:='good')a,
     paySchedule2
@@ -170,14 +180,14 @@ join etcContract
 join customer
     on etcContract.customer_id = customer.id
 join building
-    on paySchedule2.building_id = building.id
+    on etcContract.building_id = building.id
 join good_in_building
     on etcContract.good_in_building_id = good_in_building.id
 where paySchedule2.user_id={$_SESSION['id']} and
-      paySchedule2.building_id = {$_POST['building']} and
+      etcContract.building_id = {$_POST['building']} and
       paySchedule2.executiveDate is not null
       $etcDate $taxCondi $payCondi $etcCondi2)
-order by roomdiv desc, executiveDate desc
+order by date_format(executiveDate, '%Y-%m-%d') desc
 ";
 
 

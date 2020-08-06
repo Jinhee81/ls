@@ -1,0 +1,53 @@
+@charset "utf-8";
+
+/*////////// 랜딩 로그인 페이지 //////////*/
+#header{position:relative;width:100%; background:#323237;z-index:11;}
+#header .header_inner{width:952px; margin-left:446px;}
+#header .header_inner h1{font-size:17px; color:#cacaca; line-height:42px; font-family:'Nanum Gothic'; padding-left:10px;}
+#header .header_inner h1 span{color:#1cd7ff;}
+#header .header_inner h1 img{vertical-align:middle;}
+
+#index_main{position:absolute;left:0;right:0;top:0;bottom:0;background:url('../img/index/index_bg.jpg') no-repeat center top; background-size:cover; }
+#index_main .login_form{width:466px; height:auto; position:absolute; background:#359698 url('../img/index/login_form_bg.png') repeat-x center top; box-sizing:border-box;z-index:11;
+	box-shadow:0 0 20px 5px rgba(0,0,0,0.6);border:1px solid #132b4c;
+	    left: 50%;
+    margin-left: -35px;
+    top: 50%;
+    margin-top: -222px;
+}
+#index_main:after{position:absolute;left:50%;top:50% ; margin-left: -417px; margin-top: -192px;width:518px;height:342px;background:url('../img/index/login_form_img.png') no-repeat;content:"";display:block;}
+.login_form .login_form_inner{padding:35px 30px ;position:relative;z-index:11;}
+
+.login_form .login_form_inner h2{font-size:26px; color:#fff; font-weight:bold; font-family:'Arial';  line-height:34px;}
+.login_form .login_form_inner > p{font-size:14px; color:#fff; font-family:'Nanum Gothic'; padding-left:50px; line-height:24px;}
+.login_form .login_form_inner > p span{color:#c1deff;}
+.login_form .login_form_inner .input_id{width:403px; height:37px; margin:0 auto; background:url('../img/index/ip_text_bg.png') no-repeat center top; box-sizing:border-box; padding-left:56px; margin-top:30px;}
+.login_form .login_form_inner .input_id input{background:none; border:none; outline:none; width:100%; height:37px; color:#fff;}
+.login_form .login_form_inner .input_id input::-webkit-input-placeholder{color:#828da4}
+.login_form .login_form_inner .input_id input::-moz-placeholder{color:#828da4}
+.login_form .login_form_inner .input_id input:-ms-input-placeholder{color:#828da4}
+.login_form .login_form_inner .input_id input:-moz-placeholder{color:#828da4}
+.login_form .login_form_inner .input_pw{width:403px; height:37px; margin:0 auto; background:url('../img/index/ip_pw_bg.png') no-repeat center top; box-sizing:border-box; padding-left:56px; margin-top:10px;}
+.login_form .login_form_inner .input_pw input{background:none; border:none; outline:none; width:100%; height:37px; color:#fff;}
+.login_form .login_form_inner .input_pw input::-webkit-input-placeholder{color:#828da4}
+.login_form .login_form_inner .input_pw input::-moz-placeholder{color:#828da4}
+.login_form .login_form_inner .input_pw input:-ms-input-placeholder{color:#828da4}
+.login_form .login_form_inner .input_pw input:-moz-placeholder{color:#828da4}
+
+.login_form .login_form_inner .text{    text-align: center;    margin-top: 37px;}
+.login_form .login_form_inner .text a{font-size:12px; color:#8cadda; font-family:'Arial'; display:block; line-height:37px; width:140px;}
+.login_form .login_form_inner .text img{}
+.login_form .btn_wrap{position:absolute; right: 30px;top: 58px;text-align:center;}
+.login_form .login_form_inner .copy{width:100%; height:42px; position:absolute;left:0;right:0;bottom:0; background-color:#0b6463; text-align:center; }
+.login_form .login_form_inner .copy p{font-size:11px;color:#cfedf0; font-family:'Nanum Gothic';line-height:42px;}
+ input:-webkit-autofill {
+    -webkit-box-shadow: 0 0 0 1000px white inset !important;
+}
+
+.login_cont{padding:12px 0;color:#cfedf0;margin-bottom:25px;}
+.login_cont .agree{font-size:12px;margin-bottom:10px;line-height:18px;}
+.login_cont .agree label{position:relative;display:inline-block;color:#c9dcf7;padding-right:20px;margin-right:15px;margin-left:8px;}
+.login_cont .agree label:after{position:absolute;right:0;top:50%;margin-top:-8px;height:16px;border-right:1px solid #8ea3bb;content:"";display:block;}
+.login_cont .agree a{display:inline-block;color:#8cadda;font-size:12px;}
+.login_cont p{font-size:12px;line-height:18px;padding-left:23px;}
+.login_cont p.mb5{margin-bottom:8px;}

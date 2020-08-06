@@ -2,7 +2,7 @@
 <html lang="en" dir="ltr">
   <head>
     <title>리스맨</title>
-    <link rel="icon" type="image/png" href="/admin/img/leaseman.ico">
+    <link rel="icon" type="image/png" href="/admin/inc/img/leaseman.ico">
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1,
       shrink-to-fit=no">
@@ -12,13 +12,13 @@
   	<meta content='유진희' property='og:title'>
   	<meta content='회원가입웹사이트입니다' property='og:description'>
   	<meta content='http://charm3007.cafe24.com/PracticeIntroduce/img/ci.png' property='og:image'>
-    <link rel="stylesheet" href="/admin/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/admin/inc/css/bootstrap.min.css">
     <link href="https://fonts.googleapis.com/css?family=Gothic+A1:700|Nanum+Gothic" rel="stylesheet">
 
-    <link rel="stylesheet" href="/admin/css/custom.css">
-    <script type="text/javascript" src="/admin/js/jquery-3.3.1.min.js"></script>
+    <link rel="stylesheet" href="/admin/inc/css/custom.css">
+    <script type="text/javascript" src="/admin/inc/js/jquery-3.3.1.min.js"></script>
   </head>
-  <body>
+  
     <!-- <nav class="navbar bg-dark">
       <a class="navbar-brand" href="/index.php">
         <img src="/img/leaseman_logo.png" width="20%">
@@ -35,5 +35,3 @@
         </li>
       </ul>
     </nav> -->
-  </body>
-</html>

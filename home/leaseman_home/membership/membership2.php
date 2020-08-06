@@ -83,7 +83,7 @@ echo G5_POSTCODE_JS;    //다음 주소 js
 									<tr>
 										<th>연락처</th>
 										<td>
-											<input type="text" name="cellphone" id="phone" required placeholder="'-' 제외, 숫자만 입력합니다" value=""><input type="hidden" name="phoneAuth" value="no"><button type="button" onclick="phone_check();" id="phoneBtn">인증하기</button><h1 id="check"></h1><div id="ViewTimer"></div>
+											<input type="number" name="cellphone" id="phone" required placeholder="'-' 제외, 숫자만 입력합니다" value=""><input type="hidden" name="phoneAuth" value="no"><button type="button" onclick="phone_check();" id="phoneBtn">인증하기</button><h1 id="check"></h1><div id="ViewTimer"></div>
                                         </td>
                                     </tr>
 									<tr>
@@ -116,7 +116,7 @@ echo G5_POSTCODE_JS;    //다음 주소 js
 							</table>
 							<div class="btn_box">
 							<b class="blue on_btn">
-								<a href="./signup_proccess2.php" class="submit_btn">회원가입</a>
+								<a href="./signup_proccess.php" class="submit_btn">회원가입</a>
 							</b>
 							<b class="on_btn">
 								<a href="../main/main.php">취소</a>

@@ -49,14 +49,14 @@ include $_SERVER['DOCUMENT_ROOT']."/svc/view/conn.php";
         </select>
       </div>
     </div>
-    <div class="form-row">
+    <!-- <div class="form-row">
       <div class="form-group col-md-2">
         <label>제목</label>
       </div>
       <div class="form-group col-md-10 text-center">
         <input type='text' name='title' class='form-control' required maxlength='30'>
       </div>
-    </div>
+    </div> -->
     <div class="form-row">
       <div class="form-group col-md-2">
         <label>내용</label>

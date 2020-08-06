@@ -1,0 +1,58 @@
+<table>
+  <tr id='loadCondition'>
+    <td class="mobile">
+      <select class="form-control form-control-sm selectCall" id="dateDiv">
+        <option value="startDate">시작일자</option>
+        <option value="endDate">종료일자</option>
+        <option value="contractDate">계약일자</option>
+        <option value="registerDate">등록일자</option>
+      </select><!--codi1-->
+    </td>
+    <td class="mobile">
+      <select class="form-control form-control-sm selectCall" id="periodDiv">
+        <option value="allDate">--</option>
+        <option value="nowMonth">당월</option>
+        <option value="pastMonth">전월</option>
+        <option value="1pastMonth">1개월</option>
+        <option value="3pastMonth">3개월</option>
+      </select><!--codi2-->
+    </td>
+    <td class="mobile">
+      <input type="text" name="fromDate" value="" class="form-control form-control-sm text-center dateType" id=""><!--codi3-->
+    </td><!--from date-->
+    <td class="mobile">~</td>
+    <td class="mobile">
+      <input type="text" name="toDate" value="" class="form-control form-control-sm text-center dateType" id=""><!--codi4-->
+    </td><!--to date-->
+    <td class="mobile">
+      <select class="form-control form-control-sm selectCall" id="progress">
+        <option value="pAll">전체</option>
+        <option value="pIng" selected>진행</option>
+        <option value="pEnd">종료</option>
+        <option value="pWaiting">대기</option>
+      </select><!--codi5-->
+    </td>
+    <td>
+      <select class="form-control form-control-sm selectCall" id="select1">
+      </select><!--codi6-->
+    </td>
+    <td>
+      <select class="form-control form-control-sm selectCall" id="select2" name="group">
+      </select><!--codi7-->
+    </td>
+    <td class="mobile">
+      <select class="form-control form-control-sm selectCall" id="etcCondi">
+        <option value="customer">세입자</option>
+        <option value="contact">연락처</option>
+        <option value="contractId">계약번호</option>
+        <option value="roomId">방번호</option>
+      </select><!--codi8-->
+    </td>
+    <td>
+      <input type="text" name="cText" value="" class="form-control form-control-sm text-center"><!--codi9-->
+    </td>
+    <td>
+      <button type="button" name="button" class="btn btn-info btn-sm">조회</button>
+    </td>
+  </tr>
+</table>

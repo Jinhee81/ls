@@ -1,0 +1,144 @@
+<!-- <?php if(count($allRows)===0){
+   echo "조회값이 없습니다.";
+ } else {?> -->
+  <!-- <table class="table table-hover text-center mt-2" id="checkboxTestTbl">
+    <thead>
+      <tr class="table-info">
+        <th scope="col" class="mobile"><input type="checkbox"></th>
+        <th scope="col">순번</th>
+        <th scope="col">상태</th>
+        <th scope="col">세입자</th>
+        <th scope="col">방번호</th>
+        <th scope="col">월세</th>
+        <th scope="col" class="mobile">입금일</th>
+        <th scope="col" class="mobile">입금액</th>
+        <th scope="col" class="mobile">출금일</th>
+        <th scope="col" class="mobile">출금액</th>
+        <th scope="col" class="mobile">잔액</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr> -->
+        <!-- <?php for ($i=0; $i < count($allRows); $i++) {?>
+          <td><input type="checkbox"></td>
+          <td></td>
+        <?php} ?> -->
+
+      <!-- </tr> -->
+<!-- <?php}
+?> -->
+
+<script>
+var table = $("#checkboxTestTbl");
+
+// 테이블 헤더에 있는 checkbox 클릭시
+$(":checkbox:first", table).change(function(){
+  if($(":checkbox:first", table).is(":checked")){
+    $(":checkbox", table).prop('checked',true);
+    $(":checkbox").parent().parent().addClass("selected");
+  } else {
+    $(":checkbox", table).prop('checked',false);
+    $(":checkbox").parent().parent().removeClass("selected");
+  }
+})
+
+// 헤더에 있는 체크박스외 다른 체크박스 클릭시
+$(":checkbox:not(:first)", table).change(function(){
+  var allCnt = $(":checkbox:not(:first)", table).length;
+  var checkedCnt = $(":checkbox:not(:first)", table).filter(":checked").length;
+
+  if($(this).prop("checked")==true){
+    $(this).parent().parent().addClass("selected");
+  } else {
+    $(this).parent().parent().removeClass("selected");
+  }
+
+  if( allCnt==checkedCnt ){
+    $(":checkbox:first", table).prop("checked", true);
+  }
+})
+
+var contractArray = [];
+
+$(":checkbox:first", table).click(function(){
+
+  var allCnt = $(":checkbox:not(:first)", table).length;
+  contractArray = [];
+
+  if($(":checkbox:first", table).is(":checked")){
+    for (var i = 1; i <= allCnt; i++) {
+      var contractArrayEle = [];
+      var colOrder = table.find("tr:eq("+i+")").find("td:eq(1)").text();
+      var colid = table.find("tr:eq("+i+")").find("td:eq(0)").children('input').val();
+      var colStep = table.find("tr:eq("+i+")").find("td:eq(8)").children('div').text();
+      var colFile = table.find("tr:eq("+i+")").find("td:eq(9)").children('a:eq(0)').text();
+      var colMemo = table.find("tr:eq("+i+")").find("td:eq(9)").children('a:eq(1)').text();
+      contractArrayEle.push(colOrder, colid, $.trim(colStep), colFile, colMemo);
+      contractArray.push(contractArrayEle);
+    }
+  } else {
+    contractArray = [];
+  }
+  // console.log(contractArray);
+})
+
+$(":checkbox:not(:first)",table).click(function(){
+var contractArrayEle = [];
+
+if($(this).is(":checked")){
+  var currow = $(this).closest('tr');
+  var colOrder = Number(currow.find('td:eq(1)').text());
+  var colid = currow.find('td:eq(0)').children('input').val();
+  var colStep = currow.find('td:eq(8)').children('div').text();
+  var colFile = currow.find("td:eq(9)").children('a:eq(0)').text();
+  var colMemo = currow.find("td:eq(9)").children('a:eq(1)').text();
+  contractArrayEle.push(colOrder, colid, $.trim(colStep), colFile, colMemo);
+  contractArray.push(contractArrayEle);
+} else {
+  var currow = $(this).closest('tr');
+  var colOrder = Number(currow.find('td:eq(1)').text());
+  var colid = currow.find('td:eq(0)').children('input').val();
+  var colStep = currow.find('td:eq(8)').children('div').text();
+  var colFile = currow.find("td:eq(9)").children('a:eq(0)').text();
+  var colMemo = currow.find("td:eq(9)").children('a:eq(1)').text();
+  var dropReady = contractArrayEle.push(colOrder, colid, $.trim(colStep), colFile, colMemo);
+  var index = contractArray.indexOf(dropReady);
+  contractArray.splice(index, 1);
+}
+// console.log(contractArray);
+// console.log(typeof(contractArray[3]));
+})
+
+$('button[name="rowDeleteBtn"]').on('click', function(){
+// console.log(contractArray);
+for (var i = 0; i < contractArray.length; i++) {
+  if(contractArray[i][2] === '청구' || contractArray[i][2] === '입금'){
+    alert('단계가 clear 이어야만 삭제 가능합니다.');
+    return false;
+  }
+  if(!(contractArray[i][3]==="")){
+    alert('메모 또는 파일이 존재하면 삭제 불가합니다.');
+    return false;
+  }
+  if(!(contractArray[i][4]==="")){
+    alert('메모 또는 파일이 존재하면 삭제 불가합니다.');
+    return false;
+  }
+}
+
+var aa = 'realContractDelete';
+var bb = 'p_realContract_delete_for.php';
+var cc = JSON.stringify(contractArray);
+
+goCategoryPage(aa, bb, cc);
+
+function goCategoryPage(a, b, c){
+  var frm = formCreate(a, 'post', b,'');
+  frm = formInput(frm, 'contractArray', c);
+  formSubmit(frm);
+}
+
+}) //rowDeleteBtn function closing
+
+$(".numberComma").number(true);
+</script>

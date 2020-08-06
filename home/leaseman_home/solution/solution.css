@@ -1,0 +1,34 @@
+.section_box{padding:60px 0 80px 0;/*border-top:1px solid #dfdfdf;*/}
+.section_box:first-child{border-top:0;}
+.section_box h3{font-size:20px;color:#222;margin-bottom:40px;text-align:center;}
+
+.func_list{width:1065px;text-align:center;margin-left:-30px;}
+.func_list:after{content:"";display:block;clear:both;}
+.func_list li{position:relative;display:inline-block;width:291px;margin-bottom:50px;text-align:left;padding:0 30px;vertical-align:top;}
+.func_list li .fl_txt{font-size:14px;color:#666;margin-bottom:20px;}
+.func_list li img{width:100%;}
+.func_list li h4{position:relative;font-size:20px;color:#2183cf;font-weight:bold;padding-top:11px;margin-bottom:20px;white-space:nowrap;}
+.func_list li h4:after{position:absolute;left:0;top:0;width:20px;border-top:2px solid #2183cf;content:"";display:block;}
+.func_list li.two{width:646px;}
+
+.func_img01{margin:40px 0;text-align:center;}
+
+
+/* tablet */
+@media screen and (max-width: 1000px){
+	.func_list{width:102%;margin-left:-1%;}
+	.func_list li{float:left;width:48%;margin:10px 1%;padding:0;}
+	.func_list li.two{width:98%;}
+
+}
+
+/* moblie */
+@media screen and (max-width: 768px){
+	.section_box h3{margin-bottom:20px;}
+	.func_list{width:102%;margin-left:-1%;}
+	.func_list li{float:left;width:48%;margin:10px 1%;padding:0;}
+	.func_list li h4{font-size:12px;padding-top:8px;margin-bottom:10px;}
+	.func_list li.two{width:98%;}
+	.func_list li .fl_txt{font-size:11px;margin-bottom:10px;line-height:1.2;}
+	.func_list li.two + li .fl_txt{display:none;}
+}

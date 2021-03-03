@@ -1,4 +1,4 @@
-var table = $("#checkboxTestTbl");
+var table = $("table[name=outsideTable]");
 
 // 테이블 헤더에 있는 checkbox 클릭시
 $("#allselect").change(function(){
@@ -22,16 +22,26 @@ $(document).on('change', '.tbodycheckbox', function(){
   if($(this).is(":checked")){
     $(this).prop('checked',true);
     $(this).parent().parent().addClass("selected");
+    checkedCnt = $(".tbodycheckbox").filter(":checked").length;
+
+    if(allCnt==checkedCnt ){
+      $("#allselect").prop("checked", true);
+    } else {
+      $("#allselect").prop("checked", false);
+    }
   } else {
     $(this).prop('checked',false);
     $(this).parent().parent().removeClass("selected");
+    checkedCnt = $(".tbodycheckbox").filter(":checked").length;
+
+    if(allCnt==checkedCnt ){
+      $("#allselect").prop("checked", true);
+    } else {
+      $("#allselect").prop("checked", false);
+    }
   }
 
-  // if( allCnt==checkedCnt ){
-  //   $("#allselect").prop("checked", true);
-  // } else {
-  //   $("#allselect").prop("checked", false);
-  // }
+
   //이거를 주석처리함. 왜냐면 이걸 해놓은니 자꾸 맨위 체크박스가 체크되었어서 다음조회시 불편해서 없앰 20.5.11월
 });
 

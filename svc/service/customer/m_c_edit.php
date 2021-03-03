@@ -27,7 +27,7 @@ $sql = "select
           div1, qDate, div2, name, contact1, contact2, contact3,
           gender, customer.email, div3, div4, div5, companyname,
           cNumber1, cNumber2, cNumber3,
-          zipcode, add1, add2, add3, etc, created, updated, building_id, birthday
+          zipcode, add1, add2, add3, trim(etc), created, updated, building_id, birthday
       from customer
       where id = {$filtered_id}";
 
@@ -39,11 +39,13 @@ $row = mysqli_fetch_array($result);
 $clist['num'] = htmlspecialchars($row['num']);
 $clist['div1'] = htmlspecialchars($row['div1']);
 $clist['div2'] = htmlspecialchars($row['div2']);
+$clist['div4'] = htmlspecialchars($row['div4']);
+$clist['div5'] = htmlspecialchars($row['div5']);
 $clist['contact1'] = htmlspecialchars($row['contact1']);
 $clist['contact2'] = htmlspecialchars($row['contact2']);
 $clist['contact3'] = htmlspecialchars($row['contact3']);
 $clist['email'] = htmlspecialchars($row['email']);
-$clist['etc'] = htmlspecialchars($row['etc']);
+$clist['etc'] = htmlspecialchars($row['trim(etc)']);
 $clist['name'] = htmlspecialchars($row['name']);
 $clist['companyname'] = htmlspecialchars($row['companyname']);
 $clist['cNumber1'] = htmlspecialchars($row['cNumber1']);
@@ -192,11 +194,11 @@ if($clist['div1']==='입주자'){
           <p class="mb-1">업태</p>
           <input type='text' name='div4' class='form-control form-control-sm' maxlength='9' value="<?=$clist['div4']?>">
         </div>
-        <div class="form-group col-md-3">
+        <div class="form-group col-md-4">
           <p class="mb-1">종목</p>
-          <input type='text' name='div5' class='form-control form-control-sm' maxlength='9' value="<?=$clist['div5']?>">
+          <input type='text' name='div5' class='form-control form-control-sm' maxlength='15' value="<?=$clist['div5']?>">
         </div>
-        <div class="form-group col-md-6">
+        <div class="form-group col-md-5">
           <p class="mb-1">이메일</p>
           <input type='email' name='email' class='form-control form-control-sm' maxlength='40' value="<?=$clist['email']?>">
         </div>
@@ -236,14 +238,11 @@ if($clist['div1']==='입주자'){
       <div class='form-group'>
         <div class='form-row'>
           <div class="form-group col-md-9">
-            <p class="mb-1">특이사항</p>
-            <textarea name="etc" rows="2" cols="80" class="form-control form-control-sm">
-              <?=$clist['etc']?>
-            </textarea>
+            <p class="mb-1">특이사항</p><textarea name="etc" rows="2" cols="80" class="form-control form-control-sm"><?=$clist['etc']?></textarea>
           </div>
           <div class="form-group col-md-3">
             <p class="mb-1">생년월일</p>
-            <input type='text' name='birthday' class='form-control form-control-sm dateType' value="<?=$clist['birthday']?>">
+            <input type='text' name='birthday' class='form-control form-control-sm dateType yyyymmdd' value="<?=$clist['birthday']?>">
           </div>
         </div>
       </div>
@@ -314,6 +313,31 @@ var buildingArray = <?php echo json_encode($buildingArray); ?>;
 var customerId = <?=$filtered_id?>;
 
 $(document).ready(function(){
+  $('.dateType').datepicker({
+    changeMonth: true,
+    changeYear: true,
+    showButtonPanel: true,
+    currentText: '오늘',
+    closeText: '닫기'
+  })
+
+  $('.yyyymmdd').keydown(function (event) {
+   var key = event.charCode || event.keyCode || 0;
+   $text = $(this);
+   if (key !== 8 && key !== 9) {
+       if ($text.val().length === 4) {
+           $text.val($text.val() + '-');
+       }
+       if ($text.val().length === 7) {
+           $text.val($text.val() + '-');
+       }
+   }
+
+   return (key == 8 || key == 9 || key == 46 || (key >= 48 && key <= 57) || (key >= 96 && key <= 105));
+  // Key 8번 백스페이스, Key 9번 탭, Key 46번 Delete 부터 0 ~ 9까지, Key 96 ~ 105까지 넘버패트
+  // 한마디로 JQuery 0 ~~~ 9 숫자 백스페이스, 탭, Delete 키 넘버패드외에는 입력못함
+  })
+
   $(function () {
       $('[data-toggle="tooltip"]').tooltip();
   })

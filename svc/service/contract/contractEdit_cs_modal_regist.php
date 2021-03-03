@@ -31,7 +31,7 @@
                 <p class="text-left">예정일</p>
               </div>
               <div class="form-group col-md-8 mb-0">
-                <input type="text" class="form-control form-control-sm" id="expectedDate" disabled>
+                <input type="text" class="form-control form-control-sm" id="expectedDate">
               </div>
           </div>
           <div class="form-row">

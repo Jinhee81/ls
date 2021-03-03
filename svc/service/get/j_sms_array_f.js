@@ -37,7 +37,7 @@ $("#allselect").click(function(){
   } else {
     smsReadyArray = [];
   }
-  console.log(smsReadyArray);
+//   console.log(smsReadyArray);
 })
 
 $(document).on('click', '.tbodycheckbox', function(){
@@ -86,6 +86,6 @@ var smsReadyArrayEle = [];
       // console.log(smsReadyArray);
     }
 
-console.log(smsReadyArray);
+// console.log(smsReadyArray);
 
 })

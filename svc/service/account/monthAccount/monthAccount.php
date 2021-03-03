@@ -1,5 +1,7 @@
 <?php
 session_start();
+// ini_set('display_errors', 1);
+// ini_set('error_reporting', E_ALL);
 if(!isset($_SESSION['is_login'])){
   header('Location: /svc/login.php');
 }
@@ -16,10 +18,20 @@ include $_SERVER['DOCUMENT_ROOT']."/svc/main/condition.php";
 include $_SERVER['DOCUMENT_ROOT']."/svc/service/contract/building.php";
 include $_SERVER['DOCUMENT_ROOT']."/svc/service/account/flexCost/yearMonth.php";
 ?>
+<!-- <style>
+        #modalTable tr.selected{background-color: #A9D0F5;}
+        #checkboxTestTbl tr.selected{background-color: #A9D0F5;}
+        select .selectCall{background-color: #A9D0F5;}
 
+        @media (max-width: 990px) {
+        .mobile {
+          display: none;
+        }
+}
+</style> -->
 <section class="container">
   <div class="jumbotron pt-3 pb-3">
-    <h2 class="">월별회계조회 화면입니다!</h2>
+    <h2 class="">월별회계조회 화면입니다!</h1>
     <p class="lead">
       <!-- (1) 상태(진행 - 현재 계약 진행 중), (대기 - 곧 계약시작임), (종료 - 종료된 계약)로 구분합니다.<br>
       (2) 월이용료를 클릭하면 해당 계약의 상세페이지가 나옵니다.<br>
@@ -73,8 +85,6 @@ include $_SERVER['DOCUMENT_ROOT']."/svc/service/account/flexCost/yearMonth.php";
       </form>
   </div>
 </section><!--조회조건 섹션 end-->
-
-
 <section class="container">
   <div class="row">
     <div class="col">
@@ -88,8 +98,13 @@ include $_SERVER['DOCUMENT_ROOT']."/svc/service/account/flexCost/yearMonth.php";
             <td width="30%">세액</td>
           </tr>
         </thead>
-        <tbody id="leftTotal">
-
+        <tbody>
+          <tr class="table-warning">
+            <td id="leftTotal1"></td>
+            <td id="leftTotal2"></td>
+            <td id="leftTotal3"></td>
+            <td id="leftTotal4"></td>
+          </tr>
         </tbody>
       </table>
       <h5 class="text-center">임대계약</h5>
@@ -125,8 +140,6 @@ include $_SERVER['DOCUMENT_ROOT']."/svc/service/account/flexCost/yearMonth.php";
         </tbody>
       </table>
     </div>
-
-
     <div class="col">
       <!-- <h3 style="background-color:#;" class="pt-2 pb-2 pl-1"># 매입액</h3> -->
       <h3 class="text-center" id="href_cost" style="color:#819FF7;"># <u>매입액 전체</u></h3>
@@ -139,8 +152,13 @@ include $_SERVER['DOCUMENT_ROOT']."/svc/service/account/flexCost/yearMonth.php";
             <td width="30%">세액</td>
           </tr>
         </thead>
-        <tbody id="rightTotal">
-
+        <tbody>
+          <tr class="table-warning">
+            <td id="rightTotal1"></td>
+            <td id="rightTotal2"></td>
+            <td id="rightTotal3"></td>
+            <td id="rightTotal4"></td>
+          </tr>
         </tbody>
       </table>
       <h5 class="text-center">고정비</h5>
@@ -171,29 +189,20 @@ include $_SERVER['DOCUMENT_ROOT']."/svc/service/account/flexCost/yearMonth.php";
 
         </tbody>
       </table>
-    </div>
-  </div>
-  <div class="row">
-    <div class="col">
-
-    </div>
-    <div class="col">
-      <h3 class="text-center" id="calcurate" style="color:#819FF7;"># <u>매출액 대비 매입액 산출</u></h3>
+      <h3 class="text-center mt-5" id="calcurate" style="color:#2E64FE;"># <u>매출액 대비 매입액 산출</u></h3>
       <table class="table table-bordered table-sm text-center">
         <thead>
-          <tr class="table-warning">
-            <td width="10%">건수</td>
+          <tr class="table-info">
             <td width="30%">금액</td>
             <td width="30%">공급가액</td>
             <td width="30%">세액</td>
           </tr>
         </thead>
         <tbody id="bottomArea">
-          <tr class="table-warning">
+          <tr class="table-info">
             <td id="bottomArea1"></td>
             <td id="bottomArea2"></td>
             <td id="bottomArea3"></td>
-            <td id="bottomArea4"></td>
           </tr>
         </tbody>
       </table>
@@ -224,304 +233,201 @@ include $_SERVER['DOCUMENT_ROOT']."/svc/service/account/flexCost/yearMonth.php";
 <script src="/svc/inc/js/etc/form.js?<?=date('YmdHis')?>"></script>
 
 <script>
+// var select1option;
 
-
-var buildingIdx = $('select[name=building]').val();
-var building = $('select[name=building] :selected').text();
-var year = $('select[name=year]').val();
-var month = $('select[name=month]').val();
+// for(var key in buildingArray){ //건물목록출력(비즈피스장암,비즈피스구로)
+//   select1option = "<option value='"+key+"'>"+buildingArray[key][0]+"</option>";
+//   $('select[name=building]').append(select1option);//문서위건물목록
+// }
+//---- ^ 건물출력 ^------//
 //---- ^ buildingIdx 전역변수 선언 ^------//
+
+function leftTotalFn(){
+  var buildingIdx = $('select[name=building]').val();
+  var building = $('select[name=building] :selected').text();
+  var year = $('select[name=year]').val();
+  var month = $('select[name=month]').val();
+
+  var leftTotal = $.ajax({
+    url: 'ajax_12.php',
+    method: 'post',
+    data: {buildingIdx:buildingIdx, year:year, month:month},
+    success: function(data){
+      data = JSON.parse(data);
+      // console.log(data);
+      $('#leftTotal1').text(data[0]);
+      $('#leftTotal2').text(data[1]);
+      $('#leftTotal3').text(data[2]);
+      $('#leftTotal4').text(data[3]);
+    }
+  })
+  return leftTotal;
+}
+
+function realContractFn(){
+  var buildingIdx = $('select[name=building]').val();
+  var building = $('select[name=building] :selected').text();
+  var year = $('select[name=year]').val();
+  var month = $('select[name=month]').val();
+
+  var realContract = $.ajax({
+    url: 'ajax_1.php',
+    method: 'post',
+    data: {buildingIdx:buildingIdx, year:year, month:month},
+    success: function(data){
+      $('#tbody1').html(data);
+    }
+  })
+  return realContract;
+}
+//
+function etcContractFn(){
+  var buildingIdx = $('select[name=building]').val();
+  var building = $('select[name=building] :selected').text();
+  var year = $('select[name=year]').val();
+  var month = $('select[name=month]').val();
+
+  var etcContract = $.ajax({
+    url: 'ajax_2.php',
+    method: 'post',
+    data: {buildingIdx:buildingIdx, year:year, month:month},
+    success: function(data){
+      $('#tbody2').html(data);
+    }
+  })
+  return etcContract;
+}
+
+function rightTotalFn(){
+  var buildingIdx = $('select[name=building]').val();
+  var building = $('select[name=building] :selected').text();
+  var year = $('select[name=year]').val();
+  var month = $('select[name=month]').val();
+
+  var rightTotal = $.ajax({
+    url: 'ajax_34.php',
+    method: 'post',
+    data: {buildingIdx:buildingIdx, year:year, month:month},
+    success: function(data){
+      data = JSON.parse(data);
+      // console.log(data);
+      $('#rightTotal1').text(data[0]);
+      $('#rightTotal2').text(data[1]);
+      $('#rightTotal3').text(data[2]);
+      $('#rightTotal4').text(data[3]);
+    }
+  })
+  return rightTotal;
+}
+
+function fixCostFn(){
+  var buildingIdx = $('select[name=building]').val();
+  var building = $('select[name=building] :selected').text();
+  var year = $('select[name=year]').val();
+  var month = $('select[name=month]').val();
+
+  var fixCost = $.ajax({
+    url: 'ajax_3.php',
+    method: 'post',
+    data: {buildingIdx:buildingIdx, year:year, month:month},
+    success: function(data){
+      $('#tbody3').html(data);
+    }
+  })
+  return fixCost;
+}
+
+function flexCostFn(){
+  var buildingIdx = $('select[name=building]').val();
+  var building = $('select[name=building] :selected').text();
+  var year = $('select[name=year]').val();
+  var month = $('select[name=month]').val();
+
+  var flexCost = $.ajax({
+    url: 'ajax_4.php',
+    method: 'post',
+    data: {buildingIdx:buildingIdx, year:year, month:month},
+    success: function(data){
+      $('#tbody4').html(data);
+    }
+  })
+  return flexCost;
+}
+
+function diffFn(){
+  var buildingIdx = $('select[name=building]').val();
+  var building = $('select[name=building] :selected').text();
+  var year = $('select[name=year]').val();
+  var month = $('select[name=month]').val();
+
+  var diff = $.ajax({
+    url: 'ajax_5.php',
+    method: 'post',
+    data: {buildingIdx:buildingIdx, year:year, month:month},
+    success: function(data){
+      data = JSON.parse(data);
+      $('#bottomArea1').text(data[0]);
+      $('#bottomArea2').text(data[0]);
+      $('#bottomArea3').text(data[0]);
+    }
+  })
+  return diff;
+}
 
 
 $(document).ready(function(){
-      $.ajax({
-        url: 'ajax_12.php',
-        method: 'post',
-        data: {buildingIdx:buildingIdx, year:year, month:month},
-        success: function(data){
-          $('#leftTotal').html(data);
-        }
-      })
-
-      $.ajax({
-        url: 'ajax_1.php',
-        method: 'post',
-        data: {buildingIdx:buildingIdx, year:year, month:month},
-        success: function(data){
-          $('#tbody1').html(data);
-        }
-      })
-
-      $.ajax({
-        url: 'ajax_2.php',
-        method: 'post',
-        data: {buildingIdx:buildingIdx, year:year, month:month},
-        success: function(data){
-          $('#tbody2').html(data);
-        }
-      })
-
-      $.ajax({
-        url: 'ajax_34.php',
-        method: 'post',
-        data: {buildingIdx:buildingIdx, year:year, month:month},
-        success: function(data){
-          $('#rightTotal').html(data);
-        }
-      })
-
-      $.ajax({
-        url: 'ajax_3.php',
-        method: 'post',
-        data: {buildingIdx:buildingIdx, year:year, month:month},
-        success: function(data){
-          $('#tbody3').html(data);
-        }
-      })
-
-      $.ajax({
-        url: 'ajax_4.php',
-        method: 'post',
-        data: {buildingIdx:buildingIdx, year:year, month:month},
-        success: function(data){
-          $('#tbody4').html(data);
-        }
-      })
+  leftTotalFn();
+  realContractFn();
+  etcContractFn();
+  rightTotalFn();
+  fixCostFn();
+  flexCostFn();
+  diffFn();
 })//------------ ^ document.ready ^------//
 
 $('select[name=building]').on('change', function(){
-      var buildingIdx = $('select[name=building]').val();
-      var building = $('select[name=building] :selected').text();
-      var year = $('select[name=year]').val();
-      var month = $('select[name=month]').val();
-
-      $.ajax({
-        url: 'ajax_12.php',
-        method: 'post',
-        data: {buildingIdx:buildingIdx, year:year, month:month},
-        success: function(data){
-          $('#leftTotal').html(data);
-        }
-      })
-
-      $.ajax({
-        url: 'ajax_1.php',
-        method: 'post',
-        data: {buildingIdx:buildingIdx, year:year, month:month},
-        success: function(data){
-          $('#tbody1').html(data);
-        }
-      })
-
-      $.ajax({
-        url: 'ajax_2.php',
-        method: 'post',
-        data: {buildingIdx:buildingIdx, year:year, month:month},
-        success: function(data){
-          $('#tbody2').html(data);
-        }
-      })
-
-      $.ajax({
-        url: 'ajax_34.php',
-        method: 'post',
-        data: {buildingIdx:buildingIdx, year:year, month:month},
-        success: function(data){
-          $('#rightTotal').html(data);
-        }
-      })
-
-      $.ajax({
-        url: 'ajax_3.php',
-        method: 'post',
-        data: {buildingIdx:buildingIdx, year:year, month:month},
-        success: function(data){
-          $('#tbody3').html(data);
-        }
-      })
-
-      $.ajax({
-        url: 'ajax_4.php',
-        method: 'post',
-        data: {buildingIdx:buildingIdx, year:year, month:month},
-        success: function(data){
-          $('#tbody4').html(data);
-        }
-      })
+  leftTotalFn();
+  realContractFn();
+  etcContractFn();
+  rightTotalFn();
+  fixCostFn();
+  flexCostFn();
+  diffFn();
 })//------------ ^ building change function ^------//
 
 
 $('select[name=year]').on('change', function(){
-      var buildingIdx = $('select[name=building]').val();
-      var building = $('select[name=building] :selected').text();
-      var year = $('select[name=year]').val();
-      var month = $('select[name=month]').val();
-
-      $.ajax({
-        url: 'ajax_12.php',
-        method: 'post',
-        data: {buildingIdx:buildingIdx, year:year, month:month},
-        success: function(data){
-          $('#leftTotal').html(data);
-        }
-      })
-
-      $.ajax({
-        url: 'ajax_1.php',
-        method: 'post',
-        data: {buildingIdx:buildingIdx, year:year, month:month},
-        success: function(data){
-          $('#tbody1').html(data);
-        }
-      })
-
-      $.ajax({
-        url: 'ajax_2.php',
-        method: 'post',
-        data: {buildingIdx:buildingIdx, year:year, month:month},
-        success: function(data){
-          $('#tbody2').html(data);
-        }
-      })
-
-      $.ajax({
-        url: 'ajax_34.php',
-        method: 'post',
-        data: {buildingIdx:buildingIdx, year:year, month:month},
-        success: function(data){
-          $('#rightTotal').html(data);
-        }
-      })
-
-      $.ajax({
-        url: 'ajax_3.php',
-        method: 'post',
-        data: {buildingIdx:buildingIdx, year:year, month:month},
-        success: function(data){
-          $('#tbody3').html(data);
-        }
-      })
-
-      $.ajax({
-        url: 'ajax_4.php',
-        method: 'post',
-        data: {buildingIdx:buildingIdx, year:year, month:month},
-        success: function(data){
-          $('#tbody4').html(data);
-        }
-      })
+  leftTotalFn();
+  realContractFn();
+  etcContractFn();
+  rightTotalFn();
+  fixCostFn();
+  flexCostFn();
+  diffFn();
 })//------------ ^ year change function ^------//
 
 $('select[name=month]').on('change', function(){
-      var buildingIdx = $('select[name=building]').val();
-      var building = $('select[name=building] :selected').text();
-      var year = $('select[name=year]').val();
-      var month = $('select[name=month]').val();
-
-      $.ajax({
-        url: 'ajax_12.php',
-        method: 'post',
-        data: {buildingIdx:buildingIdx, year:year, month:month},
-        success: function(data){
-          $('#leftTotal').html(data);
-        }
-      })
-
-      $.ajax({
-        url: 'ajax_1.php',
-        method: 'post',
-        data: {buildingIdx:buildingIdx, year:year, month:month},
-        success: function(data){
-          $('#tbody1').html(data);
-        }
-      })
-
-      $.ajax({
-        url: 'ajax_2.php',
-        method: 'post',
-        data: {buildingIdx:buildingIdx, year:year, month:month},
-        success: function(data){
-          $('#tbody2').html(data);
-        }
-      })
-
-      $.ajax({
-        url: 'ajax_34.php',
-        method: 'post',
-        data: {buildingIdx:buildingIdx, year:year, month:month},
-        success: function(data){
-          $('#rightTotal').html(data);
-        }
-      })
-
-      $.ajax({
-        url: 'ajax_3.php',
-        method: 'post',
-        data: {buildingIdx:buildingIdx, year:year, month:month},
-        success: function(data){
-          $('#tbody3').html(data);
-        }
-      })
-
-      $.ajax({
-        url: 'ajax_4.php',
-        method: 'post',
-        data: {buildingIdx:buildingIdx, year:year, month:month},
-        success: function(data){
-          $('#tbody4').html(data);
-        }
-      })
+  leftTotalFn();
+  realContractFn();
+  etcContractFn();
+  rightTotalFn();
+  fixCostFn();
+  flexCostFn();
+  diffFn();
 })//------------ ^ year change function ^------//
 
 
 
-$('#href_cost').on('click', function(){
-  var newWindow = window.open("about:blank");
-  newWindow.location.href='/service/account/flexcost/flexcost1.php?buildingIdx='+buildingIdx+'&building='+building+'&year='+year+'&month='+month;
-})
 
 $('#href_sell').on('click', function(){
   var newWindow = window.open("about:blank");
-  newWindow.location.href='/service/get/getfinished.php';
+  newWindow.location.href='../../get/getfinished.php';
 })
 
-$('#calcurate').on('click', function(){
-  var leftArea1 = $('#leftArea1').text();
-  var leftArea2 = $('#leftArea2').text();
-  var leftArea3 = $('#leftArea3').text();
-  var leftArea4 = $('#leftArea4').text();
-
-  var rightArea1 = $('#rightArea1').text();
-  var rightArea2 = $('#rightArea2').text();
-  var rightArea3 = $('#rightArea3').text();
-  var rightArea4 = $('#rightArea4').text();
-
-  var bottomArea1 = Number(leftArea1) - Number(rightArea1);
-  var bottomArea2 = parseFloat(leftArea2.replace(/,/g,'')) - parseFloat(rightArea2.replace(/,/g,''));
-  var bottomArea3 = parseFloat(leftArea3.replace(/,/g,'')) - parseFloat(rightArea3.replace(/,/g,''));
-  var bottomArea4 = parseFloat(leftArea4.replace(/,/g,'')) - parseFloat(rightArea4.replace(/,/g,''));
-
-  Number.prototype.format = function(){
-    if(this==0) return 0;
-
-  	var reg = /(^[+-]?\d+)(\d{3})/;
-  	var n = (this + '');
-
-  	while (reg.test(n)) n = n.replace(reg, '$1' + ',' + '$2');
-
-  	return n;
-  };
-
-  $('#bottomArea1').text(bottomArea1);
-  $('#bottomArea2').text(bottomArea2.format());
-  $('#bottomArea3').text(bottomArea3.format());
-  $('#bottomArea4').text(bottomArea4.format());
-
-
+$('#href_cost').on('click', function(){
+  var newWindow = window.open("about:blank");
+  newWindow.location.href='../flexCost/flexCost.php';
 })
 
 
 </script>
-
-
-<?php include $_SERVER['DOCUMENT_ROOT']."/svc/view/service_footer.php";?>

@@ -12,9 +12,9 @@ parse_str($_POST['form'], $a);
 // echo 111;
 
 if($a['dateDiv']==='registerDate'){
-  $dateDiv = 'created';
+  $dateDiv = 'customer.created';
 } elseif($a['dateDiv']==='updateDate'){
-  $dateDiv = 'updated';
+  $dateDiv = 'customer.updated';
 }
 
 $etcDate = "";
@@ -39,11 +39,11 @@ if($a['cText']){
   if($a['etcCondi']==='customer'){
     $etcCondi = " and (name like '%".$a['cText']."%' or companyname like '%".$a['cText']."%')";
   } elseif($a['etcCondi']==='contact'){
-    $etcCondi = " and (contact1 like '%".$a['cText']."%' or contact2 like '%".$a['cText']."%' or contact3 like '%".$a['cText']."%')";
+    $etcCondi = " and (customer.contact1 like '%".$a['cText']."%' or customer.contact2 like '%".$a['cText']."%' or customer.contact3 like '%".$a['cText']."%')";
   } elseif($a['etcCondi']==='email'){
     $etcCondi = " and (email like '%".$a['cText']."%')";
   } elseif($a['etcCondi']==='etc'){
-    $etcCondi = " and (etc like '%".$a['cText']."%')";
+    $etcCondi = " and (customer.etc like '%".$a['cText']."%')";
   }
 }
 
@@ -62,16 +62,44 @@ if($_POST['getPage']=='1'){
 
 $firstOrder = $row_count[0] + 1;
 
-
-$sql = "select
+$sql_before = "select
           @num := @num - 1 as num,
-          id, div1, div2, name, div3, companyname, cNumber1, cNumber2, cNumber3, contact1, contact2, contact3, email, etc, created, updated
+          customer.id,
+          customer.div1,
+          customer.div2,
+          customer.name,
+          customer.div3,
+          customer.div4,
+          customer.div5,
+          customer.companyname,
+          customer.cNumber1,
+          customer.cNumber2,
+          customer.cNumber3,
+          customer.contact1,
+          customer.contact2,
+          customer.contact3,
+          customer.email,
+          customer.zipcode,
+          customer.add1,
+          customer.add1,
+          customer.add2,
+          customer.add3,
+          customer.etc,
+          customer.birthday,
+          customer.created,
+          customer.updated,
+          building_id,
+          building.bName
         from
           (select @num := {$firstOrder})a,
           customer
-        where user_id={$_SESSION['id']} and building_id={$a['building']}
+        left join building
+          on customer.building_id = building.id
+        where customer.user_id={$_SESSION['id']} and
+              customer.building_id={$a['building']}
               $etcDate $div1 $etcCondi
-        order by created desc
-        LIMIT {$start}, {$_POST['pagerow']}";
+        order by created desc";
+
+$sql = $sql_before." LIMIT {$start}, {$_POST['pagerow']}";
 
 ?>

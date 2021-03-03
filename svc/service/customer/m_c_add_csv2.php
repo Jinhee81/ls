@@ -35,17 +35,16 @@ if(isset($_FILES['upfile']) && $_FILES['upfile']['name'] !== ""){
       <small>
         (1) <div class="badge badge-primary text-wrap" style="width: 3rem;">구분1</div> : '입주자','거래처','기타' 중 1개의 값만 넣으세요. 오타/띄어쓰기에 유의하여 주세요.(필수값)<br>
         (2) <div class="badge badge-primary text-wrap" style="width: 3rem;">구분2</div> : '개인','개인사업자','법인사업자' 중 1개의 값만 넣으세요. 오타/띄어쓰기에 유의하여 주세요.(필수값)<br>
-        (3) <div class="badge badge-primary text-wrap" style="width: 3rem;">성명</div> : 자유롭게 적어주는데 보통 사람이름을 적어주세요. 글자수는 20글자로 제한됩니다.<br>
+        (3) <div class="badge badge-primary text-wrap" style="width: 3rem;">성명</div> : 자유롭게 적어주는데 보통 사람이름을 적어주세요. <br>
         (4) <div class="badge badge-primary text-wrap" style="width: 3rem;">연락처</div> : '010-1234-1234' 형식으로 넣어주세요. 만약 유선번호일경우 반드시 지역번호 포함하여 '02-111-1234'로 '-'가 2개이며, 숫자만 입력되어야 합니다.<br>
         (5) <div class="badge badge-primary text-wrap" style="width: 3rem;">성별</div> : '남','여' 중 1개의 값만 넣으세요. 오타/띄어쓰기에 유의하여 주세요.<br>
-        (6) <div class="badge badge-primary text-wrap" style="width: 3rem;">이메일</div> : @를 포함한 이메일형식으로 넣어주세요. 글자수 40글자로 제한됩니다.<br>
+        (6) <div class="badge badge-primary text-wrap" style="width: 3rem;">이메일</div> : @를 포함한 이메일형식으로 넣어주세요. <br>
         (7) <div class="badge badge-primary text-wrap" style="width: 6rem;">법인사업자구분</div> : '주식회사','합자회사','유한회사' 중 1개의 값만 넣으세요. 오타/띄어쓰기에 유의하여 주세요.<br>
-        (8) <div class="badge badge-primary text-wrap" style="width: 4rem;">사업자명</div> : 사업자명을 적어주세요. 글자수는 14글자로 제한됩니다.<br>
+        (8) <div class="badge badge-primary text-wrap" style="width: 4rem;">사업자명</div> : 사업자명을 적어주세요.<br>
         (9) <div class="badge badge-primary text-wrap" style="width: 4rem;">사업자번호</div> : 사업자번호를 123-12-12345 형식으로 넣어주세요. 이 형식이 아닐경우 오류발생합니다.<br>
-        (10) <div class="badge badge-primary text-wrap" style="width: 3rem;">업태</div> : 사업자등록증에 기재된 업태를 자유롭게 적어주세요. 글자수는 9글자로 제한됩니다.<br>
-        (11) <div class="badge badge-primary text-wrap" style="width: 3rem;">종목</div> : 사업자등록증에 기재된 종목을 자유롭게 적어주세요. 글자수는 14글자로 제한됩니다.<br>
-
-        (12) <div class="badge badge-primary text-wrap" style="width: 4rem;">특이사항</div> : 자유롭게 적어주세요. 글자수는 47글자로 제한됩니다.
+        (10) <div class="badge badge-primary text-wrap" style="width: 3rem;">업태</div> : 사업자등록증에 기재된 업태를 자유롭게 적어주세요. <br>
+        (11) <div class="badge badge-primary text-wrap" style="width: 3rem;">종목</div> : 사업자등록증에 기재된 종목을 자유롭게 적어주세요. <br>
+        (12) <div class="badge badge-primary text-wrap" style="width: 4rem;">특이사항</div> : 자유롭게 적어주세요.
       </small>
     </div>
     <form method="post" action="p_cfile_upload_csv.php">
@@ -56,8 +55,8 @@ if(isset($_FILES['upfile']) && $_FILES['upfile']['name'] !== ""){
             <td width="5%"><span id='star' style='color:#F7BE81;'>* </span>순번</td>
             <td width="5%"><span id='star' style='color:#F7BE81;'>* </span>구분1</td>
             <td width="5%"><span id='star' style='color:#F7BE81;'>* </span>구분2</td>
-            <td width="6%"><span id='star' style='color:#F7BE81;'>* </span>성명</td>
-            <td width="10%"><span id='star' style='color:#F7BE81;'>* </span>연락처</td>
+            <td width="6%">성명</td>
+            <td width="10%">연락처</td>
             <td width="5%">성별</td>
             <td width="14%">이메일</td>
             <td width="8%">법인사업자<br>구분</td>
@@ -73,20 +72,43 @@ if(isset($_FILES['upfile']) && $_FILES['upfile']['name'] !== ""){
             while($data = fgetcsv($handle)){
               ?>
             <tr>
-              <td><?=$i?></td>
-              <td class="pl-1 pr-1 pt-1 pb-1"><input type="text" class="form-control form-control-sm pl-1 pr-1 pt-1 pb-1 text-center" name="building" value="<?=$data[0]?>" required></td><!--물건명-->
-              <td class="pl-1 pr-1 pt-1 pb-1"><input type="text" class="form-control form-control-sm pl-1 pr-1 pt-1 pb-1 text-center" name="group" value="<?=$data[1]?>" required></td><!--그룹명-->
-              <td class="pl-1 pr-1 pt-1 pb-1"><input type="text" class="form-control form-control-sm pl-1 pr-1 pt-1 pb-1 text-center" name="room" value="<?=$data[2]?>" required></td><!--관리번호-->
-              <td class="pl-1 pr-1 pt-1 pb-1"><input type="text" class="form-control form-control-sm pl-1 pr-1 pt-1 pb-1 text-center" name="name" value="<?=$data[3]?>" required></td><!--성명-->
-              <td class="pl-1 pr-1 pt-1 pb-1"><input type="text" class="form-control form-control-sm pl-1 pr-1 pt-1 pb-1 text-center dateType yyyymmdd" name="contractDate" value="<?=$data[4]?>" maxlength=10></td><!--계약일자-->
-              <td class="pl-1 pr-1 pt-1 pb-1"><input type="text" class="form-control form-control-sm pl-1 pr-1 pt-1 pb-1 text-right amountNumber numberComma" name="mamount" value="<?=$data[5]?>" numberOnly><input type="text" class="form-control form-control-sm pl-1 pr-1 pt-1 pb-1 text-right amountNumber numberComma" name="mvAmount" value="<?=$data[6]?>" numberOnly></td><!--공급가액,세액-->
-              <td class="pl-1 pr-1 pt-1 pb-1"><input type="text" class="form-control form-control-sm pl-1 pr-1 pt-1 pb-1 text-center" name="mvAmount" value="<?=$data[6]?>"></td><!--합계-->
-
-              <td class="pl-1 pr-1 pt-1 pb-1"><input type="number" class="form-control form-control-sm pl-1 pr-1 pt-1 pb-1 text-center" name="monthCount" value="<?=$data[7]?>"  min='1' max='72'></td><!--개월수-->
-              <td class="pl-1 pr-1 pt-1 pb-1"><input type="text" class="form-control form-control-sm pl-1 pr-1 pt-1 pb-1 text-center dateType yyyymmdd" name="startDate" value="<?=$data[8]?>" maxlength=10><input type="text" class="form-control form-control-sm pl-1 pr-1 pt-1 pb-1 text-center dateType yyyymmdd" name="endDate" value="" maxlength=10></td><!--시작일,종료일-->
-              <td class="pl-1 pr-1 pt-1 pb-1"><input type="text" class="form-control form-control-sm pl-1 pr-1 pt-1 pb-1 text-center amountNumber numberComma" name="depositMoney" value="<?=$data[9]?>" maxLength="9"></td><!--보증금-->
-              <td class="pl-1 pr-1 pt-1 pb-1"><input type="text" class="form-control form-control-sm pl-1 pr-1 pt-1 pb-1 text-center dateType yyyymmdd" name="depositInDate" value="<?=$data[10]?>" maxLength="10"></td><!--보증금입금일-->
-
+              <td><?=$i?></td><!--순번-->
+              <td class="pl-1 pr-1 pt-1 pb-1">
+                <input type="text" class="form-control form-control-sm pl-1 pr-1 pt-1 pb-1 text-center" name="<?=$i?>div1" value="<?=$data[0]?>" required>
+              </td><!--구분1-->
+              <td class="pl-1 pr-1 pt-1 pb-1">
+                <input type="text" class="form-control form-control-sm pl-1 pr-1 pt-1 pb-1 text-center" name="<?=$i?>div2" value="<?=$data[1]?>" required>
+              </td><!--구분2-->
+              <td class="pl-1 pr-1 pt-1 pb-1">
+                <input type="text" class="form-control form-control-sm pl-1 pr-1 pt-1 pb-1 text-center" name="<?=$i?>name" value="<?=$data[2]?>">
+              </td><!--성명-->
+              <td class="pl-1 pr-1 pt-1 pb-1">
+                <input type="text" class="form-control form-control-sm pl-1 pr-1 pt-1 pb-1 text-center" name="<?=$i?>contact" value="<?=$data[3]?>">
+              </td><!--연락처-->
+              <td class="pl-1 pr-1 pt-1 pb-1">
+                <input type="text" class="form-control form-control-sm pl-1 pr-1 pt-1 pb-1 text-center" name="<?=$i?>gender" value="<?=$data[4]?>">
+              </td><!--성별-->
+              <td class="pl-1 pr-1 pt-1 pb-1">
+                <input type="text" class="form-control form-control-sm pl-1 pr-1 pt-1 pb-1 text-center" name="<?=$i?>email" value="<?=$data[5]?>">
+              </td><!--이메일-->
+              <td class="pl-1 pr-1 pt-1 pb-1">
+                <input type="text" class="form-control form-control-sm pl-1 pr-1 pt-1 pb-1 text-center" name="<?=$i?>div3" value="<?=$data[6]?>" numberOnly>
+              </td><!--법인사업자구분-->
+              <td class="pl-1 pr-1 pt-1 pb-1">
+                <input type="text" class="form-control form-control-sm pl-1 pr-1 pt-1 pb-1 text-center" name="<?=$i?>companyname" value="<?=$data[7]?>">
+              </td><!--사업자명-->
+              <td class="pl-1 pr-1 pt-1 pb-1">
+                <input type="text" class="form-control form-control-sm pl-1 pr-1 pt-1 pb-1 text-center" name="<?=$i?>companyNumber" value="<?=$data[8]?>">
+              </td><!--사업자번호-->
+              <td class="pl-1 pr-1 pt-1 pb-1">
+                <input type="number" class="form-control form-control-sm pl-1 pr-1 pt-1 pb-1 text-center" name="<?=$i?>div4" value="<?=$data[9]?>">
+              </td><!--업태-->
+              <td class="pl-1 pr-1 pt-1 pb-1">
+                <input type="text" class="form-control form-control-sm pl-1 pr-1 pt-1 pb-1 text-center" name="<?=$i?>div5" value="<?=$data[10]?>">
+              </td><!--종목-->
+              <td class="pl-1 pr-1 pt-1 pb-1">
+                <input type="text" class="form-control form-control-sm pl-1 pr-1 pt-1 pb-1 text-center" name="<?=$i?>etc" value="<?=$data[11]?>">
+              </td><!--특이사항-->
               <td class="pl-1 pr-1 pt-2 pb-1">
                 <img src="/svc/inc/img/svg/minus.svg" width="20" name="minus">
               </td><!--행추가/삭제-->
@@ -148,15 +170,21 @@ $(document).ready(function(){
 
   $('img[name="minus"]').on('click', function(){
     // console.log('삭제하기');
-    var deleteCheck = confirm('정말 삭제하겠습니까?');
-    if(deleteCheck){
-      var currow = $(this).closest('tr');
-      conclude = [0,0,0,0,0,0,0,0,0,0,0,0,0]; //0이 정상, 1이 오류.
-      errorVal = ['','','','','','','','','','','','',''];
-      currow.remove();
-      alert('삭제하였습니다');
-      //행삭제에 cunclude, errorVal 초기값을 넣는 이유가 이래야지 에전오류났던거가 지워짐...(중요)
-    }
+    // var deleteCheck = confirm('정말 삭제하겠습니까?');
+    // if(deleteCheck){
+    //   var currow = $(this).closest('tr');
+    //   conclude = [0,0,0,0,0,0,0,0,0,0,0,0,0]; //0이 정상, 1이 오류.
+    //   errorVal = ['','','','','','','','','','','','',''];
+    //   currow.remove();
+    //   // alert('삭제하였습니다');
+    //   // 매번 삭제확인 너무 귀찮아서 그냥 없애기로 함
+    //   //행삭제에 cunclude, errorVal 초기값을 넣는 이유가 이래야지 에전오류났던거가 지워짐...(중요)
+    // }
+
+    var currow = $(this).closest('tr');
+    conclude = [0,0,0,0,0,0,0,0,0,0,0,0,0]; //0이 정상, 1이 오류.
+    errorVal = ['','','','','','','','','','','','',''];
+    currow.remove();
   })
 
 

@@ -1,5 +1,5 @@
 <div class="p-3 mb-2 text-dark border border-info rounded">
-  <h5>메모</h5>
+  <!-- <h5>메모</h5> -->
   <div class="form-row">
     <div class="col col-sm-2">
       <input type="text" class="form-control form-control-sm text-center" id="memoInputer" value="<?=$_SESSION['manager_name']?>">
@@ -28,13 +28,12 @@
     <tr>
         <td>
             <?=$memoRows[$i]['num']?>
-            <input type="hidden" name="memoid" id="memoid" value="<?=$memoRows[$i]['idrealContract_memo']?>">
+            <input type="hidden" name="memoid" value="<?=$memoRows[$i]['idrealContract_memo']?>">
         </td>
         <td class="">
-            <input class="form-control form-control-sm text-center" name="memoContent" value="<?=$memoRows[$i]['memoCreator']?>" disabled></td>
+            <input class="form-control form-control-sm text-center grey" name="memoContent" value="<?=$memoRows[$i]['memoCreator']?>"></td>
         </td>
-        <td class="">
-          <input class="form-control form-control-sm text-center" name="memoContent" value="<?=$memoRows[$i]['memoContent']?>" disabled></td>
+        <td class=""><textarea name="memoContent" class="form-control form-control-sm grey" rows="1" cols="80"><?=$memoRows[$i]['memoContent']?></textarea>
         <td class="mobile">
           <small class="grey"><?=$memoRows[$i]['created']?>/<?php if(!$memoRows[$i]['updated']){
             echo "-";
@@ -44,8 +43,9 @@
         </td>
      <!-- <td><label class="grey"><//?=$memoRows[$i]['updated']?></label></td> -->
         <td id="append" class="mobile">
-          <button type="submit" name="memoEdit" id="edit<?=$memoRows[$i]['idrealContract_memo']?>" class="btn btn-default grey"><i class='far fa-edit'></i></button>
-          <button type="submit" name="memoDelete" id="del<?=$memoRows[$i]['idrealContract_memo']?>" class="btn btn-default grey"><i class='far fa-trash-alt'></i></button>
+
+          <label class="small grey" name="memoEdit"><u>수정</u></label>&nbsp;
+          <label class="small grey" name="memoDelete"><u>삭제</u></label>
         </td>
     </tr>
 <?php }

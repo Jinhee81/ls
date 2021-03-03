@@ -40,7 +40,8 @@ include $_SERVER['DOCUMENT_ROOT']."/svc/service/contract/building.php"; //이거
              <td width="4%" class="">
                <select class="form-control form-control-sm selectCall"name="periodDiv">
                  <option value="allDate">--</option>
-                 <option value="nowMonth" selected>당월</option>
+                 <option value="today" selected>오늘</option>
+                 <option value="nowMonth">당월</option>
                  <option value="pastMonth">전월</option>
                  <option value="1pastMonth">1개월</option>
                  <option value="3pastMonth">3개월</option>

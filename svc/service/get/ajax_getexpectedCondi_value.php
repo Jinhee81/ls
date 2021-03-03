@@ -20,7 +20,7 @@ for ($i=0; $i < count($allRows); $i++) {
   } elseif($allRows[$i]['div3']==='합자회사'){
     $allRows[$i]['cdiv3'] = '(합)';
   } elseif($allRows[$i]['div3']==='기타'){
-    $allRows[$i]['cdiv3'] = '(기타)';
+    $allRows[$i]['cdiv3'] = '';
   }
 
   $allRows[$i]['companynumber'] = $allRows[$i]['cNumber1'].'-'.$allRows[$i]['cNumber2'].'-'.$allRows[$i]['cNumber3'];
@@ -41,7 +41,7 @@ for ($i=0; $i < count($allRows); $i++) {
     $allRows[$i]['ccompanyname'] = '';
   }
 
-  $allRows[$i]['cnamemb'] = mb_substr($allRows[$i]['cname'],0,5,"utf-8");
+  $allRows[$i]['cnamemb'] = mb_substr($allRows[$i]['cname'],0,10,"utf-8");
 
   $allRows[$i]['contact'] = $allRows[$i]['contact1'].'-'.$allRows[$i]['contact2'].'-'.$allRows[$i]['contact3'];
 

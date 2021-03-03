@@ -14,7 +14,7 @@
             </form>
           </div>
       </div> -->
-  <h5>첨부파일</h5>
+  <!-- <h5>첨부파일</h5> -->
   <form name="uploadForm" id="uploadForm" method="post" action="p_file_upload.php" enctype="multipart/form-data">
     <label for="">첨부파일</label>
     <input type="file" name="upfile" id="upfile">
@@ -58,7 +58,7 @@
     </table>
     <small>(1)파일등록할수 있는 확장자는 'hwp', 'xls', 'xlsx', 'doc', 'docx', 'pdf', 'jpg', 'jpeg', 'gif', 'png', 'txt', 'ppt', 'pptx', 'tiff'입니다. <br>
       (2)파일은 5MB까지만 업로드 가능합니다.<br>
-      (3)아이폰의 사진은 파일에서 jpg확장자로 변환후 등록하여주세요.
+      <!-- (3)아이폰의 사진은 파일에서 jpg확장자로 변환후 등록하여주세요. -->
     </small>
   </div>
 </div>

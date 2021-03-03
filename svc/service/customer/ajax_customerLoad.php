@@ -6,7 +6,6 @@ $result = mysqli_query($conn, $sql);
 $allRows = array();
 while($row = mysqli_fetch_array($result)){
   $allRows[] = $row;
-
 }
 
 

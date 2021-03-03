@@ -370,7 +370,7 @@ $signKey = array(
                              $paymentResult = mysqli_query($conn, $paymentSql);
 
                             if($payhow == 'VBank') {
-                                alertAndLocation('계좌이체 후 서비스를 사용하실 수 있습니다.', 'main.php');
+                                alertAndLocation('계좌이체 후 서비스를 사용하실 수 있습니다.', 'vbank.php');
                                 exit;
                             } else{
                                 alertAndLocation('결제 완료하였습니다.', 'main.php');

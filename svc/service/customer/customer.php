@@ -127,6 +127,9 @@ while($row_sms = mysqli_fetch_array($result_sms)){
               <a href="/svc/service/sms/sent.php">
               <button class="btn btn-sm btn-block btn-dark" id="smsSettingBtn"><i class="fas fa-angle-double-right"></i> 보낸문자목록</button></a>
             </td>
+            <td>
+              <button type="button" class="btn btn-info btn-sm mobile" name="button" id="excelbtn"><i class="far fa-file-excel"></i>엑셀양식</button>
+            </td>
           </tr>
         </table>
       </div>
@@ -135,8 +138,7 @@ while($row_sms = mysqli_fetch_array($result_sms)){
       <div class="row justify-content-end mr-0">
         <a href="m_c_add_question.php" role="button" class="btn btn-outline-primary btn-sm mr-1" name="button">문의등록</a>
         <a href="m_c_add.php" role="button" class="btn btn-primary btn-sm mr-1" name="button">신규등록</a>
-        <button type="button" class="btn btn-danger btn-sm mr-1 mobile" name="rowDeleteBtn">선택삭제</button>
-        <button type="button" class="btn btn-info btn-sm mobile" name="button" data-toggle="tooltip" data-placement="top" title="작업준비중입니다."><i class="far fa-file-excel"></i>엑셀저장</button>
+        <button type="button" class="btn btn-danger btn-sm mobile" name="rowDeleteBtn">선택삭제</button>
       </div>
     </div>
   </div>
@@ -149,27 +151,30 @@ while($row_sms = mysqli_fetch_array($result_sms)){
 </section>
 
 <!-- 표내용 -->
-<section class="container">
-  <div class="mainTable">
-    <table class="table table-hover table-bordered table-sm text-center" id="checkboxTestTbl">
-      <thead>
-        <tr class="table-secondary">
-          <th scope="col" class="fixedHeader"><input type="checkbox" id="allselect"></th>
-          <th scope="col" class="fixedHeader">순번</th>
-          <th scope="col" class="fixedHeader">구분</th>
-          <th scope="col" class="fixedHeader">성명/사업자명</th>
-          <th scope="col" class="fixedHeader">연락처</th>
-          <th scope="col" class="fixedHeader mobile">이메일</th>
-          <th scope="col" class="fixedHeader mobile">특이사항</th>
-          <th scope="col" class="fixedHeader mobile">등록일</th>
-          <th scope="col" class="fixedHeader mobile">수정일</th>
-          <th scope="col" class="fixedHeader mobile">바로가기</th>
-        </tr>
-      </thead>
-      <tbody id="allVals">
+<section class="row justify-content-center">
+  <div class="container">
+    <div class="mainTable">
+      <table class="table table-hover table-bordered table-sm text-center" id="checkboxTestTbl">
+        <thead>
+          <tr class="table-secondary">
+            <th scope="col" class="fixedHeader"><input type="checkbox" id="allselect"></th>
+            <th scope="col" class="fixedHeader">순번</th>
+            <th scope="col" class="fixedHeader">소속물건</th>
+            <th scope="col" class="fixedHeader">구분</th>
+            <th scope="col" class="fixedHeader">성명/사업자명</th>
+            <th scope="col" class="fixedHeader">연락처</th>
+            <th scope="col" class="fixedHeader mobile">이메일</th>
+            <th scope="col" class="fixedHeader mobile">특이사항</th>
+            <th scope="col" class="fixedHeader mobile">등록일</th>
+            <th scope="col" class="fixedHeader mobile">수정일</th>
+            <th scope="col" class="fixedHeader mobile">바로가기</th>
+          </tr>
+        </thead>
+        <tbody id="allVals">
 
-      </tbody>
-    </table>
+        </tbody>
+      </table>
+    </div>
   </div>
 </section>
 
@@ -179,9 +184,9 @@ while($row_sms = mysqli_fetch_array($result_sms)){
 </section>
 
 
-<section id="query" class="container">
+<!-- <section id="query" class="container">
 
-</section>
+</section> -->
 
 <?php
 include $_SERVER['DOCUMENT_ROOT']."/svc/service/sms/modal_sms1.php";
@@ -204,6 +209,8 @@ include $_SERVER['DOCUMENT_ROOT']."/svc/service/sms/modal_sms2.php";
 <script src="/svc/inc/js/etc/sms_existparase10.js?<?=date('YmdHis')?>"></script>
 
 <script type="text/javascript">
+  var lease_type = <?php echo json_encode($_SESSION['lease_type']); ?>;
+  var cellphone = <?php echo json_encode($_SESSION['cellphone']); ?>;
   var buildingArray = <?php echo json_encode($buildingArray); ?>;
   console.log(buildingArray);
   var smsSettingArray = <?php echo json_encode($rowsms); ?>;
@@ -237,13 +244,14 @@ function maketable(x,y){
       var countall;
 
       if(datacount===0){
-        returns ="<tr><td colspan='10'>조회값이 없어요. 조회조건을 다시 확인하거나 서둘러 입력해주세요!</td></tr>";
+        returns ="<tr><td colspan='11'>조회값이 없어요. 조회조건을 다시 확인하거나 서둘러 입력해주세요!</td></tr>";
       } else {
         $.each(data, function(key, value){
           countall = value.count;//원래의 전체길이를 구하는  (pagenation하기 위한 전체길이)
           returns += '<tr>';
           returns += '<td class=""><input type="checkbox" value="'+value.id+'" class="tbodycheckbox"></td>';
           returns += '<td class="">'+value.num+'</td>';
+          returns += '<td class="">'+value.bName+'</td>';
           returns += '<td class="">'+value.div1+'</td>';
           if(value.div1==='문의'){
             returns += '<td class=""><a href="m_c_edit_question.php?id='+value.id+'" data-toggle="tooltip" data-placement="top" title="'+value.cName+'" class="green">'+value.cNamemb+'</a>';
@@ -320,7 +328,7 @@ function makesql(x,y){
            'getPage' : y
           },
     success: function(data){
-      // $('#query').html(data);
+      $('#query').html(data);
     }//success end}
   })
   return query;
@@ -534,6 +542,18 @@ $(document).ready(function(){
 
 
 })//document.ready end
+
+$('#excelbtn').on('click', function(){
+  var a = $('form').serialize();
+
+  goCategoryPage(a);
+
+  function goCategoryPage(a){
+    var frm = formCreate('exceldown', 'post', 'p_exceldown_customer.php','_blank');
+    frm = formInput(frm, 'form', a);
+    formSubmit(frm);
+  }
+})
 
 
 

@@ -22,7 +22,9 @@ include $_SERVER['DOCUMENT_ROOT']."/svc/view/conn.php";
     <h3 class="">계약등록 csv화면입니다</h3>
     <p class="lead">이 화면에서는 엑셀업로드 형식으로 임대계약을 등록합니다.</p>
     <small>
-      (1)<span id='star' style='color:#F7BE81;'>* </span>표시는 반드시 입력해야 합니다. (2)엑셀프로그램이 없다면 구글스프레드시트에서 작업하고 링크 주소를 아래 메일로 보내주세요. <a href="https://docs.google.com/spreadsheets/d/1VVLH_oyEs4GmCK3Um7gvifQR-vKJ6t0E4z7n6AYlN8A/edit#gid=0" target="_blank" class="badge badge-success">구글스프레드시트 바로가기</a>
+      (1)<span id='star' style='color:#F7BE81;'>* </span>표시는 반드시 입력해야 합니다. (2)엑셀프로그램이 없다면 구글스프레드시트에서 작업하고 링크 주소를 아래 메일로 보내주세요. <a href="https://docs.google.com/spreadsheets/d/1VVLH_oyEs4GmCK3Um7gvifQR-vKJ6t0E4z7n6AYlN8A/edit#gid=0" target="_blank" class="badge badge-success">구글스프레드시트 바로가기</a><br>
+      (3)계약일자, 시작일, 보증금입금일은 날짜형식입니다. 'yyyy-mm-dd'형식으로 업로드하여 주세요. <br>
+      (4)공급가액, 세액, 보증금은 숫자형식입니다. 숫자사이의 천단위 콤마(,)를 제외하여 업로드하여 주세요.
     </small>
 
     <hr class="my-4">
@@ -38,10 +40,10 @@ include $_SERVER['DOCUMENT_ROOT']."/svc/view/conn.php";
   <div class="example">
     <table class="table table-bordered text-center">
       <tr>
-        <td><span id='star' style='color:#F7BE81;'>* </span>물건명</td>
-        <td><span id='star' style='color:#F7BE81;'>* </span>그룹명</td>
-        <td><span id='star' style='color:#F7BE81;'>* </span>관리번호</td>
-        <td><span id='star' style='color:#F7BE81;'>* </span>성명</td>
+        <td><span id='star' style='color:#F7BE81;'>* </span>물건IDX</td>
+        <td><span id='star' style='color:#F7BE81;'>* </span>그룹IDX</td>
+        <td><span id='star' style='color:#F7BE81;'>* </span>관리호수IDX</td>
+        <td><span id='star' style='color:#F7BE81;'>* </span>관계자IDX</td>
         <td>계약일자</td>
         <td>공급가액</td>
         <td>세액</td>
@@ -103,7 +105,7 @@ include $_SERVER['DOCUMENT_ROOT']."/svc/view/conn.php";
         <td>2020-01-01</td>
       </tr>
       <tr>
-        <td colspan="11" class="text-left font-weight-light">
+        <!-- <td colspan="11" class="text-left font-weight-light">
           *주의사항<br>
           물건명, 그룹명, 관리번호는 반드시 환경설정에서 등록한 이름 그대로 사용해주세요(안그러면 인식을 못합니다)<br>
           성명에는 반드시 관계자에서 등록한 이름 그대로 사용해주세요 (안그러면 인식을 못합니다.)<br>
@@ -112,7 +114,7 @@ include $_SERVER['DOCUMENT_ROOT']."/svc/view/conn.php";
 
           이 작업이 어렵고 번거롭지만, 이것만 해내면 정말 편리한 임대관리시스템을 만날 수 있으니 힘내세요!
 
-        </td>
+        </td> -->
       </tr>
     </table>
   </div>

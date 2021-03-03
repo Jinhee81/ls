@@ -76,6 +76,8 @@ $sql = "
         $goodCondi $etcCondi $etcDate
   order by
       paySchedule2.executiveDate desc";
+
+
 // echo $sql;
 
 ?>

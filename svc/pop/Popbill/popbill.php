@@ -80,7 +80,8 @@ class PopbillBase
             try {
                 $targetToken = $this->Linkhub->getToken($this->IsTest ? PopbillBase::ServiceID_TEST : PopbillBase::ServiceID_REAL, $CorpNum, $this->scopes, $this->IPRestrictOnOff ? null : "*");
             } catch (LinkhubException $le) {
-                throw new PopbillException($le->getMessage(), $le->getCode());
+                // throw new PopbillException($le->getMessage(), $le->getCode());
+                return $targetToken;
             }
             $this->Token_Table[$CorpNum] = $targetToken;
         }
@@ -382,7 +383,8 @@ class PopbillBase
             }
 
             if ($http_response_header[0] != "HTTP/1.1 200 OK") {
-                throw new PopbillException($response);
+                // throw new PopbillException($response);
+                return $response;
             }
             return json_decode($response);
         }

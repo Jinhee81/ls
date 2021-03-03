@@ -28,13 +28,15 @@ for ($i=0; $i < count($a); $i++) {
   $result3 = mysqli_query($conn, $sql3);
   if($result3===false){
     echo "<script>alert('저장과정에 문제가 생겼습니다. 관리자에게 문의하세요.(1)')
-                  location.href='contractEdit.php?id=$filtered_id'
+                  location.href='contractEdit.php?page=schedule&id=$filtered_id'
             </script>";
     error_log(mysqli_error($conn));
     exit();
   }
 }//이작업을해야지 계약스케줄의 행별로 바뀐금액이 저장이 된다
-//
+
+
+
 $expectedDateArray = array(); //입금예정일만 모인 배열을 만듦
 for ($i=0; $i < count($a); $i++) {
   array_push($expectedDateArray, $a[$i][7]);

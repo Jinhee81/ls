@@ -101,17 +101,12 @@ function sms_noneparase(){
     var smsTime = $('#smsTime').val();
     var smsTimeValue = $('#timeSetVal').val();
     var getByte = byteLength(textareaOnly);
-    if(getByte>80){
-      var smsDiv = 'mms';
-    } else {
-      var smsDiv = 'sms';
-    }
+    var smsDiv = $('#smsDivOnly').children().text();
     var sendphonenumber = $('input[name=sendphonenumber]').val();
     if(textareaOnly.length===0){
       alert('문자내용이 없는 경우 문자전송할수 없습니다.');
       return false;
     }
-    // console.log(getByte);
 
     goCategoryPage(aa, bb, sendedArray1, textareaOnly, smsTime, smsTimeValue, getByte, smsDiv, sendphonenumber);
 

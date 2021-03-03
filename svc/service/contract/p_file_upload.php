@@ -11,15 +11,15 @@ $filtered_id = mysqli_real_escape_string($conn, $_POST['contract']);
 if(isset($_FILES['upfile']) && $_FILES['upfile']['name'] !== ""){
   $file = $_FILES['upfile'];
   $upload_directory = 'data/';
-  $ext_str = "hwp,xls,xlsx,doc,docx,pdf,jpg,jpeg,gif,png,txt,ppt,pptx,tiff";
-  $allowed_extensions = explode(',', $ext_str);
+  // $ext_str = "hwp,xls,xlsx,doc,docx,pdf,jpg,jpeg,gif,png,txt,ppt,pptx,tiff";
+  // $allowed_extensions = explode(',', $ext_str);
 
   $max_file_size = 5242880;
   $ext = substr($file['name'], strrpos($file['name'],'.') + 1);
 
-  if(!in_array($ext, $allowed_extensions)){
-    echo "업로드 할수없는 확장자입니다.";
-  }
+  // if(!in_array($ext, $allowed_extensions)){
+  //   echo "업로드 할수없는 확장자 ".$ext." 입니다.";
+  // }
 
   if($file['size'] >= $max_file_size){
     echo "5MB 까지만 업로드 가능합니다.";

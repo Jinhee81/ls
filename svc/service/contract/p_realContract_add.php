@@ -1,13 +1,32 @@
 <!-- 이거는 고객등록하자마자 계약등록할 때 처리하는 프로세스파일 -->
 <?php
+//업데이트 - 20.8.11, 종료일에 스케쥴종료일을 맞추어버림
+
+
 header('Content-Type: text/html; charset=UTF-8');
 session_start();
 include $_SERVER['DOCUMENT_ROOT']."/svc/view/conn.php";
 
-print_r($_POST);
+// print_r($_POST);
 // print_r($_SESSION);
 
 $customer_id = $_POST['customerId'];
+
+if(!$_POST['group']){
+  echo "<script>
+        alert('그룹명이 입력되어야 합니다. 환경설정에서 물건정보를 완성하세요.');
+        location.href = '../setting/building.php';
+        </script>";
+  exit();
+}
+
+if(!$_POST['room']){
+  echo "<script>
+        alert('관리호수가 입력되어야 합니다. 환경설정에서 물건정보를 완성하세요.');
+        location.href = '../setting/building.php';
+        </script>";
+  exit();
+}
 
 $date = array($_POST['contractDate'], $_POST['startDate'], $_POST['endDate'], $_POST['executiveDate']);
 
@@ -66,7 +85,7 @@ $sql = "
   )
 ";
 
-// echo $sql;
+// echo $sql."<br>";
 //
 $result = mysqli_query($conn, $sql);
 
@@ -119,8 +138,19 @@ for ($i=1; $i <= (int)$_POST['monthCount']; $i++) {
     // print_r($i);
     $mStartDate = date("Y-n-j", strtotime($mEndDate."+1 day"));
 }
-// print_r($contractRow);
+
 // echo 'bbbbb';
+
+if ($_POST['endDate'] != $mEndDate){
+  // echo '정상적으로 스케쥴 생성되지 않았음<br>';
+  $last_month = (int)$_POST['monthCount'];
+  // print_r($last_month); echo "<br>";
+  $contractRow[$last_month][2] = $date[2];
+  // print_r($contractRow[$last_month][2]);echo "<br>";
+
+} //우와 2020년에 윤달이 있어서 종료일자가 안맞음, 그래서 이걸로 확인체크하는것은 없애기로 함
+
+// print_r($contractRow);
 
 $contractScheduleIdArray = array();
 $orderedArray = array();
@@ -144,8 +174,9 @@ for ($i=1; $i <= count($contractRow); $i++) {
           {$id}
         )
   ";
-  $result2 = mysqli_query($conn, $sql2);
   // echo $sql2;
+  $result2 = mysqli_query($conn, $sql2);
+
 
   if($result2===false){
     echo "<script>alert('저장과정에 문제가 생겼습니다. 관리자에게 문의하세요(화면캡쳐하고 관련내용을 이메일 info@leaseman.co.kr로 보내주세요).(2)');
@@ -186,14 +217,6 @@ if($_POST['executiveDate']){//입금일이 있을때
   }
 
   $row3 = mysqli_fetch_array($result3);
-
-  // $pAmount = (int)str_replace(',', '', $_POST['mAmount']) * (int)$_POST['executiveCount'];
-  // $pvAmount = (int)str_replace(',', '', $_POST['mvAmount']) * (int)$_POST['executiveCount'];
-  // $ptAmount = (int)str_replace(',', '', $_POST['mtAmount']) * (int)$_POST['executiveCount'];
-
-  // $pAmount = $_POST['mAmount'] * 3;
-  // $pvAmount = $_POST['mvAmount'] * 3;
-  // $ptAmount = $_POST['mtAmount'] * 3;
 
   $pAmount = (int)str_replace(',', '', $_POST['mAmount']);
   $pvAmount = (int)str_replace(',', '', $_POST['mvAmount']);
@@ -264,8 +287,5 @@ echo "<script>
       location.href = 'contractEdit.php?page=schedule&id=$id';
       </script>";
 
-// if ($_POST['endDate'] === $mEndDate){
-//   echo '정상적으로 스케쥴 생성되었음';
-//} //우와 2020년에 윤달이 있어서 종료일자가 안맞음, 그래서 이걸로 확인체크하는것은 없애기로 함
 
  ?>

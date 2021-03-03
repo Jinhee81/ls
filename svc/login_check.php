@@ -24,10 +24,12 @@ if(!$row){
   $_SESSION['user_name'] = $row['user_name'];
   $_SESSION['manager_name'] = $row['manager_name'];
   $_SESSION['cellphone'] = $row['cellphone'];
+  $_SESSION['smsnumber'] = $row['smsnumber'];
   $_SESSION['lease_type'] = $row['lease_type'];
   $_SESSION['created'] = $row['created'];
   $_SESSION['gradename'] = $row['gradename'];
-  header('Location: /svc/main/main.php');
+  // header('Location: /svc/main/main.php'); //in real server
+  header('Location: /leaseman20210302/svc/main/main.php'); //in local pc
   exit();
   } else {
   echo "<script>

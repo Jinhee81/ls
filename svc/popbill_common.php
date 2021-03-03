@@ -34,6 +34,6 @@ define('LINKHUB_COMM_MODE','STREAM');
 $TaxinvoiceService = new TaxinvoiceService($LinkID, $SecretKey);
 
 // 연동환경 설정값, 개발용(true), 상업용(false)
-$TaxinvoiceService->IsTest(true);
+$TaxinvoiceService->IsTest(false);
 
 ?>

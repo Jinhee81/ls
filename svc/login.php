@@ -1,14 +1,22 @@
 <?php include "view/header.php";
-ini_set('display_errors', 1);
-ini_set('error_reporting', E_ALL);
+// ini_set('display_errors', 1);
+// ini_set('error_reporting', E_ALL);
 
 ?>
+<body>
+  <div class="alert alert-primary alert-dismissible fade show" role="alert">
+  리스맨은 '크롬브라우저'에서 최적으로 작동합니다. 반드시 크롬브라우저에서 실행해주세요 ^__^ <a href="https://www.google.com/intl/ko/chrome/" class="alert-link" target="_blank">다운로드 바로가기</a>
+  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+    <span aria-hidden="true">&times;</span>
+  </button>
+  </div>
 <div class="bg-dark text-center pt-3">
   <img class="mb-4" src="inc/img/leaseman-1.png" alt="" width="" height="">
 </div>
 <div class="text-center container mt-5">
 
     <h1 class="h3 mb-3 font-weight-normal">임대관리시스템 리스맨 접속을 환영합니다!</h1>
+    <p>회원가입후 30일 또는 20건 이하 계약은 쭉~~ 무료이용입니다. 부담없이 회원가입해주세요^__^ <a href="../use_guide/fare_guide.php" class='badge badge-danger'>요금안내 바로가기</a></p>
     <div class="text-center container mt-5" style="width:360px;">
 
 
@@ -29,7 +37,7 @@ ini_set('error_reporting', E_ALL);
           <a class="btn btn-sm btn-outline-success btn-block" href="#" role="button">이메일찾기</a>
         </div>
         <div class="form-group col-md-4">
-          <a class="btn btn-sm btn-outline-success btn-block" href="#" role="button">비밀번호찾기</a>
+          <a class="btn btn-sm btn-outline-success btn-block" href="password_find.php" role="button">비밀번호찾기</a>
         </div>
         <div class="form-group col-md-4">
           <a class="btn btn-sm btn-outline-success btn-block" href="../membership/membership.php" role="button">회원가입하기</a>
@@ -43,7 +51,7 @@ include "view/footer.php";
 ?>
 
 <script src="/svc/inc/js/jquery-3.3.1.min.js"></script>
-
+<script src="/svc/inc/js/bootstrap.min.js"></script>
 <script type="text/javascript">
 
 $(document).ready(function(){
@@ -103,3 +111,5 @@ $(document).ready(function(){
 
 })
 </script>
+</body>
+</html>

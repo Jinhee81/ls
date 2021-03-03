@@ -1,5 +1,4 @@
 <?php
-// include $_SERVER['DOCUMENT_ROOT']."/include/lib.inc.php";
 
 header("Content-Type: text/html; charset=utf-8");
 session_start();
@@ -280,11 +279,11 @@ for ($i=0; $i < count($allRows); $i++) {
  .coltype3{background:pink}
 </style>
 
-<h1>전체선택하여 엑셀시트에 복사하세요.</h1>
 <table border="1">
   <thead>
-    <tr></tr>
-    <tr></tr>
+    <tr>
+      <td colspan="28"><h1>전체선택하여 엑셀시트에 복사하세요.</h1></td>
+    </tr>
     <tr>
       <th class="coltype1">순번</th>
       <th class="coltype2">계약일</th>
@@ -305,13 +304,12 @@ for ($i=0; $i < count($allRows); $i++) {
       <th class="coltype1">입금구분</th>
       <th class="coltype1">수납구분</th>
       <th class="coltype3">생년월일</th>
-      <th class="coltype3">성별</th>
       <th class="coltype3">대표자명</th>
       <th class="coltype3">사업자번호</th>
       <th class="coltype3">사업자명</th>
-      <th class="coltype1">상품</th>
-      <th class="coltype1">관리물건</th>
-      <th class="coltype1">방번호</th>
+      <th class="coltype1">그룹명</th>
+      <th class="coltype1">물건명</th>
+      <th class="coltype1">관리번호</th>
       <th class="coltype1">증빙구분</th>
       <th class="coltype1">증빙일자</th>
       <th class="coltype1">리스맨세금계산서여부</th>
@@ -342,7 +340,6 @@ for ($i=0; $i < count($allRows); $i++) {
         <td><?=$allRows[$i]['a']?></td><!--입금구분-->
         <td><?=$allRows[$i]['payKind']?></td><!--수납구분-->
         <td><?=$allRows[$i]['birthday']?></td><!--생년월일-->
-        <td><?=$allRows[$i]['gender']?></td><!--성별-->
         <td><?=$allRows[$i]['name']?></td><!--입주자-->
         <td><?=$allRows[$i]['companynumber']?></td><!--사업자번호-->
         <td><?=$allRows[$i]['companyname2']?></td><!--사업자명-->

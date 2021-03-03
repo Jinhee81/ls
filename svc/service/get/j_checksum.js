@@ -11,7 +11,6 @@ $("#allselect").click(function(){
       var colpAmount = table.find("tr:eq("+i+")").find("td:eq(9)").children('label:eq(0)').text();
       var colpvAmount = table.find("tr:eq("+i+")").find("td:eq(9)").children('label:eq(1)').text();
       var colptAmount = table.find("tr:eq("+i+")").find("td:eq(10)").children('a').text();
-      // console.log(colptAmount);
       colpAmount = colpAmount.replace(/,/gi,'');
       colpvAmount = colpvAmount.replace(/,/gi,'');
       colptAmount = colptAmount.replace(/,/gi,'');
@@ -41,13 +40,15 @@ $("#allselect").click(function(){
   }
 
   // console.log('solmi');
-  // console.log(ptAmountArray);
+//   console.log(amountMoney);
 })
 
 $(document).on('click', '.tbodycheckbox', function(){
+
     var AmountArrayEle = [];
 
     if($(this).is(":checked")){
+      var checkedCnt = $(".tbodycheckbox").filter(":checked").length;
       var currow = $(this).closest('tr');
       var colid = currow.find('td:eq(0)').children('input').val();
       var colpAmount = currow.find("td:eq(9)").children('label:eq(0)').text();
@@ -65,7 +66,7 @@ $(document).on('click', '.tbodycheckbox', function(){
       amountMoney[1] += colpvAmount;
       amountMoney[2] += colptAmount;
 
-      $('#ptAmountSelectCount').html(AmountArray.length);
+      $('#ptAmountSelectCount').html(checkedCnt);
       $('#pAmountSelectAmount').html(amountMoney[0]);
       $('#pAmountSelectAmount').number(true);
       $('#pvAmountSelectAmount').html(amountMoney[1]);
@@ -74,6 +75,7 @@ $(document).on('click', '.tbodycheckbox', function(){
       $('#ptAmountSelectAmount').number(true);
       // console.log(ptAmountArray);
     } else {
+      var checkedCnt = $(".tbodycheckbox").filter(":checked").length;
       var currow = $(this).closest('tr');
       var colid = currow.find('td:eq(0)').children('input').val();
       var colpAmount = currow.find("td:eq(9)").children('label:eq(0)').text();
@@ -92,7 +94,7 @@ $(document).on('click', '.tbodycheckbox', function(){
       amountMoney[1] -= colpvAmount;
       amountMoney[2] -= colptAmount;
 
-      $('#ptAmountSelectCount').html(AmountArray.length);
+      $('#ptAmountSelectCount').html(checkedCnt);
       $('#pAmountSelectAmount').html(amountMoney[0]);
       $('#pAmountSelectAmount').number(true);
       $('#pvAmountSelectAmount').html(amountMoney[1]);
@@ -101,4 +103,5 @@ $(document).on('click', '.tbodycheckbox', function(){
       $('#ptAmountSelectAmount').number(true);
       // console.log(ptAmountArray);
     }
+    // console.log(amountMoney);
 })

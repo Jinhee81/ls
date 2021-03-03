@@ -4,7 +4,7 @@ session_start();
 
 if(isset($_POST['id']))
 {
-  $connect = new PDO('mysql:host=127.0.0.1;dbname=leaseman','root','wlsgml88');
+  $connect = new PDO('mysql:host=127.0.0.1;dbname=leaseman_svc','leaseman','leaseman!!22');
   $query = "
     DELETE from events where id=:id
   ";

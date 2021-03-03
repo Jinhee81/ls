@@ -23,7 +23,8 @@ $fil = array(
   'postcode' => mysqli_real_escape_string($conn, $_POST['postcode']),
   'add1' => mysqli_real_escape_string($conn, $_POST['add1']),
   'add2' => mysqli_real_escape_string($conn, $_POST['add2']),
-  'add3' => mysqli_real_escape_string($conn, $_POST['add3'])
+  'add3' => mysqli_real_escape_string($conn, $_POST['add3']),
+  'birthday' => mysqli_real_escape_string($conn, $_POST['birthday']),
 );
 
 settype($filtered_id, 'integer');
@@ -44,6 +45,7 @@ if($_POST['div3']){
 $sql = "
   UPDATE customer
   SET
+    building_id = {$_POST['building']},
     div1 = '{$_POST['div1']}',
     div2 = '{$div2}',
     name = '{$fil['name']}',
@@ -64,6 +66,7 @@ $sql = "
     add2 = '{$fil['add2']}',
     add3 = '{$fil['add3']}',
     etc = '{$fil['etc']}',
+    birthday = '{$fil['birthday']}',
     updated = now(),
     updatePerson = '{$_SESSION['manager_name']}'
   WHERE id = {$filtered_id}

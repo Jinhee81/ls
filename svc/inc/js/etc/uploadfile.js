@@ -1,5 +1,5 @@
 function fnUpload(){
-  var extArray = new Array('hwp', 'xls', 'xlsx', 'doc', 'docx', 'pdf', 'jpg', 'gif', 'png', 'txt', 'ppt', 'pptx', 'tiff');
+  var extArray = new Array('hwp', 'xls', 'xlsx', 'doc', 'docx', 'pdf', 'jpg', 'jpeg', 'gif', 'png', 'txt', 'ppt', 'pptx', 'tiff');
   var path = $('#upfile').val();
   console.log(path);
 

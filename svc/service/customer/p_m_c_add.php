@@ -1,4 +1,7 @@
 <?php //고객생성 파일
+//업데이트 - 20.8.7 중복된연락처 수정하기로 함 이름+연락처3+사업자명까지 일치하면 저장안하기로 로직을 수정했음
+
+
 header('Content-Type: text/html; charset=UTF-8');
 session_start();
 include $_SERVER['DOCUMENT_ROOT']."/svc/view/conn.php";
@@ -29,6 +32,8 @@ $addCheck1 = "
   where
     user_id={$_SESSION['id']}
     and name = '{$fil['name']}'
+    and contact3 = '{$fil['contact3']}'
+    and companyname = '{$fil['companyname']}'
     and building_id = {$_POST['building']}
     ";
 // echo $addCheck1;
@@ -36,29 +41,29 @@ $result_addCheck1 = mysqli_query($conn, $addCheck1);
 $row_addCheck1 = mysqli_fetch_array($result_addCheck1);
 
 if((int)$row_addCheck1[0]>0){
-  echo "<script>alert('중복된 이름이 존재합니다. 중복된 이름은 저장이 안돼요.');
+  echo "<script>alert('중복된 내역이 존재합니다. 성명+연락처+사업자명까지 일치하면 저장되지 않아요.');
         history.back();</script>";
   exit();
 }
 
-$addCheck2 = "
-  select count(*) from customer
-  where
-    user_id={$_SESSION['id']} and
-    contact1 = '{$fil['contact1']}' and
-    contact2 = '{$fil['contact2']}' and
-    contact3 = '{$fil['contact3']}' and
-    building_id = {$_POST['building']}
-    ";
-// echo $addCheck2;
-$result_addCheck2 = mysqli_query($conn, $addCheck2);
-$row_addCheck2 = mysqli_fetch_array($result_addCheck2);
-
-if((int)$row_addCheck2[0]>0){
-  echo "<script>alert('중복된 연락처가 존재합니다. 중복된 연락처는 저장이 안돼요.');
-        history.back();</script>";
-  exit();
-}
+// $addCheck2 = "
+//   select count(*) from customer
+//   where
+//     user_id={$_SESSION['id']} and
+//     contact1 = '{$fil['contact1']}' and
+//     contact2 = '{$fil['contact2']}' and
+//     contact3 = '{$fil['contact3']}' and
+//     building_id = {$_POST['building']}
+//     ";
+// // echo $addCheck2;
+// $result_addCheck2 = mysqli_query($conn, $addCheck2);
+// $row_addCheck2 = mysqli_fetch_array($result_addCheck2);
+//
+// if((int)$row_addCheck2[0]>0){
+//   echo "<script>alert('중복된 연락처가 존재합니다. 중복된 연락처는 저장이 안돼요.');
+//         history.back();</script>";
+//   exit();
+// }//고민하다가 이거를 빼기로 함
 
 
 $sql = "

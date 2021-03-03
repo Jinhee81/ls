@@ -3,7 +3,8 @@
 // ini_set('error_reporting', E_ALL);
 include "ajax_realContractSql.php";
 
-// echo $sql;
+// print_r($_POST);echo "<br>";
+// echo $sql;echo "<br>";
 //
 // print_r($allRows);
 
@@ -32,7 +33,15 @@ for ($i=0; $i < count($allRows); $i++) {
     $allRows[$i]['ccnn'] = $allRows[$i]['cname'];
   }
 
-  $allRows[$i]['ccomname'] = mb_substr($allRows[$i]['cdiv3'].$allRows[$i]['ccomname'],0,10,'utf-8');
+  if($allRows[$i]['div2']==='개인사업자'){
+    $allRows[$i]['ccnn2'] = $allRows[$i]['cname'].'('.$allRows[$i]['ccomname'].')';
+  } else if($allRows[$i]['div2']==='법인사업자'){
+    $allRows[$i]['ccnn2'] = $allRows[$i]['cdiv3'].$allRows[$i]['ccomname'].'('.$allRows[$i]['cname'].')';
+  } else if($allRows[$i]['div2']==='개인'){
+    $allRows[$i]['ccnn2'] = $allRows[$i]['cname'];
+  }
+
+  $allRows[$i]['ccomname2'] = mb_substr($allRows[$i]['cdiv3'].$allRows[$i]['ccomname'],0,10,'utf-8');
 
   $allRows[$i]['ccnnmb'] = mb_substr($allRows[$i]['ccnn'],0,10,'utf-8');
 

@@ -122,11 +122,11 @@ include $_SERVER['DOCUMENT_ROOT']."/svc/service/contract/building.php";
           <p class="mb-1">업태</p>
           <input type='text' name='div4' class='form-control' maxlength='9'>
         </div>
-        <div class="form-group col-md-3">
+        <div class="form-group col-md-4">
           <p class="mb-1">종목</p>
-          <input type='text' name='div5' class='form-control' maxlength='9'>
+          <input type='text' name='div5' class='form-control' maxlength='15'>
         </div>
-        <div class="form-group col-md-6">
+        <div class="form-group col-md-5">
           <p class="mb-1">이메일</p>
           <input type='email' name='email' class='form-control' maxlength='40'>
         </div>

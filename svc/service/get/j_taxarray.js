@@ -1,3 +1,5 @@
+//비고란 텍스트를 당분간 없애기로 함 - 2020.8.6
+
 var taxArray = [];
 
 $("#allselect").click(function(){
@@ -24,7 +26,8 @@ $("#allselect").click(function(){
       var startdate = table.find("tr:eq("+i+")").find("td:eq(7)").children('label:eq(0)').text();//청구시작일
       var enddate = table.find("tr:eq("+i+")").find("td:eq(7)").children('label:eq(1)').text();//청구종료일
       var monthcount = table.find("tr:eq("+i+")").find("td:eq(6)").text();//청구개월
-      var comment = "기간 ("+startdate+"~"+enddate+", "+monthcount+"개월 이용료)";//비고
+      // var comment = "기간 ("+startdate+"~"+enddate+", "+monthcount+"개월 이용료)";//비고
+      var comment = '';
       var acceptdiv = table.find("tr:eq("+i+")").find("td:eq(11)").text().trim();//입금구분
       var evidencedate = table.find("tr:eq("+i+")").find("td:eq(13)").children('label').text();//증빙일자
 
@@ -61,7 +64,8 @@ var taxArrayEle = [];
       var startdate = currow.find("td:eq(7)").children('label:eq(0)').text();//청구시작일
       var enddate = currow.find("td:eq(7)").children('label:eq(1)').text();//청구종료일
       var monthcount = currow.find("td:eq(6)").text();//청구개월
-      var comment = "기간 ("+startdate+"~"+enddate+", "+monthcount+"개월 이용료)";//비고
+      // var comment = "기간 ("+startdate+"~"+enddate+", "+monthcount+"개월 이용료)";//비고
+      var comment = '';
       var acceptdiv = currow.find("td:eq(11)").text().trim();//입금구분
       var evidencedate = currow.find("td:eq(13)").children('label').text();//증빙일자
 

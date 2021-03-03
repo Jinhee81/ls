@@ -1,4 +1,4 @@
-    <link rel="icon" type="image/x-icon" href="/svc/inc/img/logo/letterL.png">
+<link rel="icon" type="image/x-icon" href="/svc/inc/img/logo/letterL.png">
     <meta http-equiv="content-type" content="text/html;charset=utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1,
       shrink-to-fit=no">
@@ -9,6 +9,9 @@
 
     <!-- 달력 css -->
     <link rel="stylesheet" href="/svc/inc/css/jquery-ui.min.css">
+
+    <!-- 세금계산서 css -->
+    <link rel="stylesheet" href="/svc/inc/css/pops.css">
 
     <!-- 폰트어썸 css -->
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">

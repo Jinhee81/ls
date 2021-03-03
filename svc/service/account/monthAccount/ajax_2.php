@@ -60,7 +60,7 @@ for ($i=0; $i < count($allRows); $i++) {
 
 for ($i=0; $i < count($allRows); $i++) {
 
-  $amountGroupArray[$i] = [0,0,0];
+  $amountGroupArray[$i] = array(0,0,0);
   for ($j=0; $j < count($allRows[$i]['name']); $j++) {
 
     $amountGroupArray[$i][0] += str_replace(",", "", $allRows[$i]['name'][$j]['ptAmount']);
@@ -69,7 +69,7 @@ for ($i=0; $i < count($allRows); $i++) {
   }
 }
 
-$amountTotalArray = [0,0,0,0];
+$amountTotalArray = array(0,0,0,0);
 
 for ($i=0; $i < count($allRows); $i++) {
   $amountTotalArray[0] += count($allRows[$i]['name']);

@@ -64,7 +64,7 @@ if(isset($_POST['query'])){
       if($allRows[$i]['div2']==='개인사업자'){
         $allRows[$i]['ccnn'] = $allRows[$i]['name'].'('.$allRows[$i]['comname'].','.$allRows[$i]['companynumber'].'),'.$allRows[$i]['contact'];
       } else if($allRows[$i]['div2']==='법인사업자'){
-        $allRows[$i]['ccnn'] = $allRows[$i]['cdiv3'].$allRows[$i]['comname'].'('.$allRows[$i]['name'].','.$allRows[$i]['comname'].'),'.$allRows[$i]['contact'];
+        $allRows[$i]['ccnn'] = $allRows[$i]['cdiv3'].$allRows[$i]['comname'].'('.$allRows[$i]['name'].'),'.$allRows[$i]['contact'];
       } else if($allRows[$i]['div2']==='개인'){
         $allRows[$i]['ccnn'] = $allRows[$i]['name'].','.$allRows[$i]['contact'];
       }

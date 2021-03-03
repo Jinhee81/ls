@@ -10,12 +10,12 @@ include $_SERVER['DOCUMENT_ROOT']."/svc/view/conn.php";
 $filtered_id = mysqli_real_escape_string($conn, $_POST['contractId']);
 
 $a = json_decode($_POST['payIdArray']);
-print_r($a);
+// print_r($a);
 
 for ($i=0; $i < count($a); $i++) {
     $sql_drop = "
                 delete from paySchedule2 where idpaySchedule2={$a[$i][0]}";
-    echo $sql_drop;
+    // echo $sql_drop;
     $result_drop = mysqli_query($conn, $sql_drop);
     if($result_drop){
       $sql2 = "
@@ -25,7 +25,7 @@ for ($i=0; $i < count($a); $i++) {
                 payIdOrder = null
               where payId = {$a[$i][0]} and realContract_id={$filtered_id}";
               //계약스케줄에서 청구번호와 청구순번 없애기
-      echo $sql2;
+      // echo $sql2;
 
       $result2 = mysqli_query($conn, $sql2);
 

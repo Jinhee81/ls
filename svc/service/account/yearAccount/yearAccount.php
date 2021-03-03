@@ -76,7 +76,7 @@ include $_SERVER['DOCUMENT_ROOT']."/svc/service/account/yearAccount/monthlyValue
 </section> -->
 
 <!--히든 섹션 시작-->
-<section class="container">
+<!-- <section class="container">
   <h3>데이타</h3>
   <div id="plus_part2">
 
@@ -87,7 +87,7 @@ include $_SERVER['DOCUMENT_ROOT']."/svc/service/account/yearAccount/monthlyValue
   <div id="basic">
 
   </div>
-</section>
+</section> -->
 
 <!--차트 섹션 시작-->
 <section class="container">

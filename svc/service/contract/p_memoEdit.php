@@ -5,7 +5,7 @@ header('Content-Type: text/html; charset=UTF-8');
 session_start();
 include $_SERVER['DOCUMENT_ROOT']."/svc/view/conn.php";
 
-print_r($_POST);
+// print_r($_POST);
 // print_r($_SESSION);
 
 $filtered_id = mysqli_real_escape_string($conn, $_POST['contractId']);

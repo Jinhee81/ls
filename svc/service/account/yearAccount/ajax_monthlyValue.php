@@ -55,6 +55,7 @@ for ($i=0; $i < count($allRows); $i++) {
   }
 }
 
+
 // print_r($plusAmountArray); echo 222;
 
 $allRows2 = array();

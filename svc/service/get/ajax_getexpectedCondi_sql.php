@@ -51,9 +51,17 @@ $sql_where = "
 
 $sql_count = "select count(*)
               from paySchedule2
-              where user_id={$_SESSION['id']} and
-                    building_id = {$a['building']} and
-                    executiveDate is null
+              left join realContract
+                  on paySchedule2.realContract_id = realContract.id
+              left join customer
+                  on realContract.customer_id = customer.id
+              left join group_in_building
+                  on realContract.group_in_building_id = group_in_building.id
+              left join r_g_in_building
+                  on realContract.r_g_in_building_id = r_g_in_building.id
+              where paySchedule2.user_id={$_SESSION['id']} and
+                    paySchedule2.building_id = {$a['building']} and
+                    paySchedule2.executiveDate is null
                     $groupCondi $etcCondi $etcDate
               ";
 
@@ -66,7 +74,7 @@ if($_POST['getPage']=='1'){
   $start = ((int)$_POST['getPage']-1) * (int)$_POST['pagerow'];
 }
 
-$firstOrder = $row_count[0];
+$firstOrder = $row_count[0] + 1;
 
 $sql_common = "
   select

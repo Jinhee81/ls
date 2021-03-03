@@ -21,7 +21,7 @@ $sql = "select
         from user
         where id={$filtered_id}
        ";
-echo $sql;
+// echo $sql;
 
 $result = mysqli_query($conn, $sql);
 $row = mysqli_fetch_array($result);
@@ -68,27 +68,35 @@ $row_waiting = mysqli_fetch_array($result_waiting);
 date_default_timezone_set('Asia/Seoul');
 $currentDate = date('Y-m-d');
 
-$date1 = $currentDate;
-$date2 = $row['created'];
+// $date1 = $currentDate;
+// $date2 = $row['created'];
+//
+// function diffdate($date1, $date2){
+//   $diff = abs(strtotime($date2) - strtotime($date1));
+//   $years = floor($diff / (365*60*60*24));
+//   $months = floor(($diff - $years * 365*60*60*24) / (30*60*60*24));
+//   $days = floor(($diff - $years * 365*60*60*24 - $months*30*60*60*24)/ (60*60*24));
+//
+//   // return array('year'=>$years, 'month'=>$months, 'day'=>$days);
+//   return $days;
+// }
 
-function diffdate($date1, $date2){
-  $diff = abs(strtotime($date2) - strtotime($date1));
-  $years = floor($diff / (365*60*60*24));
-  $months = floor(($diff - $years * 365*60*60*24) / (30*60*60*24));
-  $days = floor(($diff - $years * 365*60*60*24 - $months*30*60*60*24)/ (60*60*24));
 
-  // return array('year'=>$years, 'month'=>$months, 'day'=>$days);
-  return $days;
-}
+$currentDateDate = strtotime($currentDate);
+$startDateDate = strtotime($row['created']);
 
-$fordays2 = diffdate($date1, $date2);
+$fordays = $currentDateDate - $startDateDate;
+
+$fordays2 = round($fordays / (60*60*24));
+
+
 $sql_grade = "select
                 gradename, executivedate, startdate, enddate, formonth, payamount,
                 ordered
               from grade
               where user_id={$filtered_id}
               ";
-echo $sql_grade;
+// echo $sql_grade;
 
 $result_grage = mysqli_query($conn, $sql_grade);
 
@@ -126,7 +134,7 @@ for ($i=0; $i < count($div1); $i++) {
         <tr class="table-success">
           <th>회원번호</th>
           <th>이메일</th>
-          <th>구분(유형,회원명)</th>
+          <th>구분(유형,회원명,담당자명)</th>
           <th>휴대폰번호</th>
           <th>가입경로</th>
           <th>가입일시</th>
@@ -135,11 +143,11 @@ for ($i=0; $i < count($div1); $i++) {
         <tr>
           <td><?=$row['id']?></td>
           <td><?=$row['email']?></td>
-          <td><?=$row['user_div'].'('.$row['lease_type'].','.$row['user_name'].')'?></td>
-          <td><?=$row['cellphone']?></td>
+          <td><?=$row['user_div'].'('.$row['lease_type'].','.$row['user_name'].','.$row['manager_name'].')'?></td>
+          <td><?=substr($row['cellphone'],0,3).'-'.substr($row['cellphone'],3,4).'-'.substr($row['cellphone'],7,4)?></td>
           <td><?=$row['regist_channel'].'('.$row['regist_etc'].')'?></td>
           <td><?=$row['created']?></td>
-          <td><?=(int)$fordays2+1?></td>
+          <td><?=$fordays2?></td>
         </tr>
     </table>
     <table class="table mt-5 table-bordered">

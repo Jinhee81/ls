@@ -29,7 +29,7 @@ if($_POST['query']){
         on customer.building_id = building.id
     where
       customer.user_id={$_SESSION['id']} and
-      div1 in('입주자', '기타') and
+      div1 in('입주자', '기타', '거래처') and
       (customer.name like '%{$_POST['query']}%' or
       customer.companyname like '%{$_POST['query']}%')
       ";

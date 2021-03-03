@@ -80,7 +80,7 @@ include "m_building.php";
             <td>물건명</td>
             <td>그룹명</td>
             <td class="pink">공실</td>
-            <td>만실</td>
+            <td>입실</td>
             <td>전체</td>
           </tr>
           <?php
@@ -177,7 +177,7 @@ $(document).ready(function(){
     header:{
       left:'prevYear,prev,next,nextYear today',
       center:'title',
-      right:'month'
+      right:'month, agendaWeek'
       // right:'month,agendaWeek'//주별일정은 일단 빼기로함
     },
     // titleFormat: {

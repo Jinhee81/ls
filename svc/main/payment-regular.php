@@ -14,19 +14,19 @@
    <tr>
      <th rowspan="2">등급</th>
      <th rowspan="2">건수</th>
-     <th colspan="4">이용요금</th>
+     <th colspan="3">이용요금</th>
    </tr>
    <tr>
      <th>1개월 구매하기</th>
-     <th>1개월 구독하기</th>
+     <!-- <th>1개월 구독하기</th> -->
      <th>3개월 구매하기(월요금)</th>
      <th>12개월 구매하기(월요금)</th>
    </tr>
    <tr>
      <td><i class="fas fa-star"></i>(스타)1</td>
-     <td><?=$payAmount[0][1]?>건</td>
+     <td>~<?=$payAmount[0][1]?>건</td>
      <td><?=$payAmount[0][2]?>원</td>
-     <td><?=$payAmount[0][3]?>원</td>
+     <!-- <td><?=$payAmount[0][3]?>원</td> -->
      <td><?=$payAmount[0][4]?>원</td>
      <td><?=$payAmount[0][5]?>원</td>
    </tr>
@@ -35,7 +35,7 @@
        <input type="hidden" name="grade_star" value="스타2">
        <input type="hidden" name="gradename" value="star2">
      </td>
-     <td><?=$payAmount[1][1]?>건</td>
+     <td>~<?=$payAmount[1][1]?>건</td>
      <td><?=number_format($payAmount[1][2])?>원
        <input type="hidden" name="amount" value="<?=$payAmount[1][2]?>">
        <input type="hidden" name="month" value="<?=1?>">
@@ -45,7 +45,7 @@
        }
         ?>
      </td>
-     <td><?=number_format($payAmount[1][3])?>원
+     <!-- <td><?=number_format($payAmount[1][3])?>원
        <input type="hidden" name="amount" value="<?=$payAmount[1][3]?>">
        <input type="hidden" name="month" value="<?=1?>">
        <?php
@@ -53,7 +53,7 @@
          echo $pay2;
        }
         ?>
-     </td>
+     </td> -->
      <td><?=number_format($payAmount[1][4])?>원
        <input type="hidden" name="amount" value="<?=$payAmount[1][4]?>">
        <input type="hidden" name="month" value="<?=3?>">
@@ -78,7 +78,7 @@
        <input type="hidden" name="grade_star" value="스타3">
        <input type="hidden" name="gradename" value="star3">
      </td>
-     <td><?=$payAmount[2][1]?>건</td>
+     <td>~<?=$payAmount[2][1]?>건</td>
      <td><?=number_format($payAmount[2][2])?>원
        <input type="hidden" name="amount" value="<?=$payAmount[2][2]?>">
        <input type="hidden" name="month" value="<?=1?>">
@@ -88,7 +88,7 @@
        }
         ?>
      </td>
-     <td><?=number_format($payAmount[2][3])?>원
+     <!-- <td><?=number_format($payAmount[2][3])?>원
        <input type="hidden" name="amount" value="<?=$payAmount[2][3]?>">
        <input type="hidden" name="month" value="<?=1?>">
        <?php
@@ -96,7 +96,7 @@
          echo $pay2;
        }
         ?>
-     </td>
+     </td> -->
      <td><?=number_format($payAmount[2][4])?>원
        <input type="hidden" name="amount" value="<?=$payAmount[2][4]?>">
        <input type="hidden" name="month" value="<?=3?>">
@@ -121,7 +121,7 @@
        <input type="hidden" name="grade_star" value="스타4">
        <input type="hidden" name="gradename" value="star4">
      </td>
-     <td><?=$payAmount[3][1]?>건</td>
+     <td>~<?=$payAmount[3][1]?>건</td>
      <td><?=number_format($payAmount[3][2])?>원
        <input type="hidden" name="amount" value="<?=$payAmount[3][2]?>">
        <input type="hidden" name="month" value="<?=1?>">
@@ -131,7 +131,7 @@
        }
         ?>
      </td>
-     <td><?=number_format($payAmount[3][3])?>원
+     <!-- <td><?=number_format($payAmount[3][3])?>원
        <input type="hidden" name="amount" value="<?=$payAmount[3][3]?>">
        <input type="hidden" name="month" value="<?=1?>">
        <?php
@@ -139,7 +139,7 @@
          echo $pay2;
        }
         ?>
-     </td>
+     </td> -->
      <td><?=number_format($payAmount[3][4])?>원
        <input type="hidden" name="amount" value="<?=$payAmount[3][4]?>">
        <input type="hidden" name="month" value="<?=3?>">
@@ -164,7 +164,7 @@
        <input type="hidden" name="grade_star" value="스타5">
        <input type="hidden" name="gradename" value="star5">
      </td>
-     <td><?=$payAmount[4][1]?>건</td>
+     <td>~<?=$payAmount[4][1]?>건</td>
      <td><?=number_format($payAmount[4][2])?>원
        <input type="hidden" name="amount" value="<?=$payAmount[4][2]?>">
        <input type="hidden" name="month" value="<?=1?>">
@@ -174,7 +174,7 @@
        }
         ?>
      </td>
-     <td><?=number_format($payAmount[4][3])?>원
+     <!-- <td><?=number_format($payAmount[4][3])?>원
        <input type="hidden" name="amount" value="<?=$payAmount[4][3]?>">
        <input type="hidden" name="month" value="<?=1?>">
        <?php
@@ -182,7 +182,7 @@
          echo $pay2;
        }
         ?>
-     </td>
+     </td> -->
      <td><?=number_format($payAmount[4][4])?>원
        <input type="hidden" name="amount" value="<?=$payAmount[4][4]?>">
        <input type="hidden" name="month" value="<?=3?>">
@@ -207,7 +207,7 @@
        <input type="hidden" name="grade_star" value="스타6">
        <input type="hidden" name="gradename" value="star6">
      </td>
-     <td><?=$payAmount[5][1]?>건</td>
+     <td>~<?=$payAmount[5][1]?>건</td>
      <td><?=number_format($payAmount[5][2])?>원
        <input type="hidden" name="amount" value="<?=$payAmount[5][2]?>">
        <input type="hidden" name="month" value="<?=1?>">
@@ -217,7 +217,7 @@
        }
         ?>
      </td>
-     <td><?=number_format($payAmount[5][3])?>원
+     <!-- <td><?=number_format($payAmount[5][3])?>원
        <input type="hidden" name="amount" value="<?=$payAmount[5][3]?>">
        <input type="hidden" name="month" value="<?=1?>">
        <?php
@@ -225,7 +225,7 @@
          echo $pay2;
        }
         ?>
-     </td>
+     </td> -->
      <td><?=number_format($payAmount[5][4])?>원
        <input type="hidden" name="amount" value="<?=$payAmount[5][4]?>">
        <input type="hidden" name="month" value="<?=3?>">
@@ -245,37 +245,49 @@
         ?>
      </td>
    </tr>
-   <!-- <tr>
+   <tr>
      <td><i class="fas fa-star"></i>(스타)7
-       <input type="hidden" name="grade_star" value="스타7">
-       <input type="hidden" name="gradename" value="star7">
-       <input type="hidden" name="1monthAmount" value="<?=$payAmount[6][2]?>">
-       <input type="hidden" name="monthlyAmount" value="<?=$payAmount[6][3]?>">
-       <input type="hidden" name="1yearAmount" value="<?=$payAmount[6][4]?>">
+       <input type="hidden" name="grade_star" value="스타6">
+       <input type="hidden" name="gradename" value="star6">
      </td>
-     <td><?=$payAmount[6][1]?>건</td>
+     <td>~<?=$payAmount[6][1]?>건</td>
      <td><?=number_format($payAmount[6][2])?>원
+       <input type="hidden" name="amount" value="<?=$payAmount[6][2]?>">
+       <input type="hidden" name="month" value="<?=1?>">
        <?php
        if((int)$row[0]<=(int)$payAmount[6][1]){
          echo $pay1;
        }
         ?>
      </td>
-     <td><?=number_format($payAmount[6][3])?>원
+     <!-- <td><?=number_format($payAmount[6][3])?>원
+       <input type="hidden" name="amount" value="<?=$payAmount[6][3]?>">
+       <input type="hidden" name="month" value="<?=1?>">
        <?php
        if((int)$row[0]<=(int)$payAmount[6][1]){
          echo $pay2;
        }
         ?>
-     </td>
+     </td> -->
      <td><?=number_format($payAmount[6][4])?>원
+       <input type="hidden" name="amount" value="<?=$payAmount[6][4]?>">
+       <input type="hidden" name="month" value="<?=3?>">
        <?php
        if((int)$row[0]<=(int)$payAmount[6][1]){
-         echo $pay3;
+         echo $pay1;
        }
         ?>
      </td>
-   </tr> -->
+     <td><?=number_format($payAmount[6][5])?>원
+       <input type="hidden" name="amount" value="<?=$payAmount[6][5]?>">
+       <input type="hidden" name="month" value="<?=12?>">
+       <?php
+       if((int)$row[0]<=(int)$payAmount[6][1]){
+         echo $pay1;
+       }
+        ?>
+     </td>
+   </tr>
  </table>
  <p>
    · 구매하신 상품은 구매와 동시에 선과금되며 사용 이력이 있는 경우 환불 불가합니다.<br>

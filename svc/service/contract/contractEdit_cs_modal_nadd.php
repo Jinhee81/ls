@@ -80,15 +80,18 @@
             </div>
         </div>
       </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-sm btn-secondary mr-0" data-dismiss="modal">닫기</button>
-        <button type="button" class="btn btn-sm btn-primary mr-0" id="button6">추가하기</button>
-        <button type="button" class="btn btn-sm btn-warning mr-0" id="buttonm2">청구설정</button>
-        <button type="button" class="btn btn-sm btn-warning mr-0" id="buttonm1">입금완료</button>
+      <div class="container">
+        <div class="modal-footer-n">
+          <button type="button" class="btn btn-sm btn-secondary mr-0" data-dismiss="modal">닫기</button>
+          <button type="button" class="btn btn-sm btn-primary mr-0" id="button6">추가하기</button>
+          <button type="button" class="btn btn-sm btn-warning mr-0" id="buttonm2">청구설정</button>
+          <button type="button" class="btn btn-sm btn-warning mr-0" id="buttonm1">입금완료</button>
+        </div>
+        <div class="container pl-3 pr-3">
+          <p class="pink" style="line-height:15px;font-size:small;">* 입금예정일 또는 입금완료일을 넣으면 해당날짜로 일괄 청구/입금처리 됩니다. 넣지 않으면 월단위로 청구/입금처리 됩니다. ^_^</p>
+        </div>
       </div>
-      <div class="container pl-3 pr-3">
-        <p class="pink" style="line-height:15px;font-size:small;">* 입금예정일 또는 입금완료일을 넣으면 해당날짜로 일괄 청구/입금처리 됩니다. 넣지 않으면 월단위로 청구/입금처리 됩니다. ^_^</p>
-      </div>
+
     </div>
   </div>
 </div>

@@ -119,6 +119,7 @@ include $_SERVER['DOCUMENT_ROOT']."/svc/view/service_footer.php";?>
 <script src="/svc/inc/js/etc/sms_noneparase4.js?<?=date('YmdHis')?>"></script>
 
 <script type="text/javascript">
+var buildingArray = <?php echo json_encode($buildingArray); ?>;
 var customerId = <?=$filtered_id?>;
 
 function maxlengthCheck(object){

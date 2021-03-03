@@ -148,7 +148,7 @@ if((int)$row_step[0]===0){
   <form method="post" action="p_realContract_edit.php">
     <div class="form-row">
         <div class="form-group col-md-2">
-              <label><b>[세입자정보]</b></label>
+              <label><b>[입주자정보]</b></label>
         </div>
         <div class="form-group col-md-10 inputWithIcon">
               <input type="text" class="form-control" name="customer" id="customer" value="<?=$output?>" disabled>
@@ -233,7 +233,7 @@ if((int)$row_step[0]===0){
               </div>
               <div class="form-group col-md-2 mb-0">
                     <label>종료일자</label>
-                    <input type="text" id="endDate" class="form-control" value="<?=$row_main['endDate']?>" readonly>
+                    <input type="text" id="endDate" name="endDate" class="form-control" value="<?=$row_main['endDate']?>" readonly>
               </div>
         </div>
       </div>
@@ -412,6 +412,16 @@ $("input[name='mvAmount']").on('keyup', function(){
 })
 
 $('#submitbtn').on('click', function(){
+  var startDate = $('input[name=startDate]').val();
+  var monthCount = Number($('input[name=monthCount]').val());
+
+  var arr1 = startDate.split('-');
+  var sDate = new Date(arr1[0], arr1[1]-1, arr1[2]);
+  var eDate = new Date(sDate.getFullYear(), sDate.getMonth() + monthCount, sDate.getDate()-1);
+
+  var endDate = dateFormat(eDate);
+
+  $('#endDate').val(endDate);
   $('form').submit();
 })
 

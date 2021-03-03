@@ -36,7 +36,7 @@ $new_endDate = date("Y-n-j", strtotime($new_startDate."+1 month"."-1 day"));
 if($row1[0]==='선납'){
   $new_expectedDate = date("Y-n-j", strtotime($new_startDate."-1 day"));
 } else if($row1[0]==='후납'){
-  $new_expectedDate = date("Y-n-j", strtotime($new_endDate."+1 day"));
+  $new_expectedDate = date("Y-n-j", strtotime($new_endDate));
 }
 
 $sql4 = "

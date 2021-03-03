@@ -73,6 +73,14 @@ select .selectCall{background-color: #A9D0F5;}
   text-decoration: underline;
 }
 
+.modalpay {
+  font-weight: bold;
+}
+
+.paySchedule {
+  font-style: italic;
+}
+
 .modalDescription {
   color:#04B486; /*글자 녹색*/
   text-decoration: underline;
@@ -90,7 +98,7 @@ li.page-item.active {
 
 .mainTable {
   height: auto;
-  max-height: 400px;
+  max-height: 500px;
   overflow: auto;
 }
 

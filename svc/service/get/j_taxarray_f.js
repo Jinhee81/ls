@@ -1,3 +1,5 @@
+//비고란 텍스트를 당분간 없애기로 함 - 2020.8.6
+
 var taxArray = [];
 
 $("#allselect").click(function(){
@@ -5,7 +7,7 @@ $("#allselect").click(function(){
   var allCnt = $(".tbodycheckbox").length;
   taxArray = [];
 
-  if($("#allselect").is(":checked")){
+  if($(this).is(":checked")){
     for (var i = 1; i <= allCnt; i++) {
       var taxArrayEle = [];
       var colOrder = Number(table.find("tr:eq("+i+")").find("td:eq(1)").text());//순번
@@ -32,7 +34,10 @@ $("#allselect").click(function(){
       var comment;//비고
 
       if(contractDiv==='room'){
-        comment = "기간 ("+startdate+"~"+enddate+", "+monthcount+"개월 이용료)";//비고
+        // comment = "기간 ("+startdate+"~"+enddate+", "+monthcount+"개월 이용료)";//비고
+        comment = '';
+      } else {
+        comment = '';
       }
 
       var acceptdiv = table.find("tr:eq("+i+")").find("td:eq(6)").text().trim();//입금구분
@@ -45,7 +50,7 @@ $("#allselect").click(function(){
   } else {
     taxArray = [];
   }
-  console.log(taxArray);
+//   console.log(taxArray);
 })
 
 $(document).on('change', '.tbodycheckbox', function(){
@@ -79,7 +84,8 @@ var taxArrayEle = [];
       var comment;//비고
 
       if(contractDiv==='room'){
-        comment = "기간 ("+startdate+"~"+enddate+", "+monthcount+"개월 이용료)";//비고
+        // comment = "기간 ("+startdate+"~"+enddate+", "+monthcount+"개월 이용료)";//비고
+        comment = '';
       } else {
         comment = '';
       }
@@ -91,10 +97,14 @@ var taxArrayEle = [];
 
       taxArray.push(taxArrayEle);
 
+      console.log(taxArray);
+
     } else {
 
       var currow = $(this).closest('tr');
       var dropOrder = Number(currow.find('td:eq(1)').text());
+
+      console.log(dropOrder);
 
       for (var i = 0; i < taxArray.length; i++) {
         // var join1 = taxArray[i].join(',');
@@ -113,6 +123,6 @@ var taxArrayEle = [];
       taxArray.splice(index, 1);
 
     } //if else closing}
-    console.log(taxArray);
+    // console.log(taxArray);
 
 })//tbodycheckbox change event closing}

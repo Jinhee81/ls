@@ -256,6 +256,8 @@ $(document).ready(function(){
     //     })
   })
 
+  customersearch();
+
   $('.dateType').datepicker({
     changeMonth: true,
     changeYear: true,
@@ -433,11 +435,11 @@ $('#frmSubmit').on('click', function(){
     return false;
   }
 
-  var amount1 = Number($("input[name='mAmount']").val());
-  if(amount1 === 0){
-    alert('공급가액은 0보다 커야 저장됩니다.');
-    return false;
-  }
+  // var amount1 = Number($("input[name='mAmount']").val());
+  // if(amount1 === 0){
+  //   alert('공급가액은 0보다 커야 저장됩니다.');
+  //   return false;
+  // } - 2020.8.7, 이건 좀 쓸데없는것같아서 주석처리함
 
   var amount1 = Number($("input[name='mAmount']").val());
   var amount2 = Number($("input[name='mvAmount']").val());

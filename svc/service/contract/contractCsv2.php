@@ -44,15 +44,15 @@ if(isset($_FILES['upfile']) && $_FILES['upfile']['name'] !== ""){
   $handle = fopen($file['tmp_name'], 'r');?>
 
 <section class="container">
-  <form method="post" action="contractCsv2_p.php">
+  <form method="post" action="contractCsv2_p0.php">
     <table class="table table-bordered text-center">
       <tr>
         <td>순번</td>
-        <td><span style='color:#F7BE81;'>* </span>물건명</td>
-        <td><span style='color:#F7BE81;'>* </span>그룹명</td>
-        <td><span style='color:#F7BE81;'>* </span>관리번호</td>
-        <td><span style='color:#F7BE81;'>* </span>성명</td>
-        <td>계약일자</td>
+        <td><span style='color:#F7BE81;'>* </span>물건idx</td>
+        <td><span style='color:#F7BE81;'>* </span>그룹idx</td>
+        <td><span style='color:#F7BE81;'>* </span>호수idx</td>
+        <td><span style='color:#F7BE81;'>* </span>입주자idx</td>
+        <td>계약일</td>
         <td><span style='color:#F7BE81;'>* </span>공급가액</td>
         <td><span style='color:#F7BE81;'>* </span>세액</td>
         <td><span style='color:#F7BE81;'>* </span>개월수</td>

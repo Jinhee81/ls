@@ -286,7 +286,7 @@ $(document).ready(function(){
       // console.log(query);
       if(query != ''){
         $.ajax({
-                url: 'ajax_customer_search2.php',
+                url: 'ajax_customer_search.php',
                 method: 'post',
                 data: {query : query, 'building':building},
                 success: function(data){

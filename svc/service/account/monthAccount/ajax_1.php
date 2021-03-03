@@ -1,6 +1,8 @@
 <!-- 이거는 지출입력화면에서의 ajax파일, 고정비입력화면에서의 ajax파일과 혼동하지 말것 -->
 <?php
 session_start();
+ini_set('display_errors', 1);
+ini_set('error_reporting', E_ALL);
 include $_SERVER['DOCUMENT_ROOT']."/svc/view/conn.php";
 
 // echo $_POST;
@@ -23,8 +25,10 @@ $result1 = mysqli_query($conn, $sql1);
 
 $total_rows = mysqli_num_rows($result1);
 
+// var_dump($total_rows);
+
 $allRows = array();
-if((int)$total_rows > 0 ){
+if($total_rows > 0 ){
   while($row1 = mysqli_fetch_array($result1)){
     $allRows[] = $row1;
 
@@ -65,7 +69,7 @@ if((int)$total_rows > 0 ){
 
   for ($i=0; $i < count($allRows); $i++) {
 
-    $amountGroupArray[$i] = [0,0,0];
+    $amountGroupArray[$i] = array(0, 0, 0);
     for ($j=0; $j < count($allRows[$i]['gName']); $j++) {
 
       $amountGroupArray[$i][0] += str_replace(",", "", $allRows[$i]['gName'][$j]['ptAmount']);
@@ -74,7 +78,7 @@ if((int)$total_rows > 0 ){
     }
   }
 
-  $amountTotalArray = [0,0,0,0];
+  $amountTotalArray = array(0,0,0,0);
 
   for ($i=0; $i < count($allRows); $i++) {
     $amountTotalArray[0] += count($allRows[$i]['gName']);

@@ -1,5 +1,6 @@
 <?php
-
+// ini_set('display_errors', 1);
+// ini_set('error_reporting', E_ALL);
 $filtered_id = mysqli_real_escape_string($conn, $_GET['id']);//계약번호
 settype($filtered_id, 'integer');
 
@@ -31,6 +32,7 @@ $sql = "
           mtAmount,
           count2,
           endDate2,
+          endDate3,
           realContract.createTime,
           realContract.updateTime
       from
@@ -86,7 +88,9 @@ $difference = count(array_diff_assoc($edited_period, $original_period));
 
 $currentDate = date('Y-m-d');
 // echo $currentDate;
-if($currentDate >= date('Y-m-d', strtotime($row['startDate'])) && $currentDate <= date('Y-m-d', strtotime($row['endDate2']))){
+if($row['endDate3']){
+  $status = '중간종료';
+} elseif($currentDate >= date('Y-m-d', strtotime($row['startDate'])) && $currentDate <= date('Y-m-d', strtotime($row['endDate2']))){
   $status = '현재';
 } elseif ($currentDate < date('Y-m-d', strtotime($row['startDate']))) {
   $status = '대기';
@@ -161,19 +165,33 @@ for ($i=0; $i < count($fileRows); $i++) {
   }
 }
 
+$sql_count = "select count(*)
+              from realContract_memo
+              where realContract_id={$filtered_id}";
+// echo $sql_count;
+$result_count = mysqli_query($conn, $sql_count);
+$row_count = mysqli_fetch_array($result_count);
+
+// print_r($row_count);echo '11';
+
+$memoLength = $row_count[0] + 1;
+
+// print_r($memoLength);
+
+
 $sql_memoS = "select
-                @num := @num + 1 as num,
+                @num := @num - 1 as num,
                 idrealContract_memo,
                 memoCreator,
                 memoContent,
                 created,
                 updated
               from
-                (select @num :=0)a,
+                (select @num :={$memoLength})a,
                 realContract_memo
               where realContract_id={$filtered_id}
               order by
-                num asc";
+                created desc";
 // echo $sql_memoS;
 $result_memoS = mysqli_query($conn, $sql_memoS);
 
@@ -197,7 +215,7 @@ $sql2 = "
             realContract_id
         FROM contractSchedule
         WHERE realContract_id = {$filtered_id}
-        order by ordered asc
+        order by ordered desc
         ";
 // echo $sql2;
 $result2 = mysqli_query($conn, $sql2);
@@ -224,6 +242,7 @@ for ($i=0; $i < count($allRows); $i++) {
                 monthCount,
                 TIMESTAMPDIFF(day, pExpectedDate, curdate()) as delaycount1,
                 TIMESTAMPDIFF(day, pExpectedDate, executiveDate) as delaycount2,
+                getdiv(pExpectedDate, executiveDate) as getdiv2,
                 taxSelect,
                 taxDate,
                 building_id as bid,
@@ -243,6 +262,37 @@ for ($i=0; $i < count($allRows); $i++) {
   }//if closing}
 
 }//for closing}
+
+$sql4 = "select ptAmount
+         from paySchedule2
+         where user_id={$_SESSION['id']} and
+               realContract_id = {$filtered_id} and
+               getdiv(pExpectedDate, executiveDate)='not_get_delay'";
+$result4 = mysqli_query($conn, $sql4);
+
+$num_rows = mysqli_num_rows($result4);
+// var_dump($num_rows);
+
+if($num_rows > 0){
+  $not_get_delay_amount = array();
+  while($row4 = mysqli_fetch_array($result4)){
+    $not_get_delay_amount[] = $row4;
+  }
+
+  // print_r($not_get_delay_amount);
+
+  for ($i=0; $i < count($not_get_delay_amount); $i++) {
+    $sum += str_replace(',', '', $not_get_delay_amount[$i]['ptAmount']);
+  }
+
+  // print_r($sum);
+
+  $sum = number_format($sum);
+} else {
+  $sum = 0;
+}
+
+
 
 // echo '------------';
 // print_r($allRows[17]);

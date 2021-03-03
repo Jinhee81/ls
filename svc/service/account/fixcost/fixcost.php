@@ -64,9 +64,9 @@ include $_SERVER['DOCUMENT_ROOT']."/svc/service/contract/building.php";
   </div>
 </section>
 
-<section id="allVals2">
+<!-- <section id="allVals2">
 
-</section>
+</section> -->
 
 <?php include "fixcost_add_modal.php"; ?>
 <?php include "fixcost_edit_modal.php"; ?>

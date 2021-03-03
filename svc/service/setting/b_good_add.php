@@ -41,10 +41,13 @@ $row = mysqli_fetch_array($result);
       </tr>
     </table>
     <div class='mt-7'>
-      <button type='submit' class='btn btn-primary ml-1'>저장</button>
+      <button type='submit' class='btn btn-primary ml-1'>추가</button>
       <a class='btn btn-secondary' href='building.php' role='button'>취소/돌아가기</a>
     </div>
   </form>
 </section>
 
 <?php include $_SERVER['DOCUMENT_ROOT']."/svc/view/service_footer.php";?>
+
+</body>
+</html>

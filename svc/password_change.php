@@ -1,13 +1,13 @@
 <?php
-session_start();
-if(!isset($_SESSION['is_login'])){
-  header('Location: /user/login.php');
-}
+// session_start();
+// if(!isset($_SESSION['is_login'])){
+//   header('Location: /user/login.php');
+// }
 ?>
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
   <head>
-    <title>비밀번호변경</title>
+    <title>비밀번호를 변경합니다</title>
 <?php
 include $_SERVER['DOCUMENT_ROOT']."/svc/view/service_header1_meta.php";
 include $_SERVER['DOCUMENT_ROOT']."/svc/view/service_header2.php";
@@ -22,8 +22,8 @@ $row = mysqli_fetch_array($result);
 
  ?>
 <section class="container">
-  <div class="jumbotron">
-    <h3 class="display-4">비밀번호를 변경합니다.</h3>
+  <div class="jumbotron pt-3 pb-3">
+    <h3 class="">비밀번호를 찾습니다.</h3>
     <hr class="my-4">
     <!-- <p>It uses utility classes for typography and spacing to space content out within the larger container.</p> -->
  </div>
@@ -31,18 +31,11 @@ $row = mysqli_fetch_array($result);
 
 <div class="container" style="max-width:500px;">
   <form class="" action="p_password_change.php" method="post">
-    <div class="form-group row">
-      <label for="" class="col-sm-4 col-form-label"><b>회원번호</b></label>
-      <label for="" class="col-sm-8 col-form-label"><?=$_SESSION['id']?></label>
-    </div>
+
     <div class="form-group row">
       <label for="" class="col-sm-4 col-form-label"><b>이메일</b></label>
-      <label for="" class="col-sm-8 col-form-label"><?=$row['email']?></label>
-    </div>
-    <div class="form-group row">
-      <label for="" class="col-sm-4 col-form-label"><b>비밀번호 변경</b></label>
       <div class="col-sm-8">
-        <input type="password" class="form-control" name="password1">
+        <input type="text" class="form-control" name="password1">
       </div>
     </div>
     <div class="form-group row">
@@ -54,12 +47,18 @@ $row = mysqli_fetch_array($result);
         </div>
       </div>
     </div>
-
-
-    <button type="submit" class="btn btn-sm btn-outline-info btn-block">수정하기</button>
+    <div class="text-center">
+      <button type="submit" class="btn btn-sm btn-outline-info">수정하기</button>
+    </div>
   </form>
 </div>
 
+<?php
+include $_SERVER['DOCUMENT_ROOT']."/svc/view/service_footer.php";
+?>
+
+<script src="/svc/inc/js/jquery-3.3.1.min.js"></script>
+<script src="/svc/inc/js/bootstrap.min.js"></script>
 <script>
 var pscheckval = false;
 
@@ -89,8 +88,3 @@ $('button[type=submit]').on('click', function(){
 
 
 </script>
-
-
-<?php
-include $_SERVER['DOCUMENT_ROOT']."/svc/view/service_footer.php";
-?>

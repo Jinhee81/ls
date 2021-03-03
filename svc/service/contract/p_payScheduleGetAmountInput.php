@@ -15,6 +15,7 @@ $filtered_id = mysqli_real_escape_string($conn, $_POST['realContract_id']);
 $sql = "
       UPDATE paySchedule2
       SET
+        pExpectedDate = '{$_POST['pExpectedDate']}',
         payKind = '{$_POST['paykind']}',
         executiveDate = '{$_POST['pgetdate']}',
         getAmount = '{$_POST['pgetAmount']}'

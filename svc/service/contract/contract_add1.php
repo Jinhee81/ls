@@ -430,10 +430,10 @@ $('#frmSubmit').on('click', function(){
   }
 
   var amount1 = Number($("input[name='mAmount']").val());
-  if(amount1 === 0){
-    alert('공급가액은 0보다 커야 저장됩니다.');
-    return false;
-  }
+  // if(amount1 === 0){
+  //   alert('공급가액은 0보다 커야 저장됩니다.');
+  //   return false;
+  // }
 
   var amount1 = Number($("input[name='mAmount']").val());
   var amount2 = Number($("input[name='mvAmount']").val());

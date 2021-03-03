@@ -12,10 +12,10 @@ $("#allselect").click(function(){
       var colid = "";
       var colgroup = "";
       var colroom = "";
-      var colcustomerName = table.find("tr:eq("+i+")").find("td:eq(3)").children('input[name=name]').val();//성명
-      var colcustomerCompany = table.find("tr:eq("+i+")").find("td:eq(3)").children('input[name=companyname]').val();//사업자명
-      var colcustomerContact = table.find("tr:eq("+i+")").find("td:eq(4)").children('a').text();
-      var colcustomerEmail = table.find("tr:eq("+i+")").find("td:eq(5)").children().val();
+      var colcustomerName = table.find("tr:eq("+i+")").find("td:eq(4)").children('input[name=name]').val();//성명
+      var colcustomerCompany = table.find("tr:eq("+i+")").find("td:eq(4)").children('input[name=companyname]').val();//사업자명
+      var colcustomerContact = table.find("tr:eq("+i+")").find("td:eq(5)").children('a').text();
+      var colcustomerEmail = table.find("tr:eq("+i+")").find("td:eq(6)").children().val();
       var colcustomerId = table.find("tr:eq("+i+")").find("td:eq(0)").children('input').val();
       var colexecutiveDate = "";
       var coltaxDate = "";
@@ -49,10 +49,10 @@ var smsReadyArrayEle = [];
       var colid = "";
       var colgroup = "";
       var colroom = "";
-      var colcustomerName = currow.find("td:eq(3)").children('input[name=name]').val();//성명
-      var colcustomerCompany = currow.find("td:eq(3)").children('input[name=companyname]').val();//사업자명
-      var colcustomerContact = currow.find("td:eq(4)").children('a').text();
-      var colcustomerEmail = currow.find("td:eq(5)").children().val();
+      var colcustomerName = currow.find("td:eq(4)").children('input[name=name]').val();//성명
+      var colcustomerCompany = currow.find("td:eq(4)").children('input[name=companyname]').val();//사업자명
+      var colcustomerContact = currow.find("td:eq(5)").children('a').text();
+      var colcustomerEmail = currow.find("td:eq(6)").children().val();
       var colcustomerId = currow.find("td:eq(0)").children('input').val();
       var colexecutiveDate = "";
       var coltaxDate = "";

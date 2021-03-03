@@ -34,7 +34,7 @@ $row = mysqli_fetch_array($result);
  </div>
 </section>
 
-<div class="container" style="max-width:500px;">
+<div class="container" style="max-width:600px;">
   <form class="" action="myinfo_edit_proccess.php" method="post">
     <div class="form-group row">
       <label for="" class="col-sm-3 col-form-label"><b>회원번호</b></label>
@@ -66,9 +66,15 @@ $row = mysqli_fetch_array($result);
       </div>
     </div>
     <div class="form-group row">
-      <label for="" class="col-sm-3 col-form-label"><b>연락처</b></label>
+      <label for="" class="col-sm-3 col-form-label"><b>담당자연락처</b></label>
       <div class="col-sm-9">
         <input type="text" class="form-control" name="cellphone" value="<?=$row['cellphone']?>">
+      </div>
+    </div>
+    <div class="form-group row">
+      <label for="" class="col-sm-3 col-form-label"><b>문자발송번호</b></label>
+      <div class="col-sm-9">
+        <input type="text" class="form-control" name="smsnumber" value="<?=$row['smsnumber']?>">
       </div>
     </div>
     <div class="form-group row">
@@ -107,7 +113,9 @@ $row = mysqli_fetch_array($result);
 
 
 <?php include $_SERVER['DOCUMENT_ROOT']."/svc/view/service_footer.php";?>
-<?php include $_SERVER['DOCUMENT_ROOT']."/svc/view/service_footer_script.php"; ?>
+
+<script src="/svc/inc/js/jquery-3.3.1.min.js"></script>
+<script src="/svc/inc/js/bootstrap.min.js"></script><!--툴팁함수호출하면 예쁘게부트스트랩표시가 됨-->
 
 </body>
 </html>

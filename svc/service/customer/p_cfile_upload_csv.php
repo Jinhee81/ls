@@ -21,7 +21,7 @@ foreach ($_POST as $key => $value) {
 }
 
 for ($i=0; $i < count($a)/12; $i++) {
-  $customerRow[$i]=array();
+  $customerRow[$i] = array();
 } //$customerRow 라는 배열을 만듦
 
 for ($i=0; $i < count($a); $i++) {

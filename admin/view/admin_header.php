@@ -34,6 +34,9 @@
           <li class="nav-item">
             <a class="nav-link" href="/admin/building_list.php">관리물건리스트</a>
           </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/admin/data/contract.php">계약데이타등록</a>
+          </li>
         </ul>
 
         <form class="form-inline my-2 my-lg-0">

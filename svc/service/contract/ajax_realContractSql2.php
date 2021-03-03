@@ -8,10 +8,10 @@ include $_SERVER['DOCUMENT_ROOT']."/svc/view/conn.php";
 // echo '111';
 
 include "ajax_realContractSql.php";
-echo $sql_count;
-echo $sql;
+echo $sql_count."<br>";
+echo $sql."<br>";
 
-print_r($_POST['form']).'<br>';
+print_r($_POST['form']); echo '<br>';
 
 print_r($a);
 

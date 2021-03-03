@@ -147,6 +147,7 @@ include "contractetc_edit_condi.php";
 
     <div class="mt-3">
       <button type='submit' class='btn btn-primary' id='saveBtn'>수정</button>
+      <button type='button' class='btn btn-danger' id='deleteBtn'>삭제</button>
       <a href='contractetc.php'><button type='button' class='btn btn-secondary'><i class="fas fa-angle-double-right"></i> 기타계약목록</button></a>
     </div>
   </form>

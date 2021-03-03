@@ -16,7 +16,7 @@ include $_SERVER['DOCUMENT_ROOT']."/svc/view/conn.php";
 
 <section class="container">
   <div class="jumbotron pt-3 pb-3">
-    <h3 class="">임대관리의 필요사항을 설정하세요!</h3>
+    <h3 class="">환경설정화면이에요(임대관리의 필요사항을 설정하세요!)</h3>
     <p class="lead">
     (1)'도레미고시원' 또는 '두드림센터' 등 평상시 관리하는 명칭을 적어주세요.<br>
     (2) 관리호수를 등록해야 리스맨 사용이 가능합니다. (관리호수란? '101호', '102호' 등의 명칭)<br>

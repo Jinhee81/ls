@@ -87,9 +87,9 @@ include "good.php";
 <!-- 삭제,등록,엑셀저장부분 -->
 <section class="container mb-2">
   <div class="row justify-content-end mr-0">
-    <a href="contractetc_add.php" role="button" class="btn btn-sm btn-primary mr-1">신규등록</a>
-    <button type="button" class="btn btn-sm btn-danger mr-1" name="rowDeleteBtn">선택삭제</button>
-    <button type="button" class="btn btn-info btn-sm" name="button" data-toggle="tooltip" data-placement="top" title="작업준비중입니다."><i class="far fa-file-excel"></i>엑셀저장</button>
+    <a href="contractetc_add.php" role="button" class="btn btn-sm btn-primary">신규등록</a>
+    <!-- <button type="button" class="btn btn-sm btn-danger mr-1" name="rowDeleteBtn">선택삭제</button> -->
+    <!-- <button type="button" class="btn btn-info btn-sm" name="button" data-toggle="tooltip" data-placement="top" title="작업준비중입니다."><i class="far fa-file-excel"></i>엑셀저장</button> -->
   </div>
 </section>
 
@@ -171,7 +171,7 @@ function maketable(){
           returns += '<td class=""><a href="tel:'+value.contact+'">'+value.contact+'</a></td>';
           returns += '<td class="mobile">'+value.pAmount+'</td>';
           returns += '<td class="mobile">'+value.pvAmount+'</td>';
-          returns += '<td class=""><a href="contractetc_edit.php?id='+value.eid+'" >'+value.ptAmount+'</a></td>';
+          returns += '<td class=""><a href="contractetc_edit.php?id='+value.eid+'" class=green>'+value.ptAmount+'</a></td>';
           returns += '<td class="">'+value.executiveDate+'</td>';
           returns += '<td class="mobile">'+value.payKind+'</td>';
           returns += '<td class="mobile"><label class="" data-toggle="tooltip" data-placement="top" data-title="'+value.eetc+'">'+value.etcmb+'</td>';

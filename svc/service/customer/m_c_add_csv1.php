@@ -44,15 +44,15 @@ include $_SERVER['DOCUMENT_ROOT']."/svc/view/conn.php";
       <tr>
         <td><span id='star' style='color:#F7BE81;'>* </span>구분</td>
         <td><span id='star' style='color:#F7BE81;'>* </span>구분2</td>
-        <td><span id='star' style='color:#F7BE81;'>* </span>성명</td>
-        <td><span id='star' style='color:#F7BE81;'>* </span>연락처</td>
+        <td>성명</td>
+        <td>연락처</td>
         <td>성별</td>
         <td>이메일</td>
         <td>사업자구분</td>
         <td>사업자명</td>
         <td>사업자번호</td>
         <td>업태</td>
-        <td>업종</td>
+        <td>종목</td>
         <td>특이사항</td>
       </tr>
       <tr>
@@ -171,17 +171,16 @@ include $_SERVER['DOCUMENT_ROOT']."/svc/view/conn.php";
         <td colspan="12" class="text-left font-weight-light">
           (1) <div class="badge badge-primary text-wrap" style="width: 3rem;">구분1</div> : '입주자','거래처','기타' 중 1개의 값만 넣으세요. 오타/띄어쓰기에 유의하여 주세요.(필수값)<br>
           (2) <div class="badge badge-primary text-wrap" style="width: 3rem;">구분2</div> : '개인','개인사업자','법인사업자' 중 1개의 값만 넣으세요. 오타/띄어쓰기에 유의하여 주세요.(필수값)<br>
-          (3) <div class="badge badge-primary text-wrap" style="width: 3rem;">성명</div> : 자유롭게 적어주는데 보통 사람이름을 적어주세요. 글자수는 20글자로 제한됩니다.<br>
+          (3) <div class="badge badge-primary text-wrap" style="width: 3rem;">성명</div> : 자유롭게 적어주는데 보통 사람이름을 적어주세요.<br>
           (4) <div class="badge badge-primary text-wrap" style="width: 3rem;">연락처</div> : '010-1234-1234' 형식으로 넣어주세요. 만약 유선번호일경우 반드시 지역번호 포함하여 '02-111-1234'로 '-'가 2개이며, 숫자만 입력되어야 합니다.<br>
           (5) <div class="badge badge-primary text-wrap" style="width: 3rem;">성별</div> : '남','여' 중 1개의 값만 넣으세요. 오타/띄어쓰기에 유의하여 주세요.<br>
-          (6) <div class="badge badge-primary text-wrap" style="width: 3rem;">이메일</div> : @를 포함한 이메일형식으로 넣어주세요. 글자수 40글자로 제한됩니다.<br>
+          (6) <div class="badge badge-primary text-wrap" style="width: 3rem;">이메일</div> : @를 포함한 이메일형식으로 넣어주세요.<br>
           (7) <div class="badge badge-primary text-wrap" style="width: 6rem;">법인사업자구분</div> : '주식회사','합자회사','유한회사' 중 1개의 값만 넣으세요. 오타/띄어쓰기에 유의하여 주세요.<br>
-          (8) <div class="badge badge-primary text-wrap" style="width: 4rem;">사업자명</div> : 사업자명을 적어주세요. 글자수는 14글자로 제한됩니다.<br>
+          (8) <div class="badge badge-primary text-wrap" style="width: 4rem;">사업자명</div> : 사업자명을 적어주세요.<br>
           (9) <div class="badge badge-primary text-wrap" style="width: 4rem;">사업자번호</div> : 사업자번호를 123-12-12345 형식으로 넣어주세요. 이 형식이 아닐경우 오류발생합니다.<br>
-          (10) <div class="badge badge-primary text-wrap" style="width: 3rem;">업태</div> : 사업자등록증에 기재된 업태를 자유롭게 적어주세요. 글자수는 9글자로 제한됩니다.<br>
-          (11) <div class="badge badge-primary text-wrap" style="width: 3rem;">종목</div> : 사업자등록증에 기재된 종목을 자유롭게 적어주세요. 글자수는 14글자로 제한됩니다.<br>
-
-          (12) <div class="badge badge-primary text-wrap" style="width: 4rem;">특이사항</div> : 자유롭게 적어주세요. 글자수는 47글자로 제한됩니다.
+          (10) <div class="badge badge-primary text-wrap" style="width: 3rem;">업태</div> : 사업자등록증에 기재된 업태를 자유롭게 적어주세요.<br>
+          (11) <div class="badge badge-primary text-wrap" style="width: 3rem;">종목</div> : 사업자등록증에 기재된 종목을 자유롭게 적어주세요.<br>
+          (12) <div class="badge badge-primary text-wrap" style="width: 4rem;">특이사항</div> : 자유롭게 적어주세요.
         </td>
       </tr>
     </table>

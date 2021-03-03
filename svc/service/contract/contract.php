@@ -28,6 +28,8 @@ $rowsms = array();
 while($row_sms = mysqli_fetch_array($result_sms)){
   $rowsms[] = $row_sms;
 }
+
+// print_r($_SESSION);
 ?>
 
 <!-- 제목 -->
@@ -35,9 +37,9 @@ while($row_sms = mysqli_fetch_array($result_sms)){
   <div class="jumbotron pt-3 pb-3">
     <h2 class="">계약목록이에요.(#201)</h2>
     <p class="lead">
-      (1) 상태(<span class="badge badge-info text-wrap" style="width: 3rem;">현재</span>, <span class="badge badge-warning text-wrap" style="width: 3rem;">대기</span>, <span class="badge badge-danger text-wrap" style="width: 3rem;">종료</span>)로 계약을 구분해요.<br>
+      (1) 상태(<span class="badge badge-info text-wrap" style="width: 3rem;">현재</span>, <span class="badge badge-warning text-wrap" style="width: 3rem;">대기</span>, <span class="badge badge-danger text-wrap" style="width: 3rem;">종료</span>, <span class="badge badge-danger text-wrap" style="width: 5rem;">중간종료</span>)로 계약을 구분해요.<br>
       (2) 임대료를 클릭하면 해당 계약의 상세페이지를 볼 수 있어요.<br>
-      (3) 계약만 등록된 상태 (clear)는 따로 조회 가능합니다 (현재, 종료, 대기 뒤 clear 선택함)
+      (3) 계약만 등록된 상태 (clear)는 따로 조회 가능합니다 (현재, 종료, 대기, 중간종료 뒤 clear 선택함)
     </p>
   </div>
 </section>
@@ -65,6 +67,7 @@ while($row_sms = mysqli_fetch_array($result_sms)){
                 <option value="pastMonth">전월</option>
                 <option value="nextMonth">익월</option>
                 <option value="1pastMonth">1개월전</option>
+                <option value="nownextMonth">당월익월</option>
                 <option value="nowYear">당년</option>
               </select><!--codi2-->
             </td>
@@ -81,6 +84,7 @@ while($row_sms = mysqli_fetch_array($result_sms)){
                 <option value="pIng" selected>현재</option>
                 <option value="pEnd">종료</option>
                 <option value="pWaiting">대기</option>
+                <option value="middleEnd">중간종료</option>
                 <option value="clear">clear</option>
               </select><!--codi5-->
             </td>
@@ -98,7 +102,7 @@ while($row_sms = mysqli_fetch_array($result_sms)){
                 <option value="customer">성명/사업자명</option>
                 <option value="contact">연락처</option>
                 <option value="contractId">계약번호</option>
-                <option value="roomId">방번호</option>
+                <option value="roomId">관리호수</option>
               </select><!--codi8-->
             </td>
             <td width="12%" class="">
@@ -137,6 +141,9 @@ while($row_sms = mysqli_fetch_array($result_sms)){
                   <a href="/svc/service/sms/sent.php">
                   <button class="btn btn-sm btn-block btn-dark" id="smsSettingBtn"><i class="fas fa-angle-double-right"></i> 보낸문자목록</button></a>
                 </td>
+                <td>
+                  <button type="button" class="btn btn-info btn-sm" id="excelbtn"><i class="far fa-file-excel"></i>엑셀양식</button>
+                </td>
               </tr>
             </table>
           </div>
@@ -145,9 +152,6 @@ while($row_sms = mysqli_fetch_array($result_sms)){
           <div class="row justify-content-end mr-0">
             <a href="contract_add2.php" role="button" class="btn btn-sm btn-primary mr-1">신규등록</a>
             <button type="button" class="btn btn-sm btn-danger mr-1" name="rowDeleteBtn" data-toggle="tooltip" data-placement="top" title="임대료 숫자 뒤 'c'표시된것만 삭제 가능합니다">선택삭제</button>
-            <button type="button" class="btn btn-info btn-sm" name="button" data-toggle="tooltip" data-placement="top" title="작업준비중입니다."><i class="far fa-file-excel"></i>엑셀저장</button>
-
-
           </div>
         </div>
     </div>
@@ -161,36 +165,40 @@ while($row_sms = mysqli_fetch_array($result_sms)){
 
 
 <!-- 표내용 -->
-<section class="container">
-  <div class="mainTable">
-    <table class="table table-hover table-bordered table-sm text-center" id="checkboxTestTbl">
-      <thead>
-        <tr class="table-secondary">
-          <th class="mobile fixedHeader">
-            <input type="checkbox" id="allselect">
-          </th>
-          <th class="fixedHeader">순번</th>
-          <th class="fixedHeader">상태</th>
-          <th class="fixedHeader">입주자</th>
-          <th class="fixedHeader">연락처</th>
-          <th class="mobile fixedHeader">그룹명</th>
-          <th class="fixedHeader">방번호</th>
-          <th class="mobile fixedHeader">시작일</th>
-          <th class="mobile fixedHeader">종료일</th>
-          <th class="mobile fixedHeader">기간</th>
-          <th class="fixedHeader">임대료</th>
-          <th class="fixedHeader">보증금</th>
-          <th class="mobile fixedHeader">
-            <span class="badge badge-light">파일</span>
-            <span class="badge badge-dark">메모</span>
-          </th>
-        </tr>
-      </thead>
-      <tbody id="allVals">
+<section class="row justify-content-center">
+  <div class="col-10">
+    <div class="mainTable">
+      <table class="table table-hover table-bordered table-sm text-center" id="checkboxTestTbl">
+        <thead>
+          <tr class="table-secondary">
+            <th class="fixedHeader">
+              <input type="checkbox" id="allselect">
+            </th>
+            <th class="fixedHeader">순번</th>
+            <th class="fixedHeader">상태</th>
+            <th class="fixedHeader">입주자</th>
+            <th class="fixedHeader">연락처</th>
+            <th class="mobile fixedHeader">물건명</th>
+            <th class="mobile fixedHeader">그룹명</th>
+            <th class="fixedHeader">관리호수</th>
+            <th class="mobile fixedHeader">시작일</th>
+            <th class="mobile fixedHeader">종료일</th>
+            <th class="mobile fixedHeader">기간</th>
+            <th class="fixedHeader">임대료</th>
+            <th class="mobile fixedHeader">보증금</th>
+            <th class="mobile fixedHeader">
+              <span class="badge badge-light">파일</span>
+              <span class="badge badge-dark">메모</span>
+            </th>
+          </tr>
+        </thead>
+        <tbody id="allVals">
 
-      </tbody>
-    </table>
+        </tbody>
+      </table>
+    </div>
   </div>
+
 </section>
 
 <!-- 페이지 -->
@@ -203,6 +211,8 @@ while($row_sms = mysqli_fetch_array($result_sms)){
 </section> -->
 
 <?php
+include $_SERVER['DOCUMENT_ROOT']."/svc/service/customer/modal_customer.php";
+
 include $_SERVER['DOCUMENT_ROOT']."/svc/service/sms/modal_sms1.php";
 include $_SERVER['DOCUMENT_ROOT']."/svc/service/sms/modal_sms2.php";
  ?>
@@ -217,6 +227,7 @@ include $_SERVER['DOCUMENT_ROOT']."/svc/service/sms/modal_sms2.php";
 <script src="/svc/inc/js/jquery.number.min.js"></script>
 <script src="/svc/inc/js/datepicker-ko.js"></script>
 <script src="/svc/inc/js/jquery-ui-timepicker-addon.js"></script>
+<script src="/svc/inc/js/autosize.min.js"></script>
 <script src="/svc/inc/js/etc/newdate8.js?<?=date('YmdHis')?>"></script>
 <script src="/svc/inc/js/etc/checkboxtable.js?<?=date('YmdHis')?>"></script>
 <script src="/svc/inc/js/etc/form.js?<?=date('YmdHis')?>"></script>
@@ -224,6 +235,8 @@ include $_SERVER['DOCUMENT_ROOT']."/svc/service/sms/modal_sms2.php";
 <script src="/svc/inc/js/etc/sms_existparase10.js?<?=date('YmdHis')?>"></script>
 
 <script type="text/javascript">
+  var lease_type = <?php echo json_encode($_SESSION['lease_type']); ?>;
+  var cellphone = <?php echo json_encode($_SESSION['cellphone']); ?>;
   var buildingArray = <?php echo json_encode($buildingArray); ?>;
   var groupBuildingArray = <?php echo json_encode($groupBuildingArray); ?>;
   var roomArray = <?php echo json_encode($roomArray); ?>;
@@ -241,32 +254,41 @@ include $_SERVER['DOCUMENT_ROOT']."/svc/service/sms/modal_sms2.php";
 
 <script>
 
+function getParameterByName(name) {
+  name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
+  var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
+      results = regex.exec(location.search);
+  return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
+}
+
 function sql(x,y){
-  var form = $('form').serialize();
-  var getCid, getProgress;
 
-  var a = location.search.split('customerId=');
-  var b = location.search.split('progress=');
-  // console.log(a);
 
-  if(a!=''){
-    getCid = window.location.search.match(/customerId=([^&]*)/)[1];
-  }
-  if(b!=''){
-    getProgress = window.location.search.match(/progress=([^&]*)/)[1];
-  }
+  var getCid = getParameterByName('customerId');
+  var getProgress = getParameterByName('progress');
+  var getDateDiv = getParameterByName('dateDiv');
 
   if(getProgress==='pAll'){
     $('select[name=progress]').val('pAll').prop('selected', true);
   }
+
+  if(getDateDiv==='endDate'){
+    $('select[name=dateDiv]').val('endDate').prop('selected', true);
+    $('select[name=periodDiv]').val('nownextMonth').prop('selected', true);
+    $('select[name=progress]').val('pAll').prop('selected', true);
+    $('input[name="fromDate"]').val(todayMonthFirst);
+    $('input[name="toDate"]').val(nextMonthLast);
+  }
+
+  var form = $('form').serialize();
+
   var sql = $.ajax({
     url: 'ajax_realContractSql2.php',
     method: 'post',
     data: {'form' : form,
            'pagerow' : x,
            'getPage' : y,
-           'customerId' : getCid,
-           'progress' : getProgress
+           'customerId' : getCid
           },
     success: function(data){
       $('#sql').html(data);
@@ -275,36 +297,53 @@ function sql(x,y){
   return sql;
 }
 
-function maketable(x,y){
-  var form = $('form').serialize();
-  var getCid, getProgress;
 
-  var a = location.search.split('customerId=');
-  var b = location.search.split('progress=');
-  // console.log(a);
+function maketable(x,y){
+  var getCid;
+
+  var a = getParameterByName('customerId');
+  var b = getParameterByName('progress');
+  var c = getParameterByName('dateDiv');
 
   if(a!=''){
-    getCid = window.location.search.match(/customerId=([^&]*)/)[1];
+    getCid = a;
   }
-  if(b!=''){
-    getProgress = window.location.search.match(/progress=([^&]*)/)[1];
-  }
-
-  if(getProgress==='pAll'){
+  if(b==='pAll'){
     $('select[name=progress]').val('pAll').prop('selected', true);
   }
+
+  if(c==='endDate'){
+    $('select[name=dateDiv]').val('endDate').prop('selected', true);
+    $('select[name=dateDiv]').attr('readonly', true);
+    $('select[name=periodDiv]').val('nownextMonth').prop('selected', true);
+    $('select[name=periodDiv]').attr('readonly', true);
+    $('select[name=progress]').val('pAll').prop('selected', true);
+    $('select[name=progress]').attr('readonly', true);
+    $('input[name="fromDate"]').val(todayMonthFirst);
+    $('input[name="fromDate"]').attr('readonly', true);
+    $('input[name="toDate"]').val(nextMonthLast);
+    $('input[name="toDate"]').attr('readonly', true);
+    $('select[name=building]').attr('readonly', true);
+    $('select[name=group]').attr('readonly', true);
+    $('select[name=etcCondi]').attr('readonly', true);
+    $('input[name="cText"]').attr('readonly', true);
+  }
+
+  var form = $('form').serialize();
+  // console.log(form);
+
   var mtable = $.ajax({
     url: 'ajax_realContractLoad.php',
     method: 'post',
     data: {'form' : form,
            'pagerow' : x,
            'getPage' : y,
-           'customerId' : getCid,
-           'progress' : getProgress
+           'customerId' : getCid
           },
     success: function(data){
       data = JSON.parse(data);
       datacount = data.length;
+      // console.log(datacount);
 
       var returns = '';
       var countall;
@@ -315,14 +354,14 @@ function maketable(x,y){
       // console.log(typeof(y), y);
 
       if(datacount===0){
-        returns ="<tr><td colspan='13'>조회값이 없어요. 조회조건을 다시 확인하거나 서둘러 입력해주세요!</td></tr>";
+        returns ="<tr><td colspan='14'>조회값이 없어요. 조회조건을 다시 확인하거나 서둘러 입력해주세요!</td></tr>";
         countall = 0;
       } else {
         $.each(data, function(key, value){
           countall = value.count;
           var ordered = Number(value.num) - ((y-1)*x);
           returns += '<tr>';
-          returns += '<td class="mobile"><input type="checkbox" name="rid" value="'+value.rid+'" class="tbodycheckbox"></td>';
+          returns += '<td class=""><input type="checkbox" name="rid" value="'+value.rid+'" class="tbodycheckbox"></td>';
           returns += '<td class="" data-toggle="tooltip" data-placement="top" title="'+value.rid+'">'+ordered+'</td>';
 
           if(value.status2==='present'){
@@ -331,16 +370,28 @@ function maketable(x,y){
             returns += '<td class=""><div class="badge badge-warning text-wrap" style="width: 3rem;">대기</div></td>';
           } if(value.status2==='the_end'){
             returns += '<td class=""><div class="badge badge-danger text-wrap" style="width: 3rem;">종료</div></td>';
+          } if(value.status2==='middle_end'){
+            returns += '<td class=""><div class="badge badge-danger text-wrap" style="width: 3rem;">중간종료</div></td>';
           }
 
-          returns += '<td class=""><a href="/svc/service/customer/m_c_edit.php?id='+value.cid+'" data-toggle="tooltip" data-placement="top" title="'+value.ccnn+'">'+value.ccnnmb+'</a>';
+          // returns += '<td class=""><a href="/svc/service/customer/m_c_edit.php?id='+value.cid+'" data-toggle="tooltip" data-placement="top" title="'+value.ccnn+'" target="_blank">'+value.ccnnmb+'</a>';
 
+          returns += '<td class=""><a href="/svc/service/customer/m_c_edit.php?id='+value.cid+'" data-toggle="modal" data-target="#eachpop" class="eachpop">'+value.ccnnmb+'</a>';
           returns += '<input type="hidden" name="customername" value="'+value.cname+'">';
-          returns += '<input type="hidden" name="customercompanyname" value="'+value.ccomname+'">';
+          returns += '<input type="hidden" name="customercompanyname" value="'+value.ccomname2+'">';
           returns += '<input type="hidden" name="email" value="'+value.email+'">';
-          returns += '<input type="hidden" name="customerId" value="'+value.cid+'"></td>';
+          returns += '<input type="hidden" name="etc" value="'+value.etc+'">';
+          returns += '<input type="hidden" name="customerId" value="'+value.cid+'">';
 
-          returns += '<td class=""><a href="tel:'+value.contact+'">'+value.contact+'</a></td>';
+          returns += '<input type="hidden" name="companyname" value="'+value.ccomname+'">';
+          returns += '<input type="hidden" name="div2" value="'+value.div2+'">';
+
+          returns += '</td>';
+
+          returns += '<td class=""><a href="tel:'+value.contact+'">'+value.contact+'</a>';
+
+          returns += '</td>';
+          returns += '<td class="mobile">'+value.bName+'</td>';
           returns += '<td class="mobile">'+value.gName+'</td>';
           returns += '<td class="">'+value.rName+'</td>';
           returns += '<td class="mobile">'+value.startDate+'</td>';
@@ -357,7 +408,7 @@ function maketable(x,y){
             returns += '</td>';
           }
 
-          returns += '<td><a href="contractEdit.php?page=deposit&id='+value.rid+'" class="green">'+value.deposit+'</a></td>';
+          returns += '<td class="mobile"><a href="contractEdit.php?page=deposit&id='+value.rid+'" class="green">'+value.deposit+'</a></td>';
 
           returns += '<td class="mobile">';
 
@@ -414,23 +465,28 @@ function maketable(x,y){
 }//function }
 
 function makesum(x,y){
-  var form = $('form').serialize();
-  var getCid, getProgress;
+  var getCid;
 
-  var a = location.search.split('customerId=');
-  var b = location.search.split('progress=');
-  // console.log(a);
+  var a = getParameterByName('customerId');
+  var b = getParameterByName('progress');
+  var c = getParameterByName('dateDiv');
 
   if(a!=''){
-    getCid = window.location.search.match(/customerId=([^&]*)/)[1];
+    getCid = a;
   }
-  if(b!=''){
-    getProgress = window.location.search.match(/progress=([^&]*)/)[1];
-  }
-
-  if(getProgress==='pAll'){
+  if(b==='pAll'){
     $('select[name=progress]').val('pAll').prop('selected', true);
   }
+
+  if(c==='endDate'){
+    $('select[name=dateDiv]').val('endDate').prop('selected', true);
+    $('select[name=periodDiv]').val('nownextMonth').prop('selected', true);
+    $('select[name=progress]').val('pAll').prop('selected', true);
+    $('input[name="fromDate"]').val(todayMonthFirst);
+    $('input[name="toDate"]').val(nextMonthLast);
+  }
+
+  var form = $('form').serialize();
 
   var sumvalue = $.ajax({
     url: 'ajax_realContractLoad_sum.php',
@@ -438,8 +494,7 @@ function makesum(x,y){
     data: {'form' : form,
            'pagerow' : x,
            'getPage' : y,
-           'customerId' : getCid,
-           'progress' : getProgress
+           'customerId' : getCid
           },
     success: function(data){
       $('#aa').html(data);
@@ -522,12 +577,14 @@ $(document).ready(function(){
 $('select[name=dateDiv]').on('change', function(){
   var pagerow = 50;
   var getPage = 1;
+  // history.replaceState({}, null, location.pahtname);
   maketable(pagerow, getPage);
   makesum(pagerow, getPage);
   // sql(pagerow, getPage);
 })
 
 $('select[name=periodDiv]').on('change', function(){
+  // history.replaceState({}, null, location.pahtname);
   var pagerow = 50;
   var getPage = 1;
   var periodDiv = $('select[name=periodDiv]').val();
@@ -539,6 +596,7 @@ $('select[name=periodDiv]').on('change', function(){
 })
 
 $('input[name=fromDate]').on('change', function(){
+  // history.replaceState({}, null, location.pahtname);이게 안되네 ㅠㅠ
   var pagerow = 50;
   var getPage = 1;
   maketable(pagerow, getPage);
@@ -608,16 +666,16 @@ $(document).on('change', '#allselect', function(){
         var contractArrayEle = [];
         var colOrder = table.find("tr:eq("+i+")").find("td:eq(1)").text().trim();
         var colid = table.find("tr:eq("+i+")").find("td:eq(0)").children('input').val();
-        var colStep = table.find("tr:eq("+i+")").find("td:eq(10)").children('div').text();
-        var colFile = table.find("tr:eq("+i+")").find("td:eq(11)").children('a:eq(0)').text();
-        var colMemo = table.find("tr:eq("+i+")").find("td:eq(11)").children('a:eq(1)').text();
+        var colStep = table.find("tr:eq("+i+")").find("td:eq(11)").children('div').text();
+        var colFile = table.find("tr:eq("+i+")").find("td:eq(13)").children('a:eq(0)').text();
+        var colMemo = table.find("tr:eq("+i+")").find("td:eq(13)").children('a:eq(1)').text();
         contractArrayEle.push(colOrder, colid, $.trim(colStep), colFile, colMemo);
         contractArray.push(contractArrayEle);
       }
     } else {
       contractArray = [];
     }
-  // console.log(contractArray);
+//   console.log(contractArray);
 })
 
 $(document).on('change', '.tbodycheckbox', function(){
@@ -627,9 +685,9 @@ $(document).on('change', '.tbodycheckbox', function(){
       var currow = $(this).closest('tr');
       var colOrder = Number(currow.find('td:eq(1)').text());
       var colid = currow.find('td:eq(0)').children('input').val();
-      var colStep = currow.find('td:eq(10)').children('div').text();
-      var colFile = currow.find("td:eq(11)").children('a:eq(0)').text();
-      var colMemo = currow.find("td:eq(11)").children('a:eq(1)').text();
+      var colStep = currow.find('td:eq(11)').children('div').text();
+      var colFile = currow.find("td:eq(13)").children('a:eq(0)').text();
+      var colMemo = currow.find("td:eq(13)").children('a:eq(1)').text();
       contractArrayEle.push(colOrder, colid, $.trim(colStep), colFile, colMemo);
       contractArray.push(contractArrayEle);
     } else {
@@ -687,6 +745,71 @@ function goCategoryPage(a, b, c){
 }
 
 }) //rowDeleteBtn function closing
+
+$('#excelbtn').on('click', function(){
+  var a = $('form').serialize();
+
+  goCategoryPage(a);
+
+  function goCategoryPage(a){
+    var frm = formCreate('exceldown', 'post', 'p_exceldown_contract.php','_blank');
+    frm = formInput(frm, 'form', a);
+    formSubmit(frm);
+  }
+})
+
+$(document).on('click', '.eachpop', function(){
+
+  var cid = $(this).siblings('input[name=customerId]').val();
+  $.ajax({
+    url: '../customer/ajax_customer.php',
+    method: 'post',
+    data: {'cid' : cid},
+    success: function(data){
+      data = JSON.parse(data);
+      // console.log(data.name);
+      $('input[name=id_m]').val(cid);
+      $('input[name=name_m]').val(data.name);
+      $('input[name=contact1_m]').val(data.contact1);
+      $('input[name=contact2_m]').val(data.contact2);
+      $('input[name=contact3_m]').val(data.contact3);
+      $('input[name=companyname_m]').val(data.companyname);
+      $('input[name=cNumber1_m]').val(data.cNumber1);
+      $('input[name=cNumber2_m]').val(data.cNumber2);
+      $('input[name=cNumber3_m]').val(data.cNumber3);
+      $('input[name=email_m]').val(data.email);
+      $('input[name=div4_m]').val(data.div4);
+      $('input[name=div5_m]').val(data.div5);
+      $('textarea[name=etc_m]').val(data.etc);
+      $('span[name=id_m]').text(cid);
+      $('span[name=created_m]').text(data.created);
+      $('span[name=updated_m]').text(data.updated);
+
+      if(data.div2==='개인'){
+        $('option[name=kind1]').attr('selected',true);
+      } else if(data.div2==='개인사업자'){
+        $('option[name=kind2]').attr('selected',true);
+      } else if(data.div2==='법인사업자'){
+        $('option[name=kind3]').attr('selected',true);
+      }
+
+      if(data.div3==='주식회사'){
+        $('option[name=a2]').attr('selected',true);
+      } else if(data.div3==='유한회사'){
+        $('option[name=a3]').attr('selected',true);
+      } else if(data.div3==='합자회사'){
+        $('option[name=a4]').attr('selected',true);
+      } else if(data.div3==='기타'){
+        $('option[name=a5]').attr('selected',true);
+      } else {
+        $('option[name=a1]').attr('selected',true);
+      }
+    }
+  })//ajax}
+
+})
+
+autosize($('textarea[name=etc_m]'));
 
 
 </script>

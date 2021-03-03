@@ -11,7 +11,7 @@ include $_SERVER['DOCUMENT_ROOT']."/svc/view/conn.php";
 // echo '111';
 if(isset($_POST['customerId'])){
   $getCondi = "and customer.id=".$_POST['customerId'];
-}
+} //이걸왜했지?나중에이유를 꼭 적자, 고객별로 계약리스트 추출하려고 했었네...
 
 parse_str($_POST['form'], $a);
 
@@ -41,16 +41,24 @@ if(isset($_POST['progress'])){
   $etcIng = "";
 } else {
   if($a['progress']==='pIng'){
-    $etcIng = " and getStatus(startDate, endDate2) = 'present'";
+    $etcIng = " and status2(startDate, endDate2, endDate3) = 'present'";
   } elseif($a['progress']==='pWaiting'){
-    $etcIng = " and getStatus(startDate, endDate2) = 'waiting'";
+    $etcIng = " and status2(startDate, endDate2, endDate3) = 'waiting'";
   } elseif($a['progress']==='pEnd'){
-    $etcIng = " and getStatus(startDate, endDate2) = 'the_end'";
+    $etcIng = " and status2(startDate, endDate2, endDate3) = 'the_end'";
+  } elseif($a['progress']==='middleEnd'){
+    $etcIng = " and status2(startDate, endDate2, endDate3) = 'middle_end'";
   } elseif($a['progress']==='pAll'){
     $etcIng = "";
   } elseif($a['progress']==='clear'){
     $etcIng = " and (select count(*) from paySchedule2 where realContract_id=realContract.id)=0";
   }
+}
+
+if($a['building']==='buildingAll'){
+  $buildingCondi = "";
+} else {
+  $buildingCondi = " and (realContract.building_id = {$a['building']})";
 }
 
 
@@ -84,12 +92,14 @@ $sql_count = "select count(*)
                   on realContract.group_in_building_id = group_in_building.id
               left join r_g_in_building
                   on realContract.r_g_in_building_id = r_g_in_building.id
-              where realContract.user_id = {$_SESSION['id']} and
-                    realContract.building_id = {$a['building']}
+              where realContract.user_id = {$_SESSION['id']}
+                    $buildingCondi
                     $etcDate $etcIng $groupCondi $etcCondi
                     $getCondi
               order by
                   group_in_building.id asc, r_g_in_building.id asc";
+
+// echo $sql_count;
 
 $result_count = mysqli_query($conn, $sql_count);
 $row_count = mysqli_fetch_array($result_count);
@@ -112,6 +122,8 @@ select
     customer.companyname as ccomname,
     customer.div2,
     customer.div3,
+    customer.div4,
+    customer.div5,
     customer.contact1,
     customer.contact2,
     customer.contact3,
@@ -119,17 +131,23 @@ select
     customer.cNumber2,
     customer.cNumber3,
     customer.email,
+    customer.etc,
+    customer.created,
+    customer.updated,
+    realContract.building_id,
     building.bName,
     realContract.group_in_building_id,
     group_in_building.gName,
     realContract.r_g_in_building_id,
     r_g_in_building.rName,
+    contractDate,
+    payOrder,
     startDate,
     endDate2,
     mAmount,
     mvAmount,
     mtAmount,
-    getStatus(startDate, endDate2) as status2,
+    status2(startDate, endDate2, endDate3) as status2,
     count2,
     (select count(*) from paySchedule2 where realContract_id=rid) as stepped
 from
@@ -143,8 +161,8 @@ left join group_in_building
     on realContract.group_in_building_id = group_in_building.id
 left join r_g_in_building
     on realContract.r_g_in_building_id = r_g_in_building.id
-where realContract.user_id = {$_SESSION['id']} and
-      realContract.building_id = {$a['building']}
+where realContract.user_id = {$_SESSION['id']}
+      $buildingCondi
       $etcDate $etcIng $groupCondi $etcCondi
       $getCondi
 order by

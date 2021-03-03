@@ -51,11 +51,15 @@ $(document).on('click', '.tbodycheckbox', function(){
     var AmountArrayEle = [];
 
     if($(this).is(":checked")){
+      var checkedCnt = $(".tbodycheckbox").filter(":checked").length;
       var currow = $(this).closest('tr');
       var colid = currow.find('td:eq(0)').children('input').val();
       var colpAmount = currow.find("td:eq(3)").text();
       var colpvAmount = currow.find("td:eq(4)").text();
       var colptAmount = currow.find("td:eq(5)").children('a').text();
+
+      console.log(colpAmount, colpvAmount, colptAmount);
+
       colpAmount = colpAmount.replace(/,/gi,'');
       colpAmount = Number(colpAmount);
       colpvAmount = colpvAmount.replace(/,/gi,'');
@@ -68,15 +72,16 @@ $(document).on('click', '.tbodycheckbox', function(){
       amountMoney[1] += colpvAmount;
       amountMoney[2] += colptAmount;
 
-      $('#ptAmountSelectCount').html(AmountArray.length);
+      $('#ptAmountSelectCount').html(checkedCnt);
       $('#pAmountSelectAmount').html(amountMoney[0]);
       $('#pAmountSelectAmount').number(true);
       $('#pvAmountSelectAmount').html(amountMoney[1]);
       $('#pvAmountSelectAmount').number(true);
       $('#ptAmountSelectAmount').html(amountMoney[2]);
       $('#ptAmountSelectAmount').number(true);
-      // console.log(ptAmountArray);
+      console.log(amountMoney);
     } else {
+      var checkedCnt = $(".tbodycheckbox").filter(":checked").length;
       var currow = $(this).closest('tr');
       var colid = currow.find('td:eq(0)').children('input').val();
       var colpAmount = currow.find("td:eq(3)").text();
@@ -95,13 +100,13 @@ $(document).on('click', '.tbodycheckbox', function(){
       amountMoney[1] -= colpvAmount;
       amountMoney[2] -= colptAmount;
 
-      $('#ptAmountSelectCount').html(AmountArray.length);
+      $('#ptAmountSelectCount').html(checkedCnt);
       $('#pAmountSelectAmount').html(amountMoney[0]);
       $('#pAmountSelectAmount').number(true);
       $('#pvAmountSelectAmount').html(amountMoney[1]);
       $('#pvAmountSelectAmount').number(true);
       $('#ptAmountSelectAmount').html(amountMoney[2]);
       $('#ptAmountSelectAmount').number(true);
-      // console.log(ptAmountArray);
+      console.log(amountMoney);
     }
 })

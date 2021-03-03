@@ -1,7 +1,9 @@
 <!-- 담당자명 항목이 있었는데 없애서 담당자명 부분을 주석처리함 -->
 <?php
-header('Content-Type: text/html; charset=UTF-8');
+ini_set('display_errors', 1);
+ini_set('error_reporting', E_ALL);
 session_start();
+header('Content-Type: text/html; charset=UTF-8');
 include $_SERVER['DOCUMENT_ROOT']."/svc/view/conn.php";
 
 // print_r($_POST);
@@ -25,14 +27,26 @@ $sql  = "
     WHERE
       id = {$_SESSION['id']}
     ";
+
+// echo $sql;
 $result = mysqli_query($conn, $sql);
 
 
-$_SESSION['user_div'] = $_POST['user_div'];
-$_SESSION['user_name'] = $filtered['user_name'];
-$_SESSION['manager_name'] = $filtered['manager_name'];
-$_SESSION['cellphone'] = $_POST['cellphone'];
-$_SESSION['lease_type'] = $_POST['lease_type'];
+$sql2 = "SELECT * FROM user WHERE id = {$_SESSION['id']}";
+$result2 = mysqli_query($conn, $sql2);
+$row2 = mysqli_fetch_array($result2);
+$_SESSION['user_div'] = $row2['user_div'];
+$_SESSION['user_name'] = $row2['user_name'];
+// $_SESSION['damdangga_name'] = $row['damdangga_name'];
+$_SESSION['cellphone'] = $row2['cellphone'];
+$_SESSION['lease_type'] = $row2['lease_type'];
+
+// echo $_SESSION['user_div'];
+// echo $_SESSION['user_name'];
+// echo $_SESSION['damdangga_name'];
+// echo $_SESSION['cellphone'];
+// echo $_SESSION['lease_type'];
+
 
 if($result2 === false){
     echo mysqli_error($conn);
@@ -42,6 +56,6 @@ if($result2 === false){
   window.location.href='myinfo.php';
   </script>";
 }
-// mysqli_close($conn);
+mysqli_close($conn);
 
 ?>

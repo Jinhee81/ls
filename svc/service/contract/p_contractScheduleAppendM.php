@@ -41,7 +41,7 @@ for ($i=0; $i < (int)$_POST['addMonth']; $i++) {
   if($row1['payOrder']==='선납'){
     $new_expectedDate = date("Y-n-j", strtotime($new_startDate."-1 day"));
   } else {
-    $new_expectedDate = date("Y-n-j", strtotime($new_endDate."+1 day"));
+    $new_expectedDate = date("Y-n-j", strtotime($new_endDate));
   }
   array_push($newArray[$i], $new_expectedDate);
 

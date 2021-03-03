@@ -10,7 +10,7 @@ include $_SERVER['DOCUMENT_ROOT']."/svc/view/conn.php";
 //1. step 이 clear인지 아닌지 (클리어이면 계약스케쥴 삭제하고 새로 생성함)
 
 
-// $customer_id = $_POST['customer'];
+$customer_id = $_POST['customer'];
 $filtered_id = mysqli_real_escape_string($conn, $_POST['contract']);
 
 date_default_timezone_set('Asia/Seoul'); //이거있어야지 시간대가 맞게설정됨, 없으면 시간대가 안맞아짐

@@ -15,6 +15,8 @@ if(isset($_POST['customerId'])){
 
 parse_str($_POST['form'], $a);
 
+// print_r($a);
+
 $currentDate = date('Y-m-d');
 
 if($a['dateDiv']==='startDate'){

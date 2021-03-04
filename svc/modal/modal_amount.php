@@ -18,8 +18,8 @@
          <div class="" id="amountlist">
          <?php
             include "./edit/3_schedule.php";
-            include "../modal/modal_nadd.php";//n개월추가모달
-            include "../modal/modal_regist.php";//청구설정모달
+            include "modal_nadd.php";//n개월추가모달
+            include "modal_regist.php";//청구설정모달
          ?>
          </div>
       </div>

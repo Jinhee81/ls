@@ -5,7 +5,9 @@ $sql = "select count(*) from building where user_id={$_SESSION['id']}";
 $result = mysqli_query($conn, $sql);
 $row = mysqli_fetch_array($result);
 
-if($row[0] === 0){
+// print_r($row);
+
+if((int)$row[0] === 0){
   echo "<meta http-equiv='refresh' content='0; url=/svc/service/setting/building.php'>";
 } else {
   $sql2 = "select id from building where user_id = {$_SESSION['id']}";
@@ -18,12 +20,10 @@ if($row[0] === 0){
   $result3 = mysqli_query($conn, $sql3);
   $row3 = mysqli_fetch_array($result3);
 
-  if($row3[0]===0){
+  if((int)$row3[0]===0){
     echo "<meta http-equiv='refresh' content='0; url=/svc/service/setting/building.php'>";
   }
 }
-
-
 
 
 // print_r($_SESSION);

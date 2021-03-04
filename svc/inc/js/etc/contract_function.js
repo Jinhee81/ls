@@ -139,7 +139,7 @@ function maketable(x,y){
           returns += '<td class="" name=room>'+value.rName+'</td>';
           returns += '<td class="mobile" name=startDate>'+value.startDate+'</td>';
           returns += '<td class="mobile" name=endDate>'+value.endDate2+'</td>';
-          returns += '<td class="mobile" name=period><a href="contractEdit6.php?&id='+value.rid+'" class="green" target=_blank><u>'+value.count2+'</u></a></td>';
+          returns += '<td class="mobile" name=period><a href="contractEdit.php?&id='+value.rid+'" class="green" target=_blank><u>'+value.count2+'</u></a></td>';
           returns += '<td class="" name=amount><span class="green contractAmount" data-toggle="modal" data-target="#modal_amount">'+value.mtAmount+'</span>';
 
           returns += '<input type="hidden" name="contractId" value="'+value.rid+'">';

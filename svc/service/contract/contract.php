@@ -7,7 +7,7 @@ if(!isset($_SESSION['is_login'])){
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
   <head>
-    <title>임대계약</title>
+    <title>임대계약목록</title>
 <?php
 include $_SERVER['DOCUMENT_ROOT']."/svc/view/service_header1_meta.php";
 include $_SERVER['DOCUMENT_ROOT']."/svc/view/service_header2.php";
@@ -32,6 +32,19 @@ while($row_sms = mysqli_fetch_array($result_sms)){
 // print_r($_SESSION);
 ?>
 
+<style>
+
+ /* 세금계산서 iframe 크기 조절  */
+.popup_iframe{position:fixed;left:0;right:0;top:0;bottom:0;z-index:9999;width:100%;height:100%;display:none;}
+
+#wrap {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+}
+
+</style>
+
 <!-- 제목 -->
 <section class="container">
   <div class="jumbotron pt-3 pb-3">
@@ -43,7 +56,6 @@ while($row_sms = mysqli_fetch_array($result_sms)){
     </p>
   </div>
 </section>
-
 
 <!-- 조회조건 -->
 <section class="container">
@@ -166,9 +178,9 @@ while($row_sms = mysqli_fetch_array($result_sms)){
 
 <!-- 표내용 -->
 <section class="row justify-content-center">
-  <div class="col-10">
+  <div class="container">
     <div class="mainTable">
-      <table class="table table-hover table-bordered table-sm text-center" id="checkboxTestTbl">
+      <table class="table table-hover table-bordered table-sm text-center" id="checkboxTestTbl" name=outsideTable>
         <thead>
           <tr class="table-secondary">
             <th class="fixedHeader">
@@ -215,6 +227,13 @@ include $_SERVER['DOCUMENT_ROOT']."/svc/service/customer/modal_customer.php";
 
 include $_SERVER['DOCUMENT_ROOT']."/svc/service/sms/modal_sms1.php";
 include $_SERVER['DOCUMENT_ROOT']."/svc/service/sms/modal_sms2.php";
+include $_SERVER['DOCUMENT_ROOT']."/svc/modal/modal_amount.php";
+include $_SERVER['DOCUMENT_ROOT']."/svc/modal/modal_deposit.php";
+include $_SERVER['DOCUMENT_ROOT']."/svc/modal/modal_file.php";
+include $_SERVER['DOCUMENT_ROOT']."/svc/modal/modal_memo.php";
+include $_SERVER['DOCUMENT_ROOT']."/svc/modal/modal_nadd.php";
+include $_SERVER['DOCUMENT_ROOT']."/svc/modal/modal_regist.php";
+
  ?>
 
 <?php include $_SERVER['DOCUMENT_ROOT']."/svc/view/service_footer.php"; ?>
@@ -230,9 +249,11 @@ include $_SERVER['DOCUMENT_ROOT']."/svc/service/sms/modal_sms2.php";
 <script src="/svc/inc/js/autosize.min.js"></script>
 <script src="/svc/inc/js/etc/newdate8.js?<?=date('YmdHis')?>"></script>
 <script src="/svc/inc/js/etc/checkboxtable.js?<?=date('YmdHis')?>"></script>
+<script src="/svc/inc/js/etc/modal_table.js?<?=date('YmdHis')?>"></script>
 <script src="/svc/inc/js/etc/form.js?<?=date('YmdHis')?>"></script>
 <script src="/svc/inc/js/etc/sms_noneparase3.js?<?=date('YmdHis')?>"></script>
 <script src="/svc/inc/js/etc/sms_existparase10.js?<?=date('YmdHis')?>"></script>
+<!-- <script src="/svc/inc/js/etc/uploadfile.js?<?=date('YmdHis')?>"></script> -->
 
 <script type="text/javascript">
   var lease_type = <?php echo json_encode($_SESSION['lease_type']); ?>;
@@ -249,260 +270,12 @@ include $_SERVER['DOCUMENT_ROOT']."/svc/service/sms/modal_sms2.php";
 <script src="/svc/inc/js/etc/building.js?<?=date('YmdHis')?>"></script>
 
 <script type="text/javascript" src="js_sms_array_rcontract.js?<?=date('YmdHis')?>"></script>
-<script type="text/javascript" src="j_checksum_c.js?<?=date('YmdHis')?>"></script>
-
+<script type="text/javascript" src="j_checksum_c0.js?<?=date('YmdHis')?>"></script>
+<script type="text/javascript" src="/svc/inc/js/etc/customer.js?<?=date('YmdHis')?>"></script>
+<script type="text/javascript" src="/svc/inc/js/etc/contract_function.js?<?=date('YmdHis')?>"></script>
+<script type="text/javascript" src="/svc/inc/js/etc/ce_pl_f2.js?<?=date('YmdHis')?>"></script>
 
 <script>
-
-function getParameterByName(name) {
-  name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
-  var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
-      results = regex.exec(location.search);
-  return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
-}
-
-function sql(x,y){
-
-
-  var getCid = getParameterByName('customerId');
-  var getProgress = getParameterByName('progress');
-  var getDateDiv = getParameterByName('dateDiv');
-
-  if(getProgress==='pAll'){
-    $('select[name=progress]').val('pAll').prop('selected', true);
-  }
-
-  if(getDateDiv==='endDate'){
-    $('select[name=dateDiv]').val('endDate').prop('selected', true);
-    $('select[name=periodDiv]').val('nownextMonth').prop('selected', true);
-    $('select[name=progress]').val('pAll').prop('selected', true);
-    $('input[name="fromDate"]').val(todayMonthFirst);
-    $('input[name="toDate"]').val(nextMonthLast);
-  }
-
-  var form = $('form').serialize();
-
-  var sql = $.ajax({
-    url: 'ajax_realContractSql2.php',
-    method: 'post',
-    data: {'form' : form,
-           'pagerow' : x,
-           'getPage' : y,
-           'customerId' : getCid
-          },
-    success: function(data){
-      $('#sql').html(data);
-    }
-  })
-  return sql;
-}
-
-
-function maketable(x,y){
-  var getCid;
-
-  var a = getParameterByName('customerId');
-  var b = getParameterByName('progress');
-  var c = getParameterByName('dateDiv');
-
-  if(a!=''){
-    getCid = a;
-  }
-  if(b==='pAll'){
-    $('select[name=progress]').val('pAll').prop('selected', true);
-  }
-
-  if(c==='endDate'){
-    $('select[name=dateDiv]').val('endDate').prop('selected', true);
-    $('select[name=dateDiv]').attr('readonly', true);
-    $('select[name=periodDiv]').val('nownextMonth').prop('selected', true);
-    $('select[name=periodDiv]').attr('readonly', true);
-    $('select[name=progress]').val('pAll').prop('selected', true);
-    $('select[name=progress]').attr('readonly', true);
-    $('input[name="fromDate"]').val(todayMonthFirst);
-    $('input[name="fromDate"]').attr('readonly', true);
-    $('input[name="toDate"]').val(nextMonthLast);
-    $('input[name="toDate"]').attr('readonly', true);
-    $('select[name=building]').attr('readonly', true);
-    $('select[name=group]').attr('readonly', true);
-    $('select[name=etcCondi]').attr('readonly', true);
-    $('input[name="cText"]').attr('readonly', true);
-  }
-
-  var form = $('form').serialize();
-  // console.log(form);
-
-  var mtable = $.ajax({
-    url: 'ajax_realContractLoad.php',
-    method: 'post',
-    data: {'form' : form,
-           'pagerow' : x,
-           'getPage' : y,
-           'customerId' : getCid
-          },
-    success: function(data){
-      data = JSON.parse(data);
-      datacount = data.length;
-      // console.log(datacount);
-
-      var returns = '';
-      var countall;
-      var monthlyAmount = 0;
-      var depositAmount = 0;
-
-      // console.log(typeof(x), x);
-      // console.log(typeof(y), y);
-
-      if(datacount===0){
-        returns ="<tr><td colspan='14'>조회값이 없어요. 조회조건을 다시 확인하거나 서둘러 입력해주세요!</td></tr>";
-        countall = 0;
-      } else {
-        $.each(data, function(key, value){
-          countall = value.count;
-          var ordered = Number(value.num) - ((y-1)*x);
-          returns += '<tr>';
-          returns += '<td class=""><input type="checkbox" name="rid" value="'+value.rid+'" class="tbodycheckbox"></td>';
-          returns += '<td class="" data-toggle="tooltip" data-placement="top" title="'+value.rid+'">'+ordered+'</td>';
-
-          if(value.status2==='present'){
-            returns += '<td class=""><div class="badge badge-info text-wrap" style="width: 3rem;">현재</div></td>';
-          } if(value.status2==='waiting'){
-            returns += '<td class=""><div class="badge badge-warning text-wrap" style="width: 3rem;">대기</div></td>';
-          } if(value.status2==='the_end'){
-            returns += '<td class=""><div class="badge badge-danger text-wrap" style="width: 3rem;">종료</div></td>';
-          } if(value.status2==='middle_end'){
-            returns += '<td class=""><div class="badge badge-danger text-wrap" style="width: 3rem;">중간종료</div></td>';
-          }
-
-          // returns += '<td class=""><a href="/svc/service/customer/m_c_edit.php?id='+value.cid+'" data-toggle="tooltip" data-placement="top" title="'+value.ccnn+'" target="_blank">'+value.ccnnmb+'</a>';
-
-          returns += '<td class=""><a href="/svc/service/customer/m_c_edit.php?id='+value.cid+'" data-toggle="modal" data-target="#eachpop" class="eachpop">'+value.ccnnmb+'</a>';
-          returns += '<input type="hidden" name="customername" value="'+value.cname+'">';
-          returns += '<input type="hidden" name="customercompanyname" value="'+value.ccomname2+'">';
-          returns += '<input type="hidden" name="email" value="'+value.email+'">';
-          returns += '<input type="hidden" name="etc" value="'+value.etc+'">';
-          returns += '<input type="hidden" name="customerId" value="'+value.cid+'">';
-
-          returns += '<input type="hidden" name="companyname" value="'+value.ccomname+'">';
-          returns += '<input type="hidden" name="div2" value="'+value.div2+'">';
-
-          returns += '</td>';
-
-          returns += '<td class=""><a href="tel:'+value.contact+'">'+value.contact+'</a>';
-
-          returns += '</td>';
-          returns += '<td class="mobile">'+value.bName+'</td>';
-          returns += '<td class="mobile">'+value.gName+'</td>';
-          returns += '<td class="">'+value.rName+'</td>';
-          returns += '<td class="mobile">'+value.startDate+'</td>';
-          returns += '<td class="mobile">'+value.endDate2+'</td>';
-          returns += '<td class="mobile">'+value.count2+'</td>';
-          returns += '<td class=""><a href="contractEdit.php?page=schedule&id='+value.rid+'" class="green">'+value.mtAmount+'</a>';
-
-          returns += '<input type="hidden" name="mAmount" value="'+value.mAmount+'">';
-          returns += '<input type="hidden" name="mvAmount" value="'+value.mvAmount+'">';
-
-          if(value.step==='clear'){
-            returns += '<div class="badge badge-warning text-light" style="width: 1rem;">c</div></td>';
-          } else {
-            returns += '</td>';
-          }
-
-          returns += '<td class="mobile"><a href="contractEdit.php?page=deposit&id='+value.rid+'" class="green">'+value.deposit+'</a></td>';
-
-          returns += '<td class="mobile">';
-
-          if(value.filecount > 0){
-            returns += '<a href="contractEdit.php?page=file&id='+value.rid+'" class="badge badge-light">'+value.filecount+'</a>';
-          }
-
-          if(value.memocount > 0){
-            returns += '<a href="contractEdit.php?page=memo&id='+value.rid+'" class="badge badge-dark">'+value.memocount+'</a>';
-          }
-
-          // returns += value.stepped + '</td>';
-          returns += '</td>';
-          returns += '</tr>';
-
-          var pMonthlyAmount = value.mtAmount.replace(/,/gi,'');
-          var pDepositAmount = value.deposit.replace(/,/gi,'');
-
-          // monthlyAmount += Number(pMonthlyAmount);
-          // depositAmount += Number(pDepositAmount);
-          var monthlyAmount = value.amount1;
-          var depositAmount = value.amount2;
-
-        })
-      }
-      $('#allVals').html(returns);
-      $('#countall').text(countall);
-      $('#aa').text(monthlyAmount);
-      $('#aa').number(true);
-      $('#bb').text(depositAmount);
-      $('#bb').number(true);
-
-      var totalpage = Math.ceil(Number(countall)/Number(x));
-
-      var totalpageArray = [];
-
-      for (var i = 1; i <= totalpage; i++) {
-        totalpageArray.push(i);
-      }
-
-      var paging = '<nav aria-label="..."><ul class="pagination pagination-sm justify-content-center">';
-
-      for (var i = 1; i <= totalpageArray.length; i++) {
-        paging += '<li class="page-item"><a class="page-link">'+i+'</a></li>';
-      }
-
-      paging += '</ul></nav>';
-
-      $('#page').html(paging);
-    }//success}
-  })//ajax }
-
-  return mtable;
-}//function }
-
-function makesum(x,y){
-  var getCid;
-
-  var a = getParameterByName('customerId');
-  var b = getParameterByName('progress');
-  var c = getParameterByName('dateDiv');
-
-  if(a!=''){
-    getCid = a;
-  }
-  if(b==='pAll'){
-    $('select[name=progress]').val('pAll').prop('selected', true);
-  }
-
-  if(c==='endDate'){
-    $('select[name=dateDiv]').val('endDate').prop('selected', true);
-    $('select[name=periodDiv]').val('nownextMonth').prop('selected', true);
-    $('select[name=progress]').val('pAll').prop('selected', true);
-    $('input[name="fromDate"]').val(todayMonthFirst);
-    $('input[name="toDate"]').val(nextMonthLast);
-  }
-
-  var form = $('form').serialize();
-
-  var sumvalue = $.ajax({
-    url: 'ajax_realContractLoad_sum.php',
-    method: 'post',
-    data: {'form' : form,
-           'pagerow' : x,
-           'getPage' : y,
-           'customerId' : getCid
-          },
-    success: function(data){
-      $('#aa').html(data);
-    }
-  })
-
-  return sumvalue;
-}
 
 // $(document).on('blur', '[data-toggle="tooltip"]', function(){
 //   $(this).tooltip();
@@ -569,10 +342,11 @@ $(document).ready(function(){
       // sql(pagerow, getPage);
     })
 
+    $('input.amountNumber').number(true);
+
 
 })
 //===========document.ready function end and the other load start!
-
 
 $('select[name=dateDiv]').on('change', function(){
   var pagerow = 50;
@@ -654,11 +428,13 @@ $('input[name=cText]').on('keyup', function(){
 })
 //---------조회버튼클릭평션 end and contractArray 펑션 시작--------------//
 
-var contractArray = [];
+let contractArray = [];
+// let table = $('#checkboxTestTbl');
 
 $(document).on('change', '#allselect', function(){
 
     var allCnt = $(".tbodycheckbox", table).length;
+    console.log(allCnt);
     contractArray = [];
 
     if($("#allselect").is(":checked")){
@@ -672,10 +448,12 @@ $(document).on('change', '#allselect', function(){
         contractArrayEle.push(colOrder, colid, $.trim(colStep), colFile, colMemo);
         contractArray.push(contractArrayEle);
       }
+      // console.log('checked');
     } else {
       contractArray = [];
+      // console.log('unchecked');
     }
-//   console.log(contractArray);
+  console.log(contractArray);
 })
 
 $(document).on('change', '.tbodycheckbox', function(){
@@ -702,7 +480,7 @@ $(document).on('change', '.tbodycheckbox', function(){
       }
       contractArray.splice(index, 1);
     }
-    // console.log(contractArray);
+    console.log(contractArray);
     // console.log(typeof(contractArray[3]));
 })
 
@@ -748,8 +526,9 @@ function goCategoryPage(a, b, c){
 
 $('#excelbtn').on('click', function(){
   var a = $('form').serialize();
+  console.log(a);
 
-  goCategoryPage(a);
+  // goCategoryPage(a);
 
   function goCategoryPage(a){
     var frm = formCreate('exceldown', 'post', 'p_exceldown_contract.php','_blank');
@@ -761,60 +540,126 @@ $('#excelbtn').on('click', function(){
 $(document).on('click', '.eachpop', function(){
 
   var cid = $(this).siblings('input[name=customerId]').val();
-  $.ajax({
-    url: '../customer/ajax_customer.php',
-    method: 'post',
-    data: {'cid' : cid},
-    success: function(data){
-      data = JSON.parse(data);
-      // console.log(data.name);
-      $('input[name=id_m]').val(cid);
-      $('input[name=name_m]').val(data.name);
-      $('input[name=contact1_m]').val(data.contact1);
-      $('input[name=contact2_m]').val(data.contact2);
-      $('input[name=contact3_m]').val(data.contact3);
-      $('input[name=companyname_m]').val(data.companyname);
-      $('input[name=cNumber1_m]').val(data.cNumber1);
-      $('input[name=cNumber2_m]').val(data.cNumber2);
-      $('input[name=cNumber3_m]').val(data.cNumber3);
-      $('input[name=email_m]').val(data.email);
-      $('input[name=div4_m]').val(data.div4);
-      $('input[name=div5_m]').val(data.div5);
-      $('textarea[name=etc_m]').val(data.etc);
-      $('span[name=id_m]').text(cid);
-      $('span[name=created_m]').text(data.created);
-      $('span[name=updated_m]').text(data.updated);
 
-      if(data.div2==='개인'){
-        $('option[name=kind1]').attr('selected',true);
-      } else if(data.div2==='개인사업자'){
-        $('option[name=kind2]').attr('selected',true);
-      } else if(data.div2==='법인사업자'){
-        $('option[name=kind3]').attr('selected',true);
-      }
-
-      if(data.div3==='주식회사'){
-        $('option[name=a2]').attr('selected',true);
-      } else if(data.div3==='유한회사'){
-        $('option[name=a3]').attr('selected',true);
-      } else if(data.div3==='합자회사'){
-        $('option[name=a4]').attr('selected',true);
-      } else if(data.div3==='기타'){
-        $('option[name=a5]').attr('selected',true);
-      } else {
-        $('option[name=a1]').attr('selected',true);
-      }
-    }
-  })//ajax}
-
+  m_customer(cid);
 })
 
 autosize($('textarea[name=etc_m]'));
 
 
+//=====================
+
+
+$(document).on('click', '.contractAmount', function(){
+
+  var ccid = $(this).siblings('input[name=contractId]').val();
+  let customerId = $(this).parent('td[name=amount]').siblings('td[name=customer]').children('input[name=customerId]').val();
+  var cccustomer = $(this).parent().siblings('td[name=customer]').find('input[name=ccnn2]').val();
+  var ccroom = $(this).parent().siblings('td[name=room]').text();
+  let buildingId = $(this).parent().siblings('td[name=building]').children('input[name=buildingId]').val();
+  ccid = Number(ccid);
+  buildingId = Number(buildingId);
+  let mtAmount = $(this).text();
+  let mAmount = $(this).siblings('input[name=mAmount]').val();
+  let mvAmount = $(this).siblings('input[name=mvAmount]').val();
+  let payOrder = $(this).siblings('input[name=payOrder]').val();
+  let url = '../../ajax/ajax_amountlist.php';
+
+  $('span.mtitle').text('임대료 내역');
+  $('span.contractNumber').text(ccid);
+  $('span.customer11').text(cccustomer);
+  $('span.room11').text(ccroom);
+  $('#mAmount_m').val(mAmount);
+  $('#mvAmount_m').val(mvAmount);
+  $('#mtAmount_m').val(mtAmount);
+  $('#payOrder_m').val(payOrder);
+  $('#customerId_m').val(customerId);
+  $('#buildingId_m').val(buildingId);
+
+  amountlist(ccid, url);
+})
+
+$(document).on('click', '.modaldeposit', function(){
+
+  var ccid = $(this).parent().siblings('td[name=checkbox]').find('input[name=rid]').val();
+  var cccustomer = $(this).parent().siblings('td[name=customer]').find('input[name=ccnn2]').val();
+  var ccroom = $(this).parent().siblings('td[name=room]').text();
+  ccid = Number(ccid);
+
+  $('span.mtitle').text('보증금');
+  $('span.contractNumber').text(ccid);
+  $('span.customer11').text(cccustomer);
+  $('span.room11').text(ccroom);
+
+  depositlist(ccid);
+})
+
+$(document).on('click', '.modalfile', function(){
+  var ccid = $(this).parent().siblings('td[name=checkbox]').find('input[name=rid]').val();
+  var cccustomer = $(this).parent().siblings('td[name=customer]').find('input[name=ccnn2]').val();
+  var ccroom = $(this).parent().siblings('td[name=room]').text();
+  ccid = Number(ccid);
+
+  $('span.mtitle').text('첨부파일');
+  $('span.contractNumber').text(ccid);
+  $('span.customer11').text(cccustomer);
+  $('span.room11').text(ccroom);
+
+  filelist(ccid);
+//   console.log('file load');
+})
+
+$(document).on('click', '.modalmemo', function(){
+  var ccid = $(this).parent().siblings('td[name=checkbox]').find('input[name=rid]').val();
+  var cccustomer = $(this).parent().siblings('td[name=customer]').find('input[name=ccnn2]').val();
+  var ccroom = $(this).parent().siblings('td[name=room]').text();
+  ccid = Number(ccid);
+
+  // console.log('memo load');
+
+  $('span.mtitle').text('메모');
+  $('span.contractNumber').text(ccid);
+  $('span.customer11').text(cccustomer);
+  $('span.room11').text(ccroom);
+
+  memolist(ccid);
+})
+
+$('#modal_amount').on('hidden.bs.modal', function(){
+  var pagerow = 50;
+  var getPage = 1;
+  maketable(pagerow, getPage);
+  makesum(pagerow, getPage);
+})
+
+$('#modal_deposit').on('hidden.bs.modal', function(){
+  var pagerow = 50;
+  var getPage = 1;
+  maketable(pagerow, getPage);
+  makesum(pagerow, getPage);
+})
+
+$('#modal_file').on('hidden.bs.modal', function(){
+  var pagerow = 50;
+  var getPage = 1;
+  maketable(pagerow, getPage);
+  makesum(pagerow, getPage);
+})
+
+$('#modal_memo').on('hidden.bs.modal', function(){
+  var pagerow = 50;
+  var getPage = 1;
+  maketable(pagerow, getPage);
+  makesum(pagerow, getPage);
+})
+
 </script>
 
 <script type="text/javascript" src="/svc/service/get/js_sms_tax.js?<?=date('YmdHis')?>">
+</script>
+<script type="text/javascript" src="/svc/inc/js/etc/contract_button.js?<?=date('YmdHis')?>">
+</script>
+<script type="text/javascript" src="j_checksum_cd.js?<?=date('YmdHis')?>">
 </script>
 
 </body>

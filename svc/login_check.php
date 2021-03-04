@@ -28,8 +28,7 @@ if(!$row){
   $_SESSION['lease_type'] = $row['lease_type'];
   $_SESSION['created'] = $row['created'];
   $_SESSION['gradename'] = $row['gradename'];
-  // header('Location: /svc/main/main.php'); //in real server
-  header('Location: /leaseman20210302/svc/main/main.php'); //in local pc
+  header('Location: /svc/main/main.php');
   exit();
   } else {
   echo "<script>

@@ -61,9 +61,14 @@ for ($i=0; $i < count($allRows); $i++) {
 
   $allRows[$i]['etc'] = mb_substr($allRows[$i]['etc'],0,10,'utf-8');
 
-  $allRows[$i]['created'] = mb_substr($allRows[$i]['created'],0,10,'utf-8');
+  $allRows[$i]['created'] = date('Y-n-j', strtotime($allRows[$i]['created']));
 
-  $allRows[$i]['updated'] = mb_substr($allRows[$i]['updated'],0,10,'utf-8');
+  if($allRows[$i]['updated']===null){
+    $allRows[$i]['updated'] = '-';
+  } else {
+    $allRows[$i]['updated'] = date('Y-n-j', strtotime($allRows[$i]['updated']));
+  }
+  
 }
 
 

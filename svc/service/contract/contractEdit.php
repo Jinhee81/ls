@@ -195,7 +195,6 @@ include $_SERVER['DOCUMENT_ROOT']."/svc/view/service_footer.php"; ?>
 <script>
 
 let contractId = <?=$filtered_id?>;
-console.log(contractId);
 // let tbl = $("#checkboxTestTbl");
 let customerId = $('input[name=customerId').val();
 let buildingId = $('input[name=building').val();
@@ -973,7 +972,8 @@ var payId = $(this).parent().parent().children(':eq(0)').children(':eq(0)').chil
 let url = '/svc/service/contract/process/pp_payScheduleDrop.php';
 
 amountlist20(contractId, payId, url);
-// $('#pPay').modal('hide');
+// $('#pPay').modal('dispose');
+$(this).parent('div[id=pPay]').modal('hide');
 })
 
 $(document).on('click', '#mgetExecute', function(){ //입금완료버튼(모달안버튼) 클릭
@@ -1004,7 +1004,7 @@ $(document).on('click', '#mgetExecute', function(){ //입금완료버튼(모달�
 
   amountlist31(contractId, pid, ppayKind, pgetDate, pgetAmount, pExpectedDate, url);
 
-// $('#pPay').modal('hide');
+  $('#pPay').modal('dispose');
 })
 
 $(document).on('click', '#mExecuteBack', function(){ //입금취소버튼(모달안버튼) 클릭

@@ -6,12 +6,12 @@
 <div class="p-3 mb-2 text-dark border border-info rounded">
 
     <div class="row">
-      <div class="col">
+      <div class="col-md-3">
         <button type="button" id="button5" class="btn btn-outline-info btn-sm">1개월 추가</button>
         <button type="button" id="button6" class="btn btn-outline-info btn-sm" data-toggle="modal" data-target="#nAddBtn">n개월 추가</button>
         <button type="button" id="button7" class="btn btn-outline-info btn-sm">삭제</button>
       </div>
-      <div class="col-md-5 row justify-content-end">
+      <div class="col-md-8 row justify-content-end">
         <input type="text" class="form-control form-control-sm dateType text-center mr-1" style="width:120px" value="" placeholder="입금예정일변경" id="groupExpecteDay" data-toggle="tooltip" data-placement="left" title="체크된것의 입금예정일을 변경합니다">
         <select class="form-control form-control-sm mr-1" id="paykind" data-toggle="tooltip" data-placement="top" title="체크된것의 입금수단을 변경합니다" style="width:100px" >
           <option value="계좌">계좌</option>
@@ -19,10 +19,10 @@
           <option value="카드">카드</option>
         </select>
         <button type="button" id="button1" class="btn btn-outline-info btn-sm mr-1" data-toggle="tooltip" data-placement="top" title="체크된것을 청구설정합니다">청구설정</button>
+        <button type="button" id="button2" class="btn btn-outline-info btn-sm mr-1" data-toggle="tooltip" data-placement="top" title="체크된것을 청구설정합니다">청구취소</button>
+        <button type="button" id="button3" class="btn btn-outline-info btn-sm mr-1" data-toggle="tooltip" data-placement="top" title="체크된것을 입금처리합니다">입금처리</button>
+        <button type="button" id="button4" class="btn btn-outline-info btn-sm mr-1" data-toggle="tooltip" data-placement="top" title="체크된것을 입금취소합니다">입금취소</button>
         <button type="button" id="buttonDirect" class="btn btn-outline-danger btn-sm" data-toggle="tooltip" data-placement="top" title="체크된것을 입금예정일 날짜로 입금처리합니다(청구설정+입금처리)">즉시입금</button>
-      </div>
-      <div class="col">
-
       </div>
     </div>
 
@@ -36,7 +36,7 @@
   </div>
 
   <div class="table-responsive mainTable">
-    <table class="table table-sm table-hover text-center table-borderless" style="width:100%" cellspacing="0" id="checkboxTestTbl" name="tableAmount">
+    <table class="table table-sm table-hover text-center table-borderless" style="width:100%" cellspacing="0" name="tableAmount">
       <thead>
         <tr class="table-info">
           <td width="3%" class="fixedHeader"><input type="checkbox" id="allselect2"></td>
@@ -53,6 +53,14 @@
             <span class="">합계,</span>
             <span class="">입금예정일,</span>
             <span class="">입금구분</span>
+          </td>
+          <td width="" colspan="" class="fixedHeader text-left">
+            <span class="">수납구분,</span>
+            <span class="">청구번호,</span>
+            <span class="">(개월수),</span>
+            <span class="">입금액,</span>
+            <span class="">입금일,</span>
+            <span class="">증빙일</span>
           </td>
           <!-- <td width="" colspan="" class="fixedHeader text-left">
              <span class="ml-5 pl-5">예정일</span>

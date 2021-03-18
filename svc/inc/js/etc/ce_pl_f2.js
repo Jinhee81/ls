@@ -189,13 +189,15 @@ function success(data){
 
       if(!value.payId){
         returns += "<tr name=contractRow style='border-bottom:solid 1px grey;'>";
+      } else if(value.payId && value.payIdOrder==="0"){
+        returns += "<tr name=contractRow style='border-bottom:solid 1px grey;'>";
       } else {
         returns += "<tr name=contractRow style=''>";
       }
 
       returns += "<td name=checkbox width=>";
       returns += "<input type=checkbox name=csId class=tbodycheckbox2 value="+value.idcontractSchedule+">";
-      returns += "<input type=hidden name=payId value="+value.payId+">";
+      returns += "<input type=hidden name=payId value="+Number(value.payId)+">";
       returns += "</td>";
       returns += "<td name=order class=text-left>";
       returns += "<span name=ordered>"+value.ordered+"</span>";
@@ -205,23 +207,26 @@ function success(data){
       returns += "<span name=mStartDate>"+value.mStartDate+"</span>~";
       returns += "<span name=mEndDate>"+value.mEndDate+"</span>";
       returns += "</td>";
-      returns += "<td name=detail class=text-left width=>";
 
       if(value.payId === null){
+        returns += "<td name=detail class=text-left colspan=2>";
         returns += "<table name=detail><tr>";
-        returns += "<td name=mAmount><input type=text name=mAmount class='form-control form-control-sm amountNumber' value="+value.mMamount+" style=width:100px></td>";
+        returns += "<td name=mAmount class=pl-0><input type=text name=mAmount class='form-control form-control-sm amountNumber' value="+value.mMamount+" style=width:100px></td>";
         returns += "<td name=mvAmount><input type=text name=mvAmount class='form-control form-control-sm amountNumber' value="+value.mVmAmount+" style=width:100px></td>";
         returns += "<td name=mtAmount><input type=text name=mtAmount class='form-control form-control-sm amountNumber' value="+value.mTmAmount+" style=width:100px></td>";
         returns += "<td name=mExpectedDate><input type=text name=mExpectedDate class='form-control form-control-sm dateType' value="+value.mExpectedDate+" style=width:100px></td>";
         returns += "<td name=payKind><select name=payKind class='form-control form-control-sm' style=width:100px><option value=계좌>계좌</option><option value=현금>현금</option><option value=카드>카드</option></select></td>";
         returns += "</tr></table>";
       } else {
+        returns += "<td name=detail class=text-left>";
         returns += "<span name=mAmount class=numberComma>"+value.mMamount+"</span>원, ";
         returns += "<span name=mvAmount class=numberComma>"+value.mVmAmount+"</span>원, ";
-        returns += "<span name=mtAmount class=numberComma>"+value.mTmAmount+"</span>원";
+        returns += "<span name=mtAmount class=numberComma>"+value.mTmAmount+"</span>원, ";
+        returns += "<span name=pExpectedDate class=>"+value.paySchedule2.pExpectedDate+"</span>, ";
+        returns += "<span name=payKind class=>"+value.paySchedule2.payKind+"</span>";
       }
 
-      returns += "</td></tr>";
+      returns += "</td>";
 
       if(value.payId && value.payIdOrder==="0"){
         // console.log('solmi');
@@ -234,7 +239,16 @@ function success(data){
         // const interest1 = 0; const interest2 = 0;
 
         let payId = Number(value.payId);
-        let payIdString = ', <span>#<u class=modalpay data-toggle=modal data-target=#pPay>'+payId+'</u></span>';
+        let payIdString = ', <span>#<u class=modalpay data-toggle=modal data-target=#pPay>'+payId+'</u></span>, ';
+
+        let pAmount = '<span name=ptAmount class=numberComma>'+value.paySchedule2.ptAmount+'</span>원 입금예정';
+        let eDate = '<span name=executiveDate>'+value.paySchedule2.executiveDate+'</span> 입금';
+        let eAmount = '<span name=getAmount class=numberComma>'+value.paySchedule2.getAmount+'</span>원, ';
+        let eCount = '(<span name=monthCount>'+value.paySchedule2.monthCount+'</span>)';
+        let eCount2 = '(<span name=monthCount>'+value.paySchedule2.monthCount+'</span>), '; //comma exist
+        let eCount3 = '(<span name=monthCount>'+value.paySchedule2.monthCount+'</span>)개월, '; //comma, 개월 exist
+
+        let delayString = ', 연체<span name=dcount1>'+dcount1+'</span>일/이자<span name=interest>'+interest1+'</span>원';//미납일때는 보이게 함
 
         let hidden = '<input type=hidden name=ptAmount value='+value.paySchedule2.ptAmount+'><input type=hidden name=pExpectedDate value='+value.paySchedule2.pExpectedDate+'><input type=hidden name=payKind value='+value.paySchedule2.payKind+'><input type=hidden name=executiveDate value='+value.paySchedule2.executiveDate+'><input type=hidden name=getAmount value='+value.paySchedule2.getAmount+'>';
 
@@ -248,43 +262,63 @@ function success(data){
             }
         }
 
+        let pdiv='';
+
         // console.log(value.paySchedule2.getdiv2);
 
         if(value.paySchedule2.monthCount==="1"){
           switch (value.paySchedule2.getdiv2) {
-            case 'geted':getdiv += '입금예정일 <span>'+value.paySchedule2.pExpectedDate+'</span>, 입금일 <span>'+value.paySchedule2.executiveDate+'</span>, <span class=numberComma>'+value.paySchedule2.ptAmount+'</span>원('+value.paySchedule2.payKind+'), 연체0일/이자0원, <span name=payDiv>완납</span>' + taxString + payIdString+hidden;
+            case 'geted':
+              pdiv = '<span name=payDiv>완납</span>';
+              getdiv += pdiv + payIdString + eCount2 + eAmount + eDate + taxString + hidden;
             break;
-            case 'get_delay':getdiv += '입금예정일 <span>'+value.paySchedule2.pExpectedDate+', 입금일 <span>'+value.paySchedule2.executiveDate+'</span>, <span class=numberComma>'+value.paySchedule2.ptAmount+'</span>원(<span>'+value.paySchedule2.payKind+'</span>), 연체'+dcount2+'일/이자<span name=interest>'+interest2+'</span>원<span name=payDiv>완납(연체)</span>' + taxString + payIdString+hidden;
+            case 'get_delay':
+              pdiv = '<span name=payDiv>완납(연체)</span>';
+              getdiv += pdiv + payIdString + eCount2 + eAmount + eDate + taxString + hidden;
             break;
-            case 'not_get_delay':getdiv += '입금예정일 <span>'+value.paySchedule2.pExpectedDate+'</span> <span class=numberComma>'+value.paySchedule2.ptAmount+'</span>원(<span>'+value.paySchedule2.payKind+'</span>), 연체<span>'+dcount1+'</span>일/이자<span name=interest>'+interest1+'</span>원, <span name=payDiv>미납</span>' + taxString + payIdString+hidden;
+            case 'not_get_delay':
+              pdiv = '<span name=payDiv>미납</span>';
+              getdiv += pdiv + payIdString + eCount + taxString + delayString + hidden;
             break;
-            case 'not_get':getdiv += '입금예정일 <span>'+value.paySchedule2.pExpectedDate+'</span>, <span class=numberComma>'+value.paySchedule2.ptAmount+'</span>원(<span>'+value.paySchedule2.payKind+'</span>), <span name=payDiv>입금대기</span>' + taxString + payIdString+hidden;
+            case 'not_get':
+              pdiv = '<span name=payDiv>입금대기</span>';
+              getdiv += pdiv + payIdString + eCount3 + pAmount + taxString + hidden;
             break;
           }
         } else {
           switch (value.paySchedule2.getdiv2) {
-            case 'geted':getdiv += '<span>'+value.paySchedule2.monthCount+'</span>개월치, 입금예정일 <span>'+value.paySchedule2.pExpectedDate+'</span>, 입금일 <span>'+value.paySchedule2.executiveDate+'</span>'+'(<span>'+value.paySchedule2.payKind+'</span>) <span class=numberComma>'+value.paySchedule2.ptAmount+'</span>원 입금, 연체0일/이자0원, <span name=payDiv>완납</span>' + taxString + payIdString+hidden;
+            case 'geted':
+              pdiv = '<span name=payDiv>완납</span>';
+              getdiv += pdiv + payIdString + eCount3 + eAmount + eDate + taxString + hidden;
             break;
-            case 'get_delay':getdiv += '<span>'+value.paySchedule2.monthCount+'</span>개월치, 입금예정일 <span>'+value.paySchedule2.pExpectedDate+', <span>'+value.paySchedule2.executiveDate+'</span>(<span>'+value.paySchedule2.payKind+'</span>) <span class=numberComma>'+value.paySchedule2.ptAmount+'</span>원 입금, 연체'+dcount2+'일/이자<span name=interest>'+interest2+'</span>원, <span name=payDiv>완납(연체)</span>' + taxString + payIdString+hidden;
+            case 'get_delay':
+              pdiv = '<span name=payDiv>완납(연체)</span>';
+              getdiv += pdiv + payIdString + eCount3 + eAmount + eDate + taxString + hidden;
             break;
-            case 'not_get_delay':getdiv += '<span>'+value.paySchedule2.monthCount+'</span>개월치, 입금예정일 <span>'+value.paySchedule2.pExpectedDate+'</span>(<span>'+value.paySchedule2.payKind+'</span>) <span class=numberComma>'+value.paySchedule2.ptAmount+'</span>원, 연체'+dcount1+'일/이자<span name=interest>'+interest1+'</span>원, <span name=payDiv>미납</span>' + taxString + payIdString+hidden;
+            case 'not_get_delay':
+              pdiv = '<span name=payDiv>미납</span>';
+              getdiv += pdiv + payIdString + eCount3 + pAmount +taxString + delayString + hidden;
             break;
-            case 'not_get':getdiv += '<span>'+value.paySchedule2.monthCount+'</span>개월치, 입금예정일 <span>'+value.paySchedule2.pExpectedDate+'</span>(<span>'+value.paySchedule2.payKind+'</span>) <span class=numberComma>'+value.paySchedule2.ptAmount+'</span>원, <span name=payDiv>입금대기</span>' + taxString + payIdString+hidden;
+            case 'not_get':
+              pdiv = '<span name=payDiv>입금대기</span>';
+              getdiv += pdiv + payIdString + eCount3 + pAmount + taxString + hidden;
             break;
         }
       }
 
       switch (value.paySchedule2.getdiv2) {
-        case 'geted': returns += "<tr class=paySchedule style='border-bottom:solid 1px grey;'><td colspan=5 class='text-right green'>"+getdiv+"</td></tr>";//완납
+        case 'geted': returns += "<td name=detail2 class='text-left green font-italic'>"+getdiv+"</td>";//완납
         break;
-        case 'get_delay': returns += "<tr class=paySchedule style='border-bottom:solid 1px grey;'><td colspan=5 class='text-right green'>"+getdiv+"</td></tr>";//완납(연체)
+        case 'get_delay': returns += "<td name=detail2 class='text-left green font-italic'>"+getdiv+"</td>";//완납(연체)
         break;
-        case 'not_get_delay': returns += "<tr class=paySchedule style='border-bottom:solid 1px grey;'><td colspan=5 class='text-right pink'>"+getdiv+"</td></tr>";//미납
+        case 'not_get_delay': returns += "<td name=detail2 class='text-left pink font-italic'>"+getdiv+"</td>";//미납
         break;
-        case 'not_get': returns += "<tr class=paySchedule style='border-bottom:solid 1px grey;'><td colspan=5 class='text-right sky'>"+getdiv+"</td></tr>";//입금대기
+        case 'not_get': returns += "<td name=detail2 class='text-left sky font-italic'>"+getdiv+"</td>";//입금대기
         break;
       }
   }
+
+  returns += "</tr>";
 
 })//each}
 
@@ -354,6 +388,20 @@ function amountlist20(a,b,c){
   return amountlist;
 }
 
+function amountlist24(a,b,c){
+  let amountlist = $.ajax({
+    url:c,
+    method: 'post',
+    data:{'contractId':a,
+          'payIdArray':b},
+    success:function(data){
+      success(data);
+    }
+  })
+  expectedDayArray = [];
+  return amountlist;
+}
+
 function amountlist21(a,b,c,d){
   let amountlist = $.ajax({
     url:d,
@@ -369,18 +417,15 @@ function amountlist21(a,b,c,d){
   return amountlist;
 }
 
-//===================
-
-//===============
-
-function amountlist22(a,b,c,d,e){
+function amountlist22(a,b,c,d,e,f){
   let amountlist = $.ajax({
     url:e,
     method: 'post',
     data:{'payid':a,
           'payKind':b,
           'executiveDate':c,
-          'contractId':d
+          'contractId':d,
+          'pExpectedDate':f
          },
     success:function(data){
       success(data);

@@ -27,6 +27,7 @@ $filtered_id= $_POST['contractId'];
 $sql = "
       UPDATE paySchedule2
       SET
+        pExpectedDate = '{$_POST['pExpectedDate']}',
         payKind = '{$_POST['payKind']}',
         executiveDate = '{$_POST['executiveDate']}'
       WHERE idpaySchedule2 = {$_POST['payid']}

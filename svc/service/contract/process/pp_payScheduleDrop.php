@@ -30,6 +30,7 @@ if($result){
       payId = {$_POST['payId']}
     ";
   // echo $sql2;
+  
   $result2 = mysqli_query($conn, $sql2);
 
   if($result2){

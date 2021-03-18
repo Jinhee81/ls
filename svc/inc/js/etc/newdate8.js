@@ -146,7 +146,7 @@ function dateinput2(x){ //from, to date 입력()
   }
   if(x === 'march'){
     var fromdate = $('input[name="fromDate"]').val(marchfirst);
-    var todate = $('input[name="toDate"]').val(marchfirst);
+    var todate = $('input[name="toDate"]').val(marchlast);
   }
   if(x === 'april'){
     var fromdate = $('input[name="fromDate"]').val(aprilfirst);

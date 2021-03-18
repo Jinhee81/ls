@@ -1,8 +1,8 @@
 <?php
-// session_start();
-// if(!isset($_SESSION['is_login'])){
-//   header('Location: /user/login.php');
-// }
+session_start();
+if(!isset($_SESSION['is_login'])){
+  header('Location: /user/login.php');
+}
 ?>
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
@@ -13,17 +13,19 @@ include $_SERVER['DOCUMENT_ROOT']."/svc/view/service_header1_meta.php";
 include $_SERVER['DOCUMENT_ROOT']."/svc/view/service_header2.php";
 include $_SERVER['DOCUMENT_ROOT']."/svc/view/conn.php";
 
+// print_r($_SESSION);
 $sql = "select
           email, user_div, user_name, cellphone, lease_type, created
         from user
         where id={$_SESSION['id']}";
+// echo $sql;
 $result = mysqli_query($conn, $sql);
 $row = mysqli_fetch_array($result);
 
  ?>
 <section class="container">
   <div class="jumbotron pt-3 pb-3">
-    <h3 class="">비밀번호를 찾습니다.</h3>
+    <h3 class="">비밀번호를 변경합니다.</h3>
     <hr class="my-4">
     <!-- <p>It uses utility classes for typography and spacing to space content out within the larger container.</p> -->
  </div>
@@ -33,9 +35,9 @@ $row = mysqli_fetch_array($result);
   <form class="" action="p_password_change.php" method="post">
 
     <div class="form-group row">
-      <label for="" class="col-sm-4 col-form-label"><b>이메일</b></label>
+      <label for="" class="col-sm-4 col-form-label"><b>변경할 비밀번호</b></label>
       <div class="col-sm-8">
-        <input type="text" class="form-control" name="password1">
+        <input type="password" class="form-control" name="password1">
       </div>
     </div>
     <div class="form-group row">

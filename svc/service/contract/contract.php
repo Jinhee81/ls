@@ -180,7 +180,7 @@ while($row_sms = mysqli_fetch_array($result_sms)){
 <section class="row justify-content-center">
   <div class="container">
     <div class="mainTable">
-      <table class="table table-hover table-bordered table-sm text-center" id="checkboxTestTbl" name=outsideTable>
+      <table class="table table-hover table-bordered table-sm text-center" name=outsideTable>
         <thead>
           <tr class="table-secondary">
             <th class="fixedHeader">

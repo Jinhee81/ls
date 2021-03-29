@@ -19,6 +19,18 @@ $filtered = array(
 );
 
 
+$query = "select count(*) from user where cellphone='{$_POST['cellphone']}'";
+$result = mysqli_query($conn, $query);
+$row = mysqli_fetch_array($result);
+
+if($row[0] >=1 ){
+  echo "<script>alert('이미 등록된 전화번호입니다. 비밀번호 찾기를 해주세요.');
+  location.href = '../svc/password_find.php';
+  </script>";
+  error_log(mysqli_error($conn));
+  exit();
+}
+
 
 if($_POST['user_div']==='개인'){
   $sql  = "

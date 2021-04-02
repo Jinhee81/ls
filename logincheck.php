@@ -24,12 +24,12 @@ if(!$row){
     $_SESSION['name'] = $row['name'];
     $_SESSION['phone'] = $row['phone'];
     $_SESSION['department'] = $row['department'];
-    header('Location: /spec/index.php');
+    header('Location: spec2.php');
     exit();
   } else {
     echo "<script>
     alert('아이디 또는 비밀번호가 일치하지 않습니다.');
-    location.href='login.php';
+    location.href='index.php';
     </script>";
   }
 }

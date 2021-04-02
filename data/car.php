@@ -1,6 +1,9 @@
 <?php
+//이건 파일로 데이터를 만든것
+
+session_start();
 // include 'view/conn.php';
-$brand_file = $_SERVER['DOCUMENT_ROOT'].'/spec/data/raw/brand.csv';
+$brand_file = $_SERVER['DOCUMENT_ROOT'].'/data/raw/brand.csv';
 
 $brand_array = array();
 
@@ -14,7 +17,7 @@ if(($h = fopen($brand_file, 'r')) !== false) {
 
 // print_r($brand_array);echo "<br>";
 
-$model_file = $_SERVER['DOCUMENT_ROOT'].'/spec/data/raw/model.csv';
+$model_file = $_SERVER['DOCUMENT_ROOT'].'/data/raw/model.csv';
 
 $model_array = array();
 
@@ -28,7 +31,7 @@ if(($h = fopen($model_file, 'r')) !== false) {
 
 // print_r($model_array);echo "<br>";
 
-$lineup_file = $_SERVER['DOCUMENT_ROOT'].'/spec/data/raw/lineup.csv';
+$lineup_file = $_SERVER['DOCUMENT_ROOT'].'/data/raw/lineup.csv';
 
 $lineup_array = array();
 
@@ -42,7 +45,7 @@ if(($h = fopen($lineup_file, 'r')) !== false) {
 
 // print_r($lineup_array);echo "<br>";
 
-$trim_file = $_SERVER['DOCUMENT_ROOT'].'/spec/data/raw/trim.csv';
+$trim_file = $_SERVER['DOCUMENT_ROOT'].'/data/raw/trim.csv';
 
 $trim_array = array();
 

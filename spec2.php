@@ -55,6 +55,7 @@ p.purple {
                             <option value="62308">현대 포터2</option>
                             <option value="71481">기아 K5</option>
                             <option value="71281">기아 K7</option>
+                            <option value="73086">기아 K8</option>
                             <option value="69052">기아 K9</option>
                             <option value="69063">기아 모하비</option>
                             <option value="71136">기아 스포티지</option>
@@ -64,22 +65,29 @@ p.purple {
                             <option value="73461">제네시스 G90</option>
                             <option value="71838">제네시스 GV70</option>
                             <option value="70463">제네시스 GV80</option>
-                            <option value="71112">벤츠 The New E-Class</option>
+                            <option value="70077">벤츠 A-Class</option>
                             <option value="69581">벤츠 C-Class</option>
+                            <option value="71112">벤츠 The New E-Class</option>
                             <option value="73044">벤츠 S-Class</option>
+                            <option value="69588">벤츠 CLS-Class</option>
+                            <option value="61520">벤츠 GLB-Class</option>
                             <option value="69568">벤츠 GLC-Class</option>
                             <option value="69591">벤츠 The New GLE-Class</option>
-                            <option value="61520">벤츠 GLB-Class</option>
-                            <option value="71122">BMW New 5 Series</option>
-                            <option value="72637">BMW 7 Series</option>
                             <option value="71343">BMW 1 Series</option>
                             <option value="71349">BMW 2 Series</option>
                             <option value="71312">BMW New 3 Series</option>
+                            <option value="71372">BMW 4 Series</option>
+                            <option value="71122">BMW New 5 Series</option>
+                            <option value="72637">BMW 7 Series</option>
                             <option value="71400">BMW X2</option>
                             <option value="71465">BMW X5</option>
+                            <option value="69894">아우디 A4</option>
+                            <option value="69898">아우디 A5</option>
                             <option value="69882">아우디 A6</option>
                             <option value="69873">아우디 A7</option>
                             <option value="70904">아우디 A8</option>
+                            <option value="69890">아우디 Q7</option>
+                            <option value="69887">아우디 Q8</option>
                         </select>
                     </td>
                     <td>
@@ -115,7 +123,7 @@ p.purple {
 </section>
 
 <section class="text-center">
-    <p class="purple">수입차 추가했습니다. 단, 벤츠 s클래스랑 bmw 7시리즈가 안나오네요. 이건 더 확인해봐야겠네요. ^^;</p>
+    <p class="purple font-italic">기아 K8 등 업데이트 :) '2021.4.2 </p>
 </section>
 <div class="loader container">
     <img src="inc/img/abc.gif" alt="" class="" style="width:50px;height:50px;">

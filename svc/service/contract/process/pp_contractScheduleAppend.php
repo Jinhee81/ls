@@ -74,9 +74,7 @@ if($result4){
   $result5 = mysqli_query($conn, $sql5);
 
   if($result5===false){
-    echo "<script>alert('저장과정에 문제가 생겼습니다. 관리자에게 문의하세요.');
-          history.back();
-          </script>";
+    echo json_encode('input1');//입력오류
     error_log(mysqli_error($conn));
     exit();
   }
@@ -85,9 +83,7 @@ if($result4){
   // ('#modal_amount').modal('show');
   //       </script>";
 } else {
-  echo "<script>alert('저장과정에 문제가 생겼습니다. 관리자에게 문의하세요.');
-        history.back();
-        </script>";
+  echo json_encode('input2');//입력오류
   error_log(mysqli_error($conn));
 }
 

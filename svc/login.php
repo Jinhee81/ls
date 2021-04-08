@@ -5,6 +5,14 @@
 ?>
 
 <body>
+    <style>
+    @import url('https://fonts.googleapis.com/css2?family=Nanum+Myeongjo&family=Noto+Sans+KR:wght@100&display=swap');
+
+    .contact {
+        font-family: 'Nanum Myeongjo', serif;
+        font-family: 'Noto Sans KR', sans-serif;
+    }
+    </style>
     <div class="alert alert-primary alert-dismissible fade show" role="alert">
         리스맨은 '크롬브라우저'에서 최적으로 작동합니다. 반드시 크롬브라우저에서 실행해주세요 ^__^ <a href="https://www.google.com/intl/ko/chrome/"
             class="alert-link" target="_blank">다운로드 바로가기</a>
@@ -49,8 +57,14 @@
                     <a class="btn btn-sm btn-outline-success btn-block" href="../membership/membership.php"
                         role="button">회원가입하기</a>
                 </div>
+                <!-- <a href="https://open.kakao.com/o/sZsgqby" class="btn btn-sm btn-warning btn-block mb-4"
+                    type="button">카카오톡 문의하기</a> -->
             </div>
         </div>
+        <hr>
+        <p class="contact">1. 고객센터운영시간 : 평일 오전 10시~오후5시<br>
+            2. 카카오톡 문의 가능합니다. (친구찾기 : 리스맨 검색)<br>
+            3. 하단 고객센터 번호로 문자송신 가능합니다 (단문 가능). 문자메시지 또는 이메일을 보내주세요.</p>
     </div>
 
     <?php

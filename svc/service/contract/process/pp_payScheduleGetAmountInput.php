@@ -37,18 +37,14 @@ if($result){
   $result5 = mysqli_query($conn, $sql5);
 
   if(!$result5){
-    echo "<script>alert('입금처리 과정에 문제가 생겼습니다. 관리자에게 문의하세요(2).');
-          history.back();
-          </script>";
+    echo json_encode('update1');
     // echo "<script>alert('저장과정에 문제가 생겼습니다. 관리자에게 문의하세요(2).');
     //       </script>";
     error_log(mysqli_error($conn));
     exit();
   }
 } else {
-  echo "<script>alert('입금처리 과정에 문제가 생겼습니다. 관리자에게 문의하세요(1).');
-        history.back();
-        </script>";
+  echo json_encode('update2');
   error_log(mysqli_error($conn));
   exit();
 }

@@ -38,25 +38,19 @@ for ($i=0; $i < count($a); $i++) {
         $result3 = mysqli_query($conn, $sql3);
 
         if(!$result3){
-          echo "<script>alert('취소과정에 문제가 생겼습니다. 관리자에게 문의하세요.');
-                history.back();
-                </script>";
+          echo json_encode('update1');
           error_log(mysqli_error($conn));
           exit();
         }
       } else {
-        echo "<script>
-                alert('취소 과정에 문제가 생겼습니다. 관리자에게 문의하세요.(2)');
-                history.back();
-                error_log(mysqli_error($conn));
-               </script>";
+        echo json_encode('update2');
+        error_log(mysqli_error($conn));
+        exit();
       }
     } else {
-      echo "<script>
-              alert('취소 과정에 문제가 생겼습니다. 관리자에게 문의하세요.(1)');
-              history.back();
-              error_log(mysqli_error($conn));
-             </script>";
+      echo json_encode('update3');
+      error_log(mysqli_error($conn));
+      exit();
     }
 }//for end
 

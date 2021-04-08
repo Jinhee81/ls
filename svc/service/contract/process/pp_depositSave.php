@@ -28,9 +28,7 @@ if($result){
   //echo $sql_sum;
   echo json_encode($allRows);
 } else {
-  echo "<script>alert('저장과정에 문제가 생겼습니다. 관리자에게 문의하세요.');
-        history.back();
-        </script>";
+  echo json_encode('update1');//수정오류
   error_log(mysqli_error($conn));
 }
  ?>

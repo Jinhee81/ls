@@ -30,9 +30,7 @@ if($result){
     //echo $sql_sum;
     echo json_encode($memoRows);
 } else {
-  echo "<script>alert('저장과정에 문제가 생겼습니다. 관리자에게 문의하세요.');
-        location.href = 'contractEdit.php?page=memo&id=$filtered_id';
-        </script>";
+  echo json_encode('input1');
   error_log(mysqli_error($conn));
 }
  ?>

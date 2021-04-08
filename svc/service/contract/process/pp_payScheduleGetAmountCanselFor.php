@@ -37,17 +37,14 @@ for ($i=0; $i < count($a); $i++) {
     $result5 = mysqli_query($conn, $sql5);
 
     if($result5===false){
-      echo "<script>alert('취소처리에 문제가 생겼습니다. 관리자에게 문의하세요.');
-            history.back()';
-            </script>";
+      echo json_encode('update1');
       error_log(mysqli_error($conn));
       exit();
     }
   } else {
-    echo "<script>alert('취소처리에 문제가 생겼습니다. 관리자에게 문의하세요.');
-          history.back();
-          </script>";
+    echo json_encode('update2');
     error_log(mysqli_error($conn));
+    exit();
   }
 }
 

@@ -10,6 +10,9 @@
 #checkboxTestTbl tr.selected {
   background-color: #a9d0f5;
 }
+#outsideTable tr.selected {
+  background-color: #a9d0f5;
+}
 select .selectCall {
   background-color: #a9d0f5;
 }

@@ -15,10 +15,11 @@ print_r($a);
 
 for ($i=0; $i < count($a); $i++) {
   if(!strtotime($a[$i][2])){
-    echo "<script>
-          alert('입금일 ".$a[$i][2]."은 날짜형식이 아닙니다. 날짜형식에 맞추어서 입력해주세요 (날짜형식:yyyy-mm-dd)');
-          history.back();
-          </script>";
+    echo json_encode('datetype1');
+    // echo "<script>
+    //       alert('입금일 ".$a[$i][2]."은 날짜형식이 아닙니다. 날짜형식에 맞추어서 입력해주세요 (날짜형식:yyyy-mm-dd)');
+    //       history.back();
+    //       </script>";
     exit();
   }
 
@@ -28,10 +29,11 @@ for ($i=0; $i < count($a); $i++) {
   // var_dump($b);
 
   if(!$c){
-    echo "<script>
-          alert('입금일 ".$a[$i][2]."날짜는 존재하지 않습니다. 다시 확인해주세요.');
-          history.back();
-          </script>";
+    echo json_encode('datetype2');
+    // echo "<script>
+    //       alert('입금일 ".$a[$i][2]."날짜는 존재하지 않습니다. 다시 확인해주세요.');
+    //       history.back();
+    //       </script>";
     exit();
   }
 
@@ -55,16 +57,12 @@ for ($i=0; $i < count($a); $i++) {
     $result = mysqli_query($conn, $sql);
 
     if($result===false){
-      echo "<script>alert('저장과정에 문제가 생겼습니다. 관리자에게 문의하세요.(2)');
-            history.back();
-            </script>";
+      echo json_encode('update1');
       error_log(mysqli_error($conn));
       exit();
     }
   } else {
-    echo "<script>alert('입금처리에 문제가 생겼습니다. 관리자에게 문의하세요.(1)');
-          history.back();
-          </script>";
+    echo json_encode('update2');
     error_log(mysqli_error($conn));
   }
 }//for end}

@@ -9,21 +9,6 @@ include $_SERVER['DOCUMENT_ROOT']."/svc/view/conn.php";
 
 $filtered_id= $_POST['contractId'];
 
-// $sqlfirst = "select payKind, executiveDate
-//              from paySchedule2
-//              where idpaySchedule2 = {$_POST['payid']}";
-
-// $resultfirst = mysqli_query($conn, $sqlfirst);
-
-// $rowfirst = mysqli_fetch_array($resultfirst);
-
-// if($rowfirst['payKind']===$_POST['payKind']){
-//     if($rowfirst['executiveDate']===$_POST['executiveDate']){
-//         echo json_encode('noEdit');
-//         exit();
-//     }
-// }
-
 $sql = "
       UPDATE paySchedule2
       SET
@@ -47,9 +32,7 @@ if($result){
   $result5 = mysqli_query($conn, $sql5);
 
   if($result5===false){
-    echo "<script>alert('수정과정에 문제가 생겼습니다. 관리자에게 문의하세요.(1)');
-          history.back();
-          </script>";
+    echo json_encode('update1');
     error_log(mysqli_error($conn));
     exit();
   } else {
@@ -59,9 +42,7 @@ if($result){
     echo json_encode($allRows);
   }
 } else {
-  echo "<script>alert('수정과정에 문제가 생겼습니다. 관리자에게 문의하세요.(2)');
-        history.back();
-        </script>";
+  echo json_encode('update2');
   error_log(mysqli_error($conn));
   exit();
 }

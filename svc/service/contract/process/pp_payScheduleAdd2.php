@@ -19,23 +19,25 @@ $filtered_id = mysqli_real_escape_string($conn, $_POST['contractId']);
 //================날짜유효성 체크
 if($_POST['expectedDate']){
   if(!strtotime($_POST['expectedDate'])){
-    echo "<script>
-          alert('입금예정일 ".$_POST['expectedDate']."은 날짜형식이 아닙니다. 날짜형식에 맞추어서 입력해주세요 (날짜형식:yyyy-mm-dd)');
-          location.href = 'contractEdit.php?page=schedule&id=$filtered_id';
-          </script>";
+    echo json_encode('datetype1');
+    // echo "<script>
+    //       alert('입금예정일 ".$_POST['expectedDate']."은 날짜형식이 아닙니다. 날짜형식에 맞추어서 입력해주세요 (날짜형식:yyyy-mm-dd)');
+    //       location.href = 'contractEdit.php?page=schedule&id=$filtered_id';
+    //       </script>";
     exit();
   }
-
+  
   $b = explode('-', $_POST['expectedDate']);
-
+  
   $c = checkdate((int)$b[1], (int)$b[2], (int)$b[0]);
   // var_dump($b);
-
+  
   if(!$c){
-    echo "<script>
-          alert('입금예정일 ".$_POST['expectedDate']."날짜는 존재하지 않습니다. 다시 확인해주세요.');
-          location.href = 'contractEdit.php?page=schedule&id=$filtered_id';
-          </script>";
+    echo json_encode('datetype2');
+    // echo "<script>
+    //       alert('입금예정일 ".$_POST['expectedDate']."날짜는 존재하지 않습니다. 다시 확인해주세요.');
+    //       location.href = 'contractEdit.php?page=schedule&id=$filtered_id';
+    //       </script>";
     exit();
   }
 }
@@ -47,36 +49,36 @@ $sql1 = "select payOrder from realContract where id={$filtered_id}";
 // echo $sql1;
 $result1 = mysqli_query($conn, $sql1);
 if(!$result1){
-  echo "<script>alert('저장과정에 문제가 생겼습니다. 관리자에게 문의하세요.(1)');
-           location.href='contractEdit.php?page=schedule&id=$filtered_id';
-     </script>";
-     error_log(mysqli_error($conn));
-     exit();
+  echo json_encode('select1');
+  error_log(mysqli_error($conn));
+  exit();
 }
 $row1 = mysqli_fetch_array($result1);
 
 $sql2 = "select count(*)
-        from contractSchedule
-        where realContract_id={$filtered_id}";
+from contractSchedule
+where realContract_id={$filtered_id}";
 $result2 = mysqli_query($conn, $sql2);
 if(!$result2){
-  echo "<script>alert('저장과정에 문제가 생겼습니다. 관리자에게 문의하세요.(2)');
-           location.href='contractEdit.php?page=schedule&id=$filtered_id';
-     </script>";
-     error_log(mysqli_error($conn));
-     exit();
+  echo json_encode('select2');
+  // echo "<script>alert('저장과정에 문제가 생겼습니다. 관리자에게 문의하세요.(2)');
+  //          location.href='contractEdit.php?page=schedule&id=$filtered_id';
+  //    </script>";
+  error_log(mysqli_error($conn));
+  exit();
 }
 $row2 = mysqli_fetch_array($result2);
 
 $sql3 = "select mEndDate
-         from contractSchedule
-         where realContract_id={$filtered_id} and
-               ordered = {$row2[0]}";
+from contractSchedule
+where realContract_id={$filtered_id} and
+ordered = {$row2[0]}";
 $result3 = mysqli_query($conn, $sql3);
 if(!$result3){
-  echo "<script>alert('저장과정에 문제가 생겼습니다. 관리자에게 문의하세요.(3)');
-           location.href='contractEdit.php?page=schedule&id=$filtered_id';
-     </script>";
+  echo json_encode('select3');
+  // echo "<script>alert('저장과정에 문제가 생겼습니다. 관리자에게 문의하세요.(3)');
+  //          location.href='contractEdit.php?page=schedule&id=$filtered_id';
+  //    </script>";
      error_log(mysqli_error($conn));
      exit();
 }
@@ -124,9 +126,10 @@ if(!$_POST['expectedDate']){//예정일이 없이 넘어온 경우
     $result4 = mysqli_query($conn, $sql4);
 
     if($result4===false){
-      echo "<script>alert('저장과정에 문제가 생겼습니다. 관리자에게 문의하세요.(4)');
-            history.back();
-            </script>";
+      echo json_encode('input1');
+      // echo "<script>alert('저장과정에 문제가 생겼습니다. 관리자에게 문의하세요.(4)');
+      //       history.back();
+      //       </script>";
       error_log(mysqli_error($conn));
       exit();
     }
@@ -156,9 +159,11 @@ if(!$_POST['expectedDate']){//예정일이 없이 넘어온 경우
     // echo $sql5;
     $result5 = mysqli_query($conn, $sql5);
     if($result5===false){
-      echo "<script>alert('저장과정에 문제가 생겼습니다. 관리자에게 문의하세요.(5)');
-            history.back();
-            </script>";
+      echo json_encode('input2');
+
+      // echo "<script>alert('저장과정에 문제가 생겼습니다. 관리자에게 문의하세요.(5)');
+      //       history.back();
+      //       </script>";
       error_log(mysqli_error($conn));
       exit();
     } else {
@@ -174,9 +179,10 @@ if(!$_POST['expectedDate']){//예정일이 없이 넘어온 경우
       echo $sql6; //청구번호를 계약스케줄번호에 넣음
       $result6 = mysqli_query($conn, $sql6);
       if(!$result6){
-        echo "<script>alert('저장과정에 문제가 생겼습니다. 관리자에게 문의하세요.(6)');
-                 location.href='contractEdit.php?page=schedule&id=$filtered_id';
-           </script>";
+        echo json_encode('update1');
+        // echo "<script>alert('저장과정에 문제가 생겼습니다. 관리자에게 문의하세요.(6)');
+        //          location.href='contractEdit.php?page=schedule&id=$filtered_id';
+        //    </script>";
            error_log(mysqli_error($conn));
            exit();
       }
@@ -222,9 +228,11 @@ if(!$_POST['expectedDate']){//예정일이 없이 넘어온 경우
     $result4 = mysqli_query($conn, $sql4);
 
     if($result4===false){
-      echo "<script>alert('저장과정에 문제가 생겼습니다. 관리자에게 문의하세요.(7)');
-            history.back();
-            </script>";
+      echo json_encode('input3');
+
+      // echo "<script>alert('저장과정에 문제가 생겼습니다. 관리자에게 문의하세요.(7)');
+      //       history.back();
+      //       </script>";
       error_log(mysqli_error($conn));
       exit();
     } else {
@@ -266,9 +274,11 @@ if(!$_POST['expectedDate']){//예정일이 없이 넘어온 경우
   // echo $sql5;
   $result5 = mysqli_query($conn, $sql5);
   if(!$result5){
-    echo "<script>alert('저장과정에 문제가 생겼습니다. 관리자에게 문의하세요.(8)');
-             location.href='contractEdit.php?page=schedule&id=$filtered_id';
-       </script>";
+    echo json_encode('input4');
+
+    // echo "<script>alert('저장과정에 문제가 생겼습니다. 관리자에게 문의하세요.(8)');
+    //          location.href='contractEdit.php?page=schedule&id=$filtered_id';
+    //    </script>";
        error_log(mysqli_error($conn));
        exit();
   } else {
@@ -284,9 +294,11 @@ if(!$_POST['expectedDate']){//예정일이 없이 넘어온 경우
       // echo $sql2; //청구번호를 계약스케줄번호에 넣음
       $result6 = mysqli_query($conn, $sql6);
       if(!$result6){
-        echo "<script>alert('저장과정에 문제가 생겼습니다. 관리자에게 문의하세요.(9)');
-                 location.href='contractEdit.php?page=schedule&id=$filtered_id';
-           </script>";
+        echo json_encode('update2');
+
+        // echo "<script>alert('저장과정에 문제가 생겼습니다. 관리자에게 문의하세요.(9)');
+        //          location.href='contractEdit.php?page=schedule&id=$filtered_id';
+        //    </script>";
            error_log(mysqli_error($conn));
            exit();
       }
@@ -302,9 +314,10 @@ $sql7 = "select mEndDate
                ordered = {$count2}";
 $result7 = mysqli_query($conn, $sql7);
 if($result7===false){
-  echo "<script>alert('저장과정에 문제가 생겼습니다. 관리자에게 문의하세요.(10)');
-        location.href = 'contractEdit.php?page=schedule&id=$filtered_id';
-        </script>";
+  echo json_encode('select4');
+  // echo "<script>alert('저장과정에 문제가 생겼습니다. 관리자에게 문의하세요.(10)');
+  //       location.href = 'contractEdit.php?page=schedule&id=$filtered_id';
+  //       </script>";
   error_log(mysqli_error($conn));
   exit();
 }
@@ -320,9 +333,10 @@ $sql8 = "UPDATE realContract SET
 // echo $sql5;
 $result8 = mysqli_query($conn, $sql8);
 if($result8===false){
-  echo "<script>alert('저장과정에 문제가 생겼습니다. 관리자에게 문의하세요.(10)');
-        location.href = 'contractEdit.php?page=schedule&id=$filtered_id';
-        </script>";
+  echo json_encode('update3');
+  // echo "<script>alert('저장과정에 문제가 생겼습니다. 관리자에게 문의하세요.(10)');
+  //       location.href = 'contractEdit.php?page=schedule&id=$filtered_id';
+  //       </script>";
   error_log(mysqli_error($conn));
   exit();
 }

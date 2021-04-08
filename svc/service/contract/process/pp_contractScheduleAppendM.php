@@ -74,9 +74,7 @@ for ($i=0; $i < count($newArray); $i++) {
   $result4 = mysqli_query($conn, $sql4);
 
   if($result4===false){
-    echo "<script>alert('저장과정에 문제가 생겼습니다. 관리자에게 문의하세요.(1)');
-          history.back();
-          </script>";
+    echo json_encode('input1');//입력오류
     error_log(mysqli_error($conn));
     exit();
   }
@@ -94,9 +92,7 @@ $sql5 = "UPDATE realContract SET
 $result5 = mysqli_query($conn, $sql5);
 
 if($result5===false){
-  echo "<script>alert('저장과정에 문제가 생겼습니다. 관리자에게 문의하세요.(2)');
-        history.back();
-        </script>";
+  echo json_encode('input2');//입력오류
   error_log(mysqli_error($conn));
   exit();
 }

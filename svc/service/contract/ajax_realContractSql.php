@@ -75,7 +75,7 @@ if($a['cText']){
   if($a['etcCondi']==='customer'){
     $etcCondi = " and (name like '%".$a['cText']."%' or companyname like '%".$a['cText']."%')";
   } elseif($a['etcCondi']==='contact'){
-    $etcCondi = " and (contact1 like '%".$a['cText']."%' or contact2 like '%".$a['cText']."%' or contact3 like '%".$a['cText']."%')";
+    $etcCondi = " and (customer.contact1 like '%".$a['cText']."%' or customer.contact2 like '%".$a['cText']."%' or customer.contact3 like '%".$a['cText']."%')";
   } elseif($a['etcCondi']==='contractId'){
     $etcCondi = " and (realContract.id like '%".$a['cText']."%')";
   } elseif($a['etcCondi']==='roomId'){

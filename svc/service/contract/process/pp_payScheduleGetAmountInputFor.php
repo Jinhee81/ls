@@ -1,8 +1,8 @@
 <?php
 //여러개를 한꺼번에 입금완료하는 처리파일
 header('Content-Type: text/html; charset=UTF-8');
-ini_set('display_errors', 1);
-ini_set('error_reporting', E_ALL);
+// ini_set('display_errors', 1);
+// ini_set('error_reporting', E_ALL);
 session_start();
 include $_SERVER['DOCUMENT_ROOT']."/svc/view/conn.php";
 

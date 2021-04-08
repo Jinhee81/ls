@@ -23,7 +23,7 @@ if(isset($_FILES['upfile']) && $_FILES['upfile']['name'] !== ""){
   // }
 
   if($file['size'] >= $max_file_size){
-    echo "5MB 까지만 업로드 가능합니다.";
+    echo json_encode('logical');//5MB 까지만 업로드 가능합니다
   }
 
   $path = md5(microtime()).'.'.$ext;
@@ -51,20 +51,10 @@ if(isset($_FILES['upfile']) && $_FILES['upfile']['name'] !== ""){
         //echo $sql_sum;
         echo json_encode($fileRows);
     } else {
-      echo "<script>
-              alert('파일저장에 실패했습니다. 관리자에게 문의하세요(1).');
-              history.back();
-            </script>";
+      echo json_encode('input1');//입력오류
     }
-} else {
-  echo "<script>
-          alert('파일저장에 실패했습니다. 관리자에게 문의하세요(2).');
-          history.back();
-        </script>";
-  // echo "<script>
-  //         alert('파일저장에 실패했습니다. 관리자에게 문의하세요.');
-  //         location.href='contractEdit.php?id=$filtered_id';
-  //       </script>";
-}
+  } else {
+    echo json_encode('input2');//입력오류
+  }
 }
  ?>

@@ -64,7 +64,7 @@ $(document).on('click', '.tbodycheckbox2', function(){
 $(document).on('click', '.contractEdit', function(){
   var cid = $(this).siblings('.contractNumber').text();
 //   console.log(cid);
-  window.open('about:blank').location.href='contractEdit6.php?id='+cid;
+  window.open('about:blank').location.href='contractEdit.php?id='+cid;
 })
 
 $('#button7').click(function(){ //삭제버튼 클릭시
@@ -91,7 +91,7 @@ $('#button7').click(function(){ //삭제버튼 클릭시
 
     var psId = table.find("tr[name=contractRow]:eq("+expectedDayArray[i][0]+")").find('td[name=checkbox]').children('input[name=payId]').val();
 
-    if(psId != 'null'){
+    if(!(psId === 'null' || psId==='0')){
       alert('청구번호는 '+psId+' 입니다. 청구번호가 존재하면 삭제할수 없습니다.');
       return false;
     }
@@ -350,7 +350,7 @@ $(document).on('click', '.modalpay', function(){ //청구번호클릭하는거(�
   var executiveAmount = $(this).parent().siblings('input[name=getAmount]').val();
   var payDiv = $(this).parent().siblings('span[name=payDiv]').text();
   var taxMun = $(this).parent().siblings('input[name=taxMun]').val();
-  // alert(taxMun);
+  console.log(taxMun);
 
   // console.log(filtered_id, payNumber, expectedAmount, expectedDate, executiveDiv, executiveDate, executiveAmount, payDiv, taxMun);
 
@@ -374,26 +374,26 @@ $(document).on('click', '.modalpay', function(){ //청구번호클릭하는거(�
 
   if(payDiv==='완납' || payDiv==='완납(연체)'){
 
-    $('#expectedDate').val(expectedDate).prop('disabled', true);
+    $('#expectedDate').val(expectedDate);
     $('#expectedAmount').val(expectedAmount).prop('disabled', true);
     // $('#executiveDiv').val(executiveDiv).prop('disabled', true);
     // $('#executiveDate').val(executiveDate).prop('disabled', true);
     $('#executiveAmount').val(expectedAmount).prop('disabled', true);//하다보니 입금수단과 입금일은 좀 수정을 하고싶어짐
     $('#executiveDiv').val(executiveDiv);
     $('#executiveDate').val(executiveDate);
-    if(taxMun){
-      $('#modalfooter11').html(footer22);
-    } else {
+    if(taxMun==='null'){
       $('#modalfooter11').html(footer2);
+    } else {
+      $('#modalfooter11').html(footer22);
     }
   } else if(payDiv==='입금대기' || payDiv==='미납'){
     $('#executiveDiv').prop('disabled', false);
     $('#executiveDate').val(expectedDate).prop('disabled', false);
     $('#executiveAmount').val(expectedAmount).prop('disabled', false);
-    if(taxMun){
-      $('#modalfooter11').html(footer11);
-    } else {
+    if(taxMun==='null'){
       $('#modalfooter11').html(footer1);
+    } else {
+      $('#modalfooter11').html(footer11);
     }
   }
 
@@ -402,7 +402,8 @@ $(document).on('click', '.modalpay', function(){ //청구번호클릭하는거(�
     var pid = $(this).parent().parent().children(':eq(0)').children(':eq(0)').children(':eq(0)').text(); //청구번호
     let contractId = $('.contractNumber:eq(0)').text();
     var payDiv2 = $('#executiveDiv').val(); //입금수단, 계좌/현금/카드
-    var executiveDate2 = $('#executiveDate').val(); //입금금액
+    var expectedDate2 = $('#expectedDate').val(); 
+    var executiveDate2 = $('#executiveDate').val();
     let url = '/svc/service/contract/process/pp_payScheduleGetAmountModify.php';
 
     if(executiveDiv===payDiv2 && executiveDate===executiveDate2){
@@ -411,7 +412,8 @@ $(document).on('click', '.modalpay', function(){ //청구번호클릭하는거(�
         return false;
     }
   
-    amountlist22(pid, payDiv2, executiveDate2, contractId, url);
+    // console.log(pid, payDiv2, executiveDate2, contractId, expectedDate2, url);
+    amountlist33(pid, payDiv2, executiveDate2, contractId, expectedDate2, url);
     alert('수정했습니다.');
     $('#pPay').modal('hide');
   })
@@ -505,26 +507,41 @@ $(document).on('click', '#button1', function(){ //청구설정버튼 클릭시
     var payId = table.find("tr[name=contractRow]:eq("+expectedDayArray[i][0]+")").find('td[name=checkbox]').children('input[name=payId]').val(); //청구번호
 
     // console.log(payId);
-    if(!(payId==='null')){
+    if(!(payId==='null' || payId==='0')){
       alert('청구번호가 존재하여, 청구설정을 못합니다. 다시 확인해주세요.');
       return false;
     }
 
-    // table.find("tr:eq("+expectedDayArray[i][0]+")").find("td:eq(7)").text(paykind);이게 왜있지? 20.11.12
-    // console.log(expectedDayArray[i][0], a);
-    // 입금구분을 변경시키는 것
     var contractScheduleEle = [];
-    contractScheduleEle.push(table.find("tr[name=contractRow]:eq("+expectedDayArray[i][0]+")").find('td[name=checkbox]').children('input[name=csId]').val()); //계약번호
-    contractScheduleEle.push(table.find("tr[name=contractRow]:eq("+expectedDayArray[i][0]+")").find('td[name=order]').children('span[name=ordered]').text()); //순번
-    contractScheduleEle.push(table.find("tr[name=contractRow]:eq("+expectedDayArray[i][0]+")").find('td[name=date]').find('span[name=mStartDate]').text()); //시작일
-    contractScheduleEle.push(table.find("tr[name=contractRow]:eq("+expectedDayArray[i][0]+")").find('td[name=date]').find('span[name=mEndDate]').text()); //종료일
-    contractScheduleEle.push(table.find("tr[name=contractRow]:eq("+expectedDayArray[i][0]+")").find('td[name=detail]').find('input[name=mAmount]').val()); //공급가액
-    contractScheduleEle.push(table.find("tr[name=contractRow]:eq("+expectedDayArray[i][0]+")").find('td[name=detail]').find('input[name=mvAmount]').val()); //세액
-    contractScheduleEle.push(table.find("tr[name=contractRow]:eq("+expectedDayArray[i][0]+")").find('td[name=detail]').find('input[name=mtAmount]').val()); //합계금액
-    contractScheduleEle.push(table.find("tr[name=contractRow]:eq("+expectedDayArray[i][0]+")").find('td[name=detail]').find('input[name=mExpectedDate]').val()); //예정일
-    contractScheduleEle.push(table.find("tr[name=contractRow]:eq("+expectedDayArray[i][0]+")").find('td[name=detail]').find('select[name=payKind]').val()); //입금구분
+    
+    let cid = table.find("tr[name=contractRow]:eq(" + expectedDayArray[i][0] + ")").find(
+      'td[name=checkbox]').children('input[name=csId]').val(); //계약번호
+    let order = table.find("tr[name=contractRow]:eq(" + expectedDayArray[i][0] + ")").find(
+        'td[name=order]').children('span[name=ordered]').text(); //순번
+    let startDate = table.find("tr[name=contractRow]:eq(" + expectedDayArray[i][0] + ")").find(
+        'td[name=date]').find('span[name=mStartDate]').text(); //시작일
+    let endDate = table.find("tr[name=contractRow]:eq(" + expectedDayArray[i][0] + ")").find(
+        'td[name=date]').find('span[name=mEndDate]').text(); //종료일
+    let mAmount = table.find("tr[name=contractRow]:eq(" + expectedDayArray[i][0] + ")").find(
+        'td[name=detail]').find('input[name=mAmount]').val(); //공급가액
+    let mvAmount = table.find("tr[name=contractRow]:eq(" + expectedDayArray[i][0] + ")").find(
+        'td[name=detail]').find('input[name=mvAmount]').val(); //세액
+    let mtAmount = table.find("tr[name=contractRow]:eq(" + expectedDayArray[i][0] + ")").find(
+        'td[name=detail]').find('input[name=mtAmount]').val(); //합계금액
+    let expectedDate = table.find("tr[name=contractRow]:eq(" + expectedDayArray[i][0] + ")").find(
+        'td[name=detail]').find('input[name=mExpectedDate]').val(); //예정일
+    let payKind = table.find("tr[name=contractRow]:eq(" + expectedDayArray[i][0] + ")").find(
+    'td[name=detail]').find('select[name=payKind]').val(); //입금구분
 
+    if(expectedDate.length===0){
+      alert('입금예정일이 비어있으면 청구가 불가합니다.');
+      return false;
+    }
+    
+    contractScheduleEle.push(cid, order, startDate, endDate, mAmount, mvAmount, mtAmount, expectedDate,
+      payKind);
     contractScheduleArray.push(contractScheduleEle);
+
   }
   // console.log(contractSchedule);
 
@@ -539,12 +556,156 @@ $(document).on('click', '#button1', function(){ //청구설정버튼 클릭시
     // console.log(contractId, buildingId,contractScheduleArray, url);
     amountlist21(contractId, buildingId,contractScheduleArray, url);
 
+    $('#allselect2').prop('checked',false);
   } else {
     alert('계약기간은 120개월, 10년으로 제안됩니다. 그 이상인경우 새로운 계약을 생성해주세요.');
     return false;
   }
 
 })
+
+//===============
+
+$(document).on('click', '#button2', function(){ //청구취소버튼 클릭시
+
+  if(expectedDayArray.length===0){
+    alert('선택한 내역이 없습니다.');
+    return false;
+  }
+
+  var payIdArray = [];
+  var table = tbl.find('tbody');
+
+  for (var i = 0; i < expectedDayArray.length; i++) {
+
+    var payIdArrayEle = [];
+    var payId = table.find("tr[name=contractRow]:eq("+expectedDayArray[i][0]+")").find('td[name=checkbox]').children('input[name=payId]').val(); //청구번호
+    var csCheck = table.find("tr:eq("+expectedDayArray[i][0]+")").find('td[name=detail2]').children('span[name=payDiv]').text();//수납구분
+    // console.log(csCheck);
+    var taxMun = table.find("tr:eq("+expectedDayArray[i][0]+")").find('td[name=detail2]').children('input[name=taxMun]').val();//세금계산서문서번호
+    if(payId=='0' || payId==='null'){
+      alert('청구번호가 존재해야 청구취소 가능합니다.');
+      return false;
+    }
+
+    if(csCheck == '완납' || csCheck == '완납(연체)'){
+      alert('완납상태여서 청구취소 불가합니다. 입금취소부터 해주세요.');
+      return false;
+    }
+
+    if(taxMun != 'null'){
+      alert('청구세금계산서가 발행된 상태이므로 청구취소 불가합니다. 내용을 다시 확인하거나 만일 반드시 청구취소해야 한다면, 데이터정정요청 버튼을 클릭하세요.');
+      return false;
+    }
+
+    payIdArrayEle.push(payId, csCheck);
+    payIdArray.push(payIdArrayEle);
+  }
+  // console.log(payIdArray);
+
+  let contractId = $('.contractNumber:eq(0)').text();
+  payIdArray = JSON.stringify(payIdArray);
+  let url = '/svc/service/contract/process/pp_payScheduleDropFor.php';
+
+  amountlist24(contractId, payIdArray, url);
+
+  $('#allselect2').prop('checked',false);
+})
+
+//===================
+$(document).on('click', '#button3', function(){ //일괄입금버튼 클릭시
+
+  var payIdArray = [];
+  var table = tbl.find('tbody');
+
+  // console.log(expectedDayArray);
+
+  if(expectedDayArray.length===0){
+    alert('청구설정된것을 선택해야 일괄입금처리가 가능합니다.');
+    return false;
+  }
+
+  for (var i = 0; i < expectedDayArray.length; i++) {
+    var payIdArrayEle = [];
+
+    var psId = table.find("tr[name=contractRow]:eq("+expectedDayArray[i][0]+")").find('td[name=checkbox]').children('input[name=payId]').val(); //청구번호
+    // console.log(psId); //제이쿼리로 트림을 하니 더 이상해져서 안하기로함
+    if(payId=='0' || payId==='null'){ 
+      alert('청구번호가 존재해야 일괄입금처리가 가능합니다.');
+      return false;
+    }
+
+    var csCheck = table.find("tr:eq("+expectedDayArray[i][0]+")").find('td[name=detail2]').children('span[name=payDiv]').text();//수납구분
+    if(csCheck == '완납' || csCheck == '완납(연체)'){
+      alert('이미 입금처리가 되어있습니다.');
+      return false;
+    }
+
+    var payKind = table.find("tr:eq("+expectedDayArray[i][0]+")").find('td[name=detail]').children('span[name=payKind]').text();//입금구분
+    var executiveDate = table.find("tr:eq("+expectedDayArray[i][0]+")").find('td[name=detail]').children('span[name=pExpectedDate]').text();
+    var executiveAmount = table.find("tr:eq("+expectedDayArray[i][0]+")").find('td[name=detail]').children('span[name=mtAmount]').text();
+
+    payIdArrayEle.push(psId, payKind, executiveDate, executiveAmount);
+    payIdArray.push(payIdArrayEle);
+  }
+  console.log(payIdArray);
+
+  let contractId = $('.contractNumber:eq(0)').text();
+  payIdArray = JSON.stringify(payIdArray);
+  let url = '/svc/service/contract/process/pp_payScheduleGetAmountInputFor.php';
+
+  amountlist24(contractId, payIdArray, url);
+
+  $('#allselect2').prop('checked',false);
+
+})
+
+$('#button4').click(function(){ //일괄입금취소버튼 클릭시
+
+  var payIdArray = [];
+  var table = tbl.find('tbody');
+
+  if(expectedDayArray.length===0){
+    alert('선택된것이 없습니다. 먼저 체크박스로 데이터를 선택해주세요.');
+    return false;
+  }
+
+  for (var i = 0; i < expectedDayArray.length; i++) {
+
+    var psId = table.find("tr[name=contractRow]:eq("+expectedDayArray[i][0]+")").find('td[name=checkbox]').children('input[name=payId]').val();//청구번s
+
+    if(payId=='0' || payId==='null'){ //trim()이거를 안넣으니 빈문자열로 인식이 안되어서 이거넣음
+      alert('청구번호가 존재해야 일괄입금취소 처리가 가능합니다.');
+      return false;
+    }
+
+    var csCheck = table.find("tr:eq("+expectedDayArray[i][0]+")").find('td[name=detail2]').children('span[name=payDiv]').text();//수납구분
+    if(csCheck == '입금대기' || csCheck == '미납'){
+      alert('아직 입금처리가 되어있지 않으므로 입금취소 불가합니다.');
+      return false;
+    }
+
+    var taxMun = table.find("tr:eq("+expectedDayArray[i][0]+")").find('td[name=detail2]').children('input[name=taxMun]').val();
+    if(taxMun != 'null'){
+      alert('세금계산서가 발행된 상태이므로 입금취소 불가합니다. 내용을 다시 확인하거나 만일 반드시 입금취소해야 한다면, 하단 이메일(info@leaseman.co.kr)로 데이터정정을 요청해주세요.');
+      return false;
+    }
+
+    payIdArray.push(psId);
+  }
+  // console.log(contractScheduleArray);
+
+  let contractId = $('.contractNumber:eq(0)').text();
+  payIdArray = JSON.stringify(payIdArray);
+  let url = '/svc/service/contract/process/pp_payScheduleGetAmountCanselFor.php';
+
+  amountlist24(contractId, payIdArray, url);
+
+  $('#allselect2').prop('checked',false);
+
+})
+
+//====================
 
 $(document).on('click', '#mpayBack', function(){ //청구취소버튼(모달안버튼) 클릭
 
@@ -591,6 +752,8 @@ $(document).on('click', '#mgetExecute', function(){ //입금완료버튼(모달�
   $('#pPay').modal('hide');
 })
 
+
+
 //=======================
 $(document).on('click', '#mExecuteBack', function(){ //입금취소버튼(모달안버튼) 클릭
   
@@ -623,7 +786,7 @@ $(document).on('click', '#buttonDirect', function(){
   
     for (var i = 0; i < expectedDayArray.length; i++) {
       var psId = table.find("tr[name=contractRow]:eq("+expectedDayArray[i][0]+")").find('td[name=checkbox]').children('input[name=payId]').val(); //청구번호
-      if(psId != 'null'){
+      if(!(psId === 'null' || psId ==='0')){
         alert('청구번호가 있는경우 즉시입금이 불가합니다. 청구번호없는 아무것도 없는 상태에서 청구와 입금처리가 동시에 되는거에요.');
         return false;
       }
@@ -751,4 +914,22 @@ $(document).on('click', 'button[name=fileDelete]', function(){
   console.log(url, contractId, fileid);
   deletefile(url, contractId, fileid);
 })
+
+
+$('.table').on('keyup', '.amountNumber:input[type="text"]', function() {
+  var currow = $(this).closest('table').parent().closest('tr');
+
+  // console.log(colOrder);
+
+  var colmAmount = Number(currow.find('td[name=detail]').find('input[name=mAmount]').val());
+
+  var colmvAmount = Number(currow.find('td[name=detail]').find('input[name=mvAmount]').val());
+
+  var colmtAmount = colmAmount + colmvAmount;
+  currow.find('td[name=detail]').find('input[name=mtAmount]').val(colmtAmount);
+
+  // console.log(colmAmount, colmvAmount, colmtAmount)
+
+})
+
 

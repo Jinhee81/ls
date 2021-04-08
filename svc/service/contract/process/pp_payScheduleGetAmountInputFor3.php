@@ -27,9 +27,7 @@ for ($i=0; $i < count($a); $i++) {
   // echo $sql3;
   $result3 = mysqli_query($conn, $sql3);
   if($result3===false){
-    echo "<script>alert('저장과정에 문제가 생겼습니다. 화면을 캡쳐하여 관리자(info@leaseman.co.kr)에게 이메일을 보내주세요.(1)')
-                  location.href='contractEdit.php?id=$filtered_id'
-            </script>";
+    echo json_encode('update1');
     error_log(mysqli_error($conn));
     exit();
   }
@@ -87,10 +85,7 @@ for ($i=0; $i < count($expectedDateArray2); $i++) {
 // print_r($payExecutiveRow);
 for ($i=0; $i < count($payExecutiveRow); $i++) {
   if($payExecutiveRow[$i][6]===0){
-    echo "<script>
-            alert('0원은 청구 불가합니다.');
-            location.href='contractEdit.php?page=schedule&id=$filtered_id';
-          </script>";
+    echo json_encode('logical');//0원청구불가
     exit();
   }
 }
@@ -136,17 +131,14 @@ for ($i=0; $i < count($payExecutiveRow); $i++) {
       // echo $sql2; //청구번호를 계약스케줄번호에 넣음
       $result2 = mysqli_query($conn, $sql2);
       if(!$result2){
-        echo "<script>alert('저장과정에 문제가 생겼습니다. 화면을 캡쳐하여 관리자(info@leaseman.co.kr)에게 이메일을 보내주세요(4)');
-                 location.href='contractEdit.php?page=schedule&id=$filtered_id';
-           </script>";
+        echo json_encode('update2');
            error_log(mysqli_error($conn));
            exit();
       }
     }
   } else {
-    echo "<script>alert('저장과정에 문제가 생겼습니다. 화면을 캡쳐하여 관리자(info@leaseman.co.kr)에게 이메일을 보내주세요(2)');
-             location.href='contractEdit.php?page=schedule&id=$filtered_id';
-       </script>";
+    echo json_encode('input1');
+
        error_log(mysqli_error($conn));
        exit();
   }
@@ -161,9 +153,8 @@ $sql5 = "UPDATE realContract SET
 $result5 = mysqli_query($conn, $sql5);
 
 if($result5===false){
-  echo "<script>alert('저장과정에 문제가 생겼습니다. 화면을 캡쳐하여 관리자(info@leaseman.co.kr)에게 이메일을 보내주세요.(3)');
-        location.href = 'contractEdit.php?page=schedule&id=$filtered_id';
-        </script>";
+  echo json_encode('update3');
+
   error_log(mysqli_error($conn));
   exit();
 }

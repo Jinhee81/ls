@@ -5,8 +5,7 @@ header('Content-Type: text/html; charset=UTF-8');
 
 $conn = mysqli_connect("127.0.0.1", "leaseman", "leaseman!!22", "leaseman_svc");
 
-$password = $_POST['password'];
-$hash = md5($password);
+// $hash = md5($password);
 
 // print_r($_POST);
 
@@ -15,6 +14,7 @@ $month1later = date('Y-m-d', strtotime($currentDate.'+1 month -1 days'));
 
 $filtered = array(
   'email' => mysqli_real_escape_string($conn, $_POST['email1']),
+  'password' => mysqli_real_escape_string($conn, $_POST['password']),
   'user_name' => mysqli_real_escape_string($conn, $_POST['user_name'])
 );
 
@@ -25,7 +25,7 @@ $row = mysqli_fetch_array($result);
 
 if($row[0] >=1 ){
   echo "<script>alert('이미 등록된 전화번호입니다. 비밀번호 찾기를 해주세요.');
-  location.href = '../svc/password_find.php';
+  location.href = '../svc/password_find2.php';
   </script>";
   error_log(mysqli_error($conn));
   exit();
@@ -51,7 +51,7 @@ if($_POST['user_div']==='개인'){
           coin
       ) VALUES (
           '{$filtered['email']}',
-          '{$hash}',
+          '{$filtered['password']}',
           '{$_POST['user_div']}',
           '{$filtered['user_name']}',
           '{$filtered['user_name']}',
@@ -85,7 +85,7 @@ if($_POST['user_div']==='개인'){
           coin
       ) VALUES (
           '{$filtered['email']}',
-          '{$hash}',
+          '{$filtered['password']}',
           '{$_POST['user_div']}',
           '{$filtered['user_name']}',
           '{$_POST['manager_name']}',
@@ -163,6 +163,23 @@ for ($i=0; $i < count($sms); $i++) {
     exit();
   }
 }
+
+$content = "이메일 : ".$filtered['email']."\n"
+           ."user_div : ".$_POST['user_div']."\n"
+           ."user_name : ".$filtered['user_name']."\n"
+           ."manager_name : ".$filtered['manager_name']."\n"
+           ."cellphone : ".$_POST['cellphone']."\n"
+           ."lease_type : ".$_POST['lease_type']."\n"
+           ."lease_etc : ".$_POST['lease_etc']."\n"
+           ."regist_channel : ".$_POST['regist_channel']."\n"
+           ."regist_etc : ".$_POST['regist_etc']."\n";
+
+//리스맨에게 받는 메일
+$to      = 'info@leaseman.co.kr';
+$subject = '[리스맨시스템]회원가입';
+$headers = 'From: '.$filtered['email'];
+
+mail($to, $subject, $content, $headers);
 
 
 if($result2 && $result3){

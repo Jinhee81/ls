@@ -7,6 +7,8 @@ $id = $_POST['id'];
 $password = $_POST['password'];
 
 $check = "SELECT * from administrator WHERE id = '{$id}' LIMIT 1;";
+
+// echo $check;
 $result = mysqli_query($conn, $check);
 $row = mysqli_fetch_array($result);
 

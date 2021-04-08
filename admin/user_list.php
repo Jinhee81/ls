@@ -8,23 +8,24 @@ require('view/admin_header.php');
 ?>
 
 <section class="col col-md-11">
-  <div class="text-center">
-    <h1>회원리스트</h1>
-    <table class="table mt-5">
-      <tbody>
-        <tr>
-          <th><input type="checkbox" id="allselect"></th>
-          <th>순번</th>
-          <th>회원번호</th>
-          <th>이메일</th>
-          <th>유형(회원명,담당자명)</th>
-          <th>연락처</th>
-          <th>가입경로</th>
-          <th>가입일시</th>
-          <th>등급</th>
-          <th>건물수</th>
-        </tr>
-        <?php
+    <div class="text-center">
+        <h1>회원리스트</h1>
+
+        <table class="table mt-5">
+            <tbody>
+                <tr>
+                    <th><input type="checkbox" id="allselect"></th>
+                    <th>순번</th>
+                    <th>회원번호</th>
+                    <th>이메일</th>
+                    <th>유형(회원명,담당자명)</th>
+                    <th>연락처</th>
+                    <th>가입경로</th>
+                    <th>가입일시</th>
+                    <th>등급</th>
+                    <th>건물수</th>
+                </tr>
+                <?php
         $sql_c = "select count(*) from user";
         $result_c = mysqli_query($conn, $sql_c);
         $row_c = mysqli_fetch_array($result_c);
@@ -51,7 +52,7 @@ require('view/admin_header.php');
          order by
           user.created desc";
 
-        // echo $sql;
+        echo $sql;
         $result = mysqli_query($conn, $sql);
         // print_r($result);
         while($row = mysqli_fetch_array($result)){
@@ -70,38 +71,38 @@ require('view/admin_header.php');
           'gradename'=>htmlspecialchars($row['gradename'])
         );
           ?>
-        <tr>
-          <td><input type="checkbox" class="tbodycheckbox" value="<?=$filtered['id']?>"></td>
-          <td><?=$row['num']?></td>
-          <td>
-            <a href="user_detail.php?id=<?=$filtered['id']?>"><?=$filtered['id']?></a>
-          </td>
-          <td><?=$filtered['email']?></td>
-          <td><?=$filtered['lease_type'].'('.$filtered['user_name'].','.$filtered['manager_name'].')'?></td>
-          <td>
-            <?php
+                <tr>
+                    <td><input type="checkbox" class="tbodycheckbox" value="<?=$filtered['id']?>"></td>
+                    <td><?=$row['num']?></td>
+                    <td>
+                        <a href="user_detail.php?id=<?=$filtered['id']?>"><?=$filtered['id']?></a>
+                    </td>
+                    <td><?=$filtered['email']?></td>
+                    <td><?=$filtered['lease_type'].'('.$filtered['user_name'].','.$filtered['manager_name'].')'?></td>
+                    <td>
+                        <?php
 $phone2 = substr($filtered['cellphone'],0,3).'-'.substr($filtered['cellphone'],3,4).'-'.substr($filtered['cellphone'],7,4)
              ?>
-            <?=$phone2?>
-          </td>
+                        <?=$phone2?>
+                    </td>
 
-          <td><?=$filtered['regist_channel']?></td>
-          <td><?=$filtered['created']?></td>
-          <td>
-            <?php if($filtered['gradename']==='feefree'){
+                    <td><?=$filtered['regist_channel']?></td>
+                    <td><?=$filtered['created']?></td>
+                    <td>
+                        <?php if($filtered['gradename']==='feefree'){
               echo "무료";
             } else {
               echo $filtered['gradename'];
             } ?>
-          </td>
-          <td><?=$filtered['building_count']?></td>
-        </tr>
-      <?php
+                    </td>
+                    <td><?=$filtered['building_count']?></td>
+                </tr>
+                <?php
       }
        ?>
-     </tbody>
-    </table>
-    <?php
+            </tbody>
+        </table>
+        <?php
     // echo $sql;
     if($result === false){
         echo mysqli_error($conn);
@@ -109,7 +110,7 @@ $phone2 = substr($filtered['cellphone'],0,3).'-'.substr($filtered['cellphone'],3
       echo "저장되었습니다.<a href='admin_index.php'>돌아가기</a>";
     }
      ?>
-  </div>
+    </div>
 </section>
 
 

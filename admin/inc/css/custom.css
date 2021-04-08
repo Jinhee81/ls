@@ -55,6 +55,10 @@ button#rDelete.btn.btn-default{
   background-color: grey;
 }
 
+#outsideTable tr.selected {
+  background-color: #a9d0f5;
+}
+
 /* p {
   font-family: 'Nanum Gothic', sans-serif;
   /* background-color: #C8E6C9; */

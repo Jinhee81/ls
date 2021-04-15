@@ -54,7 +54,7 @@ if($result5===false){
   exit();
 }
 
-include "../condi/sql_amount.php";
+include "../condi/sql_amount2.php";
 
 echo json_encode($allRows);
 ?>

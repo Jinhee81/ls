@@ -180,7 +180,7 @@ function deletefile(a,b,c){
 //=========================
 function success(data){
   data = JSON.parse(data);
-  // console.log(data);
+  console.log(data);
   if(errorArray.includes(data)){
     alert('데이터처리과정에 문제가 생겼습니다. 오류번호는 '+data+' 입니다.');
     return false;
@@ -379,16 +379,7 @@ function amountlist2(a,b,c){
     data:{'contractId':a,
           'contractScheduleIdArray':b},
     success:function(data){
-      data = JSON.parse(data);
-      if(errorArray.includes(data)){
-        alert('데이터처리과정에 문제가 생겼습니다. 오류번호는 '+data+' 입니다.');
-        return false;
-      } else if(data==='logical') {
-        alert('0원은 청구할 수 없습니다. 다시 확인하세요.');
-        return false;
-      } else {
-        success(data);
-      }
+      success(data);
     }
   })
   expectedDayArray = [];

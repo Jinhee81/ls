@@ -302,8 +302,8 @@ include $_SERVER['DOCUMENT_ROOT']."/svc/modal/modal_regist.php";//청구번호�
     <script src="/svc/inc/js/etc/building.js?<?=date('YmdHis')?>"></script>
 
     <script type="text/javascript" src="js_sms_array_rcontract.js?<?=date('YmdHis')?>"></script>
-    <script type="text/javascript" src="j_checksum_c0.js?<?=date('YmdHis')?>"></script>
     <!-- 계약리스트 표에서 체크썸파일 -->
+    <script type="text/javascript" src="j_checksum_c0.js?<?=date('YmdHis')?>"></script>
     <script type="text/javascript" src="/svc/inc/js/etc/customer.js?<?=date('YmdHis')?>"></script>
     <script type="text/javascript" src="/svc/inc/js/etc/contract_function.js?<?=date('YmdHis')?>"></script>
     <script type="text/javascript" src="/svc/inc/js/etc/ce_pl_f2.js?<?=date('YmdHis')?>"></script>

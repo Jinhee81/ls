@@ -1,0 +1,17 @@
+CREATE TABLE `leaseman_svc`.`sentsms_admin` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `div1` VARCHAR(20) NOT NULL,
+  `type` VARCHAR(45) NOT NULL,
+  `byte` INT NOT NULL,
+  `sendtime` DATETIME NOT NULL,
+  `recieve_div` VARCHAR(45) NULL,
+  `recieve_type` VARCHAR(45) NULL,
+  `recieve_user_name` VARCHAR(45) NULL,
+  `recieve_manager_name` VARCHAR(45) NULL,
+  `recieve_cellphone` VARCHAR(45) NOT NULL,
+  `description` VARCHAR(400) NOT NULL,
+  `result` VARCHAR(45) NULL,
+  `sentnumber` VARCHAR(45) NOT NULL,
+  `admin_id` INT NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE INDEX `id_UNIQUE` (`id` ASC));

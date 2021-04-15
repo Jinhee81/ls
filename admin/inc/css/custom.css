@@ -59,6 +59,10 @@ button#rDelete.btn.btn-default{
   background-color: #a9d0f5;
 }
 
+.fontshade {
+  color: #F8E0F7;
+}
+
 /* p {
   font-family: 'Nanum Gothic', sans-serif;
   /* background-color: #C8E6C9; */

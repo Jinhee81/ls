@@ -17,9 +17,13 @@
     <link rel="stylesheet" href="/admin/inc/css/bootstrap.min.css">
     <!-- 달력 css -->
     <link rel="stylesheet" href="/admin/inc/css/jquery-ui.min.css">
+
     <!-- custom css -->
     <link rel="stylesheet" href="/admin/inc/css/custom.css?<?=date('YmdHis')?>">
     <link href="https://fonts.googleapis.com/css?family=Gothic+A1:700|Nanum+Gothic" rel="stylesheet">
+    <!-- 폰트어썸 css -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css"
+        integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
 
 </head>
 

@@ -1,2 +1,19 @@
 klassautomanager/
+data/
+inc/
+simplehtmldom_1_9_1/
+view/
+extract.js
+extract2.js
+extract3.js
+extract.php
+extract2.php
+extract3.php
+index.php
+logincheck.php
+logout.php
+simple_html_dom.php
+spec.php
+spec2.php
+spec3.php
 

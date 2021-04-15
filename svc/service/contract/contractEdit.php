@@ -578,7 +578,7 @@ $('#button7').click(function() { //삭제버튼 클릭시
         var psId = table.find("tr[name=contractRow]:eq(" + expectedDayArray[i][0] + ")").find(
             'td[name=checkbox]').children('input[name=payId]').val();
 
-        if (psId != 'null') {
+        if (!(psId === 'null' || psId === '0')) {
             alert('청구번호는 ' + psId + ' 입니다. 청구번호가 존재하면 삭제할수 없습니다.');
             return false;
         }

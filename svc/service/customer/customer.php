@@ -9,7 +9,7 @@ if(!isset($_SESSION['is_login'])){
 <html lang="en" dir="ltr">
 
 <head>
-    <title>관계자</title>
+    <title>입주자</title>
     <?php
 include $_SERVER['DOCUMENT_ROOT']."/svc/view/service_header1_meta.php";
 include $_SERVER['DOCUMENT_ROOT']."/svc/view/service_header2.php";
@@ -35,12 +35,12 @@ while($row_sms = mysqli_fetch_array($result_sms)){
     <section class="container">
         <div class="jumbotron pt-3 pb-3 mb-2">
             <div class="row">
-                <h3 class="">관계자 목록이에요.(#101)</h3>
+                <h3 class="">입주자 목록이에요.(#101)</h3>
             </div>
             <p class="lead">
                 <!-- (1) 정확한 표현은 이해관계자리스트라고 보아도 무방합니다. 세입자(고객) 뿐만 아니라, 문의하는 사람 및 자주 거래하는 거래처도 저장할 수 있어요.<br> -->
                 (1) 임대계약이 발생하면 숫자가 표시됩니다. (2)'기타' 분류는 임대계약 외의 일회성매출에 대한 고객을 분류할 수 있습니다.<br>
-                (3) 등록해야할 세입자(임차인)가 많으면 고객센터로 연락주세요. 대신 등록작업 해드립니다. (1년계약시 유효 ^_^)
+                (3) 등록해야할 입주자(세입자/임차인)가 많으면 고객센터로 연락주세요. 대신 등록작업 해드립니다. (1년계약시 유효 ^_^)
             </p>
 
             <div class="p-3 mb-2 bg-light text-dark border border-info rounded">
@@ -507,7 +507,7 @@ include $_SERVER['DOCUMENT_ROOT']."/svc/service/sms/modal_sms2.php";
                     var colOrder = table.find("tr:eq(" + i + ")").find("td:eq(1)").text();
                     var colid = table.find("tr:eq(" + i + ")").find("td:eq(0)").children('input').val();
                     var colStep = table.find("tr:eq(" + i + ")").find("td:eq(3)").children('span')
-                    .text();
+                        .text();
                     customerArrayEle.push(colOrder, colid, colStep);
                     customerArray.push(customerArrayEle);
                 }

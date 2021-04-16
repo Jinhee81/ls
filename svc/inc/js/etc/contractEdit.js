@@ -466,44 +466,44 @@ var tbl = $("table[name=tableAmount]");
 //   var original_enddate = '<?=$row['endDate2']?>';
 //   var startDate = '<?=$row['startDate']?>';
 //   var enddate3 = $('#enddate3').val();
-//
+
 //   original_enddate = new Date(original_enddate);
 //   startDate = new Date(startDate);
 //   enddate3 = new Date(enddate3);
-//
+
 //   // console.log(original_enddate, startDate, enddate3);
-//
+
 //   if(step != '입금'){
 //     alert('현재 단계가 '+step+' 상태여서 중간종료처리를 할 필요가 없어요. 계약기간 등을 수정하면 됩니다.');
 //     return false;
 //   }
-//
+
 //   if(original_enddate === enddate3){
 //     alert('종료일과 같으면 중간종료가 아닙니다. 중간종료일을 다시 확인하세요');
 //     return false;
 //   }
-//
+
 //   if(enddate3 <= startDate){
 //     alert('시작일보다 작거나 같으면 중간종료가 아닙니다. 날짜를 다시 확인해주세요.');
 //     return false;
 //   }
-//
+
 //   if(enddate3 >= original_enddate){
 //     alert('종료일보다 크거나 같으면 중간종료가 아닙니다. 날짜를 다시 확인해주세요.');
 //     return false;
 //   }
-//
+
 //   enddate3 = $('#enddate3').val();;
-//
+
 //   goCategoryPage(contractId, enddate3);
-//
+
 //   function goCategoryPage(a,b){
 //     var frm = formCreate('contractMiddleEnd', 'post', 'p_realContract_middle_end.php', '');
 //     frm = formInput(frm, 'contractId', a);
 //     frm = formInput(frm, 'enddate3', b);
 //     formSubmit(frm);
 //   }
-//
+
 // })
 //
 // $('button[name=middleEndCansel]').on('click', function(){

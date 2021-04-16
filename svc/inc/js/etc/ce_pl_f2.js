@@ -40,14 +40,14 @@ function depositlist(a){
         returns += "<input type='hidden' name='memoid' value='"+value.idrealContract_memo+"'></td>";
         returns += "<td><input class='form-control form-control-sm text-center' name='memoCreator' value='"+value.memoCreator+"'></td>";
         returns += "<td><textarea class='form-control form-control-sm' name='memoContent' rows='1'>"+value.memoContent+"</textarea></td>";
-        returns += "<td><small>"+value.created+"</small></td>";
+        returns += "<td class=mobile><small>"+value.created+"</small></td>";
 
         if(value.updated===null){
-          returns += "<td><small>-</small></td>";
+          returns += "<td class=mobile><small>-</small></td>";
         } else {
-          returns += "<td><small>"+value.updated+"</small></td>";
+          returns += "<td class=mobile><small>"+value.updated+"</small></td>";
         }
-        returns += "<td><label class='small' name='memoEdit'><u>수정</u></label>&nbsp;<label class='small' name='memoDelete'><u>삭제</u></label></td>";
+        returns += "<td class=mobile><label class='small' name='memoEdit'><u>수정</u></label>&nbsp;<label class='small' name='memoDelete'><u>삭제</u></label></td>";
         returns += "</tr>";
       })
     }
@@ -124,14 +124,22 @@ function successfile(data){
     countall = 0;
   } else {
     $.each(data, function(key, value){
-      returns += "<tr>";
-      returns += "<td>"+value.num;
-      returns += "<input type='hidden' name='fileid' value='"+value.file_id+"'></td>";
-      returns += "<td><a href='/svc/service/contract/download.php?file_id="+value.file_id+"' target=_blank>"+value.name_orig+"</a></td>";
-      returns += "<td>"+value.bytes+"</td>";
-      returns += "<td>"+value.reg_time+"</td>";
-      returns += "<td><button type='submit' name='fileDelete' class='btn btn-default grey'><i class='far fa-trash-alt'></i></button></td>";
-      returns += "</tr>";
+      // returns += "<tr>";
+      // returns += "<td>"+value.num;
+      // returns += "<input type='hidden' name='fileid' value='"+value.file_id+"'></td>";
+      // returns += "<td><a href='/svc/service/contract/download.php?file_id="+value.file_id+"' target=_blank>"+value.name_orig+"</a></td>";
+      // returns += "<td>"+value.bytes+"</td>";
+      // returns += "<td>"+value.reg_time+"</td>";
+      // returns += "<td><button type='submit' name='fileDelete' class='btn btn-default grey'><i class='far fa-trash-alt'></i></button></td>";
+      // returns += "</tr>";
+
+      returns += `<tr>
+                  <td>${value.num}<input type='hidden' name='fileid' value=${value.file_id}></td>
+                  <td><a href='/svc/service/contract/download.php?file_id=${value.file_id}' target=_blank>${value.name_orig}</a></td>
+                  <td class=mobile>${value.bytes}</td>
+                  <td class=mobile>${value.reg_time}</td>
+                  <td class=mobile><button type='submit' name='fileDelete' class='btn btn-default grey'><i class='far fa-trash-alt'></i></button></td>
+                </tr>`;
     })
   }
   $('#file11').html(returns);

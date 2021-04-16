@@ -21,6 +21,12 @@ if($a['fromDate'] && $a['toDate']){
   $etcDate = " and (DATE($dateDiv) <= '{$a['toDate']}')";
 }
 
+if($a['building']==='buildingAll'){
+  $buildingCondi = "";
+} else {
+  $buildingCondi = "and realContract.building_id = {$a['building']}";
+}
+
 
 if($a['group']==='groupAll'){
   $groupCondi = "";
@@ -43,9 +49,8 @@ if($a['cText']){
 
 $sql_where = "
       where paySchedule2.user_id={$_SESSION['id']} and
-            realContract.building_id = {$a['building']} and
             paySchedule2.executiveDate is null
-            $groupCondi $etcCondi $etcDate
+            $buildingCondi $groupCondi $etcCondi $etcDate
       order by
             date_format(pExpectedDate, '%Y-%m-%d') asc";
 
@@ -60,9 +65,8 @@ $sql_count = "select count(*)
               left join r_g_in_building
                   on realContract.r_g_in_building_id = r_g_in_building.id
               where paySchedule2.user_id={$_SESSION['id']} and
-                    paySchedule2.building_id = {$a['building']} and
                     paySchedule2.executiveDate is null
-                    $groupCondi $etcCondi $etcDate
+                    $buildingCondi $groupCondi $etcCondi $etcDate
               ";
 
 $result_count = mysqli_query($conn, $sql_count);

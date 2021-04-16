@@ -3,7 +3,7 @@ header('Content-Type: text/html; charset=UTF-8');
 session_start();
 include $_SERVER['DOCUMENT_ROOT']."/svc/view/conn.php";
 
-print_r($_POST)."<br>";
+// print_r($_POST)."<br>";
 
 $filtered = array(
   'gId' => mysqli_real_escape_string($conn, $_POST['gId']), //상품아이디

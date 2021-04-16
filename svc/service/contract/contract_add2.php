@@ -222,66 +222,46 @@ var customerId, buildingId, buidlingName;
 function customersearch() {
     var query = $('#customer').val();
     // console.log(query);
-    var customerlist;
+    var customerlist = $.ajax({
+        url: 'ajax_customer_search.php',
+        method: 'post',
+        data: {
+            query: query
+        },
+        success: function(data) {
+            data = JSON.parse(data);
+            datacount = data.length;
 
-    if (query != '') {
-        customerlist = $.ajax({
-            url: 'ajax_customer_search.php',
-            method: 'post',
-            data: {
-                query: query
-            },
-            success: function(data) {
-                data = JSON.parse(data);
-                datacount = data.length;
+            var returns = '';
+            var buildingoption = '';
+            //
+            if (datacount === 0) {
+                returns = "<ul><li>조회값이 없어요. 조회조건을 다시 확인하거나 서둘러 입력해주세요.</li></ul>";
+            } else {
+                returns += '<ul class="list-unstyled">';
+                $.each(data, function(key, value) {
+                    returns += '<li>' + value.ccnn;
+                    returns += '<input type="hidden" name="customerId" value="' + value.cid + '">';
+                    returns += '<input type="hidden" name="buildingId" value="' + value.bid + '">';
+                    returns += '<input type="hidden" name="buildingName" value="' + value.bName +
+                        '"></li>';
+                })
+                returns += '</ul>';
+            }
 
-                var returns = '';
-                var buildingoption = '';
-                //
-                if (datacount === 0) {
-                    returns = "<ul><li>조회값이 없어요. 조회조건을 다시 확인하거나 서둘러 입력해주세요.</li></ul>";
-                } else {
-                    returns += '<ul class="list-unstyled">';
-                    $.each(data, function(key, value) {
-                        returns += '<li>' + value.ccnn;
-                        returns += '<input type="hidden" name="customerId" value="' + value.cid +
-                            '">';
-                        returns += '<input type="hidden" name="buildingId" value="' + value.bid +
-                            '">';
-                        returns += '<input type="hidden" name="buildingName" value="' + value
-                            .bName + '">';
-                        returns += '<input type="hidden" name="buildingPay" value="' + value.pay +
-                            '"></li>';
-                    })
-                    returns += '</ul>';
-                }
-
-                $('#customerList').fadeIn();
-                $('#customerList').html(returns);
-            } //success}
-        })
-    }
+            $('#customerList').fadeIn();
+            $('#customerList').html(returns);
+        } //success}
+    })
     return customerlist;
 }
 
 
 $(document).ready(function() {
 
-    $('#customer').keyup(function() {
+    $('#customer').on('click keyup', function() {
         customersearch();
-
-        // var query = $(this).val();
-        // $.ajax({
-        //       url: 'ajax_customer_search.php',
-        //       method: 'post',
-        //       data: {'query' : query},
-        //       success: function(data){
-        //         $('.allvals').html(data);
-        //       }
-        //     })
     })
-
-    customersearch();
 
     $('.dateType').datepicker({
         changeMonth: true,

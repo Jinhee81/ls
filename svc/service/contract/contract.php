@@ -294,9 +294,9 @@ include $_SERVER['DOCUMENT_ROOT']."/svc/modal/modal_regist.php";//청구번호�
     var groupBuildingArray = <?php echo json_encode($groupBuildingArray); ?>;
     var roomArray = <?php echo json_encode($roomArray); ?>;
     var smsSettingArray = <?php echo json_encode($rowsms); ?>;
-    console.log(buildingArray);
-    console.log(groupBuildingArray);
-    console.log(roomArray);
+    // console.log(buildingArray);
+    // console.log(groupBuildingArray);
+    // console.log(roomArray);
     </script>
 
     <script src="/svc/inc/js/etc/building.js?<?=date('YmdHis')?>"></script>

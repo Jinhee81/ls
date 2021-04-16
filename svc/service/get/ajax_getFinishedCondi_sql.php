@@ -16,6 +16,13 @@ if($_POST['fromDate'] && $_POST['toDate']){
   $etcDate = " and (DATE($dateDiv) <= '{$_POST['toDate']}')";
 }
 
+if($_POST['building']==='buildingAll'){
+  $buildingCondi = "";
+} else {
+  $buildingCondi1 = "and realContract.building_id = {$_POST['building']}";
+  $buildingCondi2 = "and etcContract.building_id = {$_POST['building']}";
+}
+
 $taxCondi = "";
 if($_POST['taxDiv']==='alltax'){
   $taxCondi = "";
@@ -35,6 +42,8 @@ if($_POST['payKind']==='payall'){
 } elseif ($_POST['payKind']==='카드') {
   $payCondi = " and (paySchedule2.payKind='카드')";
 }
+
+
 
 
 
@@ -123,9 +132,8 @@ join group_in_building
 join r_g_in_building
     on realContract.r_g_in_building_id = r_g_in_building.id
 where paySchedule2.user_id={$_SESSION['id']} and
-      realContract.building_id = {$_POST['building']} and
       paySchedule2.executiveDate is not null
-      $etcDate $taxCondi $payCondi $etcCondi1)
+      $buildingCondi1 $etcDate $taxCondi $payCondi $etcCondi1)
 union
 (select
     @gooddiv as gooddiv,
@@ -184,9 +192,8 @@ join building
 join good_in_building
     on etcContract.good_in_building_id = good_in_building.id
 where paySchedule2.user_id={$_SESSION['id']} and
-      etcContract.building_id = {$_POST['building']} and
       paySchedule2.executiveDate is not null
-      $etcDate $taxCondi $payCondi $etcCondi2)
+      $buildingCondi2 $etcDate $taxCondi $payCondi $etcCondi2)
 order by date_format(executiveDate, '%Y-%m-%d') desc
 ";
 

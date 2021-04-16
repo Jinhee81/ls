@@ -27,6 +27,12 @@ if($a['fromDate'] && $a['toDate']){
   $etcDate = " and (DATE($dateDiv) <= '{$a['toDate']}')";
 }
 
+if($a['building']==='bAll'){
+  $building_sql = "";
+} else {
+  $building_sql = "and customer.building_id={$a['building']}";
+}
+
 $div1 = "";
 if($a['customerDiv']==='customerAll'){
   $div1 = "";
@@ -49,8 +55,7 @@ if($a['cText']){
 
 $sql_count = "select count(*) from customer
         where user_id={$_SESSION['id']}
-              and building_id={$a['building']}
-              $etcDate $div1 $etcCondi";
+        $building_sql $etcDate $div1 $etcCondi";
 $result_count = mysqli_query($conn, $sql_count);
 $row_count = mysqli_fetch_array($result_count);
 
@@ -95,9 +100,8 @@ $sql_before = "select
           customer
         left join building
           on customer.building_id = building.id
-        where customer.user_id={$_SESSION['id']} and
-              customer.building_id={$a['building']}
-              $etcDate $div1 $etcCondi
+        where customer.user_id={$_SESSION['id']} 
+          $building_sql $etcDate $div1 $etcCondi
         order by created desc";
 
 $sql = $sql_before." LIMIT {$start}, {$_POST['pagerow']}";

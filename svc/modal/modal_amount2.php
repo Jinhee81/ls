@@ -4,7 +4,7 @@
             <div class="modal-header">
                 <h5 class="modal-title"><span class="mtitle"></span> - <label class="font-italic mb-0">계약번호 <span
                             class='contractNumber'></span>, <span class=customer11></span>, <span class=room11></span>
-                        <span class="badge badge-info contractEdit">전체화면열기</span></label>
+                        <span class="badge badge-info contractEditAll">전체화면열기</span></label>
                     <input type="hidden" id="mAmount_m">
                     <input type="hidden" id="mvAmount_m">
                     <input type="hidden" id="mtAmount_m">
@@ -19,7 +19,7 @@
             <div class="modal-body">
                 <div class="" id="amountlist">
                     <?php
-            include $_SERVER['DOCUMENT_ROOT']."/svc/service/contract/edit/3_schedule.php";
+            include $_SERVER['DOCUMENT_ROOT']."/svc/service/contract/edit/3_schedule2.php";
          ?>
                 </div>
             </div>

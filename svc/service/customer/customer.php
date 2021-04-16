@@ -225,9 +225,9 @@ include $_SERVER['DOCUMENT_ROOT']."/svc/service/sms/modal_sms2.php";
     console.log(buildingArray);
     var smsSettingArray = <?php echo json_encode($rowsms); ?>;
 
-    var buildingoption;
+    var buildingoption = buildingoption = `<option value=bAll>물건전체</option>`;
     for (var key in buildingArray) { //건물목록출력(비즈피스장암,비즈피스구로)
-        buildingoption = "<option value='" + key + "'>" + buildingArray[key][0] + "</option>";
+        buildingoption += "<option value='" + key + "'>" + buildingArray[key][0] + "</option>";
         $('select[name=building]').append(buildingoption);
     }
     </script>

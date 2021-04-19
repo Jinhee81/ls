@@ -2,10 +2,12 @@
 //이 파일에는 전체물건이 조회조건에 있다.
 
 var buildingoption = '<option value="buildingAll">물건전체</option>';
+$('select[name=building]').append(buildingoption);
+
 var groupoption, buildingIdx, groupIdx;
 
 for(var key in buildingArray){ //건물목록출력(비즈피스장암,비즈피스구로)
-  buildingoption += "<option value='"+key+"'>"+buildingArray[key][0]+"</option>";
+  buildingoption = "<option value='"+key+"'>"+buildingArray[key][0]+"</option>";
   $('select[name=building]').append(buildingoption);
 }
 buildingIdx = $('select[name=building]').val();

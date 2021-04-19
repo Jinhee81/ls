@@ -3,7 +3,7 @@ var smsReadyArray = [];
 $("#allselect").click(function(){
 
   var allCnt = $(".tbodycheckbox").length;
-  let table = $('#checkboxTestTbl');
+  let table = $('#outsideTable');
   smsReadyArray = [];
 
   if($(this).is(":checked")){

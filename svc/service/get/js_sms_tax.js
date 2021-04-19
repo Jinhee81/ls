@@ -5,11 +5,14 @@ $('#smsBtn').on('click', function(){
 
     //문자발송에 필요한 번호
 
-    if(lease_type==='임대관리회사'){
-      var sendphonenumber = cellphone;
-    } else {
-      var sendphonenumber = buildingArray[buildingkey][3] + buildingArray[buildingkey][4] + buildingArray[buildingkey][5];
-    }
+    // if(lease_type==='임대관리회사'){
+    //   var sendphonenumber = cellphone;
+    // } else {
+    //   var sendphonenumber = buildingArray[buildingkey][3] + buildingArray[buildingkey][4] + buildingArray[buildingkey][5];
+    // }
+
+    var sendphonenumber = cellphone;
+
 
     $('input[name=sendphonenumber]').val(sendphonenumber);
 

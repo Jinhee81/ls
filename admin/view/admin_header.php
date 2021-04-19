@@ -29,8 +29,8 @@
 
 <body>
     <nav class="navbar navbar-expand-lg navbar-dark" style="background-color:#04B431;">
-        <a class="navbar-brand" href="/index.php"><img src="/admin/inc/img/leaseman_logo.png" width="100" height="30"
-                class="d-inline-block align-top" alt=""></a>
+        <a class="navbar-brand" href="/admin/main/alogin.php"><img src="/admin/inc/img/leaseman_logo.png" width="100"
+                height="30" class="d-inline-block align-top" alt=""></a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
             aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -38,9 +38,9 @@
 
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav mr-auto">
-                <li class="nav-item">
+                <!-- <li class="nav-item">
                     <a class="nav-link" href=/admin/main/alogin.php>리스맨관리자</a>
-                </li>
+                </li> -->
                 <li class="nav-item">
                     <a class="nav-link" href="/admin/user_list.php">회원리스트</a>
                 </li>

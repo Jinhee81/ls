@@ -2,21 +2,19 @@
     ini_set("allow_url_fopen", 1);
     include "simple_html_dom.php";
 
-    include "data/car.php";
+    include "data/car2.php";
 
     // echo 'jinhee';
 
-    $model = json_decode($_POST['model']);
+    $model = json_decode($_POST['model']);//danawa modelcode
     $rentlease = json_decode($_POST['rlArray']);
     $period = json_decode($_POST['pArray']);
     $deposit = json_decode($_POST['dArray']);
 
-    // var_dump($model);
-
-    // $model = '71838';
-    // $rentlease = 'L';
-    // $period = '48';
-    // $deposit = '2';
+    // $model = '71838'; //gv70
+    // $rentlease = ['R'];
+    // $period = ['36'];
+    // $deposit = ['2'];
 
     $brand_name = '';
     $brand_code = '';
@@ -29,29 +27,28 @@
     $j3 = 'Y'; //혜택유무
     $j4 = '최신형 2CH 블랙박스, 썬팅(전면,측후면) 서비스'; //부가설명
 
+    // $var_dump($model);
+
     for($i=0; $i < count($model_array); $i++) {
-        if($model_array[$i][3] === strval($model)){
-            $model_name = $model_array[$i][0];
-            $model_code = $model_array[$i][1];
-            $brand_code = $model_array[$i][2];
+        $model_name = '';
+        $model_code = '';
+        $brand_code = '';
+        if($model_array[$i][2] === strval($model)){
+            $model_name = $model_array[$i][1];
+            $model_code = $model_array[$i][0];
+            $brand_code = $model_array[$i][3];
             break;
-        } 
+        }
     }
 
-    // echo $model_name, $model_code, $brand_code;
-    
     for($i=0; $i < count($brand_array); $i++) {
-        if($brand_array[$i][1] === $brand_code){
-            $brand_name = $brand_array[$i][0];
+        $brand_name = '';
+        if($brand_array[$i][0] === $brand_code){
+            $brand_name = $brand_array[$i][1];
             break;
-        } 
+        }
     }
 
-    // echo $brand_name;
-
-    // $aaa = array(
-    //     array($model, $rentlease, $period, $deposit)
-    // );
     $aaa = array();
 
     foreach ( $rentlease as $i ) {
@@ -64,7 +61,7 @@
         }
     }
 
-    // print_r($aaa);echo "<br>";
+    // // print_r($aaa);echo "<br>";
 
     $urlString = "http://auto.danawa.com/leaserent/?Work=priceCompare&Trims=".$aaa[0][0]."&ProdType=".$aaa[0][1]."&Period=".$aaa[0][2]."&PriceType=".$aaa[0][3];
     
@@ -102,17 +99,18 @@
             $lineupName = $lineupName -> plaintext;
 
             for ($j=0; $j<count($lineup_array); $j++) {
-                if($lineupName === $lineup_array[$j][0]) {
+                $lineup_code = '';
+                $lineup_use = '';
+                if($lineupName === $lineup_array[$j][1]) {
                     if($model_code === $lineup_array[$j][2]) {
-                        $lineup_code = $lineup_array[$j][1];
+                        $lineup_code = $lineup_array[$j][0];
                         $lineup_use = $lineup_array[$j][3];
                         break;
                     }
                 }
             }
 
-            if($lineup_use==='Y'){
-                $trimCount = count($data -> find('div.ml_con dl.mlc_main', $i) -> children(1) -> children(0) -> children());
+            $trimCount = count($data -> find('div.ml_con dl.mlc_main', $i) -> children(1) -> children(0) -> children());
             
             
                 for($j=0; $j < $trimCount; $j++) {
@@ -128,9 +126,11 @@
                     $trimName = $trimName -> plaintext;
 
                     for ($m=0; $m<count($trim_array); $m++) {
-                        if($trimName === $trim_array[$m][0]) {
+                        $trim_code = '';
+                        $trim_use = '';
+                        if($trimName === $trim_array[$m][1]) {
                             if($lineup_code === $trim_array[$m][2]) {
-                                $trim_code = $trim_array[$m][1];
+                                $trim_code = $trim_array[$m][0];
                                 $trim_use = $trim_array[$m][3];
                                 break;
                             }
@@ -156,17 +156,14 @@
                     }
                     //취득원가, 리스만해당, 소비자가*1.054+30만원
                     
-                    if($trim_use==='Y') {
-                        array_push($trimEle, $brand_name, $model_name, $lineupName, $trimName, $brand_code, $model_code, $lineup_code, $trim_code, $aaa[$x][1], $aaa[$x][2], $aaa[$x][3], $modifiedTrimFee, $remainAmount, $gainAmount, $j1, $j2, $j3, $j4, $trimPrice, $trimFee, $x+1, $k, $lineuplen, $i+1, $trimCount, $j+1, $lineup_use, $trim_use);
-                        array_push($lineup, $trimEle);
-                    }
+                    array_push($trimEle, $brand_name, $model_name, $lineupName, $trimName, $brand_code, $model_code, $lineup_code, $trim_code, $aaa[$x][1], $aaa[$x][2], $aaa[$x][3], $modifiedTrimFee, $remainAmount, $gainAmount, $j1, $j2, $j3, $j4, $trimPrice, $trimFee, $x+1, $k, $lineuplen, $i+1, $trimCount, $j+1, $lineup_use, $trim_use);
+                    array_push($lineup, $trimEle);
 
                     //x+1, url개수
                     //k, url 내에서의 순번
                     //i+1, 라인업순번
                     //j+1, 트림순번
                 }
-            }
 
         }
     }
@@ -175,7 +172,7 @@
     
 
     // print_r($lineup);
-    // // echo "<br>";
+    // echo "<br>";
 
     // // print_r(count($lineup));
     // // echo "<br>";

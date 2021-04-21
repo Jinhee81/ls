@@ -37,4 +37,13 @@ span.navbar-text {
   animation: loader 2s infinite ease;
 }
 
+th.primary,
+td.primary {
+  background-color: #cef6f5;
+}
+
+tr.fontred {
+  color: #f781be;
+}
+
 /* html 색상 코드 : https://html-color-codes.info/Korean/ */

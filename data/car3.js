@@ -1,3 +1,5 @@
+//이건 lineup.php, trim.php에서 필요한 js file
+
 let brandoption, modeloption, brandIdx, modelIdx;
 let lineupOption, lineupIdx;
 

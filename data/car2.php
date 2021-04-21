@@ -1,5 +1,5 @@
 <?php
-//이건 db로부터 데이터를 만드는 파일
+//이건 db로부터 데이터를 만드는 파일, 이건 spec파일에서 필요한 것
 session_start();
 include $_SERVER['DOCUMENT_ROOT'].'/view/conn.php';
 

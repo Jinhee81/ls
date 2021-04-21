@@ -21,7 +21,7 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav mr-auto">
                 <li href="nav-item">
-                    <a class="nav-link" href="/spec2.php">최저가추출</a>
+                    <a class="nav-link" href="/spec.php">최저가추출</a>
                 </li>
                 <!-- <li href="nav-item">
                     <a class="nav-link" href="#">차종코드보기</a>

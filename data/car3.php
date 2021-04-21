@@ -1,4 +1,5 @@
 <?php
+//차종코드 라인업, 트림화면에서 필요한 파일
 include $_SERVER['DOCUMENT_ROOT']."/view/conn.php";
 
 $sql = "select brandcode, name from brand";

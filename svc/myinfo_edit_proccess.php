@@ -23,6 +23,8 @@ $sql  = "
       manager_name = '{$filtered['manager_name']}',
       cellphone = '{$_POST['cellphone']}',
       lease_type = '{$_POST['lease_type']}',
+      popbillid = '{$_POST['popbillid']}',
+      companynumber = '{$_POST['companynumber']}',
       updated = NOW()
     WHERE
       id = {$_SESSION['id']}
@@ -40,6 +42,8 @@ $_SESSION['user_name'] = $row2['user_name'];
 // $_SESSION['damdangga_name'] = $row['damdangga_name'];
 $_SESSION['cellphone'] = $row2['cellphone'];
 $_SESSION['lease_type'] = $row2['lease_type'];
+$_SESSION['popbillid'] = $row2['popbillid'];
+$_SESSION['companynumber'] = $row2['companynumber'];
 
 // echo $_SESSION['user_div'];
 // echo $_SESSION['user_name'];

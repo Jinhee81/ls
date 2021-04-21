@@ -2,15 +2,6 @@ $('#smsBtn').on('click', function(){
 
     var buildingkey = $('select[name=building]').val();
     // console.log(buildingkey);
-
-    //문자발송에 필요한 번호
-
-    // if(lease_type==='임대관리회사'){
-    //   var sendphonenumber = cellphone;
-    // } else {
-    //   var sendphonenumber = buildingArray[buildingkey][3] + buildingArray[buildingkey][4] + buildingArray[buildingkey][5];
-    // }
-
     var sendphonenumber = cellphone;
 
 
@@ -38,19 +29,6 @@ $('#smsBtn').on('click', function(){
 
 }) //smsBtn function closing
 
-function taxInfo(idx,mun) {
-
-    var tmps = "<iframe name='ifm_pops_21' id='ifm_pops_21' class='popup_iframe'   scrolling='no' src=''></iframe>";
-	$("body").append(tmps);
-	//alert( "/inc/tax_invoice2.php?chkId="+chkId+"&callnum="+subIdx );
-
-	$("#ifm_pops_21").attr("src","/svc/service/get/tax_invoice.php?building_idx="+$('#building').val()+"&mun="+mun+"&id="+idx);
-	$('#ifm_pops_21').show();
-	$('.pops_wrap, .pops_21').show();
-
-}
-
-
 
 $('#btnTaxDateInput').on('click', function(){
 
@@ -59,11 +37,8 @@ $('#btnTaxDateInput').on('click', function(){
   // console.log(buildingkey);
 
   //세금계산서발송에 필요한 팝빌아이디, 사업자번호
-  var buildingText = $('select[name=building] option:selected').text();
-  var buildingPopbillid = buildingArray[buildingkey][2];
-  var buildingCompanynumber = buildingArray[buildingkey][6]+buildingArray[buildingkey][7] + buildingArray[buildingkey][8];
 
-  // alert(buildingCompanynumber);
+  // alert(companynumber);
 
 
   if(taxArray.length===0){
@@ -72,19 +47,19 @@ $('#btnTaxDateInput').on('click', function(){
   }
 
 
-  if(buildingPopbillid.length === 0){
-    alert(buildingText+' 물건은 팝빌 전자세금계산서 설정이 되어있지 않습니다. 전자세금계산서 설정을 확인해주세요 (환경설정->물건명클릭, 팝빌아이디 입력)');
+  if(popbillid.length === 0 || popbillid==='null'){
+    alert('나의정보에서 팝빌아이디를 적어주세요.');
     return false;
   }
 
-  if(buildingCompanynumber.length === 0){
-    alert(buildingText+'물건의 사업자번호등록이 되어있지 않습니다. 사업자번호가 등록되어야 합니다 (환경설정->물건명클릭)');
+  if(companynumber.length === 0){
+    alert('나의정보에서 사업자번호를 적어주세요.');
     return false;
   }
 
-  if(buildingCompanynumber.length != 10){
-    alert(buildingText+'물건의 사업자번호 형식이 올바르지 않습니다. 사업자번호를 확인하세요. (환경설정->물건명클릭)');
-    console.log(buildingCompanynumber);
+  if(companynumber.length != 10){
+    alert('나의정보에서 사업자번호 형식을 확인해주세요. 숫자10자리여야 해요.');
+    console.log(companynumber);
     return false;
   }
 
@@ -126,23 +101,24 @@ $('#btnTaxDateInput').on('click', function(){
 
   var taxArrayTo = JSON.stringify(taxArray);
 
-  goCategoryPage(buildingkey, buildingText, buildingPopbillid, buildingCompanynumber, taxArrayTo, taxSelect, taxDiv);
+  goCategoryPage(buildingkey, buildingText, popbillid, companynumber, taxArrayTo, taxSelect, taxDiv);
 
   function goCategoryPage(a,b,c,d,e,f,g,h,i,j){
-      var frm = formCreate('taxSave', 'post', 'p_payScheduleTaxInput.php','');
+      var frm = formCreate('taxSave', 'post', 'p_payScheduleTaxInput3.php','');
       frm = formInput(frm, 'buildingId', a);
       frm = formInput(frm, 'buildingText', b);
       frm = formInput(frm, 'buildingPopbill', c);
-      frm = formInput(frm, 'buildingCompanynumber', d);
+      frm = formInput(frm, 'companynumber', d);
       frm = formInput(frm, 'taxArray', e);
       frm = formInput(frm, 'taxSelect', f);
       frm = formInput(frm, 'taxDiv', g);
       formSubmit(frm);
   }
 
+
 })
 
-$('#btnTaxDateInput2').on('click', function(){
+$('#btnTaxDateInput2').on('click', function(){//이건입력버튼
   var taxDate = $('input[name="taxDate"]').val();
   var taxSelect = $('select[name="taxSelect"]').val(); //세금계산서인지 현금영수증인지 구분
 

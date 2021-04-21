@@ -1,4 +1,5 @@
 <?php
+//21.4.21 update, building 말고 user에서 정보를 갖다가 쓴거
 
 session_start();
 include $_SERVER['DOCUMENT_ROOT']."/svc/view/conn.php";
@@ -76,7 +77,7 @@ $tel = str_replace('-','',$a[0][8]->연락처);
 $count = $row2['count'];
 
 //공급자 사업자번호
-$cnum = $row3['cnumber1'].$row3['cnumber2'].$row3['cnumber3'];
+$cnum = $row3['companynumber'];
 
 //선택한 날짜
 // $idate = str_replace('-','', $_POST['taxDate']);
@@ -87,7 +88,7 @@ $today = str_replace('-','',$row3['today']);
 $tdate = date('Y-n-j', strtotime($row3['today']));
 
 //공급자 사업자명
-$bname = $row3['bName'];
+$bname = $row3['user_name'];
 
 //공급자 이메일
 $bemail = $row3['email'];
@@ -95,8 +96,8 @@ $bemail = $row3['email'];
 //공급자 팝빌아이디
 $popbillid = $row3['popbillid'];
 
-//공급자 이름
-$username = $row3['user_name'];
+//공급자 작성자명
+$username = $row3['manager_name'];
 
 //공급자 휴대폰번호
 $phone = $row3['cellphone'];

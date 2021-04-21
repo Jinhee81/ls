@@ -13,7 +13,7 @@ $("#allselect").click(function(){
       var colOrder = Number(table.find("tr:eq("+i+")").find("td:eq(1)").text());//순번
       var colid = Number(table.find("tr:eq("+i+")").find("td:eq(0)").children('input').val());//청구번호
 
-      Number(table.find("tr:eq("+i+")").find("td:eq(7)").children('input[name=customer_id]').val());//세입자번호
+      let cid = Number(table.find("tr:eq("+i+")").find("td:eq(7)").children('input[name=customer_id]').val());//세입자번호
       var companynumber = table.find("tr:eq("+i+")").find("td:eq(7)").children('input[name=companynumber]').val();//사업자번호
       var companyname = table.find("tr:eq("+i+")").find("td:eq(7)").children('input[name=companyname]').val();//사업자명
       var name = table.find("tr:eq("+i+")").find("td:eq(7)").children('input[name=name]').val();//성명
@@ -43,7 +43,7 @@ $("#allselect").click(function(){
       var acceptdiv = table.find("tr:eq("+i+")").find("td:eq(6)").text().trim();//입금구분
       var evidencedate = table.find("tr:eq("+i+")").find("td:eq(10)").text();//증빙일자
 
-      taxArrayEle.push({'순번':colOrder}, {'청구번호':colid}, {'사업자번호':companynumber}, {'사업자명':companyname}, {'성명':name}, {'주소':address}, {'업태':div4}, {'종목':div5}, {'연락처':contact}, {'이메일':email}, {'공급가액':supplyamount}, {'세액':vatamount}, {'합계':totalamount}, {'비고':comment}, {'입금구분':acceptdiv}, {'증빙일자':evidencedate});
+      taxArrayEle.push({'순번':colOrder}, {'청구번호':colid}, {'사업자번호':companynumber}, {'사업자명':companyname}, {'성명':name}, {'주소':address}, {'업태':div4}, {'종목':div5}, {'연락처':contact}, {'이메일':email}, {'공급가액':supplyamount}, {'세액':vatamount}, {'합계':totalamount}, {'비고':comment}, {'입금구분':acceptdiv}, {'증빙일자':evidencedate}, {'세입자번호':cid});
 
       taxArray.push(taxArrayEle);
     }
@@ -61,7 +61,7 @@ var taxArrayEle = [];
       var colOrder = Number(currow.find('td:eq(1)').text());
       var colid = Number(currow.find("td:eq(0)").children('input').val());
 
-      Number(currow.find("td:eq(7)").children('input[name=customer_id]').val());//세입자번호
+      let cid = Number(currow.find("td:eq(7)").children('input[name=customer_id]').val());//세입자번호
       var companynumber = currow.find("td:eq(7)").children('input[name=companynumber]').val();//사업자번호
       var companyname = currow.find("td:eq(7)").children('input[name=companyname]').val();//사업자명
       var name = currow.find("td:eq(7)").children('input[name=name]').val();//성명
@@ -93,7 +93,7 @@ var taxArrayEle = [];
       var acceptdiv = currow.find("td:eq(6)").text().trim();//입금구분
       var evidencedate = currow.find("td:eq(10)").text();//증빙일자
 
-      taxArrayEle.push({'순번':colOrder}, {'청구번호':colid}, {'사업자번호':companynumber}, {'사업자명':companyname}, {'성명':name}, {'주소':address}, {'업태':div4}, {'종목':div5}, {'연락처':contact}, {'이메일':email}, {'공급가액':supplyamount}, {'세액':vatamount}, {'합계':totalamount}, {'비고':comment}, {'입금구분':acceptdiv}, {'증빙일자':evidencedate});
+      taxArrayEle.push({'순번':colOrder}, {'청구번호':colid}, {'사업자번호':companynumber}, {'사업자명':companyname}, {'성명':name}, {'주소':address}, {'업태':div4}, {'종목':div5}, {'연락처':contact}, {'이메일':email}, {'공급가액':supplyamount}, {'세액':vatamount}, {'합계':totalamount}, {'비고':comment}, {'입금구분':acceptdiv}, {'증빙일자':evidencedate}, {'세입자번호':cid});
 
       taxArray.push(taxArrayEle);
 

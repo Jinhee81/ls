@@ -16,9 +16,10 @@ include $_SERVER['DOCUMENT_ROOT']."/svc/view/conn.php";
 
 $sql = "select
           email, user_div, user_name, manager_name,
-          cellphone, lease_type, created, updated, gradename, coin
+          cellphone, lease_type, created, updated, gradename, coin, popbillid, companynumber
         from user
         where id={$_SESSION['id']}";
+// echo $sql;
 $result = mysqli_query($conn, $sql);
 $row = mysqli_fetch_array($result);
 
@@ -56,15 +57,17 @@ $row = mysqli_fetch_array($result);
                 </div>
             </div>
             <div class="form-group row">
-                <label for="" class="col-sm-3 col-form-label"><b>회원명</b></label>
+                <label for="" class="col-sm-3 col-form-label"><b>회원명(상호명)</b></label>
                 <div class="col-sm-9">
                     <input type="text" class="form-control" name="user_name" value="<?=$row['user_name']?>">
+                    <small class="green">세금계산서 발행시 상호명으로 기재됩니다.</small>
                 </div>
             </div>
             <div class="form-group row">
-                <label for="" class="col-sm-3 col-form-label"><b>담당자명</b></label>
+                <label for="" class="col-sm-3 col-form-label"><b>담당자/대표자명</b></label>
                 <div class="col-sm-9">
                     <input type="text" class="form-control" name="manager_name" value="<?=$row['manager_name']?>">
+                    <small class="green">세금계산서 발행시 작성자로 기재됩니다.</small>
                 </div>
             </div>
             <div class="form-group row">
@@ -72,6 +75,21 @@ $row = mysqli_fetch_array($result);
                 <div class="col-sm-9">
                     <input type="text" class="form-control" name="cellphone" value="<?=$row['cellphone']?>">
                     <small class="green">문자메시지 발송에 사용되는 전화번호입니다.</small>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="" class="col-sm-3 col-form-label"><b>팝빌아이디</b></label>
+                <div class="col-sm-9">
+                    <input type="text" class="form-control" name="popbillid" value="<?=$row['popbillid']?>">
+                    <small class="green">전자세금계산서 발행을 원하면 <a href="https://www.popbill.com/Member/Form/Link"
+                            target="_blank">팝빌사이트</a>에 회원가입하고 아이디를 적어주세용.</small>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-sm-3 col-form-label"><b>사업자번호</b></label>
+                <div class="col-sm-9">
+                    <input type="text" class="form-control" name="companynumber" value="<?=$row['companynumber']?>">
+                    <small class=green>매출 전자세금계산서 발행에 필요한 사업자번호에요.(숫자10자리입니다.)</small>
                 </div>
             </div>
             <!-- <div class="form-group row">

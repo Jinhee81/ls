@@ -265,6 +265,10 @@ include $_SERVER['DOCUMENT_ROOT']."/svc/modal/modal_amount2.php";
     var groupBuildingArray = <?php echo json_encode($groupBuildingArray); ?>;
     var roomArray = <?php echo json_encode($roomArray); ?>;
     var smsSettingArray = <?php echo json_encode($rowsms); ?>;
+    var buildingText = <?php echo json_encode($_SESSION['user_name']); ?>;
+    var popbillid = <?php echo json_encode($_SESSION['popbillid']); ?>;
+    var companynumber =
+        <?=json_encode($_SESSION['companynumber'])?>;
     console.log(buildingArray);
     console.log(groupBuildingArray);
     console.log(roomArray);
@@ -289,7 +293,7 @@ include $_SERVER['DOCUMENT_ROOT']."/svc/modal/modal_amount2.php";
         $("body").append(tmps);
         //alert( "/inc/tax_invoice2.php?chkId="+chkId+"&callnum="+subIdx );
 
-        $("#ifm_pops_21").attr("src", "/svc/service/get/tax_invoice.php?building_idx=" + bid + "&mun=" + mun + "&id=" +
+        $("#ifm_pops_21").attr("src", "/svc/service/get/tax_invoice2.php?building_idx=" + bid + "&mun=" + mun + "&id=" +
             ccid + "&flag=expected");
         $('#ifm_pops_21').show();
         $('.pops_wrap, .pops_21').show();

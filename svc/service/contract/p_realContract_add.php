@@ -122,11 +122,14 @@ if($result_deposit===false){
 }
 
 $mStartDate = date("Y-n-j", strtotime($_POST['startDate'])); //초기시작일 가져오기
+$enddate_date = date('j', strtotime($_POST['endDate'])); //초기종료일의 일자를 가져오기
+
+print_r($enddate_date);echo "<br>";
 
 for ($i=1; $i <= (int)$_POST['monthCount']; $i++) {
 
     $contractRow[$i] = array();
-    $mEndDate = date("Y-n-j", strtotime($mStartDate."+1 month"."-1 day"));
+    $mEndDate = date("Y-n-j", strtotime($mStartDate."+1 month -1 day"));
 
     if($_POST['payOrder']==='선납'){
       $mExpectedDate = date("Y-n-j", strtotime($mStartDate."-1 day"));

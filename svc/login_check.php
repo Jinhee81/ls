@@ -28,6 +28,8 @@ if(!$row){
       $_SESSION['lease_type'] = $row['lease_type'];
       $_SESSION['created'] = $row['created'];
       $_SESSION['gradename'] = $row['gradename'];
+      $_SESSION['popbillid'] = $row['popbillid'];
+      $_SESSION['companynumber'] = $row['companynumber'];
       header('Location: /svc/main/main.php');
       exit();
     } else {

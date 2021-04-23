@@ -3,7 +3,7 @@
     if(!isset($_SESSION['is_login'])){
     echo "<meta http-equiv='refresh' content='0; url=index.php'>";
     }
-    include "view/header.php";
+    include $_SERVER['DOCUMENT_ROOT']."/view/header.php";
 ?>
 
 <style>
@@ -133,7 +133,7 @@ p.purple {
     <p class="purple font-italic">lc(lineup count)색상 표시 및 사용여부 N인것도 출력(단, font color red 적용) ^^</p>
 </section>
 <div class="loader container">
-    <img src="inc/img/abc.gif" alt="" class="" style="width:50px;height:50px;">
+    <img src="/inc/img/abc.gif" alt="" class="" style="width:50px;height:50px;">
 </div>
 
 <section name='header' class="row justify-content-center mt-5" id="content">
@@ -201,5 +201,5 @@ p.purple {
 <script src="extract.js?<?=date('YmdHis')?>"></script>
 
 <?php
-include "view/footer.php";
+include $_SERVER['DOCUMENT_ROOT']."/view/footer.php";
 ?>

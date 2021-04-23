@@ -50,7 +50,7 @@ td.fontgrey {
                         ?>
             </select>
         </div>
-        <div class="col-6">
+        <div class="col-7">
             <table class="table table-sm table-hover text-center">
                 <thead class="">
                     <tr class="table-primary">
@@ -59,6 +59,7 @@ td.fontgrey {
                         <td class="">모델명</td>
                         <td class="">danawa</td>
                         <td class="">브랜드명(코드)</td>
+                        <td class=""></td>
                     </tr>
                 </thead>
                 <tbody class="" id="tbodyArea">
@@ -88,16 +89,29 @@ function makeTable(a) {
             let returns = '';
             let count = 0;
 
+            // $.each(data, function(key, value) {
+            //     count += 1;
+
+            //     returns += '<tr>';
+            //     returns += '<td name=order>' + count + '</td>';
+            //     returns += '<td name=modelcode class=primary>' + value.modelcode + '</td>';
+            //     returns += '<td name=modelname>' + value.modelname + '</td>';
+            //     returns += '<td name=danawa class=fontgrey>' + value.danawacode + '</td>';
+            //     returns += '<td name=danawa>' + value.name + '</td>';
+            //     returns += '</tr>';
+            // });
+
             $.each(data, function(key, value) {
                 count += 1;
 
-                returns += '<tr>';
-                returns += '<td name=order>' + count + '</td>';
-                returns += '<td name=modelcode class=primary>' + value.modelcode + '</td>';
-                returns += '<td name=modelname>' + value.modelname + '</td>';
-                returns += '<td name=danawa class=fontgrey>' + value.danawacode + '</td>';
-                returns += '<td name=danawa>' + value.name + '</td>';
-                returns += '</tr>';
+                returns += `<tr>
+                    <td name=order>${count}</td>
+                    <td name=modelcode class=primary>${value.modelcode}</td>
+                    <td name=modelname>${value.modelname}</td>
+                    <td name=danawa><input type=text name=danawacode class='form-control form-control-sm text-center' value=${value.danawacode}></td>
+                    <td name=brandname>${value.name}</td>
+                    <td><span class="badge badge-info editbadge">수정</span></td>
+                </tr>`;
             });
 
             $('#tbodyArea').html(returns);

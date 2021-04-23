@@ -24,7 +24,7 @@ if(!$row){
     $_SESSION['name'] = $row['name'];
     $_SESSION['phone'] = $row['phone'];
     $_SESSION['department'] = $row['department'];
-    header('Location: spec2.php');
+    header('Location: spec/spec.php');
     exit();
   } else {
     echo "<script>

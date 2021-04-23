@@ -2,7 +2,7 @@
     ini_set("allow_url_fopen", 1);
     include "simple_html_dom.php";
 
-    include "data/car2.php";
+    include $_SERVER['DOCUMENT_ROOT']."/data/car2.php";
 
     // echo 'jinhee';
 

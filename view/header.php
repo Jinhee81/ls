@@ -21,7 +21,7 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav mr-auto">
                 <li href="nav-item">
-                    <a class="nav-link" href="/spec.php">최저가추출</a>
+                    <a class="nav-link" href="/spec/spec.php">최저가추출</a>
                 </li>
                 <!-- <li href="nav-item">
                     <a class="nav-link" href="#">차종코드보기</a>
@@ -32,10 +32,10 @@
                         차종코드
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <a class="dropdown-item" href="/data/brand.php">브랜드코드</a>
-                        <a class="dropdown-item" href="/data/model.php">모델코드</a>
-                        <a class="dropdown-item" href="/data/lineup.php">라인업코드</a>
-                        <a class="dropdown-item" href="/data/trim.php">트림코드</a>
+                        <a class="dropdown-item" href="/data/1brand.php">브랜드코드</a>
+                        <a class="dropdown-item" href="/data/2model.php">모델코드</a>
+                        <a class="dropdown-item" href="/data/3lineup.php">라인업코드</a>
+                        <a class="dropdown-item" href="/data/4trim.php">트림코드</a>
                         <!-- <div class="dropdown-divider"></div> -->
                     </div>
                 </li>

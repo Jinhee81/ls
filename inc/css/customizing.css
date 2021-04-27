@@ -42,8 +42,23 @@ td.primary {
   background-color: #cef6f5;
 }
 
+td.fontgrey {
+  color: #d8d8d8;
+}
+
+select.fontred,
 tr.fontred {
   color: #f781be;
+}
+
+p.purple {
+  color: #bf00ff;
+}
+
+p.comment {
+  color: #bf00ff;
+  font-style: italic;
+  text-align: center;
 }
 
 /* html 색상 코드 : https://html-color-codes.info/Korean/ */

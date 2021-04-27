@@ -1,7 +1,7 @@
 //이건 lineup.php, trim.php에서 필요한 js file
 
 let brandoption, modeloption, brandIdx, modelIdx;
-let lineupOption, lineupIdx;
+let lineupIdx, lineupOption;
 
 $('#brand').append('<option value=brandall>브랜드 전체</option>');
 $('#model').append('<option value=modelall>모델 전체</option>');

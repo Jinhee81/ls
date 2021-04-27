@@ -8,12 +8,6 @@
     include "car3.php";//조회조건에 필요한 php파일
 ?>
 
-<style>
-td.primary {
-    background-color: #CEF6F5;
-}
-</style>
-
 <header class="container jumbotron pt-3 pb-3 mb-2">
     <div class="row">
         <h3 class="">라인업코드입니다.</h3>
@@ -28,15 +22,18 @@ td.primary {
 <section class="container" style="">
     <!-- 조회조건 -->
     <div class="row justify-content-md-center mb-3">
-        <div class="col-4">
+        <div class="col-6">
             <div class="row">
-                <div class="col-6">
+                <div class="col-4">
                     <select name="brand" id="brand" class="form-control form-control-sm">
                     </select>
                 </div>
-                <div class="col-6">
+                <div class="col-4">
                     <select name="model" id="model" class="form-control form-control-sm">
                     </select>
+                </div>
+                <div class="col-4" id='create_lineup'>
+                    <button class="btn btn-primary btn-sm" id="create_lineup_btn">라인업 추가하기</button>
                 </div>
             </div>
         </div>
@@ -50,17 +47,25 @@ td.primary {
                 <td class="">순번</td>
                 <td class="">브랜드명</td>
                 <td class="">모델명</td>
-                <td class="">라인업명</td>
+                <td class="" width=40%>라인업명</td>
                 <td class="">라인업코드</td>
                 <td class="">사용여부</td>
+                <td class="">생성일시</td>
+                <td class="">수정일시</td>
+                <td class=""></td>
             </tr>
         </thead>
         <tbody class="" id=tbodyArea></tbody>
     </table>
+    <div class="">
+        <p class="purple text-center font-italic">* 참고 : 하위트림이 존재하는경우 삭제가 불가합니다.</p>
+    </div>
 </section>
 
 <script src="/inc/js/jquery-3.3.1.min.js"></script>
 <script src="/inc/js/bootstrap.min.js"></script>
+<script src="/inc/js/etc/form.js?<?=date('YmdHis')?>"></script>
+
 <script>
 let brandArray = <?=json_encode($brandArray)?>;
 let modelArray = <?=json_encode($modelArray)?>;
@@ -87,15 +92,47 @@ function makeTable(a, b) {
             $.each(data, function(key, value) {
                 count += 1;
 
-                returns += '<tr>';
-                returns += '<td name=order>' + count + '</td>';
-                returns += '<td name=brandname class=>' + value.name + '</td>';
-                returns += '<td name=modelname>' + value.modelname + '</td>';
-                // returns += '<td name=lineupname class=text-left pl-5>' + value.lineupname + '</td>';
-                returns += `<td name=lineupname class='text-left pl-5'>${value.lineupname}</td>`;
-                returns += '<td name=lineupcode class=primary>' + value.lineupcode + '</td>';
-                returns += '<td name=usepart>' + value.usepart + '</td>';
-                returns += '</tr>';
+                let created = '' + value.created;
+                created = created.toString();
+                let updated = '' + value.updated;
+                updated = updated.toString();
+                let usepart = '';
+
+                // console.log(created, updated, typeof(created));
+
+                if (created === 'null') {
+                    created = '-'
+                }
+
+                if (updated === 'null') {
+                    updated = '-'
+                }
+
+                if (value.usepart === 'Y') {
+                    usepart =
+                        `<select class='form-control form-control-sm' name=usepart><option value=Y selected>Y</option><option value=N>N</option></select>`;
+                } else {
+                    usepart =
+                        `<select class='form-control form-control-sm fontred' name=usepart><option value=Y>Y</option><option value=N selected>N</option></select>`;
+                }
+
+
+                returns += `<tr>
+                <td name=order>
+                ${count}
+                <input type=hidden name=lineupid value=${value.id}>
+                </td>
+                <td name=brandname class=>${value.name}</td>
+                <td name=modelname>${value.modelname}
+                <input type=hidden name=modelcode value=${value.modelcode}>
+                </td>
+                <td name=lineupname class='text-left pl-5'><input type=text name=lineupname class='form-control form-control-sm' value='${value.lineupname}'></td>
+                <td name=lineupcode class=primary>${value.lineupcode}</td>
+                <td name=usepart>${usepart}</td>
+                <td name=created class=fontgrey>${created}</td>
+                <td name=updated class=fontgrey>${updated}</td>
+                <td><span class="badge badge-info editbadge">수정</span><span class="badge badge-danger deletebadge">삭제</span></td>
+                </tr>`;
             });
 
             $('#tbodyArea').html(returns);
@@ -111,6 +148,8 @@ $(document).ready(function() {
     modelIdx = JSON.stringify(modelIdx);
 
     makeTable(brandIdx, modelIdx);
+
+    $('#create_lineup').hide();
 })
 
 $('#brand').on('change', function() {
@@ -125,10 +164,146 @@ $('#brand').on('change', function() {
 $('#model').on('change', function() {
     brandIdx = $('#brand').val();
     modelIdx = $('#model').val();
-    brandIdx = JSON.stringify(brandIdx);
-    modelIdx = JSON.stringify(modelIdx);
+    // brandIdx = JSON.stringify(brandIdx2);
+    // modelIdx = JSON.stringify(modelIdx2);
 
     makeTable(brandIdx, modelIdx);
+    $('#create_lineup').show();
+
+    $('#create_lineup_btn').on('click', function() {
+        let brandtext = $('#brand :selected').text();
+        let modeltext = $('#model :selected').text();
+        let tbodylength = $('#tbodyArea tr').length;
+        let newlineupcode;
+
+        if (tbodylength === 0) {
+            newlineupcode = modelIdx + "01";
+        } else {
+            let lastlineupcode = $(`#tbodyArea tr:eq(${tbodylength-1})`).find('td[name=lineupcode]')
+                .text();
+            newlineupcode = Number(lastlineupcode) + 1;
+        }
+
+        let rows = `<tr>
+                    <td></td>
+                    <td>${brandtext}</td>
+                    <td>${modeltext}</td>
+                    <td><input name=newlineupname type=text class='form-control form-control-sm'></td>
+                    <td name=lineupcode>${newlineupcode}</td>
+                    <td><select class='form-control form-control-sm' name=usepart><option value=Y>Y</option><option value=N>N</option></select></td>
+                    <td></td>
+                    <td></td>
+                    <td><span class="badge badge-danger savebadge">저장</span></td>
+                    </tr>`;
+        $('#tbodyArea').append(rows);
+
+        $('.savebadge').on('click', function() {
+            let currow = $(this).closest('tr');
+            let newlineupname = currow.find('input[name=newlineupname]').val();
+            let newlineupcode = currow.find('td[name=lineupcode]').text();
+            let newusepart = currow.find('select[name=usepart] :selected').text();
+
+            console.log(newlineupname, newlineupcode, newusepart, modelIdx);
+
+            $.ajax({
+                data: {
+                    'newlineupname': newlineupname,
+                    'newlineupcode': newlineupcode,
+                    'newusepart': newusepart,
+                    'modelIdx': modelIdx
+                },
+                method: 'post',
+                url: 'ajax/ajax_lineup_create.php',
+                success: function(data) {
+                    data = JSON.parse(data);
+                    console.log(data);
+
+                    if (data === 'alreay_exist') {
+                        alert('중복된 명칭이 존재합니다. 다시 확인해주세요.');
+                        return false;
+                    }
+
+                    if (data === 'save_error') {
+                        alert('저장에 문제생겼습니다. 관리자에게 문의하세요.');
+                        return false;
+                    }
+
+                    alert('라인업 생성에 성공했습니다.');
+                    makeTable(brandIdx, modelIdx);
+                }
+            })
+
+        })
+    })
+})
+
+$(document).on('click', '.editbadge', function() {
+    let brandIdx = $('#brand').val();
+    let modelIdx = $('#model').val();
+    let currow = $(this).closest('tr');
+    let lineupid = currow.find('input[name=lineupid]').val();
+    let lineupname = currow.find('input[name=lineupname]').val();
+    let usepart = currow.find('select[name=usepart]').val();
+    let modelcode = currow.find('input[name=modelcode]').val();
+
+    // console.log(lineupid, lineupname, usepart);
+
+    $.ajax({
+        data: {
+            'lineupid': lineupid,
+            'lineupname': lineupname,
+            'usepart': usepart,
+            'modelcode': modelcode
+        },
+        method: 'post',
+        url: 'ajax/ajax_lineup_edit.php',
+        success: function(data) {
+            data = JSON.parse(data);
+            // console.log(data);
+
+            if (data === 'none_change') {
+                alert('변경사항이 없습니다. 다시 확인하세요.');
+                return false;
+            } else if (data === 'save_error') {
+                alert('저장과정에 문제가 생겼습니다. 관리자에게 문의하세요.');
+                return false;
+            } else {
+                alert('수정하였습니다.');
+            }
+            makeTable(brandIdx, modelIdx);
+        }
+    })
+})
+
+$(document).on('click', '.deletebadge', function() {
+    let brandIdx = $('#brand').val();
+    let modelIdx = $('#model').val();
+    let currow = $(this).closest('tr');
+    let lineupid = currow.find('input[name=lineupid]').val();
+    let lineupcode = currow.find('td[name=lineupcode]').text();
+
+    // console.log(lineupid, lineupname, usepart);
+
+    $.ajax({
+        data: {
+            'lineupid': lineupid,
+            'lineupcode': lineupcode
+        },
+        method: 'post',
+        url: 'ajax/ajax_lineup_delete.php',
+        success: function(data) {
+            data = JSON.parse(data);
+            console.log(data);
+
+            if (data === 'delete_error') {
+                alert('삭제에 문제생겼습니다. 관리자에게 문의하세요.');
+                return false;
+            } else {
+                alert('삭제하였습니다.');
+            }
+            makeTable(brandIdx, modelIdx);
+        }
+    })
 })
 </script>
 

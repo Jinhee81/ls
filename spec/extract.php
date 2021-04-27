@@ -64,12 +64,12 @@
     // // print_r($aaa);echo "<br>";
 
     $urlString = "http://auto.danawa.com/leaserent/?Work=priceCompare&Trims=".$aaa[0][0]."&ProdType=".$aaa[0][1]."&Period=".$aaa[0][2]."&PriceType=".$aaa[0][3];
+    // $urlString = "http://auto.danawa.com/leaserent/?Work=priceCompare&Trims=".$aaa[0][0]."&ProdType=".$aaa[0][1]."&Period=".$aaa[0][2]."&PriceType=".$aaa[0][3];
     
     // echo $urlString."<br>";
     
     $data = file_get_html($urlString);
     
-    // $brand_model_name_len[$x] = count($data->find("div.rbw_title h3"));
     $brand_model_name = $data->find("div.rbw_title h3");
     
     $brand_model_name = $brand_model_name[0]->plaintext;

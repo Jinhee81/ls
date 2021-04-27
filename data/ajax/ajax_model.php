@@ -15,7 +15,8 @@
 
     if($a == "all"){
         $sql = "select 
-                    modelcode, modelname, danawacode, model.brandcode, brand.name
+                    model.id, modelcode, modelname, danawacode, model.brandcode, brand.name, model.etc,
+                    date_format(model.created, '%Y-%c-%e %H:%i:%s') as created, date_format(model.updated, '%Y-%c-%e %H:%i:%s') as updated
                 from model
                 left join brand
                     on model.brandcode = brand.brandcode
@@ -23,7 +24,8 @@
     } else {
         $sql = "
         select 
-            modelcode, modelname, danawacode, model.brandcode, brand.name
+            model.id, modelcode, modelname, danawacode, model.brandcode, brand.name, model.etc,
+            date_format(model.created, '%Y-%c-%e %H:%i:%s') as created, date_format(model.updated, '%Y-%c-%e %H:%i:%s') as updated
         from model
         left join brand on model.brandcode = brand.brandcode
         where brand.brandcode = '{$a}'

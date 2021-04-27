@@ -17,7 +17,8 @@
 
     if($a == "brandall" && $b == "modelall"){
         $sql = "select 
-                    brand.name, modelname, lineupname, lineupcode, usepart
+                    brand.name, lineup.id, lineup.modelcode, modelname, lineupname, lineupcode, usepart,
+                    date_format(lineup.created, '%Y-%c-%e %H:%i:%s') as created, date_format(lineup.updated, '%Y-%c-%e %H:%i:%s') as updated
                 from lineup
                 left join model on lineup.modelcode = model.modelcode 
                 left join brand on model.brandcode = brand.brandcode
@@ -25,7 +26,8 @@
     } else {
         if($b==='modelall'){
             $sql = "select 
-                brand.name, modelname, lineupname, lineupcode, usepart
+                brand.name, lineup.id,  lineup.modelcode,modelname, lineupname, lineupcode, usepart,
+                date_format(lineup.created, '%Y-%c-%e %H:%i:%s') as created, date_format(lineup.updated, '%Y-%c-%e %H:%i:%s') as updated
             from lineup
             left join model on lineup.modelcode = model.modelcode 
             left join brand on model.brandcode = brand.brandcode
@@ -33,7 +35,8 @@
             ";
         } else {
             $sql = "select 
-                brand.name, modelname, lineupname, lineupcode, usepart
+                brand.name, lineup.id,  lineup.modelcode,modelname, lineupname, lineupcode, usepart,
+                date_format(lineup.created, '%Y-%c-%e %H:%i:%s') as created, date_format(lineup.updated, '%Y-%c-%e %H:%i:%s') as updated
             from lineup
             left join model on lineup.modelcode = model.modelcode 
             left join brand on model.brandcode = brand.brandcode

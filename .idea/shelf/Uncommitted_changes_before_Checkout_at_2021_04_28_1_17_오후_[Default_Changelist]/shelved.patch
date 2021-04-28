@@ -1,0 +1,93 @@
+Index: spec/spec.php
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?php\n    session_start();\n    if(!isset($_SESSION['is_login'])){\n    echo \"<meta http-equiv='refresh' content='0; url=index.php'>\";\n    }\n    include $_SERVER['DOCUMENT_ROOT'].\"/view/header.php\";\n    include $_SERVER['DOCUMENT_ROOT'].\"/view/conn.php\";\n\n    $sql = \"select code, name\n            from danawa\n            where usepart = 'Y'\n            \";\n    $result = mysqli_query($conn, $sql);\n\n    $allrows = array();\n    while ($row = mysqli_fetch_array($result)){\n        $allrows[] = $row;\n    }\n\n?>\n\n<style>\ntd.t1 {\n    width: 20%;\n}\n\nth.t2 {\n    width: 6%;\n}\n\n.loader {\n    display: none;\n}\n</style>\n<section name='header' class=\"container text-center mt-5\">\n    <div class=\"row justify-content-md-center\">\n        <div class=\"col-10\">\n            <table class=\"table table-bordered table-sm\">\n                <tr>\n                    <!-- <td scope=\"col\">브랜드</td> -->\n                    <td class=\"t1\">모델명</td>\n                    <td class=\"t1\">렌트/리스</td>\n                    <td class=\"t1\">개월수</td>\n                    <td class=\"t1\">보증금</td>\n                    <td class=\"t1\"></td>\n                </tr>\n                <tr>\n                    <td>\n                        <select class=\"form-control\" name=\"model\">\n                            <?php\n                        for($i=0; $i < count($allrows); $i++) {\n                            echo \"<option value=\".$allrows[$i]['code'].\">\".$allrows[$i]['name'].\"</option>\";\n                        }\n                        ?>\n                        </select>\n                    </td>\n                    <td>\n                        <select class=\"form-control\" name=\"rentlease\">\n                            <option value=\"rlall\">전체</option>\n                            <option value=\"R\" selected>렌트</option>\n                            <option value=\"L\">리스</option>\n                        </select>\n                    </td>\n                    <td>\n                        <select class=\"form-control\" name=\"period\">\n                            <option value=\"pall\">전체</option>\n                            <option value=\"36\" selected>36개월</option>\n                            <option value=\"48\">48개월</option>\n                            <option value=\"60\">60개월</option>\n                        </select>\n                    </td>\n                    <td>\n                        <select class=\"form-control\" name=\"deposit\">\n                            <option value=\"dall\">전체</option>\n                            <option value=\"1\" selected>0%</option>\n                            <option value=\"2\">선납금30%</option>\n                            <option value=\"3\">보증금30%</option>\n                        </select>\n                    </td>\n                    <td class='pt-2 text-center'>\n                        <button type='button' id='extract' class='btn btn-primary btn-sm'>조회하기</button>\n                    </td>\n                </tr>\n            </table>\n        </div>\n    </div>\n</section>\n\n<section class=\"text-center\">\n    <p class=\"purple font-italic\">lc(lineup count)색상 표시 및 사용여부 N인것도 출력(단, font color red 적용) ^^</p>\n</section>\n<div class=\"loader container\">\n    <img src=\"/inc/img/abc.gif\" alt=\"\" class=\"\" style=\"width:50px;height:50px;\">\n</div>\n\n<section name='header' class=\"row justify-content-center mt-5\" id=\"content\">\n    <!-- <p class=\"text-end\">단위:원, 부가세포함 (렌트 R,/리스 L, 개월수 36/48/60개월, 보증금 1:0%,2:선납금30%,3:보증금30%)</p> -->\n    <div class=\"col-11\">\n        <!-- <div class=\"\">\n        </div> -->\n        <table class=\"table table-hover table-bordered table-sm text-center\">\n            <thead class=\"\">\n                <tr class=\"table-secondary\">\n                    <!-- <th class=\"t2\" name=\"checkbox\"></th> -->\n                    <!-- <th class=\"t2\" name=\"order\">#</th> -->\n                    <th class=\"\" name=\"brand\">브랜드명</th>\n                    <th class=\"\" name=\"model\">모델명</th>\n                    <th class=\"\" name=\"lineup\">라인업명</th>\n                    <th class=\"\" name=\"trim\">트림명</th>\n                    <th class=\"\" name=\"bcode\">브랜드코드</th>\n                    <th class=\"\" name=\"mcode\">모델코드</th>\n                    <th class=\"\" name=\"lcode\">라인업코드</th>\n                    <th class=\"\" name=\"tcode\">트림코드</th>\n                    <th class=\"\" name=\"rentlease\">상품구분</th>\n                    <th class=\"\" name=\"month\">할부기간</th>\n                    <th class=\"\" name=\"deposit\">가격타입</th>\n                    <th class=\"\" name=\"mf\">월납부금</th>\n                    <th class=\"\" name=\"rf\">잔존가치</th>\n                    <th class=\"\" name=\"gf\">취득원가</th>\n                    <th class=\"\" name=\"j1\">해지수수료</th>\n                    <th class=\"\" name=\"j2\">약정거리</th>\n                    <th class=\"\" name=\"j3\">혜택유무</th>\n                    <th class=\"\" name=\"j4\">부가설명</th>\n                    <!--18-->\n                    <th class=\"\" name=\"price\">소비자가</th>\n                    <th class=\"\" name=\"fee\">최저가</th>\n                    <th class=\"\" name=\"loadOrder\">순번</th>\n                    <!--전체순번-->\n                    <th class=\"\" name=\"loadOrder\">#uo</th>\n                    <!--url순번-->\n                    <th class=\"\" name=\"loadOrder\">#uoo</th>\n                    <!--url내의 순번-->\n                    <th class=\"primary\" name=\"lineupCount\">lc</th>\n                    <!--라인업개수-->\n                    <th class=\"\" name=\"lineupOrder\">#l</th>\n                    <!--라인업순번-->\n                    <th class=\"\" name=\"trimCount\">tc</th>\n                    <!--트림개수-->\n                    <th class=\"\" name=\"trimOrder\">#t</th>\n                    <!--트림순번-->\n                    <!--27-->\n                    <th class=\"\" name=\"lineup_use\">lu</th>\n                    <th class=\"\" name=\"trim_use\">tu</th>\n                    <!--29-->\n                </tr>\n            </thead>\n            <tbody id=\"allvals\">\n                <tr class=\"\">\n                    <td class=\"\" colspan=\"29\">조회하기를 누르세요.</td>\n                </tr>\n            </tbody>\n        </table>\n    </div>\n</section>\n\n<script src=\"/inc/js/jquery-3.3.1.min.js\"></script>\n<script src=\"/inc/js/bootstrap.min.js\"></script>\n<script src=\"extract.js?<?=date('YmdHis')?>\"></script>\n\n<?php\ninclude $_SERVER['DOCUMENT_ROOT'].\"/view/footer.php\";\n?>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/spec/spec.php b/spec/spec.php
+--- a/spec/spec.php	(revision e259be749be6d24f3612e17e7788b4ad858886a4)
++++ b/spec/spec.php	(date 1619510608927)
+@@ -87,7 +87,7 @@
+ </section>
+ 
+ <section class="text-center">
+-    <p class="purple font-italic">lc(lineup count)색상 표시 및 사용여부 N인것도 출력(단, font color red 적용) ^^</p>
++    <p class="purple font-italic">출력되지 않는것은 차종코드의 모델코드화면 및 다나와코드화면을 확인하세요 :)</p>
+ </section>
+ <div class="loader container">
+     <img src="/inc/img/abc.gif" alt="" class="" style="width:50px;height:50px;">
+Index: data/raw/danawa.csv
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>69261,현대 그랜저\n70422,현대 싼타페\n71091,현대 투싼\n70587,현대 쏘나타\n69314,현대 팰리세이드\n62308,현대 포터2\n71439,현대 코나\n71010,현대 쏠라티\n73476,현대 포레스트\n71481,기아 K5\n71281,기아 K7\n73086,기아 K8\n69052,기아 K9\n69063,기아 모하비\n71136,기아 스포티지\n71680,기아 쏘렌토\n70807,기아 카니발\n73573,기아 셀토스\n70957,기아 스팅어\n68993,기아 니로\n71527,제네시스 G70\n69506,제네시스 G80\n73461,제네시스 G90\n71838,제네시스 GV70\n70463,제네시스 GV80\n70077,벤츠 A-Class\n69581,벤츠 C-Class\n71112,벤츠 The New E-Class\n73044,벤츠 S-Class\n69588,벤츠 CLS-Class\n61520,벤츠 GLB-Class\n69568,벤츠 GLC-Class\n69591,벤츠 The New GLE-Class\n71343,BMW 1 Series\n71349,BMW 2 Series\n71312,BMW New 3 Series\n71372,BMW 4 Series\n71122,BMW New 5 Series\n72637,BMW 7 Series\n71400,BMW X2\n71465,BMW X5\n69894,아우디 A4\n69898,아우디 A5\n69882,아우디 A6\n69873,아우디 A7\n70904,아우디 A8\n69890,아우디 Q7\n69887,아우디 Q8
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/data/raw/danawa.csv b/data/raw/danawa.csv
+--- a/data/raw/danawa.csv	(revision e259be749be6d24f3612e17e7788b4ad858886a4)
++++ b/data/raw/danawa.csv	(date 1619508933054)
+@@ -7,6 +7,7 @@
+ 71439,현대 코나
+ 71010,현대 쏠라티
+ 73476,현대 포레스트
++74061,현대 스타리아
+ 71481,기아 K5
+ 71281,기아 K7
+ 73086,기아 K8
+Index: data/raw/p_insert_trim_20210412.php
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?php\nheader('Content-Type: text/html; charset=UTF-8');\nsession_start();\ninclude $_SERVER['DOCUMENT_ROOT'].\"/view/conn.php\";\n\n\n$trim_file = $_SERVER['DOCUMENT_ROOT'].'/data/raw/trim20210412.csv';\n\n$trim_array = array();\n\nif(($h = fopen($trim_file, 'r')) !== false) {\n    while(($data = fgetcsv($h, 1000, ',')) !== false) {\n        $trim_array[] = $data;\n    }\n\n    fclose($h);\n}\n\nprint_r($trim_array);\n\n$error = array();\n\nfor($i=1; $i < count($trim_array); $i++) {\n    $sql = \"insert into trim\n                    (trimcode, trimname, lineupcode, usepart, price)\n                  values\n                    ('{$trim_array[$i][1]}',\n                    '{$trim_array[$i][0]}',\n                    '{$trim_array[$i][2]}',\n                    '{$trim_array[$i][3]}',\n                    {$trim_array[$i][4]})\";\n\n    echo $sql.\"<br>\";\n\n    $result = mysqli_query($conn, $sql);\n\n    if(!$result){\n      array_push($error, $sql);\n    }\n}\n\nprint_r(count($trim_array));echo \"<br>\";\n\necho \"7<br>\";\nprint_r($error);\n ?>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/data/raw/p_insert_trim_20210412.php b/data/raw/p_insert_trim_20210412.php
+--- a/data/raw/p_insert_trim_20210412.php	(revision e259be749be6d24f3612e17e7788b4ad858886a4)
++++ b/data/raw/p_insert_trim_20210412.php	(date 1619509436563)
+@@ -4,7 +4,7 @@
+ include $_SERVER['DOCUMENT_ROOT']."/view/conn.php";
+ 
+ 
+-$trim_file = $_SERVER['DOCUMENT_ROOT'].'/data/raw/trim20210412.csv';
++$trim_file = $_SERVER['DOCUMENT_ROOT'].'/data/raw/trim20210427.csv';
+ 
+ $trim_array = array();
+ 
+Index: data/5danawa.php
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?php\n    session_start();\n    if(!isset($_SESSION['is_login'])){\n    echo \"<meta http-equiv='refresh' content='0; url=index.php'>\";\n    }\n    include $_SERVER['DOCUMENT_ROOT'].\"/view/header.php\";\n    include $_SERVER['DOCUMENT_ROOT'].\"/view/conn.php\";\n\n    $sql = \"select \n                id, code, name, usepart, etc, date_format(updated, '%Y-%c-%e %H:%i:%s') as updated\n            from danawa\n            order by ordered\n            \";\n    $result = mysqli_query($conn, $sql);\n\n    $allRows = array();\n\n    while($row = mysqli_fetch_array($result)){\n        $allRows[] = $row; \n    }\n\n?>\n\n<style>\ntd.primary {\n    background-color: #CEF6F5;\n}\n</style>\n\n<header class=\"container jumbotron pt-3 pb-3 mb-2\">\n    <div class=\"row\">\n        <h3 class=\"\">다나와코드입니다.</h3>\n    </div>\n    <p class=\"lead\">\n        <!-- (1) 정확한 표현은 이해관계자리스트라고 보아도 무방합니다. 세입자(고객) 뿐만 아니라, 문의하는 사람 및 자주 거래하는 거래처도 저장할 수 있어요.<br> -->\n        <!-- (1) 임대계약이 발생하면 숫자가 표시됩니다. (2)'기타' 분류는 임대계약 외의 일회성매출에 대한 고객을 분류할 수 있습니다.<br>\n    (3) 등록해야할 세입자(임차인)가 많으면 고객센터로 연락주세요. 대신 등록작업 해드립니다. (1년계약시 유효 ^_^) -->\n    </p>\n</header>\n\n<section class=\"container\" style=\"width:90%\">\n    <!-- 테이블 -->\n    <table class=\"table table-sm table-hover text-center\">\n        <thead class=\"\">\n            <tr class=\"table-primary\">\n                <td class=\"\">순번</td>\n                <td class=\"\" width=10%>다나와코드</td>\n                <td class=\"\" width=15%>명칭</td>\n                <td class=\"\" width=>사용여부</td>\n                <td class=\"\" width=>특이사항</td>\n                <td class=\"\" width=>수정일</td>\n                <td class=\"\"></td>\n            </tr>\n        </thead>\n        <tbody class=\"\" id=\"tbodyArea\">\n            <?php\n        for($i=0; $i < count($allRows); $i++) { ?>\n            <tr>\n                <td class=\"\"><?=$i+1?></td>\n                <td class=\"\">\n                    <input type=\"text\" class=\"form-control form-control-sm text-center\" name=code\n                        value=\"<?=$allRows[$i]['code']?>\">\n                    <input type=\"hidden\" name=\"id\" value=\"<?=$allRows[$i]['id']?>\">\n                </td>\n                <td class=\"\"><input type=\"text\" class=\"form-control form-control-sm text-center\" name=name\n                        value=\"<?=$allRows[$i]['name']?>\">\n                </td>\n                <td class=\"\">\n                    <?php\n                if($allRows[$i]['usepart']==='Y'){\n                    echo \"<select name='usepart' class='form-control form-control-sm'>\n                        <option value='Y'>Y</option>\n                        <option value='N'>N</option>\n                    </select>\";\n                } else {\n                    echo \"<select name='usepart' class='form-control form-control-sm fontred'>\n                        <option value='Y'>Y</option>\n                        <option value='N' selected>N</option>\n                    </select>\";\n                }\n                ?>\n                </td>\n                <td class=\"\">\n                    <input name=\"etc\" class=\"form-control form-control-sm text-center\" name=etc\n                        value=\"<?=$allRows[$i]['etc']?>\">\n                </td>\n                <td class=\"fontgrey\"><?=$allRows[$i]['updated']?></td>\n                <td class=\"\">\n                    <span class=\"badge badge-info editbadge\">수정</span>\n                </td>\n            </tr>\n            <?php }\n        ?>\n        </tbody>\n    </table>\n</section>\n\n<script src=\"/inc/js/jquery-3.3.1.min.js\"></script>\n<script src=\"/inc/js/bootstrap.min.js\"></script>\n<script src=\"/inc/js/etc/form.js?<?=date('YmdHis')?>\"></script>\n\n<script class=\"\">\n$(document).on('click', '.editbadge', function() {\n    let currow = $(this).closest('tr');\n    let id = currow.find('input[name=id]').val();\n    let name = currow.find('input[name=name]').val();\n    let danawacode = currow.find('input[name=code]').val();\n    let usepart = currow.find('select[name=usepart] :selected').val();\n    let etc = currow.find('input[name=etc]').val();\n\n    // console.log(id, name, danawacode, usepart);\n    goCategoryPage(id, name, danawacode, usepart, etc);\n    // console.log(id, name, danawacode, usepart, etc);\n\n    function goCategoryPage(a, b, c, d, e) {\n        var frm = formCreate('edit', 'post', 'process/p_danawa_edit.php', '');\n        frm = formInput(frm, 'id', a);\n        frm = formInput(frm, 'name', b);\n        frm = formInput(frm, 'danawacode', c);\n        frm = formInput(frm, 'usepart', d);\n        frm = formInput(frm, 'etc', e);\n        formSubmit(frm);\n    }\n})\n\n$('input[name=code]').on('click', function() {\n    $(this).select();\n});\n</script>\n\n<?php\ninclude $_SERVER['DOCUMENT_ROOT'].\"/view/footer.php\";\n?>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/data/5danawa.php b/data/5danawa.php
+--- a/data/5danawa.php	(revision e259be749be6d24f3612e17e7788b4ad858886a4)
++++ b/data/5danawa.php	(date 1619509639419)
+@@ -7,7 +7,9 @@
+     include $_SERVER['DOCUMENT_ROOT']."/view/conn.php";
+ 
+     $sql = "select 
+-                id, code, name, usepart, etc, date_format(updated, '%Y-%c-%e %H:%i:%s') as updated
++                id, code, name, usepart, etc,
++                date_format(created, '%Y-%c-%e %H:%i:%s') as created,
++                date_format(updated, '%Y-%c-%e %H:%i:%s') as updated
+             from danawa
+             order by ordered
+             ";
+@@ -48,6 +50,7 @@
+                 <td class="" width=15%>명칭</td>
+                 <td class="" width=>사용여부</td>
+                 <td class="" width=>특이사항</td>
++                <td class="" width=>생성일</td>
+                 <td class="" width=>수정일</td>
+                 <td class=""></td>
+             </tr>
+@@ -84,6 +87,7 @@
+                     <input name="etc" class="form-control form-control-sm text-center" name=etc
+                         value="<?=$allRows[$i]['etc']?>">
+                 </td>
++                <td class="fontgrey"><?=$allRows[$i]['created']?></td>
+                 <td class="fontgrey"><?=$allRows[$i]['updated']?></td>
+                 <td class="">
+                     <span class="badge badge-info editbadge">수정</span>

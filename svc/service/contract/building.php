@@ -6,14 +6,7 @@ $buildingArray = array();
 while($row = mysqli_fetch_array($result)){
   $buildingArray[$row['id']] =
                 array($row['bName'],
-                      $row['pay'],
-                      $row['popbillid'],
-                      $row['contact1'],
-                      $row['contact2'],
-                      $row['contact3'],
-                      $row['cnumber1'],
-                      $row['cnumber2'],
-                      $row['cnumber3']
+                      $row['pay']
                     );
 }
 

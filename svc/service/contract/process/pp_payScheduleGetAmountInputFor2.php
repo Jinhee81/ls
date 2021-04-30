@@ -81,7 +81,7 @@ $sql3 = "select mEndDate
                ordered = {$row2[0]}";
 $result3 = mysqli_query($conn, $sql3);
 if(!$result3){
-  echo json_encode('select3');
+    echo json_encode('select3');
      error_log(mysqli_error($conn));
      exit();
 }
@@ -320,10 +320,6 @@ if($result8===false){
   exit();
 }
 
-include "../condi/sql_amount2.php";
-
-// echo $sql_sum;
-
-echo json_encode($allRows);
+echo json_encode('success');
 
 ?>

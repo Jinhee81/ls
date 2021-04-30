@@ -240,11 +240,12 @@ function customersearch() {
             } else {
                 returns += '<ul class="list-unstyled">';
                 $.each(data, function(key, value) {
-                    returns += '<li>' + value.ccnn;
-                    returns += '<input type="hidden" name="customerId" value="' + value.cid + '">';
-                    returns += '<input type="hidden" name="buildingId" value="' + value.bid + '">';
-                    returns += '<input type="hidden" name="buildingName" value="' + value.bName +
-                        '"></li>';
+                    returns += `<li>${value.ccnn}
+                                    <input type=hidden name=customerId value=${value.cid}>
+                                    <input type=hidden name=buildingId value=${value.bid}>
+                                    <input type=hidden name=buildingName value=${value.bName}>
+                                    <input type=hidden name=buildingPay value=${value.pay}>
+                                </li>`;
                 })
                 returns += '</ul>';
             }
@@ -376,7 +377,7 @@ $('#contractDate').on('change', function() {
 
 
 $('#startDate').on('change', function(event) {
-    var startDate = $(input[name = startDate]).val();
+    var startDate = $('input[name = startDate]').val();
     $('#startDate').val(startDate);
 
     var monthCount = Number($('input[name=monthCount]').val());

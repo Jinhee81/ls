@@ -21,8 +21,8 @@ $sql_cs = "
 $result_cs = mysqli_query($conn, $sql_cs);
 
 $allRows = array();
-while($row_cs = mysqli_fetch_array($result_cs)){
-  $allRows[] = $row_cs;
+while ($row_cs = mysqli_fetch_array($result_cs)) {
+    $allRows[] = $row_cs;
 }
 
 // echo $sql_cs;
@@ -30,11 +30,10 @@ while($row_cs = mysqli_fetch_array($result_cs)){
 // echo print_r($allRows);
 
 
+for ($i = 0; $i < count($allRows); $i++) {
 
-for ($i=0; $i < count($allRows); $i++) {
-
-  if($allRows[$i]['payId']){
-    $sql_pay = "
+    if ($allRows[$i]['payId']) {
+        $sql_pay = "
             Select
                 pStartDate,
                 pEndDate,
@@ -54,16 +53,16 @@ for ($i=0; $i < count($allRows); $i++) {
             from paySchedule2
             where
                 idpaySchedule2={$allRows[$i]['payId']}";
-    // echo $sql_pay;
-    $result_pay = mysqli_query($conn, $sql_pay);
+//        echo $sql_pay;
+        $result_pay = mysqli_query($conn, $sql_pay);
 
-    $allRows[$i]['paySchedule2'] = array();
-    while($row_pay = mysqli_fetch_array($result_pay)){
-      $allRows[$i]['paySchedule2'] = $row_pay;
-    }
-    // print_r($allRows[$i]['paySchedule2']); echo '111';
-    $allRows[$i]['paySchedule2']['pExpectedDate'] = date('Y-n-j', strtotime($allRows[$i]['paySchedule2']['pExpectedDate']));
-  }//if closing}
+        $allRows[$i]['paySchedule2'] = array();
+        while ($row_pay = mysqli_fetch_array($result_pay)) {
+            $allRows[$i]['paySchedule2'] = $row_pay;
+        }
+        // print_r($allRows[$i]['paySchedule2']); echo '111';
+        $allRows[$i]['paySchedule2']['pExpectedDate'] = date('Y-n-j', strtotime($allRows[$i]['paySchedule2']['pExpectedDate']));
+    }//if closing}
 
 }//for closing}
 
@@ -79,25 +78,25 @@ $result_sum = mysqli_query($conn, $sql_sum);
 $num_rows = mysqli_num_rows($result_sum);
 // var_dump($num_rows);
 
-if($num_rows > 0){
-  $not_get_delay_amount = array();
-  while($row4 = mysqli_fetch_array($result_sum)){
-    $not_get_delay_amount[] = $row4;
-  }
+if ($num_rows > 0) {
+    $not_get_delay_amount = array();
+    while ($row4 = mysqli_fetch_array($result_sum)) {
+        $not_get_delay_amount[] = $row4;
+    }
 
-  // print_r($not_get_delay_amount);
+    // print_r($not_get_delay_amount);
 
-  for ($i=0; $i < count($not_get_delay_amount); $i++) {
-    $sum += str_replace(',', '', $not_get_delay_amount[$i]['ptAmount']);
-  }
+    for ($i = 0; $i < count($not_get_delay_amount); $i++) {
+        $sum += str_replace(',', '', $not_get_delay_amount[$i]['ptAmount']);
+    }
 
-  // print_r($sum);
+    // print_r($sum);
 
-  $sum = number_format($sum);
+    $sum = number_format($sum);
 } else {
-  $sum = 0;
+    $sum = 0;
 }
 
 $allRows[0]['sum'] = $sum;
 
- ?>
+?>

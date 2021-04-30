@@ -1,7 +1,7 @@
 <?php
 session_start();
-if(!isset($_SESSION['is_login'])){
-  header('Location: /svc/login.php');
+if (!isset($_SESSION['is_login'])) {
+    header('Location: /svc/login.php');
 }
 ?>
 <!DOCTYPE html>
@@ -10,28 +10,28 @@ if(!isset($_SESSION['is_login'])){
 <head>
     <title>임대계약목록</title>
     <?php
-include $_SERVER['DOCUMENT_ROOT']."/svc/view/service_header1_meta.php";
-include $_SERVER['DOCUMENT_ROOT']."/svc/view/service_header2.php";
-include $_SERVER['DOCUMENT_ROOT']."/svc/view/conn.php";
-include $_SERVER['DOCUMENT_ROOT']."/svc/main/condition.php";
-include "building.php";
+    include $_SERVER['DOCUMENT_ROOT'] . "/svc/view/service_header1_meta.php";
+    include $_SERVER['DOCUMENT_ROOT'] . "/svc/view/service_header2.php";
+    include $_SERVER['DOCUMENT_ROOT'] . "/svc/view/conn.php";
+    include $_SERVER['DOCUMENT_ROOT'] . "/svc/main/condition.php";
+    include "building.php";
 
-$sql_sms = "select
+    $sql_sms = "select
           screen, title, description
         from sms
         where
           user_id={$_SESSION['id']} and
           screen='임대계약화면'";
-// echo $sql_sms;
+    // echo $sql_sms;
 
-$result_sms = mysqli_query($conn, $sql_sms);
-$rowsms = array();
-while($row_sms = mysqli_fetch_array($result_sms)){
-  $rowsms[] = $row_sms;
-}
+    $result_sms = mysqli_query($conn, $sql_sms);
+    $rowsms = array();
+    while ($row_sms = mysqli_fetch_array($result_sms)) {
+        $rowsms[] = $row_sms;
+    }
 
-// print_r($_SESSION);
-?>
+    // print_r($_SESSION);
+    ?>
 
     <style>
     /* 세금계산서 iframe 크기 조절  */
@@ -161,28 +161,34 @@ while($row_sms = mysqli_fetch_array($result_sms)){
                             <td>
                                 <select class="form-control form-control-sm" id="smsTitle" name="">
                                     <option value="상용구없음">상용구없음</option>
-                                    <?php for ($i=0; $i < count($rowsms); $i++) {
-                      echo "<option value='".$rowsms[$i]['title']."'>".$rowsms[$i]['title']."</option>";
-                    } ?>
+                                    <?php for ($i = 0; $i < count($rowsms); $i++) {
+                                        echo "<option value='" . $rowsms[$i]['title'] . "'>" . $rowsms[$i]['title'] . "</option>";
+                                    } ?>
                                 </select>
                             </td>
                             <td>
                                 <button class="btn btn-sm btn-block btn-outline-primary" id="smsBtn" data-toggle="modal"
-                                    data-target="#smsModal1"><i class="far fa-envelope"></i> 보내기</button>
+                                    data-target="#smsModal1"><i class="far fa-envelope"></i> 보내기
+                                </button>
                             </td>
                             <td>
                                 <a href="/svc/service/sms/smsSetting.php">
                                     <button class="btn btn-sm btn-block btn-dark mobile" id="smsSettingBtn"><i
-                                            class="fas fa-angle-double-right"></i> 상용구설정</button></a>
+                                            class="fas fa-angle-double-right"></i> 상용구설정
+                                    </button>
+                                </a>
                             </td>
                             <td>
                                 <a href="/svc/service/sms/sent.php">
                                     <button class="btn btn-sm btn-block btn-dark" id="smsSettingBtn"><i
-                                            class="fas fa-angle-double-right"></i> 보낸문자목록</button></a>
+                                            class="fas fa-angle-double-right"></i> 보낸문자목록
+                                    </button>
+                                </a>
                             </td>
                             <td>
                                 <button type="button" class="btn btn-info btn-sm" id="excelbtn"><i
-                                        class="far fa-file-excel"></i>엑셀양식</button>
+                                        class="far fa-file-excel"></i>엑셀양식
+                                </button>
                             </td>
                         </tr>
                     </table>
@@ -192,12 +198,14 @@ while($row_sms = mysqli_fetch_array($result_sms)){
                 <div class="row justify-content-end mr-0">
                     <a href="contract_add2.php" role="button" class="btn btn-sm btn-primary mr-1">신규등록</a>
                     <button type="button" class="btn btn-sm btn-danger mr-1" name="rowDeleteBtn" data-toggle="tooltip"
-                        data-placement="top" title="임대료 숫자 뒤 'c'표시된것만 삭제 가능합니다">선택삭제</button>
+                        data-placement="top" title="임대료 숫자 뒤 'c'표시된것만 삭제 가능합니다">선택삭제
+                    </button>
                 </div>
             </div>
         </div>
         <div class="row justify-content-end mr-0 mobile">
-            <label class="mb-0" style=""><span id="aa"></span></label>
+            <label class="mb-0"> 전체 : <span id="countall">0</span>건, 임대료 <span id="aa">0</span>원, 보증금 <span
+                    id="bb">0</span>원</label>
             <!--글자 기본&-->
         </div>
         <div class="row justify-content-end mr-0 mobile">
@@ -250,25 +258,18 @@ while($row_sms = mysqli_fetch_array($result_sms)){
 
     </section>
 
-    <!-- <section class="container" id="sql">
-
-</section> -->
-
     <?php
-include $_SERVER['DOCUMENT_ROOT']."/svc/service/customer/modal_customer.php";
-
-include $_SERVER['DOCUMENT_ROOT']."/svc/service/sms/modal_sms1.php";
-include $_SERVER['DOCUMENT_ROOT']."/svc/service/sms/modal_sms2.php";
-include $_SERVER['DOCUMENT_ROOT']."/svc/modal/modal_amount.php";
-include $_SERVER['DOCUMENT_ROOT']."/svc/modal/modal_deposit.php";
-include $_SERVER['DOCUMENT_ROOT']."/svc/modal/modal_file.php";
-include $_SERVER['DOCUMENT_ROOT']."/svc/modal/modal_memo.php";
-include $_SERVER['DOCUMENT_ROOT']."/svc/modal/modal_nadd.php";//n개월추가 모달
-include $_SERVER['DOCUMENT_ROOT']."/svc/modal/modal_regist.php";//청구번호모달
-
- ?>
-
-    <?php include $_SERVER['DOCUMENT_ROOT']."/svc/view/service_footer.php"; ?>
+    include $_SERVER['DOCUMENT_ROOT'] . "/svc/service/customer/modal_customer.php";
+    include $_SERVER['DOCUMENT_ROOT'] . "/svc/service/sms/modal_sms1.php";
+    include $_SERVER['DOCUMENT_ROOT'] . "/svc/service/sms/modal_sms2.php";
+    include $_SERVER['DOCUMENT_ROOT'] . "/svc/modal/modal_amount.php";
+    include $_SERVER['DOCUMENT_ROOT'] . "/svc/modal/modal_deposit.php";
+    include $_SERVER['DOCUMENT_ROOT'] . "/svc/modal/modal_file.php";
+    include $_SERVER['DOCUMENT_ROOT'] . "/svc/modal/modal_memo.php";
+    include $_SERVER['DOCUMENT_ROOT'] . "/svc/modal/modal_nadd.php";//n개월추가 모달
+    include $_SERVER['DOCUMENT_ROOT'] . "/svc/modal/modal_regist.php";//청구번호모달
+    include $_SERVER['DOCUMENT_ROOT'] . "/svc/view/service_footer.php";
+    ?>
 
 
     <script src="/svc/inc/js/jquery-3.3.1.min.js"></script>
@@ -279,13 +280,13 @@ include $_SERVER['DOCUMENT_ROOT']."/svc/modal/modal_regist.php";//청구번호�
     <script src="/svc/inc/js/datepicker-ko.js"></script>
     <script src="/svc/inc/js/jquery-ui-timepicker-addon.js"></script>
     <script src="/svc/inc/js/autosize.min.js"></script>
-    <script src="/svc/inc/js/etc/newdate8.js?<?=date('YmdHis')?>"></script>
-    <script src="/svc/inc/js/etc/checkboxtable.js?<?=date('YmdHis')?>"></script>
-    <script src="/svc/inc/js/etc/modal_table.js?<?=date('YmdHis')?>"></script>
-    <script src="/svc/inc/js/etc/form.js?<?=date('YmdHis')?>"></script>
-    <script src="/svc/inc/js/etc/sms_noneparase3.js?<?=date('YmdHis')?>"></script>
-    <script src="/svc/inc/js/etc/sms_existparase10.js?<?=date('YmdHis')?>"></script>
-    <!-- <script src="/svc/inc/js/etc/uploadfile.js?<?=date('YmdHis')?>"></script> -->
+    <script src="/svc/inc/js/etc/newdate8.js?<?= date('YmdHis') ?>"></script>
+    <script src="/svc/inc/js/etc/checkboxtable.js?<?= date('YmdHis') ?>"></script>
+    <script src="/svc/inc/js/etc/modal_table.js?<?= date('YmdHis') ?>"></script>
+    <script src="/svc/inc/js/etc/form.js?<?= date('YmdHis') ?>"></script>
+    <script src="/svc/inc/js/etc/sms_noneparase3.js?<?= date('YmdHis') ?>"></script>
+    <script src="/svc/inc/js/etc/sms_existparase10.js?<?= date('YmdHis') ?>"></script>
+    <!-- <script src="/svc/inc/js/etc/uploadfile.js?<?= date('YmdHis') ?>"></script> -->
 
     <script type="text/javascript">
     var lease_type = <?php echo json_encode($_SESSION['lease_type']); ?>;
@@ -299,227 +300,34 @@ include $_SERVER['DOCUMENT_ROOT']."/svc/modal/modal_regist.php";//청구번호�
     // console.log(roomArray);
     </script>
 
-    <script src="/svc/inc/js/etc/building.js?<?=date('YmdHis')?>"></script>
+    <script src="/svc/inc/js/etc/building.js?<?= date('YmdHis') ?>"></script>
 
-    <script type="text/javascript" src="js_sms_array_rcontract.js?<?=date('YmdHis')?>"></script>
+    <script type="text/javascript" src="js_sms_array_rcontract.js?<?= date('YmdHis') ?>"></script>
     <!-- 계약리스트 표에서 체크썸파일 -->
-    <script type="text/javascript" src="j_checksum_c0.js?<?=date('YmdHis')?>"></script>
-    <script type="text/javascript" src="/svc/inc/js/etc/customer.js?<?=date('YmdHis')?>"></script>
-    <script type="text/javascript" src="/svc/inc/js/etc/contract_function.js?<?=date('YmdHis')?>"></script>
-    <script type="text/javascript" src="/svc/inc/js/etc/ce_pl_f2.js?<?=date('YmdHis')?>"></script>
+    <script type="text/javascript" src="j_checksum_c0.js?<?= date('YmdHis') ?>"></script>
+    <script type="text/javascript" src="/svc/inc/js/etc/customer.js?<?= date('YmdHis') ?>"></script>
+    <script type="text/javascript" src="j_contract_outside.js?<?= date('YmdHis') ?>"></script>
+    <script type="text/javascript" src="j_contract_inside.js?<?= date('YmdHis') ?>"></script>
+    <script type="text/javascript" src="j_contract_array.js?<?= date('YmdHis') ?>"></script>
+
 
     <script>
-    // $(document).on('blur', '[data-toggle="tooltip"]', function(){
-    //   $(this).tooltip();
-    // })
-
-    $('[data-toggle="tooltip"]').tooltip();
-
     $(document).ready(function() {
-
-        $(function() {
-            $('[data-toggle="tooltip"]').tooltip()
-        })
-
-        var periodDiv = $('select[name=periodDiv]').val();
-        dateinput2(periodDiv);
-
         var pagerow = 50;
         var getPage = 1;
 
-        maketable(pagerow, getPage);
-        sql(pagerow, getPage);
-        makesum(pagerow, getPage);
-
-        $('#href_smsSetting').on('click', function() {
-            var moveCheck = confirm('문자상용구설정 화면으로 이동합니다. 이동하시겠습니까?');
-            if (moveCheck) {
-                location.href = '/svc/service/sms/smsSetting.php';
-            }
-        })
-
-
-        $('.dateType').datepicker({
-            changeMonth: true,
-            changeYear: true,
-            showButtonPanel: true,
-            currentText: '오늘',
-            closeText: '닫기'
-        })
-
-        $('.yyyymmdd').keydown(function(event) {
-            var key = event.charCode || event.keyCode || 0;
-            $text = $(this);
-            if (key !== 8 && key !== 9) {
-                if ($text.val().length === 4) {
-                    $text.val($text.val() + '-');
-                }
-                if ($text.val().length === 7) {
-                    $text.val($text.val() + '-');
-                }
-            }
-
-            return (key == 8 || key == 9 || key == 46 || (key >= 48 && key <= 57) || (key >= 96 &&
-                key <= 105));
-            // Key 8번 백스페이스, Key 9번 탭, Key 46번 Delete 부터 0 ~ 9까지, Key 96 ~ 105까지 넘버패트
-            // 한마디로 JQuery 0 ~~~ 9 숫자 백스페이스, 탭, Delete 키 넘버패드외에는 입력못함
-        })
-
-        $(document).on('click', '.page-link', function() {
-            // $(this).parent('li').attr('class','active');
-            var pagerow = 50;
-            var getPage = $(this).text();
-            // console.log(getPage);
-            maketable(pagerow, getPage);
-            makesum(pagerow, getPage);
-            // sql(pagerow, getPage);
-        })
-
-        $('input.amountNumber').number(true);
-
-
-    })
-    //===========document.ready function end and the other load start!
-
-    $('select[name=dateDiv]').on('change', function() {
-        var pagerow = 50;
-        var getPage = 1;
-        // history.replaceState({}, null, location.pahtname);
-        maketable(pagerow, getPage);
-        makesum(pagerow, getPage);
-        // sql(pagerow, getPage);
+        outsideTable(pagerow, getPage);
     })
 
-    $('select[name=periodDiv]').on('change', function() {
-        // history.replaceState({}, null, location.pahtname);
-        var pagerow = 50;
-        var getPage = 1;
-        var periodDiv = $('select[name=periodDiv]').val();
-        // console.log(periodDiv);
-        dateinput2(periodDiv);
-        maketable(pagerow, getPage);
-        makesum(pagerow, getPage);
-        // sql(pagerow, getPage);
+    $(document).on('click', '.eachpop', function() {
+        var cid = $(this).siblings('input[name=customerId]').val();
+        m_customer(cid);
     })
 
-    $('input[name=fromDate]').on('change', function() {
-        // history.replaceState({}, null, location.pahtname);이게 안되네 ㅠㅠ
-        var pagerow = 50;
-        var getPage = 1;
-        maketable(pagerow, getPage);
-        makesum(pagerow, getPage);
-        // sql(pagerow, getPage);
-    })
-
-    $('input[name=toDate]').on('change', function() {
-        var pagerow = 50;
-        var getPage = 1;
-        maketable(pagerow, getPage);
-        makesum(pagerow, getPage);
-        // sql(pagerow, getPage);
-    })
-
-    $('select[name=progress]').on('change', function() {
-        var pagerow = 50;
-        var getPage = 1;
-        maketable(pagerow, getPage);
-        makesum(pagerow, getPage);
-        // sql(pagerow, getPage);
-    })
-
-    $('select[name=building]').on('change', function() {
-        var pagerow = 50;
-        var getPage = 1;
-        maketable(pagerow, getPage);
-        makesum(pagerow, getPage);
-        // sql(pagerow, getPage);
-    })
-
-    $('select[name=group]').on('change', function() {
-        var pagerow = 50;
-        var getPage = 1;
-        maketable(pagerow, getPage);
-        makesum(pagerow, getPage);
-        // sql(pagerow, getPage);
-    })
-
-    $('select[name=etcCondi]').on('change', function() {
-        var pagerow = 50;
-        var getPage = 1;
-        maketable(pagerow, getPage);
-        makesum(pagerow, getPage);
-        // sql(pagerow, getPage);
-    })
+    autosize($('textarea[name=etc_m]'));
 
 
-    $('input[name=cText]').on('keyup', function() {
-        var pagerow = 50;
-        var getPage = 1;
-        maketable(pagerow, getPage);
-        makesum(pagerow, getPage);
-        // sql(pagerow, getPage);
-    })
-    //---------조회버튼클릭평션 end and contractArray 펑션 시작--------------//
-
-    let contractArray = [];
-    // let table = $('#checkboxTestTbl');
-
-    $(document).on('change', '#allselect', function() {
-
-        var allCnt = $(".tbodycheckbox", table).length;
-        console.log(allCnt);
-        contractArray = [];
-
-        if ($("#allselect").is(":checked")) {
-            for (var i = 1; i <= allCnt; i++) {
-                var contractArrayEle = [];
-                var colOrder = table.find("tr:eq(" + i + ")").find("td:eq(1)").text().trim();
-                var colid = table.find("tr:eq(" + i + ")").find("td:eq(0)").children('input').val();
-                var colStep = table.find("tr:eq(" + i + ")").find("td:eq(11)").children('div').text();
-                var colFile = table.find("tr:eq(" + i + ")").find("td:eq(13)").children('a:eq(0)').text();
-                var colMemo = table.find("tr:eq(" + i + ")").find("td:eq(13)").children('a:eq(1)').text();
-                contractArrayEle.push(colOrder, colid, $.trim(colStep), colFile, colMemo);
-                contractArray.push(contractArrayEle);
-            }
-            // console.log('checked');
-        } else {
-            contractArray = [];
-            // console.log('unchecked');
-        }
-        console.log(contractArray);
-    })
-
-    $(document).on('change', '.tbodycheckbox', function() {
-        var contractArrayEle = [];
-
-        if ($(this).is(":checked")) {
-            var currow = $(this).closest('tr');
-            var colOrder = Number(currow.find('td:eq(1)').text());
-            var colid = currow.find('td:eq(0)').children('input').val();
-            var colStep = currow.find('td:eq(11)').children('div').text();
-            var colFile = currow.find("td:eq(13)").children('a:eq(0)').text();
-            var colMemo = currow.find("td:eq(13)").children('a:eq(1)').text();
-            contractArrayEle.push(colOrder, colid, $.trim(colStep), colFile, colMemo);
-            contractArray.push(contractArrayEle);
-        } else {
-            var currow = $(this).closest('tr');
-            var colOrder = Number(currow.find('td:eq(1)').text());
-
-            for (var i = 0; i < contractArray.length; i++) {
-                if (contractArray[i][0] === colOrder) {
-                    var index = i;
-                    break;
-                }
-            }
-            contractArray.splice(index, 1);
-        }
-        console.log(contractArray);
-        // console.log(typeof(contractArray[3]));
-    })
-
-
-
-    //---------contractArray펑션 end 삭제버튼펑션 시작--------------//
+    //---------삭제버튼 시작--------------//
     $('button[name="rowDeleteBtn"]').on('click', function() {
         // console.log(contractArray);
 
@@ -570,19 +378,6 @@ include $_SERVER['DOCUMENT_ROOT']."/svc/modal/modal_regist.php";//청구번호�
         }
     })
 
-    $(document).on('click', '.eachpop', function() {
-
-        var cid = $(this).siblings('input[name=customerId]').val();
-
-        m_customer(cid);
-    })
-
-    autosize($('textarea[name=etc_m]'));
-
-
-    //=====================
-
-
     $(document).on('click', '.contractAmount', function() {
 
         var ccid = $(this).siblings('input[name=contractId]').val();
@@ -613,7 +408,7 @@ include $_SERVER['DOCUMENT_ROOT']."/svc/modal/modal_regist.php";//청구번호�
 
         // console.log(ccid, url);
 
-        amountlist(ccid, url);
+        insideTable(ccid, url);
     })
 
     $(document).on('click', '.modaldeposit', function() {
@@ -665,38 +460,35 @@ include $_SERVER['DOCUMENT_ROOT']."/svc/modal/modal_regist.php";//청구번호�
     $('#modal_amount').on('hidden.bs.modal', function() {
         var pagerow = 50;
         var getPage = 1;
-        maketable(pagerow, getPage);
-        makesum(pagerow, getPage);
+        outsideTable(pagerow, getPage);
+        // makesum(pagerow, getPage);
     })
 
     $('#modal_deposit').on('hidden.bs.modal', function() {
         var pagerow = 50;
         var getPage = 1;
-        maketable(pagerow, getPage);
-        makesum(pagerow, getPage);
+        outsideTable(pagerow, getPage);
+        // makesum(pagerow, getPage);
     })
 
     $('#modal_file').on('hidden.bs.modal', function() {
         var pagerow = 50;
         var getPage = 1;
-        maketable(pagerow, getPage);
-        makesum(pagerow, getPage);
+        outsideTable(pagerow, getPage);
+        // makesum(pagerow, getPage);
     })
 
     $('#modal_memo').on('hidden.bs.modal', function() {
         var pagerow = 50;
         var getPage = 1;
-        maketable(pagerow, getPage);
-        makesum(pagerow, getPage);
+        outsideTable(pagerow, getPage);
+        // makesum(pagerow, getPage);
     })
     </script>
 
-    <script type="text/javascript" src="/svc/service/get/js_sms_tax.js?<?=date('YmdHis')?>">
-    </script>
-    <script type="text/javascript" src="/svc/inc/js/etc/contract_button.js?<?=date('YmdHis')?>">
-    </script>
-    <script type="text/javascript" src="j_checksum_cd.js?<?=date('YmdHis')?>">
-    </script>
+    <script type="text/javascript" src="/svc/service/get/js_sms_tax.js?<?=date('YmdHis')?>"></script>
+    <script type="text/javascript" src="j_contract_insidebuttons.js?<?=date('YmdHis')?>"></script>
+    <script type="text/javascript" src="j_checksum_cd.js?<?=date('YmdHis')?>"></script>
 
     </body>
 

@@ -61,19 +61,21 @@ $(document).on('click', '.tbodycheckbox2', function(){
 
     if($(this).is(":checked")){
       var checkedCnt = $(".tbodycheckbox2").filter(":checked").length;
-      var currow = $(this).closest('tr');
+      var currow = $(this).closest('tr[name=contractRow]');
       var payId = currow.find('td:eq(0)').children('input[name=payId]').val();
 
       var amount, vamount, tamount;
 
-      if(payId.includes('0', 'null')){
+      if(payId==='0' || payId==='null'){ //includes를 쓰면 이상해서 or 조건으로 변경했음
         amount = currow.find("td[name=detail]").find('input[name=mAmount]').val();
         vamount = currow.find("td[name=detail]").find('input[name=mvAmount]').val();
         tamount = currow.find("td[name=detail]").find('input[name=mtAmount]').val();
+        // console.log(amount, vamount, tamount, 0, null)
       } else {
         amount = currow.find("td[name=detail]").find('span[name=mAmount]').text();
         vamount = currow.find("td[name=detail]").find('span[name=mvAmount]').text();
         tamount = currow.find("td[name=detail]").find('span[name=mtAmount]').text();
+        // console.log(amount, vamount, tamount, 'payidexist')
       }
 
       amount = amount.replace(/,/gi,'');

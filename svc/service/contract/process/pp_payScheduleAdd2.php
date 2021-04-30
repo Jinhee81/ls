@@ -20,10 +20,6 @@ $filtered_id = mysqli_real_escape_string($conn, $_POST['contractId']);
 if($_POST['expectedDate']){
   if(!strtotime($_POST['expectedDate'])){
     echo json_encode('datetype1');
-    // echo "<script>
-    //       alert('입금예정일 ".$_POST['expectedDate']."은 날짜형식이 아닙니다. 날짜형식에 맞추어서 입력해주세요 (날짜형식:yyyy-mm-dd)');
-    //       location.href = 'contractEdit.php?page=schedule&id=$filtered_id';
-    //       </script>";
     exit();
   }
   
@@ -34,10 +30,6 @@ if($_POST['expectedDate']){
   
   if(!$c){
     echo json_encode('datetype2');
-    // echo "<script>
-    //       alert('입금예정일 ".$_POST['expectedDate']."날짜는 존재하지 않습니다. 다시 확인해주세요.');
-    //       location.href = 'contractEdit.php?page=schedule&id=$filtered_id';
-    //       </script>";
     exit();
   }
 }
@@ -61,9 +53,6 @@ where realContract_id={$filtered_id}";
 $result2 = mysqli_query($conn, $sql2);
 if(!$result2){
   echo json_encode('select2');
-  // echo "<script>alert('저장과정에 문제가 생겼습니다. 관리자에게 문의하세요.(2)');
-  //          location.href='contractEdit.php?page=schedule&id=$filtered_id';
-  //    </script>";
   error_log(mysqli_error($conn));
   exit();
 }
@@ -76,11 +65,8 @@ ordered = {$row2[0]}";
 $result3 = mysqli_query($conn, $sql3);
 if(!$result3){
   echo json_encode('select3');
-  // echo "<script>alert('저장과정에 문제가 생겼습니다. 관리자에게 문의하세요.(3)');
-  //          location.href='contractEdit.php?page=schedule&id=$filtered_id';
-  //    </script>";
-     error_log(mysqli_error($conn));
-     exit();
+  error_log(mysqli_error($conn));
+  exit();
 }
 $row3 = mysqli_fetch_array($result3);
 
@@ -176,7 +162,7 @@ if(!$_POST['expectedDate']){//예정일이 없이 넘어온 경우
                 payIdOrder = 0
               WHERE idcontractSchedule = {$id4}
               ";
-      echo $sql6; //청구번호를 계약스케줄번호에 넣음
+//      echo $sql6; //청구번호를 계약스케줄번호에 넣음
       $result6 = mysqli_query($conn, $sql6);
       if(!$result6){
         echo json_encode('update1');
@@ -248,7 +234,7 @@ if(!$_POST['expectedDate']){//예정일이 없이 넘어온 경우
   $pEndDateI = (int)$_POST['addMonth'] - 1;
 
   $contractScheduleIdArray2=implode(',', $contractScheduleIdArray);
-  $orderedArray2=implode(',', $orderevdArray);
+  $orderedArray2=implode(',', $orderedArray);
 
   $sql5 = "
         INSERT INTO paySchedule2 (
@@ -341,14 +327,11 @@ if($result8===false){
   exit();
 }
 
+echo json_encode('success');
+
 // echo "<script>
 //         location.href='contractEdit.php?page=schedule&id=$filtered_id';
 //       </script>";
 
-include "../condi/sql_amount2.php";
-
-// echo $sql_sum;
-
-echo json_encode($allRows);
 
  ?>

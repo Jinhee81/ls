@@ -90,15 +90,19 @@ function outsideTable(x, y) {
 
           if (value.status2 === 'present') {
             statusValue = '현재';
+            statusColor = 'info';
           }
           if (value.status2 === 'waiting') {
             statusValue = '대기';
+            statusColor = 'warning';
           }
           if (value.status2 === 'the_end') {
             statusValue = '종료';
+            statusColor = 'danger';
           }
           if (value.status2 === 'middle_end') {
             statusValue = '중간종료';
+            statusColor = 'danger';
           }
 
           if(value.step === 'clear') {
@@ -124,7 +128,7 @@ function outsideTable(x, y) {
                             <input type="checkbox" name="rid" value=${value.rid} class="tbodycheckbox">
                         </td>
                         <td class="" data-toggle="tooltip" data-placement="top" title=${value.rid} name=order>${ordered}</td>
-                        <td class="" name=status><div class="badge badge-info text-wrap" style="width: 3rem;">${statusValue}</div></td>
+                        <td class="" name=status><div class="badge badge-${statusColor} text-wrap" style="width: 3rem;">${statusValue}</div></td>
                         <td class="" name=customer>
                             <span data-toggle="modal" data-target="#eachpop" class="eachpop sky">${value.ccnnmb}</span>
                             <input type="hidden" name="customername" value='${value.cname}'>

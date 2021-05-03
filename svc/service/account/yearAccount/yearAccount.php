@@ -194,9 +194,25 @@ $('#minus_part').text(minusAmountArray);
                         scales: {
                             yAxes: [{
                                 ticks: {
-                                    beginAtZero: true
+                                    beginAtZero: true,
+                                    callback: function(value, index, values) {
+                                        if (parseInt(value) >= 1000) {
+                                            return value.toString().replace(
+                                                /\B(?=(\d{3})+(?!\d))/g, ",");
+                                        } else {
+                                            return value;
+                                        }
+                                    }
                                 }
                             }]
+                        },
+                        tooltips: {
+                            callbacks: {
+                                label: function(tooltipItem, data) {
+                                    return tooltipItem.yLabel.toString().replace(
+                                        /\B(?=(\d{3})+(?!\d))/g, ",");
+                                },
+                            }
                         }
                     }
                 });

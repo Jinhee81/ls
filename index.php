@@ -50,7 +50,7 @@
     if (document.location.protocol == 'http:') {
         document.location.href = document.location.href.replace('http:', 'https:')
     }
-    이건 서버에만 들어가있는 코드임. 로컬에서는 이렇게 하면 에러난다. 
+    // 이건 서버에만 들어가있는 코드임. 로컬에서는 이렇게 하면 에러난다. 
     </script> -->
     <script src="inc/js/bootstrap.min.js"></script>
 

@@ -30,7 +30,7 @@ include $_SERVER['DOCUMENT_ROOT']."/svc/view/conn.php";
                 <div class="form-group row">
                     <label class="col-sm-3 col-form-label">이메일</label>
                     <div class="col-sm-9">
-                        <input type="text" class="form-control" name="email" placeholder="이메일을 입력하세요.(로그인시 사용)"
+                        <input type="email" class="form-control" name="email" placeholder="이메일을 입력하세요.(로그인시 사용)"
                             required="">
                     </div>
                 </div>

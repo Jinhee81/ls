@@ -298,9 +298,41 @@ if (!isset($_SESSION['is_login'])) {
     // console.log(buildingArray);
     // console.log(groupBuildingArray);
     // console.log(roomArray);
+    // buildingArray = JSON.stringify(buildingArray);
+    console.log(buildingArray);
     </script>
 
-    <script src="/svc/inc/js/etc/building.js?<?= date('YmdHis') ?>"></script>
+    <!-- <script src="/svc/inc/js/etc/building.js?<?= date('YmdHis') ?>"></script> -->
+    <script class="">
+    let buildingoption, groupoption;
+    var buildingIdx, groupIdx;
+
+    $('select[name=building]').append('<option value="buildingAll">물건전체</option>');
+    $('select[name=group]').append('<option value="groupAll">그룹전체</option>');
+
+
+    for (var key in buildingArray) { //건물목록출력(비즈피스장암,비즈피스구로)
+        buildingoption = `<option value=${key}>${buildingArray[key][0]}</option>`;
+        $('select[name=building]').append(buildingoption);
+    }
+    buildingIdx = $('select[name=building]').val();
+
+    for (var key2 in groupBuildingArray[buildingIdx]) { //그룹목록출력(상주,비상주)
+        groupoption = `<option valuet=${key2}>${groupBuildingArray[buildingIdx][key2]}</option>`;
+        $('select[name=group]').append(groupoption);
+    }
+    groupIdx = $('select[name=group]').val();
+
+    $('select[name=building]').on('change', function(event) {
+        buildingIdx = $('select[name=building]').val();
+        $('select[name=group]').empty();
+        $('select[name=group]').append('<option value="groupAll">그룹전체</option>');
+        for (var key2 in groupBuildingArray[buildingIdx]) { //그룹목록출력(상주,비상주)
+            groupoption = `<option valuet=${key2}>${groupBuildingArray[buildingIdx][key2]}</option>`;
+            $('select[name=group]').append(groupoption);
+        }
+    })
+    </script>
 
     <script type="text/javascript" src="js_sms_array_rcontract.js?<?= date('YmdHis') ?>"></script>
     <!-- 계약리스트 표에서 체크썸파일 -->

@@ -71,10 +71,9 @@ td.primary {
     </table>
 </section>
 
-<script src="/inc/js/jquery-3.3.1.min.js"></script>
-<script src="/inc/js/bootstrap.min.js"></script>
-<script src="/inc/js/jquery.number.min.js"></script>
-
+<?php
+include $_SERVER['DOCUMENT_ROOT']."/view/footer.php";
+?>
 
 <script>
 let brandArray = <?=json_encode($brandArray)?>;
@@ -344,7 +343,5 @@ $(document).on('click', '.editbadge', function() {
     })
 })
 </script>
-
-<?php
-include $_SERVER['DOCUMENT_ROOT']."/view/footer.php";
-?>
+</body>
+</html

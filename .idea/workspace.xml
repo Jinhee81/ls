@@ -2,10 +2,33 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="db804300-dc99-4752-be5e-5422394ae19a" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/data/5danawa.php" beforeDir="false" afterPath="$PROJECT_DIR$/data/5danawa.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/raw/danawa.csv" beforeDir="false" afterPath="$PROJECT_DIR$/data/raw/danawa.csv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/raw/p_insert_trim_20210412.php" beforeDir="false" afterPath="$PROJECT_DIR$/data/raw/p_insert_trim_20210412.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/codeStyles/codeStyleConfig.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/sqldialects.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/inc/js/bootstrap-4.1.3.min.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/inc/js/date.format.min.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/kservice/ajax/ajax_note_add.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/kservice/ajax/ajax_note_edit.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/kservice/ajax/ajax_note_load.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/kservice/note/below/note_car.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/kservice/note/note.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/kservice/note/note_add.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/kservice/note/note_edit.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/kservice/setting/account.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/kservice/setting/account_add.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/kservice/setting/account_edit.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/kservice/setting/p_account_add.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/kservice/setting/p_account_edit.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_2021_04_28_1_17___Default_Changelist_.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_2021_04_28_1_17_오후_[Default_Changelist]/shelved.patch" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/3lineup.php" beforeDir="false" afterPath="$PROJECT_DIR$/data/3lineup.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/4trim.php" beforeDir="false" afterPath="$PROJECT_DIR$/data/4trim.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/inc/css/customizing.css" beforeDir="false" afterPath="$PROJECT_DIR$/inc/css/customizing.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/inc/js/bootstrap.min.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/logincheck.php" beforeDir="false" afterPath="$PROJECT_DIR$/logincheck.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/spec/spec.php" beforeDir="false" afterPath="$PROJECT_DIR$/spec/spec.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/view/footer.php" beforeDir="false" afterPath="$PROJECT_DIR$/view/footer.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/view/header.php" beforeDir="false" afterPath="$PROJECT_DIR$/view/header.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -18,31 +41,47 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
-  <component name="PhpDebugGeneral" listening_started="true" />
-  <component name="ProblemsViewState">
-    <option name="selectedIndex" value="1" />
+  <component name="GitSEFilterConfiguration">
+    <file-type-list>
+      <filtered-out-file-type name="LOCAL_BRANCH" />
+      <filtered-out-file-type name="REMOTE_BRANCH" />
+      <filtered-out-file-type name="TAG" />
+      <filtered-out-file-type name="COMMIT_BY_MESSAGE" />
+    </file-type-list>
   </component>
+  <component name="PhpDebugGeneral" listening_started="true" />
   <component name="ProjectId" id="1rkw1AwoHImiAzdBMeI1IZ6zjWW" />
+  <component name="ProjectLevelVcsManager">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent">
+    <property name="ASKED_ADD_EXTERNAL_FILES" value="true" />
     <property name="ASKED_SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
     <property name="full.screen.before.presentation.mode" value="true" />
     <property name="jsx.switch.disabled" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/kservice/setting" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.tslint" value="true" />
     <property name="node.js.selected.package.eslint" value="(autodetect)" />
     <property name="node.js.selected.package.tslint" value="(autodetect)" />
-    <property name="settings.editor.selected.configurable" value="reference.settingsdialog.IDE.editor.colors" />
+    <property name="nodejs_package_manager_path" value="npm" />
+    <property name="settings.editor.selected.configurable" value="preferences.sourceCode.PHP" />
     <property name="ts.external.directory.path" value="$APPLICATION_HOME_DIR$/plugins/JavaScriptLanguage/jsLanguageServicesImpl/external" />
     <property name="vue.rearranger.settings.migration" value="true" />
+  </component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/kservice/setting" />
+    </key>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
@@ -57,6 +96,9 @@
       <workItem from="1619578389923" duration="247000" />
       <workItem from="1619578821950" duration="225000" />
       <workItem from="1619583162832" duration="252000" />
+      <workItem from="1620359517348" duration="4572000" />
+      <workItem from="1620621716113" duration="220000" />
+      <workItem from="1620629213743" duration="161000" />
     </task>
     <servers />
   </component>
@@ -86,5 +128,12 @@
       </map>
     </option>
     <option name="oldMeFiltersMigrated" value="true" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
+  </component>
+  <component name="XSLT-Support.FileAssociations.UIState">
+    <expand />
+    <select />
   </component>
 </project>

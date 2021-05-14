@@ -62,9 +62,9 @@
     </div>
 </section>
 
-<script src="/inc/js/jquery-3.3.1.min.js"></script>
-<script src="/inc/js/bootstrap.min.js"></script>
-<script src="/inc/js/etc/form.js?<?=date('YmdHis')?>"></script>
+<?php
+include $_SERVER['DOCUMENT_ROOT']."/view/footer.php";
+?>
 
 <script>
 let brandArray = <?=json_encode($brandArray)?>;
@@ -307,6 +307,5 @@ $(document).on('click', '.deletebadge', function() {
 })
 </script>
 
-<?php
-include $_SERVER['DOCUMENT_ROOT']."/view/footer.php";
-?>
+</body>
+</html

@@ -153,10 +153,10 @@ th.t2 {
     </div>
 </section>
 
-<script src="/inc/js/jquery-3.3.1.min.js"></script>
-<script src="/inc/js/bootstrap.min.js"></script>
-<script src="extract.js?<?=date('YmdHis')?>"></script>
-
 <?php
 include $_SERVER['DOCUMENT_ROOT']."/view/footer.php";
 ?>
+<script src="extract.js?<?=date('YmdHis')?>"></script>
+</body>
+
+</html>

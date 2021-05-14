@@ -2,11 +2,15 @@
 
 @import url("https://fonts.googleapis.com/css?family=Gothic+A1:700|Nanum+Gothic");
 
-a.nav-link {
+a.nav-link-head {
   color: white;
 }
 
 span.navbar-text {
+  color: white;
+}
+
+span.navbar-text a {
   color: white;
 }
 
@@ -46,6 +50,12 @@ td.fontgrey {
   color: #d8d8d8;
 }
 
+th.fontwhite,
+td.fontwhite {
+  color: #ffffff;
+}
+
+input.fontred,
 select.fontred,
 tr.fontred {
   color: #f781be;
@@ -59,6 +69,23 @@ p.comment {
   color: #bf00ff;
   font-style: italic;
   text-align: center;
+}
+td.password,
+input.password {
+  color: #f8e0ec;
+}
+
+th.fontblue {
+  color: #0040ff;
+}
+
+select.center {
+  text-align-last: center;
+}
+
+footer p {
+  font-family: "Nanum Gothic", sans-serif;
+  font-size: 13px;
 }
 
 /* html 색상 코드 : https://html-color-codes.info/Korean/ */

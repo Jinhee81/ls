@@ -1,11 +1,12 @@
-//이건 lineup.php, trim.php에서 필요한 js file
-
-let brandoption, modeloption, brandIdx, modelIdx;
+let brandIdx, brandOption;
+let modelIdx, modelOption;
 let lineupIdx, lineupOption;
+let trimIdx, trimOption;
 
 $('#brand').append('<option value=brandall>브랜드 전체</option>');
 $('#model').append('<option value=modelall>모델 전체</option>');
 $('#lineup').append('<option value=lineupall>라인업 전체</option>');
+$('#trim').append('<option value=trimall>트림 전체</option>');
 
 for (let key in brandArray) {
     brandoption = `<option value=${key}>${brandArray[key]}</option>`;
@@ -21,6 +22,12 @@ modelIdx = $('#model').val();
 
 for (let key in lineupArray[modelIdx]) {
     lineupOption = `<option value=${key}>${lineupArray[modelIdx][key]}</option>`;
+    $('#model').append(lineupOption);
+}
+lineupIdx = $('#lineup').val();
+
+for (let key in trimArray[lineupIdx]) {
+    trimOption = `<option value=${key}>${trimArray[modelIdx][key]}</option>`;
     $('#model').append(lineupOption);
 }
 lineupIdx = $('#lineup').val();
@@ -51,4 +58,32 @@ $('#model').on('change', function() {
         $('#lineup').append(lineupOption);
     }
     lineupIdx = $('#lineup').val();
+})
+
+$('#lineup').on('change', function() {
+    lineupIdx = $('#lineup').val();
+    $('#trim').empty();
+
+    $('#trim').append('<option value=trimall>트림 전체</option>');
+
+    for (let key in trimArray[lineupIdx]) {
+        trimOption = `<option value=${trimArray[lineupIdx][key]['trimcode']}>${trimArray[lineupIdx][key]['trimname']}</option>`;
+        $('#trim').append(trimOption);
+    }
+    trimIdx = $('#trim').val();
+})
+
+$('#trim').on('change', function() {
+    trimIdx = $('#trim').val();
+
+    for (let key in trimArray[lineupIdx]) {
+        if(trimArray[lineupIdx][key]['trimcode']===trimIdx){
+            $('#price').val(trimArray[lineupIdx][key]['price']);
+
+            let price1 = Number(trimArray[lineupIdx][key]['price']); //소비자가
+            let price2 = Number($('#optionTotalPrice').val().replace(',', '')); //옵션가
+            let price3 = price1 + price2;
+            $('#carPrice1').val(price3);
+        }
+    }
 })

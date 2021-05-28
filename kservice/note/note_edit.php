@@ -40,6 +40,8 @@
 ?>
 
 <style>
+button.primary,
+tr.primary,
 td.primary {
     background-color: #CEF6F5;
 }
@@ -65,11 +67,11 @@ td.primary {
                         상담목록</button></a>
             </div>
 
-            <table class="table">
+            <table class="table table-sm">
                 <tr>
                     <th class="fontblue" width=10%>부서명</th>
                     <td class="">
-                        <select name="department" id="department" class="form-control center">
+                        <select name="department" id="department" class="form-control form-control-sm center">
                             <option value="관리팀" class="" <?php if($clist['department']==='관리팀'){echo "selected";}?>>관리팀
                             </option>
                             <option value="영업1팀" class="" <?php if($clist['department']==='영업1팀'){echo "selected";}?>>
@@ -88,8 +90,8 @@ td.primary {
                     </td>
                     <th class="fontblue">담당자명</th>
                     <td class="">
-                        <input type="text" class="form-control text-center" name="salesman" id="salesman"
-                            value=<?=$clist['username']?>>
+                        <input type="text" class="form-control form-control-sm text-center" name="salesman"
+                            id="salesman" value=<?=$clist['username']?>>
                     </td>
                     <td class=""></td>
                     <td class=""></td>
@@ -98,12 +100,12 @@ td.primary {
                 <tr class="">
                     <th class="fontblue">상담일</th>
                     <td class="">
-                        <input type="text" class="form-control text-center dateType" name="firstDate" id="firstDate"
-                            value="<?=$clist['firstDate']?>">
+                        <input type="text" class="form-control form-control-sm text-center dateType" name="firstDate"
+                            id="firstDate" value="<?=$clist['firstDate']?>">
                     </td>
                     <th class="fontblue">유입경로</th>
                     <td class="">
-                        <select name="channel" id="channel" class="form-control center">
+                        <select name="channel" id="channel" class="form-control form-control-sm center">
                             <option value="다나와" class="" <?php if($clist['channel']==='다나와'){echo "selected";}?>>다나와
                             </option>
                             <option value="홈페이지" class="" <?php if($clist['channel']==='홈페이지'){echo "selected";}?>>홈페이지
@@ -114,30 +116,30 @@ td.primary {
                     </td>
                     <th class="fontblue">다나와번호</th>
                     <td class="">
-                        <input type="number" class="form-control text-center" name="danawaNumber" id="danawaNumber"
-                            value="<?=$clist['danawaNumber']?>">
+                        <input type="number" class="form-control form-control-sm text-center" name="danawaNumber"
+                            id="danawaNumber" value="<?=$clist['danawaNumber']?>">
                     </td>
                     <td class=""></td>
                 </tr>
                 <tr class="">
                     <th class="fontblue">고객명</th>
                     <td class="">
-                        <input type="text" class="form-control text-center" name="customerName" id="customerName"
-                            value="<?=$clist['c_name']?>">
+                        <input type="text" class="form-control form-control-sm text-center" name="customerName"
+                            id="customerName" value="<?=$clist['c_name']?>">
                         <button class="btn btn-warning btn-sm">고객등록</button>
                     </td>
                     <th class="fontblue">연락처</th>
                     <td class="">
-                        <input type="text" class="form-control text-center" name="customerContact" id="customerContact"
-                            value="<?=$clist['c_contact']?>">
+                        <input type="text" class="form-control form-control-sm text-center" name="customerContact"
+                            id="customerContact" value="<?=$clist['c_contact']?>">
                     </td>
                     <th class="fontblue">위치</th>
                     <td class="">
-                        <input type="text" class="form-control text-center" name="customerLocation"
+                        <input type="text" class="form-control form-control-sm text-center" name="customerLocation"
                             id="customerLocation" value="<?=$clist['c_location']?>">
                     </td>
                     <td class="">
-                        <select name="rentlease" id="rentlease" class="form-control fontred">
+                        <select name="rentlease" id="rentlease" class="form-control form-control-sm fontred">
                             <option value="렌트" class="" <?php if($clist['rentlease']==='렌트'){echo "selected";}?>>렌트
                             </option>
                             <option value="리스" class="" <?php if($clist['rentlease']==='리스'){echo "selected";}?>>리스
@@ -166,38 +168,78 @@ td.primary {
 </section>
 
 <!-- 하단 탭 -->
-<section class=container>
-    <nav>
-        <ul class="nav nav-tabs">
-            <li class="nav-item">
-                <a class="nav-link<?php if($_GET['page']==='carInfo'){echo " active";}?>"
-                    href="note_edit.php?page=carInfo&id=<?=$filtered_id?>">차량정보</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link<?php if($_GET['page']==='customerInfo'){echo " active";}?>"
-                    href="note_edit.php?page=customerInfo&id=<?=$filtered_id?>">고객정보</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link<?php if($_GET['page']==='contractInfo'){echo " active";}?>"
-                    href="note_edit.php?page=contractInfo&id=<?=$filtered_id?>">계약/보험정보</a>
-            </li>
-            <!-- <li class="nav-item">
-                <a class="nav-link<?php if($_GET['page']==='insuranceInfo'){echo " active";}?>"
-                    href="note_edit.php?page=insuranceInfo&id=<?=$filtered_id?>">보험정보</a>
-            </li> -->
-        </ul>
-    </nav>
-    <div class="">
-        <?php if($_GET['page']==='carInfo'){
-            include "below/note_car.php";
-        } else if($_GET['page']==='customerInfo'){
-            include "below/note_customer.php";
-        } else if($_GET['page']==='contractInfo'){
-            include "below/note_contract.php";
-        } else if($_GET['page']==='insuranceInfo'){
-            include "below/note_insurance.php";
-        }
-        ?>
+<section class="container">
+    <!-- 진행사항탭 -->
+    <div class="p-3 mb-2 text-dark border border-info rounded">
+    </div>
+    <!-- 공통사항탭 -->
+    <div class="row">
+        <div class="col container pr-0">
+            <button class="btn primary btn-sm">고객정보</button>
+            <div class="p-3 mb-2 text-dark border border-info rounded">
+                <?php include "below/note_customer.php"; ?>
+            </div>
+        </div>
+        <div class="col container pr-0">
+            <button class="btn primary btn-sm">계약정보</button>
+            <div class="p-3 mb-2 text-dark border border-info rounded">
+                <?php include "below/note_contract.php"; ?>
+            </div>
+        </div>
+        <div class="col container">
+            <button class="btn primary btn-sm">보험정보</button>
+            <div class="p-3 mb-2 text-dark border border-info rounded">
+                <?php include "below/note_insurance.php"; ?>
+            </div>
+        </div>
+    </div>
+
+    <!-- <div class="row">
+        <table class="">
+            <tr class="">
+                <td class="">
+
+                </td>
+                <td class=""></td>
+                <td class=""></td>
+            </tr>
+        </table>
+    </div> -->
+    <!-- 차량,견적사항탭 -->
+    <div class="p-3 mb-2 text-dark border border-secondary rounded" id=firstCarArea>
+        <button class="btn primary btn-sm mr-1">차량정보1</button>
+        <button class="btn btn-outline-danger btn-sm">차량추가</button>
+        <div class="p-3 mb-2 text-dark border border-info rounded">
+            <?php include "below/note_car1.php"; ?>
+        </div>
+        <button class="btn primary btn-sm">차량공통</button>
+        <div class="p-3 mb-2 text-dark border border-info rounded">
+            <?php include "below/note_car_common.php"; ?>
+        </div>
+        <button class="btn primary btn-sm">견적정보</button>
+        <div class="p-3 mb-2 text-dark border border-info rounded">
+            <?php include "below/note_estimate1.php"; ?>
+        </div>
+    </div>
+
+    <!-- 평상시에는 숨기기되어있는영역 -->
+    <div class="" id=secondCarArea>
+        <div class="p-3 mb-2 text-dark border border-secondary rounded">
+            <button class="btn primary btn-sm">차량정보2</button>
+            <div class="p-3 mb-2 text-dark border border-info rounded">
+                <?php include "below/note_car2.php"; ?>
+            </div>
+            <button class="btn primary btn-sm">견적정보</button>
+            <div class="p-3 mb-2 text-dark border border-info rounded">
+                <?php include "below/note_estimate2.php"; ?>
+            </div>
+        </div>
+    </div>
+
+    <!-- 리스정보탭 -->
+    <button class="btn btn-secondary btn-sm">리스정보</button>
+    <div class="p-3 mb-2 text-dark border border-secondary rounded">
+        <?php include "below/note_lease.php"; ?>
     </div>
 </section>
 
@@ -286,6 +328,10 @@ $('#btnAdd').on('click', function() {
         let price2 = optionTotalPrice + Number(price1.replace(',', '')); //총합계
         $('#carPrice1').val(price2);
     })
+})
+
+$(document).ready(function() {
+    $('#secondCarArea').hide();
 })
 </script>
 </body>

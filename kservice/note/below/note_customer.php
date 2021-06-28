@@ -1,6 +1,6 @@
 <table class="table table-sm table-borderless mb-0">
     <tr class="">
-        <th class="">구분</th>
+        <th class="" width=20%>구분</th>
         <td class="">
             <select name="cn_div" id="cn_div" class="form-control form-control-sm">
                 <option value="" class="">개인</option>

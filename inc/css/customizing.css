@@ -79,13 +79,28 @@ th.fontblue {
   color: #0040ff;
 }
 
+input.modalInput,
+select.modalSelect {
+  color: #585858;
+  background-color: #e0e6f8;
+}
+
 select.center {
   text-align-last: center;
+}
+
+body {
+  font-family: "NanumBarunGothic", sans-serif;
 }
 
 footer p {
   font-family: "Nanum Gothic", sans-serif;
   font-size: 13px;
+}
+
+table.modalTable {
+  color: #08088a;
+  /* background-color: #e0e6f8; */
 }
 
 /* html 색상 코드 : https://html-color-codes.info/Korean/ */

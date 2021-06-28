@@ -2,33 +2,248 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="db804300-dc99-4752-be5e-5422394ae19a" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/codeStyles/codeStyleConfig.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/sqldialects.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/inc/js/bootstrap-4.1.3.min.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/inc/js/date.format.min.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/kservice/ajax/ajax_note_add.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/kservice/ajax/ajax_note_edit.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/kservice/ajax/ajax_note_load.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/kservice/note/below/note_car.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/kservice/note/note.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/kservice/note/note_add.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/kservice/note/note_edit.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/kservice/setting/account.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/kservice/setting/account_add.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/kservice/setting/account_edit.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/kservice/setting/p_account_add.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/kservice/setting/p_account_edit.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_2021_04_28_1_17___Default_Changelist_.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_2021_04_28_1_17_오후_[Default_Changelist]/shelved.patch" beforeDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/deployment.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/webServers.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/_inc/css/animate.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/_inc/css/bizdoc.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/_inc/css/bulma.bootstrap.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/_inc/css/checkout.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/_inc/css/codem.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/_inc/css/custom.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/_inc/css/flaticon.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/_inc/css/owl.carousel.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/_inc/css/prism.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/_inc/css/skin.min.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/_inc/css/style.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/_inc/css/style2.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/_inc/css/styles.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/_inc/css/styles_career_admin.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/_inc/css/styles_document_archive.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/_inc/css/styles_expert_register.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/_inc/css/styles_resume.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/_inc/css/styles_resume3.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/_inc/css/styles_resume4.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/_inc/css/vshop.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/_inc/img/ai_icon1.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/_inc/img/ai_icon2.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/_inc/img/ai_icon3.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/_inc/img/ai_icon4.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/_inc/img/ai_icon5.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/_inc/img/ai_icon6.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/_inc/img/career_btn1.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/_inc/img/career_btn2.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/_inc/img/career_btn3.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/_inc/img/career_btn4.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/_inc/img/career_btn5.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/_inc/img/career_btn6.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/_inc/img/career_mini_icon1.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/_inc/img/career_mini_icon2.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/_inc/img/career_mini_icon3.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/_inc/img/career_mini_icon4.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/_inc/img/career_mini_icon5.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/_inc/img/career_mini_icon6.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/_inc/img/enterprise.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/_inc/img/enterprise1.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/_inc/img/enterprise2.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/_inc/img/enterprise3.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/_inc/img/enterprise4.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/_inc/img/footer_icon.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/_inc/img/icon/icon_paper_small.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/_inc/img/icon/star.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/_inc/img/icon/title_icon.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/_inc/img/icon_test.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/_inc/img/logo.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/_inc/img/logo/hutechc.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/_inc/img/logo/tongdoc-4.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/_inc/img/logo/tongdoc_white.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/_inc/img/mini_logo.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/_inc/img/photo_test.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/_inc/img/resume_bg.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/_inc/img/security_icon1.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/_inc/img/security_icon2.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/_inc/img/security_icon3.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/_inc/img/sub_bg.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/_inc/img/sub_check.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/_inc/img/sub_img1.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/_inc/img/sub_img2.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/_inc/img/sub_img3.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/_inc/img/sub_img4.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/_inc/img/sub_img5.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/_inc/img/sub_title.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/_inc/img/template_story.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/_inc/img/templates/t-career.JPG" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/_inc/img/test.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/_inc/img/top1.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/_inc/img/top1_bg.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/_inc/js/Sortable.min.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/_inc/js/active-line.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/_inc/js/axios.min.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/_inc/js/bootstrap.min.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/_inc/js/codem.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/_inc/js/custom.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/_inc/js/imagesloaded.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/_inc/js/jquery-2.2.3.min.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/_inc/js/jscolor.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/_inc/js/linketado.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/_inc/js/magnific-popup.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/_inc/js/masonry-3.1.4.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/_inc/js/masonry.filter.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/_inc/js/matchtags.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/_inc/js/owl.carousel.min.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/_inc/js/prism.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/_inc/js/scripts.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/_inc/js/splide-2.4.21/.babelrc" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/_inc/js/splide-2.4.21/.editorconfig" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/_inc/js/splide-2.4.21/.eslintrc" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/_inc/js/splide-2.4.21/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/_inc/js/splide-2.4.21/.npmignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/_inc/js/splide-2.4.21/LICENSE" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/_inc/js/splide-2.4.21/README.md" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/_inc/js/splide-2.4.21/build/banner.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/_inc/js/splide-2.4.21/build/complete/complete.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/_inc/js/splide-2.4.21/build/complete/config-min.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/_inc/js/splide-2.4.21/build/complete/config.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/_inc/js/splide-2.4.21/build/module/config.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/_inc/js/splide-2.4.21/build/module/module.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/_inc/js/splide-2.4.21/dist/css/splide-core.min.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/_inc/js/splide-2.4.21/dist/css/splide.min.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/_inc/js/splide-2.4.21/dist/css/themes/splide-default.min.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/_inc/js/splide-2.4.21/dist/css/themes/splide-sea-green.min.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/_inc/js/splide-2.4.21/dist/css/themes/splide-skyblue.min.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/_inc/js/splide-2.4.21/dist/js/splide.esm.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/_inc/js/splide-2.4.21/dist/js/splide.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/_inc/js/splide-2.4.21/dist/js/splide.min.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/_inc/js/splide-2.4.21/dist/js/splide.min.js.gz" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/_inc/js/splide-2.4.21/gulpfile.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/_inc/js/splide-2.4.21/images/hero.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/_inc/js/splide-2.4.21/images/react-logo.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/_inc/js/splide-2.4.21/images/splide-logo.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/_inc/js/splide-2.4.21/images/splide.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/_inc/js/splide-2.4.21/images/vue-logo.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/_inc/js/splide-2.4.21/jest.config.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/_inc/js/splide-2.4.21/package-lock.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/_inc/js/splide-2.4.21/package.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/_inc/js/splide-2.4.21/src/assets/svg/_arrow.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/_inc/js/splide-2.4.21/src/assets/svg/arrow.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/_inc/js/splide-2.4.21/src/js/components/a11y/index.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/_inc/js/splide-2.4.21/src/js/components/arrows/index.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/_inc/js/splide-2.4.21/src/js/components/arrows/path.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/_inc/js/splide-2.4.21/src/js/components/autoplay/index.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/_inc/js/splide-2.4.21/src/js/components/breakpoints/index.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/_inc/js/splide-2.4.21/src/js/components/click/index.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/_inc/js/splide-2.4.21/src/js/components/clones/index.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/_inc/js/splide-2.4.21/src/js/components/controller/index.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/_inc/js/splide-2.4.21/src/js/components/cover/index.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/_inc/js/splide-2.4.21/src/js/components/drag/index.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/_inc/js/splide-2.4.21/src/js/components/elements/index.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/_inc/js/splide-2.4.21/src/js/components/elements/slide.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/_inc/js/splide-2.4.21/src/js/components/index.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/_inc/js/splide-2.4.21/src/js/components/keyboard/index.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/_inc/js/splide-2.4.21/src/js/components/layout/directions/horizontal.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/_inc/js/splide-2.4.21/src/js/components/layout/directions/vertical.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/_inc/js/splide-2.4.21/src/js/components/layout/index.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/_inc/js/splide-2.4.21/src/js/components/lazyload/index.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/_inc/js/splide-2.4.21/src/js/components/options/index.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/_inc/js/splide-2.4.21/src/js/components/pagination/index.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/_inc/js/splide-2.4.21/src/js/components/sync/index.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/_inc/js/splide-2.4.21/src/js/components/track/index.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/_inc/js/splide-2.4.21/src/js/constants/a11y.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/_inc/js/splide-2.4.21/src/js/constants/classes.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/_inc/js/splide-2.4.21/src/js/constants/defaults.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/_inc/js/splide-2.4.21/src/js/constants/directions.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/_inc/js/splide-2.4.21/src/js/constants/i18n.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/_inc/js/splide-2.4.21/src/js/constants/states.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/_inc/js/splide-2.4.21/src/js/constants/types.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/_inc/js/splide-2.4.21/src/js/core/composer.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/_inc/js/splide-2.4.21/src/js/core/event.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/_inc/js/splide-2.4.21/src/js/core/state.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/_inc/js/splide-2.4.21/src/js/splide.d.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/_inc/js/splide-2.4.21/src/js/splide.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/_inc/js/splide-2.4.21/src/js/transitions/fade/index.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/_inc/js/splide-2.4.21/src/js/transitions/index.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/_inc/js/splide-2.4.21/src/js/transitions/slide/index.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/_inc/js/splide-2.4.21/src/js/utils/dom.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/_inc/js/splide-2.4.21/src/js/utils/error.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/_inc/js/splide-2.4.21/src/js/utils/object.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/_inc/js/splide-2.4.21/src/js/utils/time.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/_inc/js/splide-2.4.21/src/js/utils/utils.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/_inc/js/splide-2.4.21/src/sass/core/foundation/_animations.scss" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/_inc/js/splide-2.4.21/src/sass/core/foundation/_variables.scss" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/_inc/js/splide-2.4.21/src/sass/core/object/modifiers/_draggable.scss" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/_inc/js/splide-2.4.21/src/sass/core/object/modifiers/_fade.scss" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/_inc/js/splide-2.4.21/src/sass/core/object/modifiers/_rtl.scss" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/_inc/js/splide-2.4.21/src/sass/core/object/modifiers/_ttb.scss" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/_inc/js/splide-2.4.21/src/sass/core/object/objects/_container.scss" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/_inc/js/splide-2.4.21/src/sass/core/object/objects/_list.scss" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/_inc/js/splide-2.4.21/src/sass/core/object/objects/_pagination.scss" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/_inc/js/splide-2.4.21/src/sass/core/object/objects/_root.scss" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/_inc/js/splide-2.4.21/src/sass/core/object/objects/_slide.scss" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/_inc/js/splide-2.4.21/src/sass/core/object/objects/_slider.scss" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/_inc/js/splide-2.4.21/src/sass/core/object/objects/_spinner.scss" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/_inc/js/splide-2.4.21/src/sass/core/object/objects/_track.scss" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/_inc/js/splide-2.4.21/src/sass/core/splide-core.scss" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/_inc/js/splide-2.4.21/src/sass/themes/default/foundation/_variables.scss" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/_inc/js/splide-2.4.21/src/sass/themes/default/object/modifiers/_nav.scss" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/_inc/js/splide-2.4.21/src/sass/themes/default/object/modifiers/_rtl.scss" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/_inc/js/splide-2.4.21/src/sass/themes/default/object/modifiers/_ttb.scss" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/_inc/js/splide-2.4.21/src/sass/themes/default/object/objects/_arrow.scss" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/_inc/js/splide-2.4.21/src/sass/themes/default/object/objects/_pagination.scss" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/_inc/js/splide-2.4.21/src/sass/themes/default/object/objects/_progress.scss" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/_inc/js/splide-2.4.21/src/sass/themes/default/splide-default.scss" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/_inc/js/splide-2.4.21/src/sass/themes/sea-green/foundation/_variables.scss" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/_inc/js/splide-2.4.21/src/sass/themes/sea-green/object/modifiers/_nav.scss" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/_inc/js/splide-2.4.21/src/sass/themes/sea-green/object/modifiers/_rtl.scss" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/_inc/js/splide-2.4.21/src/sass/themes/sea-green/object/modifiers/_ttb.scss" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/_inc/js/splide-2.4.21/src/sass/themes/sea-green/object/objects/_arrow.scss" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/_inc/js/splide-2.4.21/src/sass/themes/sea-green/object/objects/_pagination.scss" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/_inc/js/splide-2.4.21/src/sass/themes/sea-green/object/objects/_progress.scss" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/_inc/js/splide-2.4.21/src/sass/themes/sea-green/object/objects/_root.scss" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/_inc/js/splide-2.4.21/src/sass/themes/sea-green/object/objects/_slide.scss" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/_inc/js/splide-2.4.21/src/sass/themes/sea-green/object/objects/_spinner.scss" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/_inc/js/splide-2.4.21/src/sass/themes/sea-green/splide-sea-green.scss" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/_inc/js/splide-2.4.21/src/sass/themes/sky-blue/foundation/_variables.scss" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/_inc/js/splide-2.4.21/src/sass/themes/sky-blue/object/modifiers/_nav.scss" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/_inc/js/splide-2.4.21/src/sass/themes/sky-blue/object/modifiers/_rtl.scss" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/_inc/js/splide-2.4.21/src/sass/themes/sky-blue/object/modifiers/_ttb.scss" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/_inc/js/splide-2.4.21/src/sass/themes/sky-blue/object/objects/_arrow.scss" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/_inc/js/splide-2.4.21/src/sass/themes/sky-blue/object/objects/_pagination.scss" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/_inc/js/splide-2.4.21/src/sass/themes/sky-blue/object/objects/_progress.scss" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/_inc/js/splide-2.4.21/src/sass/themes/sky-blue/object/objects/_spinner.scss" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/_inc/js/splide-2.4.21/src/sass/themes/sky-blue/splide-sky-blue.scss" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/_inc/js/splide-2.4.21/tests/core/events.test.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/_inc/js/splide-2.4.21/tests/core/splide.test.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/_inc/js/splide-2.4.21/tests/data/html.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/_inc/js/splide-2.4.21/tests/functionality/a11y.test.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/_inc/js/splide-2.4.21/tests/functionality/autoplay.test.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/_inc/js/splide-2.4.21/tests/functionality/autowidth.test.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/_inc/js/splide-2.4.21/tests/functionality/controller.test.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/_inc/js/splide-2.4.21/tests/functionality/focus.test.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/_inc/js/splide-2.4.21/tests/functionality/keyboard.test.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/_inc/js/splide-2.4.21/tests/functionality/layout.test.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/_inc/js/splide-2.4.21/tests/functionality/loop.test.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/_inc/js/splide-2.4.21/tests/functionality/rewind.test.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/_inc/js/splide-2.4.21/tests/functionality/slide.test.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/_inc/js/splide-2.4.21/tests/functionality/sync.test.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/_inc/js/splide-2.4.21/tests/utils/dom.test.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/_inc/js/splide-2.4.21/tests/utils/object.test.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/_inc/js/splide-2.4.21/tests/utils/time.test.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/_inc/js/splide-2.4.21/tests/utils/utils.test.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/_inc/js/tinym.gzip.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/_inc/js/vshop.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/_inc/js/vue-carousel.min.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/_inc/js/vue-picture-swipe.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/_inc/js/vue.min.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/_inc/js/vuedraggable.umd.min.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/_inc/js/wow.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/_inc/js/xeditor_bootstrap.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/_inc/js/xml-fold.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/_inc/js/xml.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/3lineup.php" beforeDir="false" afterPath="$PROJECT_DIR$/data/3lineup.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/4trim.php" beforeDir="false" afterPath="$PROJECT_DIR$/data/4trim.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/inc/css/customizing.css" beforeDir="false" afterPath="$PROJECT_DIR$/inc/css/customizing.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/inc/js/bootstrap.min.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/logincheck.php" beforeDir="false" afterPath="$PROJECT_DIR$/logincheck.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/spec/spec.php" beforeDir="false" afterPath="$PROJECT_DIR$/spec/spec.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/view/footer.php" beforeDir="false" afterPath="$PROJECT_DIR$/view/footer.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/view/header.php" beforeDir="false" afterPath="$PROJECT_DIR$/view/header.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/kservice/note/below/note_customer.php" beforeDir="false" afterPath="$PROJECT_DIR$/kservice/note/below/note_customer.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tongdoc/.ftpconfig" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tongdoc/a.php" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -74,7 +289,7 @@
     <property name="node.js.selected.package.eslint" value="(autodetect)" />
     <property name="node.js.selected.package.tslint" value="(autodetect)" />
     <property name="nodejs_package_manager_path" value="npm" />
-    <property name="settings.editor.selected.configurable" value="preferences.sourceCode.PHP" />
+    <property name="settings.editor.selected.configurable" value="web.server" />
     <property name="ts.external.directory.path" value="$APPLICATION_HOME_DIR$/plugins/JavaScriptLanguage/jsLanguageServicesImpl/external" />
     <property name="vue.rearranger.settings.migration" value="true" />
   </component>
@@ -99,6 +314,7 @@
       <workItem from="1620359517348" duration="4572000" />
       <workItem from="1620621716113" duration="220000" />
       <workItem from="1620629213743" duration="161000" />
+      <workItem from="1622520965950" duration="1000000" />
     </task>
     <servers />
   </component>

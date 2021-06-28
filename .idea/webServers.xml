@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="WebServers">
+    <option name="servers">
+      <webServer id="5e8d641c-1fb6-4f83-b5f4-7b2584baf986" name="mycareer" url="http://hutechc01.cafe24.com">
+        <fileTransfer host="hutechc01.cafe24.com" port="5769">
+          <advancedOptions>
+            <advancedOptions dataProtectionLevel="Private" passiveMode="true" shareSSLContext="true" />
+          </advancedOptions>
+        </fileTransfer>
+      </webServer>
+    </option>
+  </component>
+</project>

@@ -1,9 +1,8 @@
 <hr>
 <footer class="container text-right">
     (주)장기렌터카연합, 1522-7107<br>
-    <p class=""><a href="https://www.klassauto.com" class="" target='_blank'>클라스오토 바로가기</a> | <a
-            href="http://www.rentcarmanager.com/?skiping=skip" class="" target='_blank'>장기렌터카연합 바로가기</a> | <a
-            href="https://klassauto.daouoffice.com/login" class="" target='_blank'>그룹웨어 바로가기</a></p>
+    <p class=""><a href="https://www.klassauto.com" class="" target='_blank'>클라스오토홈페이지 바로가기</a> | <a
+            href="http://www.rentcarmanager.com/?skiping=skip" class="" target='_blank'>장기렌터카연합홈페이지 바로가기</a></p>
 </footer>
 
 

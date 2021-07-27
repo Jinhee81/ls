@@ -142,7 +142,7 @@
                     $trimFee = str_replace("월 ", "", $trimFee);
                     $trimFee = str_replace("원", "", $trimFee);
                     $trimFee = str_replace(",", "", $trimFee);
-                    $modifiedTrimFee = (int)$trimFee - 10;//10원제외한 최저가
+                    $modifiedTrimFee = (int)$trimFee;//10원제외한 최저가에서 같은 값으로 변경됨
                     
                     $trimPrice = str_replace("원", "", $trimPrice);
                     $trimPrice = str_replace(",", "", $trimPrice);
@@ -155,9 +155,18 @@
                         $gainAmount = round((int)$trimPrice*1.054+300000,0);
                     }
                     //취득원가, 리스만해당, 소비자가*1.054+30만원
+
+                    if(!($lineup_use==='N')){
+                        if(!($trim_use==='N')){
+                            array_push($trimEle, $brand_name, $model_name, $lineupName, $trimName, $brand_code, $model_code, $lineup_code, $trim_code, $aaa[$x][1], $aaa[$x][2], $aaa[$x][3], $modifiedTrimFee, $remainAmount, $gainAmount, $j1, $j2, $j3, $j4, $trimPrice, $trimFee, $x+1, $k, $lineuplen, $i+1, $trimCount, $j+1, $lineup_use, $trim_use);
+                            array_push($lineup, $trimEle);
+                        }
+                    }
+
+                    // array_push($trimEle, $brand_name, $model_name, $lineupName, $trimName, $brand_code, $model_code, $lineup_code, $trim_code, $aaa[$x][1], $aaa[$x][2], $aaa[$x][3], $modifiedTrimFee, $remainAmount, $gainAmount, $j1, $j2, $j3, $j4, $trimPrice, $trimFee, $x+1, $k, $lineuplen, $i+1, $trimCount, $j+1, $lineup_use, $trim_use);
+                    //         array_push($lineup, $trimEle);
                     
-                    array_push($trimEle, $brand_name, $model_name, $lineupName, $trimName, $brand_code, $model_code, $lineup_code, $trim_code, $aaa[$x][1], $aaa[$x][2], $aaa[$x][3], $modifiedTrimFee, $remainAmount, $gainAmount, $j1, $j2, $j3, $j4, $trimPrice, $trimFee, $x+1, $k, $lineuplen, $i+1, $trimCount, $j+1, $lineup_use, $trim_use);
-                    array_push($lineup, $trimEle);
+                    
 
                     //x+1, url개수
                     //k, url 내에서의 순번

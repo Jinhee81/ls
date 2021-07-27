@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-<!--홍보페이지 헤더-->
 <html lang="en" dir="ltr">
 
 <head>
@@ -66,13 +65,13 @@
                     </div>
                 </li>
                 <li href="nav-item">
-                    <a class="nav-link nav-link-head" href="/kservice/note/note.php">상담노트</a>
+                    <!-- <a class="nav-link nav-link-head" href="/kservice/note/note.php">상담노트</a> -->
                 </li>
             </ul>
             <form class="form-inline my-2 my-lg-0">
                 <span class="navbar-text">
                     <a href="/kservice/setting/account.php">
-                        <i class="fas fa-cog"></i>&nbsp;계정목록</a>
+                        <!-- <i class="fas fa-cog"></i>&nbsp;계정목록</a> -->
                 </span>&nbsp;
                 <span class="navbar-text">
                     &nbsp;<?=$_SESSION['name']?>님, 안녕하세요.

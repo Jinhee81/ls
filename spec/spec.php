@@ -87,7 +87,13 @@ th.t2 {
 </section>
 
 <section class="text-center">
-    <p class="purple font-italic">lc(lineup count)색상 표시 및 사용여부 N인것도 출력(단, font color red 적용) ^^</p>
+    <p class="purple font-italic">
+        . 사용여부 'N'인 것은 출력되지 않도록 업데이트 했습니다.<br>
+        . 라인업코드, 트림코드가 공란(null, blank)이면 차종코드를 생성해야 하거나 라인업명, 트림명이 일치하지 않아서 그런거니 <a href='/data/3lineup.php'
+            target='_blank'>라인업코드</a>, <a href='/data/4trim.php' target='_blank'>트림코드</a>를
+        확인하세요. <br>
+        - '21.7.27 by Jinhee
+    </p>
 </section>
 <div class="loader container">
     <img src="/inc/img/abc.gif" alt="" class="" style="width:50px;height:50px;">
@@ -153,9 +159,38 @@ th.t2 {
     </div>
 </section>
 
-<?php
-include $_SERVER['DOCUMENT_ROOT']."/view/footer.php";
-?>
+<hr>
+<!-- <footer class="container text-right">
+    (주)장기렌터카연합, 1522-7107<br>
+    <p class=""><a href="https://www.klassauto.com" class="" target='_blank'>클라스오토 바로가기</a> | <a
+            href="http://www.rentcarmanager.com/?skiping=skip" class="" target='_blank'>장기렌터카연합 바로가기</a> | <a
+            href="https://klassauto.daouoffice.com/login" class="" target='_blank'>그룹웨어 바로가기</a></p>
+</footer> -->
+
+
+<script class="">
+$(document).ready(function() {
+    $('.dateType').datepicker({
+        changeMonth: true,
+        changeYear: true,
+        showButtonPanel: true,
+        currentText: '오늘',
+        closeText: '닫기'
+    })
+
+    $('.numberComma').number(true);
+
+    // $('.dropdown-toggle').dropdown('toggle');
+})
+
+$(document).on('click', '.numberComma', function() {
+    $(this).select();
+})
+
+function numberWithCommas(x) {
+    return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+}
+</script>
 <script src="extract.js?<?=date('YmdHis')?>"></script>
 </body>
 
